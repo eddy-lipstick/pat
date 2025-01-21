@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Button } from "@/components/ui/button";
+
+---
+
+<BaseLayout title="Arbeidsovereenkomst met een WOW-factor | Patroon">
+  {/* Hero Section */}
+  <section class="relative py-20 overflow-hidden">
+    <div class="absolute inset-0"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <h1 class="text-5xl font-bold mb-6">
+          Arbeidsovereenkomst met een WOW-factor
+        </h1>
+        <p class="text-xl mb-8">
+          Een arbeidsovereenkomst is vaak lang en staat bomvol jargon, verplichtingen en waarschuwingen. Zonde. Want het tekenen van een arbeidsovereenkomst zou een feestje moeten zijn. En is hét moment om jullie bedrijfscultuur in de spotlights te zetten.
+        </p>
+        <div class="flex gap-4">
+          <Button size="lg">
+            <a href="/contact">Neem contact op</a>
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Benefits Section */}
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+          <h3 class="text-xl font-semibold mb-3">In de huisstijl</h3>
+          <p class="">Aangepast aan jullie huisstijl en tone of voice</p>
+        </div>
+        <div class="p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+          <h3 class="text-xl font-semibold mb-3">Modern en to the point</h3>
+          <p class="">Zodat iedereen weet waar 'ie aan toe is</p>
+        </div>
+        <div class="p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+          <h3 class="text-xl font-semibold mb-3">Juridisch waterdicht</h3>
+          <p class="">Opgesteld door een advocaat</p>
+        </div>
+        <div class="p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+          <h3 class="text-xl font-semibold mb-3">Up to date</h3>
+          <p class="">Makkelijk aan te passen</p>
+        </div>
+        <div class="p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+          <h3 class="text-xl font-semibold mb-3">Personeelsgids</h3>
+          <p class="">Zodat ook die helemaal in lijn is met de wet</p>
+        </div>
+        <div class="p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+          <h3 class="text-xl font-semibold mb-3">Compatible met HR systemen</h3>
+          <p class="">En in een bestandsformaat dat makkelijk aanpasbaar is</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* CTA Section */}
+  <section class="py-16 bg-primary text-white">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-4">Begin vandaag nog</h2>
+      <p class="text-xl mb-8">
+        Geef je nieuwe aanwinst de beste start met een arbeidsovereenkomst in een modern jasje.
+      </p>
+      <Button size="lg" variant="secondary">
+        <a href="/contact">Neem contact op</a>
+      </Button>
+    </div>
+  </section>
+</BaseLayout>

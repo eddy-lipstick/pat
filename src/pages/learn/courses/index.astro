@@ -1,0 +1,259 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+
+const courses = await getCollection('courses');
+const allTags = [...new Set(courses.flatMap(course => course.data.tags))].sort();
+const levels = ['beginner', 'intermediate', 'advanced'];
+
+// Sort by publish date
+courses.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+---
+
+<BaseLayout title="Video Courses">
+  <div class="max-w-7xl mx-auto px-4 py-12">
+    <!-- Header section -->
+    <div class="max-w-2xl mx-auto mb-16">
+      <h1 class="text-4xl font-bold mb-4">Video Courses</h1>
+      <p class="text-xl text-muted-foreground mb-8">
+        Master new skills with our comprehensive video courses.
+      </p>
+      
+      <div class="relative">
+        <svg
+          class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.3-4.3" />
+        </svg>
+        <Input 
+          type="search" 
+          placeholder="Search courses..." 
+          class="pl-9"
+          id="searchInput"
+        />
+      </div>
+      
+      <!-- Filters -->
+      <div class="flex flex-wrap gap-4 mt-4">
+        <div>
+          <label class="text-sm font-medium mb-2 block">Level</label>
+          <div class="flex gap-2" id="levelFilters">
+            {
+              levels.map((level) => {
+                return (
+                  <button
+                    data-level={level}
+                    class="level-filter bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-full px-3 py-1 text-sm transition-colors capitalize"
+                  >
+                    {level}
+                  </button>
+                );
+              })
+            }
+          </div>
+        </div>
+
+        <div class="flex-1">
+          <label class="text-sm font-medium mb-2 block">Topics</label>
+          <div class="flex flex-wrap gap-2" id="tagFilters">
+            {
+              allTags.map((tag) => {
+                return (
+                  <button
+                    data-tag={tag}
+                    class="tag-filter bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-full px-3 py-1 text-sm transition-colors"
+                  >
+                    {tag}
+                  </button>
+                );
+              })
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Course Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" id="coursesGrid">
+      {
+        courses.map((course) => {
+          return (
+            <Card 
+              class="course-card" 
+              data-tags={JSON.stringify(course.data.tags)}
+              data-level={course.data.level}
+            >
+              <CardHeader>
+                {course.data.coverImage && (
+                  <div class="relative w-full aspect-video mb-4 overflow-hidden rounded-lg">
+                    <img
+                      src={course.data.coverImage}
+                      alt={course.data.title}
+                      class="object-cover w-full h-full transition-transform hover:scale-105 duration-300"
+                    />
+                  </div>
+                )}
+                <CardTitle class="line-clamp-2">{course.data.title}</CardTitle>
+                <CardDescription class="flex items-center gap-4">
+                  <span>{course.data.duration}</span>
+                  <Badge>{course.data.level}</Badge>
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p class="text-sm text-muted-foreground mb-4">
+                  {course.data.description}
+                </p>
+                <div class="space-y-2">
+                  <h4 class="font-medium">What you'll learn:</h4>
+                  <ul class="space-y-1">
+                    {
+                      course.data.modules.slice(0, 3).map((module) => {
+                        return (
+                          <li class="text-sm text-muted-foreground flex items-center gap-2">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="text-primary"
+                            >
+                              <path d="m8 12 2.7 2.7 5.3-5.4" />
+                            </svg>
+                            {module.title}
+                          </li>
+                        );
+                      })
+                    }
+                    {course.data.modules.length > 3 && (
+                      <li class="text-sm text-muted-foreground">
+                        + {course.data.modules.length - 3} more modules
+                      </li>
+                    )}
+                  </ul>
+                </div>
+                <div class="flex flex-wrap gap-2 mt-4">
+                  {
+                    course.data.tags.map((tag) => {
+                      return (
+                        <Badge variant="outline" class="text-xs">{tag}</Badge>
+                      );
+                    })
+                  }
+                </div>
+              </CardContent>
+              <CardFooter>
+                <a 
+                  href={`/learn/courses/${course.slug}`}
+                  class="text-primary hover:underline inline-flex items-center gap-1"
+                >
+                  Start learning
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                </a>
+              </CardFooter>
+            </Card>
+          );
+        })
+      }
+    </div>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('searchInput');
+    const courseCards = document.querySelectorAll('.course-card');
+    const tagFilters = document.querySelectorAll('.tag-filter');
+    const levelFilters = document.querySelectorAll('.level-filter');
+    
+    let activeTagFilters = new Set();
+    let activeLevelFilters = new Set();
+
+    function filterCourses() {
+      const searchTerm = searchInput.value.toLowerCase();
+
+      courseCards.forEach(card => {
+        const title = card.querySelector('.line-clamp-2').textContent.toLowerCase();
+        const description = card.querySelector('.text-muted-foreground').textContent.toLowerCase();
+        const tags = JSON.parse(card.dataset.tags);
+        const level = card.dataset.level;
+        
+        const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+        const matchesTags = activeTagFilters.size === 0 || 
+          tags.some(tag => activeTagFilters.has(tag.toLowerCase()));
+        const matchesLevel = activeLevelFilters.size === 0 ||
+          activeLevelFilters.has(level);
+
+        card.style.display = matchesSearch && matchesTags && matchesLevel ? 'flex' : 'none';
+      });
+    }
+
+    searchInput.addEventListener('input', filterCourses);
+
+    tagFilters.forEach(button => {
+      button.addEventListener('click', () => {
+        const tag = button.dataset.tag.toLowerCase();
+        
+        if (activeTagFilters.has(tag)) {
+          activeTagFilters.delete(tag);
+          button.classList.remove('bg-primary', 'text-primary-foreground');
+          button.classList.add('bg-secondary', 'text-secondary-foreground');
+        } else {
+          activeTagFilters.add(tag);
+          button.classList.remove('bg-secondary', 'text-secondary-foreground');
+          button.classList.add('bg-primary', 'text-primary-foreground');
+        }
+        
+        filterCourses();
+      });
+    });
+
+    levelFilters.forEach(button => {
+      button.addEventListener('click', () => {
+        const level = button.dataset.level;
+        
+        if (activeLevelFilters.has(level)) {
+          activeLevelFilters.delete(level);
+          button.classList.remove('bg-primary', 'text-primary-foreground');
+          button.classList.add('bg-secondary', 'text-secondary-foreground');
+        } else {
+          activeLevelFilters.add(level);
+          button.classList.remove('bg-secondary', 'text-secondary-foreground');
+          button.classList.add('bg-primary', 'text-primary-foreground');
+        }
+        
+        filterCourses();
+      });
+    });
+  });
+</script>

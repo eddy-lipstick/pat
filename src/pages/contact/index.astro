@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Button } from '../../components/ui/button';
+import { Input } from '../../components/ui/input';
+import { Card } from '../../components/ui/card';
+---
+
+<BaseLayout title="Contact Us | Project Kiwi" description="Get in touch with us">
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+      <div class="max-w-2xl mx-auto">
+        <div class="text-center mb-12">
+          <h1 class="text-4xl font-bold font-roc-grotesk text-text-primary mb-4">
+            Get in Touch
+          </h1>
+          <p class="text-lg text-text-secondary">
+            Have a question or want to work with us? Fill out the form below and we'll get back to you soon.
+          </p>
+        </div>
+
+        <Card>
+          <form 
+            action="/api/contact" 
+            method="POST"
+            class="space-y-6 p-6"
+          >
+            <div class="grid grid-cols-1 gap-6">
+              <div class="space-y-2">
+                <label 
+                  for="name"
+                  class="text-sm font-medium text-text-primary"
+                >
+                  Name
+                </label>
+                <Input
+                  id="name"
+                  name="name"
+                  type="text"
+                  required
+                  placeholder="Your name"
+                  client:load
+                />
+              </div>
+
+              <div class="space-y-2">
+                <label 
+                  for="email"
+                  class="text-sm font-medium text-text-primary"
+                >
+                  Email
+                </label>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  placeholder="you@example.com"
+                  client:load
+                />
+              </div>
+
+              <div class="space-y-2">
+                <label 
+                  for="subject"
+                  class="text-sm font-medium text-text-primary"
+                >
+                  Subject
+                </label>
+                <Input
+                  id="subject"
+                  name="subject"
+                  type="text"
+                  required
+                  placeholder="What's this about?"
+                  client:load
+                />
+              </div>
+
+              <div class="space-y-2">
+                <label 
+                  for="message"
+                  class="text-sm font-medium text-text-primary"
+                >
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="6"
+                  class="w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 disabled:cursor-not-allowed disabled:opacity-50 text-text-primary"
+                  required
+                  placeholder="Your message..."
+                ></textarea>
+              </div>
+
+              <Button type="submit" className="w-full">
+                Send Message
+              </Button>
+            </div>
+          </form>
+        </Card>
+
+        <div class="mt-12 text-center space-y-4">
+          <div>
+            <h2 class="text-lg font-semibold text-text-primary mb-2">
+              Email Us Directly
+            </h2>
+            <a 
+              href="mailto:contact@projectkiwi.com"
+              class="text-primary-600 hover:text-primary-700"
+            >
+              contact@projectkiwi.com
+            </a>
+          </div>
+
+          <div>
+            <h2 class="text-lg font-semibold text-text-primary mb-2">
+              Visit Us
+            </h2>
+            <p class="text-text-secondary">
+              123 Innovation Street<br />
+              Amsterdam, Netherlands
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</BaseLayout>

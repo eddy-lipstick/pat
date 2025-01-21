@@ -1,0 +1,59 @@
+---
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+interface Props {
+  course: {
+    slug: string;
+    data: {
+      title: string;
+      coverImage?: string;
+      level: string;
+      duration: string;
+    };
+  };
+}
+
+const { course } = Astro.props;
+---
+
+<Card>
+  <CardHeader>
+    {course.data.coverImage && (
+      <div class="relative w-full aspect-video mb-4 overflow-hidden rounded-lg">
+        <img
+          src={course.data.coverImage}
+          alt={course.data.title}
+          class="object-cover w-full h-full transition-transform hover:scale-105 duration-300"
+        />
+      </div>
+    )}
+    <CardTitle class="line-clamp-2">{course.data.title}</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <div class="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+      <Badge>{course.data.level}</Badge>
+      <span>{course.data.duration}</span>
+    </div>
+    <a 
+      href={`/learn/courses/${course.slug}`}
+      class="text-primary hover:underline inline-flex items-center gap-1"
+    >
+      View course
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M5 12h14" />
+        <path d="m12 5 7 7-7 7" />
+      </svg>
+    </a>
+  </CardContent>
+</Card>

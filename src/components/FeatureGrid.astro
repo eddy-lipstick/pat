@@ -1,0 +1,33 @@
+---
+import { Icon } from 'lucide-react';
+
+interface Feature {
+  title: string;
+  description: string;
+  icon: string;
+}
+
+interface Props {
+  features: Feature[];
+}
+
+const { features } = Astro.props;
+---
+
+<div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+  {features.map((feature) => (
+    <div class="relative flex flex-col gap-6 rounded-2xl bg-white p-8 shadow-md transition-all hover:shadow-lg">
+      <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-100 text-primary-600">
+        <Icon name={feature.icon} className="h-6 w-6" />
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold text-gray-900">
+          {feature.title}
+        </h3>
+        <p class="mt-2 text-base text-gray-600">
+          {feature.description}
+        </p>
+      </div>
+    </div>
+  ))}
+</div>

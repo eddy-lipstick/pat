@@ -1,0 +1,25 @@
+---
+import CourseCard from './CourseCard.astro';
+
+interface Course {
+  slug: string;
+  data: any; // Add proper type based on your course data structure
+}
+
+interface Props {
+  courses: Course[];
+}
+
+const { courses } = Astro.props;
+---
+
+{courses.length > 0 && (
+  <section class="border-t pt-16">
+    <h2 class="text-3xl font-bold mb-8">Related Courses</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {courses.map(course => (
+        <CourseCard course={course} />
+      ))}
+    </div>
+  </section>
+)}

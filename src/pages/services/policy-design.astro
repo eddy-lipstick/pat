@@ -1,0 +1,178 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+
+const benefits = [
+  {
+    title: "Begrijpelijker",
+    description: "Zet ingewikkelde juridische documenten om in interactieve gidsen die iedereen kan volgen."
+  },
+  {
+    title: "Betere naleving",
+    description: "Verbeter de naleving van regelgeving door duidelijke, begrijpelijke uitleg die actie stimuleert."
+  },
+  {
+    title: "Bespaar tijd",
+    description: "Bespaar tijd en kosten die normaal gesproken gaan naar het schrijven en bijwerken van uitgebreide juridische notities."
+  },
+  {
+    title: "Populariteit afdeling legal",
+    description: "Maak compliance toegankelijk en eenvoudig, waardoor de juridische afdeling een nog meer gewaardeerde steunpilaar van de organisatie wordt."
+  },
+  {
+    title: "Interactiviteit",
+    description: "De inhoud past zich aan aan de specifieke behoeften en context van elke gebruiker."
+  },
+  {
+    title: "Snellere onboarding",
+    description: "Nieuwkomers zijn sneller ingewerkt."
+  }
+];
+
+const steps = [
+  {
+    number: "1",
+    title: "Navigatie",
+    description: "Voeg interactieve navigatie toe en voorkom dat je lezers door de bomen het bos niet meer zien."
+  },
+  {
+    number: "2",
+    title: "Vraag en antwoord",
+    description: "Door een aantal simpele vragen en antwoorden komt de gebruiker bij de relevante informatie uit."
+  },
+  {
+    number: "3",
+    title: "Extra toelichting",
+    description: "Voorkom 'simpele' vragen en geef extra uitleg waar nodig."
+  }
+];
+---
+
+<BaseLayout title="Policy Design | Patroon">
+  <!-- Hero Section -->
+  <section class="relative py-20 overflow-hidden">
+    <div class="absolute inset-0"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <h1 class="text-5xl font-bold mb-6">
+          Complexe regelgeving, in één beeld gevangen
+        </h1>
+        <p class="text-xl mb-8">
+          Wij transformeren complexe regelgeving en bedrijfspolicies naar duidelijke en interactieve handleidingen. Leuker kunnen we het niet maken, wel makkelijker.
+        </p>
+        <div class="flex gap-4">
+          <Button size="lg">
+            <a href="/contact">Spreek een expert</a>
+          </Button>
+          <Button variant="outline" size="lg">
+            <a href="#how-it-works">Lees meer</a>
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Legal UX Section -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+        <div>
+          <h2 class="text-3xl font-bold mb-6">Legal User Experience</h2>
+          <p class="text-lg">
+            In een tijdperk waarin snelle toegang tot informatie en gebruiksgemak vooropstaan, bieden onze interactieve compliance documenten een moderne, efficiënte manier om over complexe regelgeving te communiceren.
+          </p>
+        </div>
+        <div class="mt-8 lg:mt-0">
+          <img 
+            src="/images/services/policy-ux.jpg" 
+            alt="Legal User Experience" 
+            class="rounded-xl shadow-lg"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Grid -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold">De voordelen</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {benefits.map(benefit => (
+          <div class="p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+            <h3 class="text-xl font-semibold mb-3">{benefit.title}</h3>
+            <p class="">{benefit.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial Section -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto text-center">
+        <p class="text-2xl italic mb-6">"De kracht van Patroon is dat ze twee disciplines bij elkaar brengen en verenigen"</p>
+        <p class="font-semibold text-xl">Sjors Dobbelaar</p>
+        <p class="text-primary-200">Legalloyd</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it Works Section -->
+  <section id="how-it-works" class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold">In 3 stappen naar een optimale legal user experience</h2>
+        <p class="mt-4 text-lg max-w-3xl mx-auto">
+          We transformeren policies in heldere en toegankelijke documenten door de lessen van UX design toe te passen. We schrappen juridisch jargon, en brengen structuur aan. We voegen infographics toe, omdat een beeld meer zegt dan 1000 woorden. En dat alles in jouw huisstijl.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+        {steps.map(step => (
+          <div class="relative p-8 bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+            <div class="absolute -top-4 -left-4 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold">
+              {step.number}
+            </div>
+            <h3 class="text-xl font-semibold mb-3">{step.title}</h3>
+            <p class="text-gray-600">{step.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Demo Section -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="rounded-xl shadow-lg overflow-hidden">
+        <div class="p-8">
+          <h2 class="text-2xl font-bold mb-4">Zie hoe het werkt</h2>
+          <p class="mb-6">
+            Bekijk een voorbeeld van hoe wij complexe regelgeving transformeren naar een interactieve guide.
+          </p>
+          <div class="aspect-video rounded-lg">
+            <!-- Placeholder for interactive demo or video -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-16">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-4">Klaar voor duidelijke policies?</h2>
+      <p class="text-xl text-gray-600 mb-8">
+        Laat ons je helpen om je policies te transformeren naar heldere, interactieve documenten
+      </p>
+      <Button size="lg">
+        <a href="/contact">Neem contact op</a>
+      </Button>
+    </div>
+  </section>
+</BaseLayout>

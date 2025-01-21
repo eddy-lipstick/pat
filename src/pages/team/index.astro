@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TeamCard from '../../components/team/TeamCard.astro';
+
+interface TeamMember {
+  id: string;  // Changed from slug to id
+  data: {
+    name: string;
+    role: string;
+    bio: string;
+    profileImage?: string;
+    expertise: string[];
+    socialLinks?: {
+      linkedin?: string;
+      email?: string;
+      phone?: string;
+      github?: string;
+      twitter?: string;
+    };
+    education?: string;
+    featured: boolean;
+  };
+}
+
+let teamMembers: TeamMember[] = [];
+let error: Error | null = null;
+
+try {
+  teamMembers = await getCollection('team');
+  console.log('Team Members:', teamMembers);
+  console.log('Raw Team Members Data:', JSON.stringify(teamMembers, null, 2));
+} catch (e) {
+  error = e as Error;
+  console.error('Error loading team members:', e);
+}
+
+let sortedTeamMembers = teamMembers.sort((a, b) => {
+  if (a.data.featured !== b.data.featured) {
+    return b.data.featured ? 1 : -1;
+  }
+  return a.data.name.localeCompare(b.data.name);
+});
+
+console.log('Sorted Team Members:', sortedTeamMembers);
+---
+
+<BaseLayout title="Our Team | Kiwi">
+  <main class="mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold mb-8">Our Team</h1>
+    
+    {error && (
+      <div class="text-red-500 mb-4">
+        Error loading team members: {error?.message}
+      </div>
+    )}
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {sortedTeamMembers.length === 0 ? (
+        <p class="col-span-3 text-center text-muted-foreground">No team members found.</p>
+      ) : (
+        sortedTeamMembers.map((member) => (
+          <TeamCard member={member} />
+        ))
+      )}
+    </div>
+
+    <div class="mt-8 text-sm text-muted-foreground">
+      Debug Info:
+      <pre class="mt-2 p-4 bg-muted rounded-lg overflow-auto">
+        {JSON.stringify({ 
+          teamMembersCount: teamMembers.length,
+          error: error?.message || 'No error message available',
+          teamMembersData: teamMembers.map(m => ({
+            id: m.id,  // Changed from slug to id
+            name: m.data.name
+          }))
+        }, null, 2)}
+      </pre>
+    </div>
+  </main>
+</BaseLayout>

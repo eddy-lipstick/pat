@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/Container.astro';
+
+---
+
+<BaseLayout title="About Us | Patroonlabs">
+  <Container>
+    <div class="py-16">
+      {/* Hero Section */}
+      <div class="mb-16">
+        <h1 class="text-5xl font-bold mb-6">About Patroonlabs</h1>
+        <p class="text-xl text-gray-600 max-w-3xl">
+          We help companies excel in digital transformation through expert enterprise architecture and innovative technology solutions.
+        </p>
+      </div>
+
+      {/* Value Proposition */}
+      <div class="grid md:grid-cols-2 gap-12 mb-16">
+        <div>
+          <h2 class="text-2xl font-bold mb-4">Our Approach</h2>
+          <p class="text-gray-600 mb-4">
+            At Patroonlabs, we combine deep technical expertise with strategic thinking to help organizations navigate complex digital transformations. Our approach is rooted in practical experience and proven methodologies.
+          </p>
+          <p class="text-gray-600">
+            We believe that successful digital transformation requires both technical excellence and a deep understanding of business objectives. This is why we work closely with our clients to deliver solutions that drive real business value.
+          </p>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold mb-4">Why Patroonlabs</h2>
+          <ul class="space-y-4 text-gray-600">
+            <li class="flex gap-3 items-start">
+              <span class="bg-primary-100 text-primary-700 p-1 rounded-full mt-1">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                  <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                </svg>
+              </span>
+              <span>Deep expertise in enterprise architecture and digital transformation</span>
+            </li>
+            <li class="flex gap-3 items-start">
+              <span class="bg-primary-100 text-primary-700 p-1 rounded-full mt-1">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                  <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                </svg>
+              </span>
+              <span>Proven track record with leading organizations</span>
+            </li>
+            <li class="flex gap-3 items-start">
+              <span class="bg-primary-100 text-primary-700 p-1 rounded-full mt-1">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4">
+                  <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                </svg>
+              </span>
+              <span>Focus on sustainable and scalable solutions</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      {/* Links to Team and News */}
+      <div class="grid md:grid-cols-2 gap-8">
+        <a 
+          href="/team" 
+          class="group block bg-gray-50 p-8 rounded-xl hover:bg-gray-100 transition-colors"
+        >
+          <h2 class="text-2xl font-bold mb-3 group-hover:text-primary-600 transition-colors">
+            Our Team
+          </h2>
+          <p class="text-gray-600 mb-4">
+            Meet the experts behind Patroonlabs. Our team brings together diverse expertise in enterprise architecture, digital transformation, and technology innovation.
+          </p>
+          <span class="text-primary-600 font-medium group-hover:underline">
+            Meet the team →
+          </span>
+        </a>
+
+        <a 
+          href="/news" 
+          class="group block bg-gray-50 p-8 rounded-xl hover:bg-gray-100 transition-colors"
+        >
+          <h2 class="text-2xl font-bold mb-3 group-hover:text-primary-600 transition-colors">
+            Latest Updates
+          </h2>
+          <p class="text-gray-600 mb-4">
+            Stay updated with our latest achievements, speaking engagements, and industry contributions. Discover how we're shaping the future of digital transformation.
+          </p>
+          <span class="text-primary-600 font-medium group-hover:underline">
+            View updates →
+          </span>
+        </a>
+      </div>
+    </div>
+  </Container>
+</Layout>

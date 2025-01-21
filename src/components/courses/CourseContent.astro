@@ -1,0 +1,87 @@
+---
+import { Badge } from "@/components/ui/badge";
+
+interface Module {
+  title: string;
+  description: string;
+  duration: string;
+}
+
+interface Props {
+  overview: string;
+  modules: Module[];
+}
+
+const { overview, modules } = Astro.props;
+---
+
+<div class="tabs-container mb-16">
+  <div class="inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground mb-4">
+    <button
+      class="tab-button inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+      data-tab="overview"
+      data-state="active"
+    >
+      Overview
+    </button>
+    <button
+      class="tab-button inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+      data-tab="curriculum"
+    >
+      Curriculum
+    </button>
+  </div>
+
+  <div class="tab-content" data-tab="overview" style="display: block;">
+    <div class="prose prose-invert max-w-none" set:html={overview} />
+  </div>
+
+  <div class="tab-content" data-tab="curriculum" style="display: none;">
+    <div class="space-y-6">
+      {modules.map((module, index) => (
+        <div class="rounded-lg border bg-card text-card-foreground shadow-sm">
+          <div class="p-6">
+            <div class="flex justify-between items-start gap-4">
+              <div class="flex-1">
+                <h3 class="text-lg font-semibold">Module {index + 1}: {module.title}</h3>
+                <p class="text-sm text-muted-foreground mt-1">
+                  {module.description}
+                </p>
+              </div>
+              <Badge variant="outline">{module.duration}</Badge>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  function initTabs() {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const tabName = button.getAttribute('data-tab');
+        
+        // Update button states
+        tabButtons.forEach(btn => {
+          btn.setAttribute('data-state', btn === button ? 'active' : '');
+        });
+
+        // Show/hide content
+        tabContents.forEach(content => {
+          const contentName = content.getAttribute('data-tab');
+          content.style.display = contentName === tabName ? 'block' : 'none';
+        });
+      });
+    });
+  }
+
+  // Initialize tabs when the page loads
+  document.addEventListener('astro:page-load', initTabs);
+  // Also initialize for the first page load
+  initTabs();
+</script>

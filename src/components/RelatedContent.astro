@@ -1,0 +1,86 @@
+---
+import { Card } from '@/components/ui/card';
+
+interface Props {
+  items: any[];
+  type: 'case-study' | 'article' | 'course';
+}
+
+const { items, type } = Astro.props;
+
+const getLink = (item: any) => {
+  switch (type) {
+    case 'case-study':
+      return `/case-studies/${item.slug}`;
+    case 'article':
+      return `/articles/${item.slug}`;
+    case 'course':
+      return `/courses/${item.slug}`;
+    default:
+      return '#';
+  }
+};
+
+const formatDate = (date: Date) => {
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'long'
+  }).format(date);
+};
+
+const getTags = (item: any) => {
+  if (!item.data.tags) return [];
+  return item.data.tags.slice(0, 3); // Show max 3 tags
+};
+
+const getAuthors = async (item: any) => {
+  if (type === 'case-study' && item.data.authors) {
+    return item.data.authors;
+  } else if ((type === 'article' && item.data.author) || 
+             (type === 'course' && item.data.instructor)) {
+    return [item.data.author || item.data.instructor];
+  }
+  return [];
+};
+---
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  {items.map(item => (
+    <Card class="overflow-hidden hover:bg-muted/50 transition-colors">
+      <a href={getLink(item)} class="block">
+        {item.data.coverImage && (
+          <div class="aspect-video overflow-hidden">
+            <img 
+              src={item.data.coverImage} 
+              alt={item.data.title}
+              class="w-full h-full object-cover"
+            />
+          </div>
+        )}
+        <div class="p-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm text-muted-foreground">
+              {formatDate(item.data.publishDate)}
+            </span>
+            {type === 'course' && (
+              <span class="bg-primary/10 text-primary px-2 py-1 rounded-full text-xs">
+                {item.data.level}
+              </span>
+            )}
+          </div>
+          <h4 class="font-semibold mb-2">{item.data.title}</h4>
+          <p class="text-sm text-muted-foreground line-clamp-2 mb-4">
+            {item.data.description}
+          </p>
+          <div class="flex flex-wrap gap-2">
+            {getTags(item).map((tag: string) => (
+              <span class="bg-secondary text-secondary-foreground px-2 py-1 rounded-full text-xs">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </a>
+    </Card>
+  ))}
+</div>

@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 243 100% 11%;
+    --foreground: 0 0% 100%;
+
+    /* Feitlijn Colors */
+    --feitlijn-purple: 234 89% 74%;
+    --feitlijn-yellow: 65 100% 60%;
+
+    /* Feitlijn Purple Palette */
+    --feitlijn-purple-50: 234 89% 98%;
+    --feitlijn-purple-100: 234 89% 95%;
+    --feitlijn-purple-200: 234 89% 90%;
+    --feitlijn-purple-300: 234 89% 85%;
+    --feitlijn-purple-400: 234 89% 80%;
+    --feitlijn-purple-500: 234 89% 74%;
+    --feitlijn-purple-600: 234 89% 65%;
+    --feitlijn-purple-700: 234 89% 55%;
+    --feitlijn-purple-800: 234 89% 45%;
+    --feitlijn-purple-900: 234 89% 35%;
+
+    /* Feitlijn Yellow Palette */
+    --feitlijn-yellow-50: 65 100% 95%;
+    --feitlijn-yellow-100: 65 100% 90%;
+    --feitlijn-yellow-200: 65 100% 80%;
+    --feitlijn-yellow-300: 65 100% 70%;
+    --feitlijn-yellow-400: 65 100% 65%;
+    --feitlijn-yellow-500: 65 100% 60%;
+
+    /* Surface Colors */
+    --surface-1: 245 70% 20%;
+    --surface-2: 245 65% 24%;
+    --surface-3: 245 60% 28%;
+
+    /* Text Colors */
+    --text-1: 0 0% 100%;
+    --text-2: 240 10% 90%;
+    --text-3: 240 5% 84%;
+
+    /* UI Colors */
+    --primary: var(--feitlijn-purple);
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 234 24% 20%;
+    --secondary-foreground: 0 0% 100%;
+
+    --accent: var(--feitlijn-yellow);
+    --accent-foreground: 244 57% 27%;
+
+    --card: 245 70% 20%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 245 70% 20%;
+    --popover-foreground: 0 0% 100%;
+
+    --muted: var(--surface-2);
+    --muted-foreground: var(--text-2);
+
+    /* Border and Input Colors */
+    --border: var(--surface-2);
+    --input: var(--surface-2);
+    --ring: var(--primary);
+
+    /* Status Colors */
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 142 72% 49%;
+    --success-foreground: 210 40% 98%;
+
+    --warning: 45 93% 67%;
+    --warning-foreground: 210 40% 98%;
+
+    /* Custom Colors */
+    --custom-dark: 252 87% 24%;
+    --custom-base: 234 15% 67%;
+    --custom-light: 240 89% 67%;
+
+    /* Sidebar Colors */
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}

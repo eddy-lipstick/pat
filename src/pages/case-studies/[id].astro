@@ -1,0 +1,165 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { Image } from "astro:assets";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Clock } from 'lucide-react';
+
+export async function getStaticPaths() {
+  const caseStudies = await getCollection('case-studies');
+  return caseStudies.map(entry => ({
+    params: { id: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props as { entry: CollectionEntry<'case-studies'> };
+const { Content } = await render(entry);
+
+// Fetch team member info
+const team = await getCollection('team');
+const author = team.find(member => member.data.name === entry.data.author);
+
+// Get related case studies (excluding current one)
+const allCaseStudies = await getCollection('case-studies');
+const relatedCaseStudies = allCaseStudies
+  .filter(study => 
+    study.id !== entry.id && 
+    study.data.tags.industries.some(tag => 
+      entry.data.tags.industries.includes(tag)
+    )
+  )
+  .slice(0, 3);
+---
+
+<BaseLayout title={entry.data.title}>
+  <article class="mx-auto px-4">
+    {/* Hero Section */}
+    <header class="mb-12">
+      <div class="space-y-4">
+        {/* Title and Meta */}
+        <div class="space-y-2">
+          <h1 class="text-4xl font-bold">{entry.data.title}</h1>
+          <div class="flex items-center gap-4">
+            <time datetime={entry.data.date.toISOString()}>
+              {new Date(entry.data.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+              })}
+            </time>
+            <div class="flex items-center gap-1">
+              <Clock className="h-4 w-4" />
+              <span>{entry.data.reading_time} min read</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Cover Image */}
+        {entry.data.cover_image && (
+          <div class="aspect-video overflow-hidden rounded-lg">
+            <Image 
+              src={entry.data.cover_image.url}
+              alt={entry.data.cover_image.alt}
+              width={entry.data.cover_image.width || 1200}
+              height={entry.data.cover_image.height || 630}
+              class="w-full h-full object-cover"
+            />
+          </div>
+        )}
+
+        {/* Tags Section */}
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Industries */}
+          <div class="space-y-2">
+            <h3 class="text-sm font-semibold">Industries</h3>
+            <div class="flex flex-wrap gap-2">
+              {entry.data.tags.industries.map(tag => (
+                <Badge variant="secondary">{tag}</Badge>
+              ))}
+            </div>
+          </div>
+
+          {/* Technologies */}
+          <div class="space-y-2">
+            <h3 class="text-sm font-semibold">Technologies</h3>
+            <div class="flex flex-wrap gap-2">
+              {entry.data.tags.technologies.map(tag => (
+                <Badge variant="outline">{tag}</Badge>
+              ))}
+            </div>
+          </div>
+
+          {/* Resources */}
+          {entry.data.tags.resource_tags.length > 0 && (
+            <div class="space-y-2">
+              <h3 class="text-sm font-semibold">Resources</h3>
+              <div class="flex flex-wrap gap-2">
+                {entry.data.tags.resource_tags.map(tag => (
+                  <Badge variant="destructive">{tag}</Badge>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </header>
+
+    {/* Main Content */}
+    <div class="prose prose-slate max-w-none mb-16 text-foreground">
+      <Content />
+    </div>
+
+    {/* Author Section */}
+    {author && (
+      <section class="mb-16 p-6 rounded-lg">
+        <h2 class="text-xl font-semibold mb-4">About the Author</h2>
+        <div class="flex items-start gap-4">
+          {author.data.profileImage && (
+            <img 
+              src={author.data.profileImage}
+              alt={author.data.name}
+              class="w-16 h-16 rounded-full object-cover"
+            />
+          )}
+          <div>
+            <h3 class="font-semibold">{author.data.name}</h3>
+            <p class="text-sm">{author.data.role}</p>
+            <p class="mt-2">{author.data.bio}</p>
+          </div>
+        </div>
+      </section>
+    )}
+
+    {/* Related Case Studies */}
+    {relatedCaseStudies.length > 0 && (
+      <section class="border-t pt-12">
+        <h2 class="text-2xl font-semibold mb-6">Related Case Studies</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {relatedCaseStudies.map(study => (
+            <Card>
+              <CardHeader>
+                <CardTitle class="text-lg">{study.data.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div class="flex flex-wrap gap-2">
+                  {study.data.tags.industries.slice(0, 2).map(tag => (
+                    <Badge variant="secondary">{tag}</Badge>
+                  ))}
+                </div>
+                <a 
+                  href={`/case-studies/${study.id}`}
+                  class="text-primary hover:underline mt-4 inline-block"
+                >
+                  Read more
+                </a>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+    )}
+  </article>
+</BaseLayout>

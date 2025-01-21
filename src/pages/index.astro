@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getFeaturedCaseStudies } from '../lib/case-studies';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import ServicesGrid from '../components/services/ServicesGrid.astro';
+import BubbleMap from '../components/bubbles/BubbleMap';
+import LogoGrid from '../components/LogoGrid.astro';
+import { ArrowRight, MessageCircle } from "lucide-react";
+import VideoTestimonials from '../components/VideoTestimonials';
+import OurFormula from '../components/OurFormula';
+
+
+const featuredCaseStudies = await getFeaturedCaseStudies();
+---
+
+<BaseLayout title="Home">
+  {/* Hero Section */}
+    
+<section class="relative min-h-screen overflow-visible">
+  {/* Text Content */}
+  <div class="grid grid-cols-1 lg:grid-cols-2 min-h-screen items-center relative">
+    <div class="px-6 lg:px-12 py-16 lg:py-24">
+      <p class="text-[#A5B4FC] text-lg mb-4">Legal design & legal tech studio</p>
+      <h1 class="font-display text-6xl lg:text-8xl font-bold mb-8 leading-none">
+        Juridische
+        <br />
+        ontwarners
+      </h1>
+      <p class="text-lg lg:text-xl text-white/80 mb-10 max-w-xl">
+        Patroon maakt juridische complexiteit toegankelijk met
+        slimme technologie en goed ontwerp. Beweeg over de
+        bollen en ontdek hoe wij dat doen.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <Button 
+          size="lg" 
+          class="bg-[#E1FF4C] hover:bg-[#E1FF4C]/90 text-black font-medium px-8"
+        >
+          Neem contact op
+        </Button>
+        <Button 
+          size="lg" 
+          variant="outline" 
+          class="border-white/20 text-white hover:bg-white/10"
+        >
+          Lees meer
+        </Button>
+      </div>
+    </div>
+
+    {/* Placeholder for visual balance */}
+    <div class="hidden lg:block"></div>
+  </div>
+
+  {/* BubbleMap positioned higher in the stacking context */}
+  <div class="absolute top-0 right-[-20%] w-[70%] h-full hidden lg:block z-20">
+    <BubbleMap client:load />
+  </div>
+</section>  
+
+  <LogoGrid />
+
+  <VideoTestimonials client:load />
+
+
+
+  <ServicesGrid />
+
+
+  <OurFormula client:load />
+
+
+  {/* Featured Case Studies */}
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex justify-between items-center mb-12">
+        <div>
+          <h2 class="text-3xl font-bold mb-2">Featured Projects</h2>
+          <p class="text-muted-foreground">Discover our most impactful work</p>
+        </div>
+        <Button variant="outline">
+          <a href="/case-studies" class="inline-flex items-center">
+            View All Projects
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform"
+            >
+              <path d="M5 12h14" />
+              <path d="m12 5 7 7-7 7" />
+            </svg>
+          </a>
+        </Button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {featuredCaseStudies.map(study => (
+          <Card class="group">
+            <CardHeader>
+              {study.data.featuredImage && (
+                <div class="relative w-full aspect-video mb-4 overflow-hidden rounded-lg">
+                  <img
+                    src={study.data.featuredImage}
+                    alt={study.data.title}
+                    class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+              )}
+              <CardTitle>{study.data.title}</CardTitle>
+              <CardDescription>{study.data.summary}</CardDescription>
+            </CardHeader>
+            <CardContent>
+  <div class="flex flex-wrap gap-2">
+    {study.data.tags?.industries?.slice(0, 2).map(tag => (
+      <Badge variant="secondary">{tag}</Badge>
+    ))}
+    {study.data.tags?.technologies?.slice(0, 1).map(tag => (
+      <Badge variant="outline">{tag}</Badge>
+    ))}
+  </div>
+</CardContent>
+            <CardFooter>
+              <a 
+                href={`/case-studies/${study.slug}`} 
+                class="text-primary hover:underline inline-flex items-center group"
+              >
+                Read Case Study
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform"
+                >
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
+              </a>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* CTA Section */}
+  <section class="py-16 bg-primary text-primary-foreground">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold mb-4">Ready to Start Your Project?</h2>
+      <p class="text-xl opacity-90 mb-8">
+        Let's discuss how we can help transform your business
+      </p>
+      <Button size="lg" variant="secondary">
+        <a href="/contact">Get in Touch</a>
+      </Button>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,125 @@
+---
+import { Button } from '../ui/button';
+
+const services = [
+  
+{
+    title: "Legal AI oplossingen op maat",
+    description: "Van slimme tijdlijnen tot geautomatiseerde analyses - wij bouwen AI tools die juridisch werk efficiënter maken. Zoals Feitlijn.nl, dat complexe rechtszaken overzichtelijk maakt door belangrijke gebeurtenissen automatisch in kaart te brengen. We denken graag mee over custom AI oplossingen die perfect aansluiten bij jouw juridische werkzaamheden.",
+    image: "/images/services/legal-ai.webp",
+    href: "/services/legal-ai-oplossingen",
+},
+
+{
+    title: "Complexe regelgeving, in één beeld gevangen",
+    description: "Wij transformeren complexe regelgeving en bedrijfspolicies naar duidelijke en interactieve handleidingen. Leuker kunnen we het niet maken, wel makkelijker.",
+    image: "/images/services/policy-design.webp",
+    href: "/services/policy-design"
+  },
+  {
+    title: "Versterk je zaak met de kracht van beeld",
+    description: "Wij combineren juridische expertise met visueel ontwerp. Daarmee maken we de essentie van een complex dossier inzichtelijk. Voor rechters, arbiters en cliënten. In elke fase van het proces.",
+    image: "/images/services/litigation-visuals.webp",
+    href: "/services/litigation-visuals"
+  },
+  {
+    title: "Arbeidsovereenkomst met een WOW-factor",
+    description: "Een arbeidsovereenkomst is vaak lang en staat bomvol jargon, verplichtingen en waarschuwingen. Zonde. Want het tekenen van een arbeidsovereenkomst zou een feestje moeten zijn. En is hét moment om jullie bedrijfscultuur in de spotlights te zetten.",
+    image: "/images/services/employment-agreement.webp",
+    href: "/services/arbeidsovereenkomst"
+  },
+
+  {
+    title: "B2B contracten die vertrouwen uitstralen",
+    description: "Zakelijke contracten zijn vaak onnodig complex en vol kleine lettertjes. Wij geloven dat het anders kan. Een contract moet een basis zijn voor samenwerking, geschreven in heldere taal die aansluit bij jouw bedrijfswaarden. Zo kom je sneller tot een 'ja' en bouw je aan duurzame relaties.",
+    image: "/images/services/b2b-contracts.webp",
+    href: "/services/b2b-contracten"
+}
+  
+];
+---
+
+<section class="py-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-16">
+      <div class="inline-block">
+        <span class="text-sm font-semibold text-primary tracking-wider uppercase">Onze expertise</span>
+      </div>
+      <h2 class="mt-4 text-4xl font-bold text-text-primary mb-4">
+        Onze diensten
+      </h2>
+      <p class="text-lg text-text-secondary max-w-2xl mx-auto">
+        Wij helpen organisaties met het verhelderen van juridische informatie
+      </p>
+    </div>
+
+    <div class="space-y-32">
+      {services.map((service, index) => (
+        <div class:list={[
+          "relative group",
+          "grid grid-cols-1 lg:grid-cols-2 gap-12 items-center",
+          index % 2 === 1 ? "lg:grid-flow-col-dense" : ""
+        ]}>
+          {/* Subtle background effect */}
+          <div class="absolute inset-0 rounded-3xl -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          
+          {/* Image container */}
+          <div class:list={[
+            "relative h-96 rounded-2xl overflow-hidden",
+            "transition-transform duration-500 ease-out group-hover:scale-[1.02]",
+            "shadow-xl shadow-primary-600/10",
+            index % 2 === 1 ? "lg:order-2" : "lg:order-1"
+          ]}>
+            <div class="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent"></div>
+            <img
+              src={service.image}
+              alt={service.title}
+              class="absolute inset-0 w-full h-full object-cover"
+            />
+          </div>
+          
+          {/* Content container */}
+          <div class:list={[
+            "flex flex-col space-y-6",
+            "transition-transform duration-500 ease-out group-hover:translate-y-[-4px]",
+            index % 2 === 1 ? "lg:order-1" : "lg:order-2"
+          ]}>
+            <h3 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-text-primary to-primary-400">
+              {service.title}
+            </h3>
+            <p class="text-lg text-text-secondary">
+              {service.description}
+            </p>
+            <div class="pt-4">
+              <Button 
+                class="group relative overflow-hidden bg-primary hover:bg-primary-600 transition-colors duration-300"
+              >
+                <a 
+                  href={service.href}
+                  class="inline-flex items-center"
+                >
+                  Lees meer
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

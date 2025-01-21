@@ -1,0 +1,206 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+
+// Get all articles
+const articles = await getCollection('articles');
+
+// Sort articles by date
+const sortedArticles = [...articles].sort((a, b) => {
+  try {
+    return b.data.publishDate.getTime() - a.data.publishDate.getTime();
+  } catch (error) {
+    console.error('Date comparison error:', error);
+    return 0;
+  }
+});
+
+// Get all authors at once for better performance
+const authors = await getCollection('team');
+const authorsMap = new Map(authors.map(author => [author.id, author]));
+
+// Extract all unique tags for filtering
+const allTags = [...new Set(articles.flatMap(article => article.data.tags))].sort();
+---
+
+<BaseLayout title="Articles | Kiwi">
+  <div class="min-h-screen space-y-8 relative">
+    <!-- Hero section with animated background -->
+    <div class="relative overflow-hidden py-12 mb-8">
+      <div class="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 opacity-50"></div>
+      <div class="relative z-10 max-w-6xl mx-auto px-4">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+          Articles
+        </h1>
+        <p class="text-lg text-muted-foreground max-w-2xl">
+          Our latest insights and learnings
+        </p>
+      </div>
+    </div>
+
+    <!-- Filters section -->
+    <div class="sticky top-0 z-20 bg-background/80 backdrop-blur-lg border-b py-4">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex items-center gap-4">
+          <span class="text-sm font-medium">Filter by:</span>
+          <div class="flex flex-wrap gap-2" id="tag-filters">
+            {allTags.map(tag => (
+              <button
+                data-tag={tag}
+                class="tag-filter transition-all duration-300 rounded-full px-2 py-1 text-xs bg-primary/10 text-primary hover:bg-primary/20"
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Articles List -->
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid grid-cols-1 gap-6" id="articles-grid">
+        {sortedArticles.map((article) => {
+          const author = authorsMap.get(article.data.author);
+          
+          return (
+            <div class="article-card transform transition-all duration-300 hover:translate-x-1">
+              <Card class="overflow-hidden hover:bg-accent/50 transition-colors border-l-2 border-l-transparent hover:border-l-primary">
+                <a href={`/articles/${article.id}`} class="block">
+                  <div class="flex flex-col md:flex-row gap-6 p-6">
+                    {article.data.coverImage && (
+                      <div class="md:w-1/3">
+                        <div class="aspect-video rounded-md overflow-hidden bg-muted">
+                          <img 
+                            src={article.data.coverImage} 
+                            alt={article.data.title}
+                            class="w-full h-full object-cover transform transition-transform duration-500 hover:scale-105"
+                            loading="lazy"
+                          />
+                        </div>
+                      </div>
+                    )}
+                    <div class={article.data.coverImage ? "md:w-2/3" : "w-full"}>
+                      <div class="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                        <time datetime={article.data.publishDate.toISOString()}>
+                          {article.data.publishDate.toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                          })}
+                        </time>
+                        {author && (
+                          <>
+                            <span class="text-muted-foreground">•</span>
+                            <a 
+                              href={`/team/${author.id}`}
+                              class="hover:text-primary transition-colors"
+                            >
+                              {author.data.name}
+                            </a>
+                          </>
+                        )}
+                        {article.data.readingTime && (
+                          <>
+                            <span class="text-muted-foreground">•</span>
+                            <span>{article.data.readingTime} min read</span>
+                          </>
+                        )}
+                      </div>
+                      
+                      <h2 class="text-2xl font-bold mb-2 text-foreground hover:text-primary transition-colors">
+                        {article.data.title}
+                      </h2>
+                      <p class="text-muted-foreground mb-4 line-clamp-2">
+                        {article.data.description}
+                      </p>
+                      
+                      <div class="flex flex-wrap gap-2">
+                        {article.data.tags.map(tag => (
+                          <span 
+                            class="bg-primary/10 text-primary px-2 py-1 rounded-full text-xs transition-all duration-300 hover:bg-primary/20"
+                            data-tag={tag}
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </Card>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* No Articles Found State */}
+      {sortedArticles.length === 0 && (
+        <div class="text-center py-12">
+          <p class="text-muted-foreground">No articles found.</p>
+        </div>
+      )}
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+// Client-side filtering logic
+document.addEventListener('astro:page-load', () => {
+  const tagFilters = document.querySelectorAll('.tag-filter');
+  const articles = document.querySelectorAll('.article-card');
+  const activeFilters = new Set();
+
+  tagFilters.forEach(filter => {
+    filter.addEventListener('click', () => {
+      const tag = filter.getAttribute('data-tag');
+      if (!tag) return;
+      
+      // Toggle active state
+      if (activeFilters.has(tag)) {
+        activeFilters.delete(tag);
+        filter.classList.remove('bg-primary/20');
+        filter.classList.add('bg-primary/10');
+      } else {
+        activeFilters.add(tag);
+        filter.classList.add('bg-primary/20');
+        filter.classList.remove('bg-primary/10');
+      }
+
+      // Filter articles
+      articles.forEach(article => {
+        if (activeFilters.size === 0) {
+          article.style.display = '';
+          return;
+        }
+
+        const tags = Array.from(article.querySelectorAll('[data-tag]'))
+          .map(el => el.getAttribute('data-tag'));
+        
+        const hasMatchingTag = Array.from(activeFilters)
+          .some(activeTag => tags.includes(activeTag));
+
+        if (hasMatchingTag) {
+          article.style.display = '';
+        } else {
+          article.style.display = 'none';
+        }
+      });
+    });
+  });
+});
+</script>
+
+<style>
+.article-card {
+  transition: all 0.3s ease-out;
+}
+
+.article-card.hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+</style>

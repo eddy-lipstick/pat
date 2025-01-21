@@ -1,0 +1,203 @@
+---
+import { getCollection } from 'astro:content';
+import { render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+
+interface Props {
+  entry: CollectionEntry<'articles'>;
+  relatedArticles: CollectionEntry<'articles'>[];
+  authorData: CollectionEntry<'team'> | undefined;
+}
+
+export async function getStaticPaths() {
+  try {
+    const allArticles = await getCollection('articles');
+    const teamMembers = await getCollection('team');
+    
+    if (!allArticles || allArticles.length === 0) {
+      console.warn('No articles found in collection');
+      return [];
+    }
+    
+    return allArticles.map(entry => {
+      try {
+        // Get author data - using the reference ID instead of slug
+        const authorData = teamMembers.find(member => member.id === entry.data.author);
+        
+        // Get related articles based on shared tags
+        const relatedArticles = allArticles
+          .filter(article => {
+            if (article.id === entry.id) return false;
+            
+            const currentTags = entry.data.tags?.map(tag => tag.toLowerCase().trim()) || [];
+            const articleTags = article.data.tags?.map(tag => tag.toLowerCase().trim()) || [];
+            
+            return articleTags.some(tag => currentTags.includes(tag));
+          })
+          .slice(0, 3);
+
+        return {
+          params: { id: entry.id },  // Changed from slug to id
+          props: { 
+            entry, 
+            relatedArticles,
+            authorData
+          },
+        };
+      } catch (error) {
+        console.error(`Error processing article ${entry.id}:`, error);
+        return null;
+      }
+    }).filter(Boolean);
+    
+  } catch (error) {
+    console.error('Error loading articles collection:', error);
+    return [];
+  }
+}
+
+const { entry, relatedArticles, authorData } = Astro.props;
+const { Content } = await render(entry);  // Changed from entry.render() to render(entry)
+
+// Format the publish date once
+const formattedDate = entry.data.publishDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<BaseLayout title={entry.data.title}>
+  <article class="max-w-4xl mx-auto px-4">
+    <header class="mb-12">
+      <div class="flex flex-wrap gap-2 mb-6">
+        {entry.data.tags?.map(tag => (
+          <Badge variant="secondary">{tag}</Badge>
+        ))}
+      </div>
+      
+      <h1 class="text-4xl font-bold mb-4">{entry.data.title}</h1>
+      <p class="text-xl text-muted-foreground mb-6">{entry.data.description}</p>
+      
+      <div class="flex items-center gap-4 text-sm text-muted-foreground">
+        <div class="flex items-center gap-4">
+          {authorData && (
+            <>
+              <a 
+                href={`/team/${authorData.id}`} 
+                class="hover:text-primary transition-colors flex items-center gap-2"
+              >
+                {authorData.data.profileImage && (
+                  <img 
+                    src={authorData.data.profileImage} 
+                    alt={authorData.data.name}
+                    class="w-8 h-8 rounded-full object-cover"
+                  />
+                )}
+                <span>{authorData.data.name}</span>
+              </a>
+              <div>•</div>
+            </>
+          )}
+          <time datetime={entry.data.publishDate.toISOString()}>
+            {formattedDate}
+          </time>
+          {entry.data.readingTime && (
+            <>
+              <div>•</div>
+              <span>{entry.data.readingTime} min read</span>
+            </>
+          )}
+        </div>
+      </div>
+    </header>
+
+    {entry.data.coverImage && (
+      <div class="mb-12">
+        <img
+          src={entry.data.coverImage}
+          alt={entry.data.title}
+          class="w-full aspect-video object-cover rounded-lg shadow-lg"
+        />
+      </div>
+    )}
+
+    <div class="prose prose-lg max-w-none mb-16">
+      <Content />
+    </div>
+
+    {/* Author Bio Section */}
+    {authorData && (
+      <div class="mb-16 p-6 bg-muted rounded-lg">
+        <div class="flex items-start gap-4">
+          {authorData.data.profileImage && (
+            <img 
+              src={authorData.data.profileImage}
+              alt={authorData.data.name}
+              class="w-16 h-16 rounded-full object-cover"
+            />
+          )}
+          <div>
+            <h3 class="font-semibold">{authorData.data.name}</h3>
+            <p class="text-sm text-muted-foreground">{authorData.data.role}</p>
+            {authorData.data.bio && (
+              <p class="mt-2">{authorData.data.bio}</p>
+            )}
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* Related Articles Section */}
+    {relatedArticles.length > 0 && (
+      <section class="border-t pt-16">
+        <h2 class="text-3xl font-bold mb-8">Related Articles</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {relatedArticles.map(article => (
+            <Card>
+              <CardHeader>
+                {article.data.coverImage && (
+                  <div class="relative w-full aspect-video mb-4 overflow-hidden rounded-lg">
+                    <img
+                      src={article.data.coverImage}
+                      alt={article.data.title}
+                      class="object-cover w-full h-full transition-transform hover:scale-105 duration-300"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+                <CardTitle class="line-clamp-2">{article.data.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p class="text-sm text-muted-foreground mb-4 line-clamp-2">
+                  {article.data.description}
+                </p>
+                <a 
+                  href={`/learn/articles/${article.id}`}
+                  class="text-primary hover:underline inline-flex items-center gap-1"
+                >
+                  Read article
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <div class="mt-16 pt-8 border-t">
+      <a 
+        href="/learn/articles" 
+        class="text-primary hover:underline inline-flex items-center gap-2"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Back to Articles
+      </a>
+    </div>
+  </article>
+</BaseLayout>
