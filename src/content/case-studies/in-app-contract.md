@@ -7,7 +7,8 @@ featured: true
 show_on_landing: false
 reading_time: 3
 service_category: "Employment"
-
+stakeholder: "Collega's"
+stakholder_bubble_title: "Digitaal contract"
 tags:
   industries:
     - "Legal"

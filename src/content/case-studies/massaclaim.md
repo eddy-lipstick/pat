@@ -7,6 +7,8 @@ featured: false
 show_on_landing: false
 reading_time: 3
 service_category: "Litigation Visuals"
+stakeholder: "Rechters en arbiters"
+stakholder_bubble_title: "Massaschade"
 
 tags:
   industries:

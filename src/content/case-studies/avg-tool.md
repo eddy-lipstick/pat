@@ -6,7 +6,8 @@ author: "savannah-koomen"
 featured: false
 show_on_landing: false
 reading_time: 4
-
+stakeholder: "Collega's"
+stakholder_bubble_title: "AVG"
 cover_image:
   url: "/case-studies/avg.jpg"
   alt: "Privacy beleid visualisatie"

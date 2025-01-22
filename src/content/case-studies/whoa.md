@@ -7,7 +7,8 @@ featured: false
 show_on_landing: false
 reading_time: 4
 service_category: "Litigation Visuals"
-
+stakeholder: "Klanten"
+stakholder_bubble_title: "Whoa"
 tags:
   industries:
     - "Legal"

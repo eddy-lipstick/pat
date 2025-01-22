@@ -24,7 +24,8 @@ export default {
 			},
 			fontFamily: {
 				sans: ["var(--font-sans)", ...fontFamily.sans],
-				'roc-grotesk': ['roc-grotesk', 'sans-serif']
+				'roc-grotesk': ['roc-grotesk', 'sans-serif'],
+				'roc-wide': ['Roc Grotesk Wide', 'sans-serif']
 			},
 			borderRadius: {
 				lg: "var(--radius)",

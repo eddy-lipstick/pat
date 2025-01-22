@@ -8,6 +8,8 @@ featured: false
 show_on_landing: true
 reading_time: 3
 service_category: "Contracts & Compliance"
+stakeholder: "Sales team"
+stakholder_bubble_title: "B2b contract"
 
 tags:
   industries:

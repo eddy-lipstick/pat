@@ -2,9 +2,14 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 export const CaseStudyBubble = ({ study, size = 90, onClick }) => {
+  const handleClick = (e) => {
+    e.stopPropagation(); // Stop event bubbling
+    onClick && onClick(study);
+  };
 
   return (
     <motion.div
+
       className="relative"
       initial={{ scale: 0 }}
       animate={{ scale: 1 }}
@@ -16,7 +21,7 @@ export const CaseStudyBubble = ({ study, size = 90, onClick }) => {
           damping: 15
         }
       }}
-      onClick={() => onClick(study)} // Add this line
+      onClick={handleClick}
 
     >
       {/* Glow effect */}
@@ -46,7 +51,7 @@ export const CaseStudyBubble = ({ study, size = 90, onClick }) => {
         }}
       >
         <div className="pointer-events-none relative z-10">
-          {study.title}
+          {study.data.stakholder_bubble_title} {/* Changed from study.title */}
         </div>
       </div>
     </motion.div>

@@ -5,6 +5,8 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from "@/components/ui/badge";
 import { Image } from "astro:assets";
 import CaseStudyFilters from '@/components/CaseStudyFilters';  
+import CaseStudyCard from '@/components/CaseStudyCard';
+
 
 // Get all case studies
 const caseStudies: CollectionEntry<'case-studies'>[] = await getCollection('case-studies');
@@ -38,84 +40,10 @@ const tagCategories = {
       technologies={tagCategories.technologies}
     />
 
-    <!-- Case studies grid -->
-    <div class="max-w-6xl mx-auto px-4">
-      <div 
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" 
-        id="case-studies-grid"
-      >
-        {caseStudies.map(study => {
-          const studyTags = [
-            ...study.data.tags.industries,
-            ...study.data.tags.technologies
-          ];
-
-          return (
-            <div 
-              class="case-study group transition-all duration-300"
-              data-tags={JSON.stringify(studyTags)}
-            >
-              <Card class="h-full transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:bg-accent/50">
-                <CardHeader>
-                  <div class="flex justify-between items-start gap-4">
-                    <div>
-                      <CardTitle class="mb-2 group-hover:text-primary transition-colors">
-                        {study.data.title}
-                      </CardTitle>
-                     
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div class="space-y-4">
-                    {study.data.cover_image && (
-                      <div class="overflow-hidden rounded-lg">
-                        <Image 
-                          src={study.data.cover_image.url} 
-                          alt={study.data.cover_image.alt}
-                          width={study.data.cover_image.width || 800}
-                          height={study.data.cover_image.height || 400}
-                          class="w-full h-48 object-cover transform transition-transform duration-500 group-hover:scale-110"
-                        />
-                      </div>
-                    )}
-                    <div class="space-y-2">
-                      <h4 class="text-sm">Industries</h4>
-                      <div class="flex flex-wrap gap-2">
-                        {study.data.tags.industries.map(tag => (
-                        <span class="bg-primary/10 text-primary px-2 py-1 rounded-full text-xs">
-            {tag}
-          </span>
-                        ))}
-                      </div>
-                    </div>
-                    
-                    <div class="space-y-2">
-                      <h4 class="text-sm">Technologies</h4>
-                      <div class="flex flex-wrap gap-2">
-                        {study.data.tags.technologies.map(tag => (
-                         
-                         <span class="bg-primary/10 text-primary px-2 py-1 rounded-full text-xs">
-            {tag}
-          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <a 
-                    href={`/case-studies/${study.id}`}
-                    class="text-primary hover:text-primary/80 inline-flex items-center gap-1 group-hover:underline transition-all"
-                  >
-                    Bekijk dit project
-                  </a>
-                </CardFooter>
-              </Card>
-            </div>
-          );
-        })}
-      </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {caseStudies.map(study => (
+        <CaseStudyCard study={study} client:load />
+      ))}
     </div>
   </div>
 </BaseLayout>

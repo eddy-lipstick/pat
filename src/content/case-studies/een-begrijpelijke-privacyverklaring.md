@@ -7,6 +7,8 @@ featured: false
 show_on_landing: false
 reading_time: 3
 service_category: "Legal Explainer"
+stakeholder: "Algemene publiek"
+stakholder_bubble_title: "Privacy policy"
 
 tags:
   industries:

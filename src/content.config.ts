@@ -1,5 +1,16 @@
 import { defineCollection, reference, z } from "astro:content";
 
+const STAKEHOLDERS = [
+  "Toezichthouders",
+  "Rechters en arbiters",
+  "Investeerders",
+  "Bestuur",
+  "Klanten",
+  "Sales team",
+  "Collega's",
+  "Algemene publiek",
+] as const;
+
 // Define the image schema for when we need a full image object
 const imageSchema = z.object({
   url: z.string(),
@@ -46,8 +57,10 @@ const caseStudySchema = z.object({
     technologies: z.array(z.string()),
     resource_tags: z.array(z.string()).default([]),
   }),
-  cover_image: imageSchema.optional(), // Made optional
+  cover_image: imageSchema.optional(),
   thumbnail: imageSchema.optional(),
+  stakeholder: z.enum(STAKEHOLDERS).nullable().optional(),
+  stakholder_bubble_title: z.string().min(1).nullable().optional(),
 });
 const articleSchema = z.object({
   title: z.string().min(1),
