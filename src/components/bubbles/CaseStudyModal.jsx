@@ -21,25 +21,25 @@ export const CaseStudyModal = ({ isOpen, onClose, study }) => {
             {study.description}
           </DialogDescription>
         </DialogHeader>
-        
+
         <div className="grid gap-6">
           {/* Main image */}
           {study.image && (
             <div className="w-full aspect-video bg-primary-800 rounded-lg overflow-hidden">
-              <img 
-                src={study.image} 
+              <img
+                src={study.image}
                 alt={study.title}
                 className="w-full h-full object-cover"
               />
             </div>
           )}
-          
+
           {/* Content */}
           <div className="text-primary-200 space-y-4">
             <p className="text-lg leading-relaxed">
               {study.content}
             </p>
-            
+
             {study.bulletPoints && (
               <ul className="list-disc list-inside space-y-2">
                 {study.bulletPoints.map((point, index) => (
@@ -50,7 +50,7 @@ export const CaseStudyModal = ({ isOpen, onClose, study }) => {
               </ul>
             )}
           </div>
-          
+
           {/* Call to action */}
           {study.link && (
             <div className="flex justify-end">

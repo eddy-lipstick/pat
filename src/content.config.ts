@@ -86,18 +86,24 @@ const courseSchema = z.object({
 });
 
 const news = defineCollection({
-  schema: z.object({
-    title: z.string(),
-    date: z.string(),
-    type: z.string(),
-    featured: z.boolean(),
-    summary: z.string(),
-    labels: z.array(z.string()),
-    link: z.string().url(),
-    impact: z.string(),
-  }),
+  schema: z
+    .object({
+      title: z.string(),
+      date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+      type: z.enum(["speaking", "award", "news", "project"]),
+      featured: z.boolean(),
+      summary: z.string(),
+      labels: z.array(z.string()),
+      link: z.string().url().optional(),
+      image: z
+        .object({
+          src: z.string(),
+          alt: z.string(),
+        })
+        .optional(),
+    })
+    .partial({ impact: true }),
 });
-
 // Export collections
 export const collections = {
   team: defineCollection({

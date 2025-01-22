@@ -68,7 +68,7 @@ const allTags = [...new Set(articles.flatMap(article => article.data.tags))].sor
           return (
             <div class="article-card transform transition-all duration-300 hover:translate-x-1">
               <Card class="overflow-hidden hover:bg-accent/50 transition-colors border-l-2 border-l-transparent hover:border-l-primary">
-                <a href={`/articles/${article.id}`} class="block">
+                <a href={`/learn/articles/${article.id}`} class="block">
                   <div class="flex flex-col md:flex-row gap-6 p-6">
                     {article.data.coverImage && (
                       <div class="md:w-1/3">

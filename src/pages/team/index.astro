@@ -65,18 +65,6 @@ console.log('Sorted Team Members:', sortedTeamMembers);
       )}
     </div>
 
-    <div class="mt-8 text-sm text-muted-foreground">
-      Debug Info:
-      <pre class="mt-2 p-4 bg-muted rounded-lg overflow-auto">
-        {JSON.stringify({ 
-          teamMembersCount: teamMembers.length,
-          error: error?.message || 'No error message available',
-          teamMembersData: teamMembers.map(m => ({
-            id: m.id,  // Changed from slug to id
-            name: m.data.name
-          }))
-        }, null, 2)}
-      </pre>
-    </div>
+   
   </main>
 </BaseLayout>

@@ -1,6 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 const newsItems = await getCollection('news');
 const sortedNews = newsItems.sort((a, b) => 
@@ -8,58 +10,88 @@ const sortedNews = newsItems.sort((a, b) =>
 );
 ---
 
-<BaseLayout title="News & Updates | Patroonlabs">
-    <div class="py-16">
-      <h1 class="text-4xl font-bold mb-8">News & Updates</h1>
-      
-      <div class="grid gap-8">
+<BaseLayout title="News & Updates | Kiwi">
+  <div class="min-h-screen space-y-8 relative">
+    <!-- Hero section with animated background -->
+    <div class="relative overflow-hidden py-12 mb-8">
+      <div class="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 opacity-50"></div>
+      <div class="relative z-10 max-w-6xl mx-auto px-4">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+          News & Updates
+        </h1>
+        <p class="text-lg text-muted-foreground max-w-2xl">
+          Latest news and announcements from our team
+        </p>
+      </div>
+    </div>
+
+    <!-- News List -->
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="grid grid-cols-1 gap-6">
         {sortedNews.map((item) => (
-          <article class="border-b border-gray-200 pb-8">
-            <div class="flex items-center gap-3 text-sm text-gray-600 mb-2">
-              <time datetime={item.data.date}>
-                {new Date(item.data.date).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric'
-                })}
-              </time>
-              {item.data.type && (
-                <span class="px-2 py-1 bg-gray-100 rounded-full">
-                  {item.data.type.charAt(0).toUpperCase() + item.data.type.slice(1)}
-                </span>
-              )}
-            </div>
-            
-            <h2 class="text-2xl font-semibold mb-3">
-              {item.data.title}
-            </h2>
-            
-            {item.data.summary && (
-              <p class="text-gray-600 mb-4">
-                {item.data.summary}
-              </p>
-            )}
-            
-            <div class="flex flex-wrap gap-2">
-              {item.data.labels?.map((label) => (
-                <span class="text-sm px-2 py-1 bg-blue-50 text-blue-600 rounded-full">
-                  {label}
-                </span>
-              ))}
-            </div>
-            
-            {item.data.link && (
-              <a 
-                href={item.data.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-block mt-4 text-blue-600 hover:text-blue-800"
-              >
-                Read more →
-              </a>
-            )}
-          </article>
+          <div class="transform transition-all duration-300 hover:translate-x-1">
+            <Card class="overflow-hidden hover:bg-accent/50 transition-colors border-l-2 border-l-transparent hover:border-l-primary">
+              {item.data.image && (
+    <div class="aspect-video w-full overflow-hidden">
+      <img 
+        src={item.data.image.src} 
+        alt={item.data.image.alt}
+        class="w-full h-full object-cover" 
+      />
+    </div>
+  )}
+              
+              <div class="p-6">
+                <div class="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                  <time datetime={item.data.date}>
+                    {new Date(item.data.date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </time>
+                  {item.data.type && (
+                    <>
+                      <span class="text-muted-foreground">•</span>
+                      <span class="bg-primary/10 text-primary px-2 py-1 rounded-full text-xs">
+                        {item.data.type.charAt(0).toUpperCase() + item.data.type.slice(1)}
+                      </span>
+                    </>
+                  )}
+                </div>
+
+                <h2 class="text-2xl font-bold mb-3 text-foreground group-hover:text-primary transition-colors">
+                  {item.data.title}
+                </h2>
+
+                {item.data.summary && (
+                  <p class="text-muted-foreground mb-4">
+                    {item.data.summary}
+                  </p>
+                )}
+
+                {item.data.link && (
+                  <a 
+                    href={item.data.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center text-primary hover:text-primary/80 transition-colors group"
+                  >
+                    Read more 
+                    <span class="ml-1 transform group-hover:translate-x-1 transition-transform">→</span>
+                  </a>
+                )}
+              </div>
+            </Card>
+          </div>
         ))}
       </div>
     </div>
+  </div>
 </BaseLayout>
+
+<style>
+  .card {
+    transition: all 0.3s ease-out;
+  }
+</style>

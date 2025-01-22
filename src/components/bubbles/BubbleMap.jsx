@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { StakeholderBubble } from './StakeholderBubble';
+import { StakeholderBubble, StakeholderBubbleProvider } from './StakeholderBubble';
 import { CenterHub } from './CenterHub';
 import { CaseStudyModal } from './CaseStudyModal';
 
+
 const STAKEHOLDERS = [
-  {
-    id: 1,
-    name: "Politici",
-    caseStudies: [
-      { id: 1, title: "Case Study 1" },
-      { id: 2, title: "Case Study 2" }
-    ]
-  },
+
   {
     id: 2,
     name: "Toezichthouders",
@@ -88,19 +82,21 @@ const BubbleMap = () => {
     <div className="relative w-full h-[800px]">
       {/* Center hub */}
       <CenterHub />
+      <StakeholderBubbleProvider>
 
-      {/* Stakeholder bubbles */}
-      {STAKEHOLDERS.map((stakeholder) => (
-        <StakeholderBubble
-          key={stakeholder.id}
-          stakeholder={stakeholder}
-          isActive={activeStakeholder?.id === stakeholder.id}
-          onClick={handleStakeholderClick}
-          onCaseStudyClick={handleCaseStudyClick}
-          isFocused={focusedBubbleId === stakeholder.id}
-          isAnyFocused={focusedBubbleId !== null}
-        />
-      ))}
+        {/* Stakeholder bubbles */}
+        {STAKEHOLDERS.map((stakeholder) => (
+          <StakeholderBubble
+            key={stakeholder.id}
+            stakeholder={stakeholder}
+            isActive={activeStakeholder?.id === stakeholder.id}
+            onClick={handleStakeholderClick}
+            onCaseStudyClick={handleCaseStudyClick}
+            isFocused={focusedBubbleId === stakeholder.id}
+            isAnyFocused={focusedBubbleId !== null}
+          />
+        ))}
+      </StakeholderBubbleProvider>
 
       {/* Case study modal */}
       {selectedCaseStudy && (
