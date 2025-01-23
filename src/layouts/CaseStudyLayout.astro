@@ -1,52 +1,209 @@
 ---
+// CaseStudyLayout.astro
+import { format } from 'date-fns';
+import { Clock, User, Briefcase, Users, Tag, ChevronRight } from 'lucide-react';
+
+interface RelatedCaseStudy {
+  id: string;
+  data: {
+    title: string;
+    cover_image: {
+      url: string;
+      alt: string;
+    };
+    service_category: string;
+  };
+}
 
 interface Props {
   title: string;
+  date: string;
+  author: string;
+  reading_time: number;
+  service_category: string;
+  stakeholder: string;
+  tags: {
+    industries: string[];
+    technologies: string[];
+  };
+  cover_image: {
+    url: string;
+    alt: string;
+  };
+  relatedCaseStudies: RelatedCaseStudy[];
 }
 
-const { title } = Astro.props;
+const { 
+  title,
+  date,
+  author,
+  reading_time,
+  service_category,
+  stakeholder,
+  tags,
+  cover_image,
+  relatedCaseStudies
+} = Astro.props;
 ---
 
-  <article class="max-w-4xl mx-auto px-4">
-    {/* Hero section */}
-    <header class="py-16 space-y-8">
-      {/* Label */}
-      <div class="text-primary text-sm font-medium tracking-wide uppercase">
-        Case Study
+<div class="min-h-screen bg-background">
+  <!-- Full-width Hero Section -->
+  <div class="relative h-[70vh] overflow-hidden">
+    <img 
+      src={cover_image.url} 
+      alt={cover_image.alt}
+      class="w-full h-full object-cover"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-background/95"></div>
+    <div class="absolute bottom-0 left-0 right-0 p-8">
+      <div class="max-w-7xl mx-auto">
+        <h1 class="text-4xl md:text-6xl font-roc-grotesk text-foreground leading-tight">
+          {title}
+        </h1>
+      </div>
+    </div>
+  </div>
+
+  <!-- Metadata Row -->
+  <div class="border-b border-surface-2">
+    <div class="max-w-7xl mx-auto px-4 py-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <!-- Date and Reading Time -->
+        <div class="space-y-1">
+          <div class="text-sm text-text-tertiary uppercase tracking-wider">Published</div>
+          <div class="flex items-center gap-2 text-text-secondary">
+            <Clock class="w-4 h-4 text-primary" />
+            <span>{format(new Date(date), 'MMM d, yyyy')}</span>
+            <span>·</span>
+            <span>{reading_time} min read</span>
+          </div>
+        </div>
+
+        <!-- Author -->
+        <div class="space-y-1">
+          <div class="text-sm text-text-tertiary uppercase tracking-wider">Author</div>
+          <div class="flex items-center gap-2 text-text-secondary">
+            <User class="w-4 h-4 text-primary" />
+            <span>{author}</span>
+          </div>
+        </div>
+
+        <!-- Service Category -->
+        <div class="space-y-1">
+          <div class="text-sm text-text-tertiary uppercase tracking-wider">Category</div>
+          <div class="flex items-center gap-2 text-text-secondary">
+            <Briefcase class="w-4 h-4 text-primary" />
+            <span>{service_category}</span>
+          </div>
+        </div>
+
+        <!-- Stakeholder -->
+        <div class="space-y-1">
+          <div class="text-sm text-text-tertiary uppercase tracking-wider">Stakeholder</div>
+          <div class="flex items-center gap-2 text-text-secondary">
+            <Users class="w-4 h-4 text-primary" />
+            <span>{stakeholder}</span>
+          </div>
+        </div>
       </div>
 
-      {/* Title */}
-      <h1 class="text-4xl md:text-6xl font-roc-grotesk leading-tight">
-        {title}
-      </h1>
-    </header>
+      <!-- Tags Row -->
+      <div class="mt-6 flex flex-wrap gap-6">
+        <!-- Industries -->
+        <div class="space-y-2">
+          <div class="text-sm text-text-tertiary uppercase tracking-wider">Industries</div>
+          <div class="flex flex-wrap gap-2">
+            {tags.industries.map((tag) => (
+              <span class="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
 
-    {/* Main content */}
-    <div class="prose prose-slate prose-lg max-w-none mb-16 text-foreground">
-      {/* Custom styling for the MDX content */}
-      <style is:global>
-        .prose h2 {
-          @apply text-2xl md:text-3xl font-roc-grotesk mt-12 mb-6;
-        }
-        .prose p {
-          @apply text-text-secondary leading-relaxed mb-6;
-        }
-        .prose ul {
-          @apply space-y-2 my-6;
-        }
-        .prose li {
-          @apply text-text-secondary pl-2;
-        }
-        .prose strong {
-          @apply text-text-primary font-semibold;
-        }
-      </style>
-      
-      <slot />
+        <!-- Technologies -->
+        <div class="space-y-2">
+          <div class="text-sm text-text-tertiary uppercase tracking-wider">Technologies</div>
+          <div class="flex flex-wrap gap-2">
+            {tags.technologies.map((tech) => (
+              <span class="px-3 py-1 bg-feitlijn-yellow/10 text-feitlijn-yellow rounded-full text-sm">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
-  </article>
+  </div>
 
-  {/* Optional: Add a gradient background effect */}
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 py-12">
+    <article class="prose prose-lg prose-invert max-w-none">
+      <slot />
+    </article>
+  </main>
+
+  <!-- Related Case Studies -->
+  {relatedCaseStudies.length > 0 && (
+    <div class="border-t border-surface-2 py-16">
+      <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-2xl font-roc-grotesk text-foreground mb-8">Related Case Studies</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {relatedCaseStudies.map((caseStudy) => (
+            <a 
+              href={`/case-studies/${caseStudy.id}`}
+              class="group block"
+            >
+              <div class="relative h-48 overflow-hidden rounded-lg mb-4">
+                <img 
+                  src={caseStudy.data.cover_image.url} 
+                  alt={caseStudy.data.cover_image.alt}
+                  class="w-full h-full object-cover transition-transform group-hover:scale-105"
+                />
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent to-background/60"></div>
+              </div>
+              <h3 class="text-lg font-medium text-foreground group-hover:text-primary transition-colors">
+                {caseStudy.data.title}
+              </h3>
+              <div class="flex items-center gap-2 mt-2 text-sm text-text-secondary">
+                <Briefcase class="w-4 h-4" />
+                <span>{caseStudy.data.service_category}</span>
+                <ChevronRight class="w-4 h-4 text-primary transition-transform group-hover:translate-x-1" />
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  )}
+
+  <!-- Background Gradient -->
   <div class="fixed inset-0 -z-10 bg-background">
     <div class="absolute inset-0 bg-gradient-to-tr from-feitlijn-purple-900/20 to-transparent"></div>
   </div>
+</div>
+
+<style is:global>
+  .prose h2 {
+    @apply text-2xl md:text-3xl font-roc-grotesk mt-12 mb-6 text-foreground;
+  }
+  .prose p {
+    @apply text-text-secondary leading-relaxed mb-6;
+  }
+  .prose ul {
+    @apply space-y-2 my-6;
+  }
+  .prose li {
+    @apply text-text-secondary pl-2;
+  }
+  .prose strong {
+    @apply text-foreground font-semibold;
+  }
+  .prose img {
+    @apply rounded-lg shadow-lg my-8;
+  }
+  /* Make BeforeAfterSlider and VideoPlayer components full-width */
+  .prose > div {
+    @apply max-w-none my-12;
+  }
+</style>

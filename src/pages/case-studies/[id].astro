@@ -13,10 +13,31 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
+
+// Get related case studies
+const allCaseStudies = await getCollection('case-studies');
+const relatedCaseStudies = allCaseStudies
+  .filter(cs => 
+    cs.id !== entry.id && 
+    cs.data.tags.industries.some(industry => 
+      entry.data.tags.industries.includes(industry)
+    )
+  )
+  .slice(0, 3);
 ---
 
 <BaseLayout title={entry.data.title}>
-  <CaseStudyLayout title={entry.data.title}>
+  <CaseStudyLayout 
+    title={entry.data.title}
+    date={entry.data.date}
+    author={entry.data.author}
+    reading_time={entry.data.reading_time}
+    service_category={entry.data.service_category}
+    stakeholder={entry.data.stakeholder}
+    tags={entry.data.tags}
+    cover_image={entry.data.cover_image}
+    relatedCaseStudies={relatedCaseStudies}
+  >
     <Content />
   </CaseStudyLayout>
 </BaseLayout>
