@@ -1,4 +1,6 @@
 ---
+layout: ../../layouts/CaseStudyLayout.astro
+
 title: "Swipe, klik, onderteken: hoe maak je een in-app contract?"
 slug: "swipe-klik-onderteken-hoe-maak-je-een-in-app-contract"
 date: "2024-07-29"
@@ -25,8 +27,17 @@ cover_image:
   alt: "Privacy beleid visualisatie"
 ---
 
+import BeforeAfterSlider from "@/components/BeforeAfterSlider";
+import VideoPlayer from "@/components/VideoPlayer";
+
 Voor een innovatieve HR-tech startup hebben we een mobiel-vriendelijk contractsysteem ontwikkeld. Het doel was om het proces van contracteren te transformeren van een formeel document naar een intuïtieve, app-gebaseerde ervaring.
 
+<BeforeAfterSlider
+  client:only="react"
+  beforeImage="/case-studies/amsterdam.jpg"
+  afterImage="/case-studies/app.jpg"
+  alt="Contract transformation"
+/>
 ## Van papier naar mobiel
 
 De uitdaging was meerledig:
