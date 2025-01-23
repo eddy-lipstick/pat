@@ -7,7 +7,8 @@ featured: false
 show_on_landing: false
 reading_time: 2
 service_category: "Contracts & Compliance"
-
+stakeholder: "Klanten"
+stakholder_bubble_title: "Influencers"
 tags:
   industries:
     - "Media"

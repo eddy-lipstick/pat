@@ -7,7 +7,8 @@ featured: false
 show_on_landing: false
 reading_time: 2
 service_category: "Employment"
-
+stakeholder: "Collega's"
+stakholder_bubble_title: "Groene overeenkomst"
 tags:
   industries:
     - "Legal"

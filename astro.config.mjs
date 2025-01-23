@@ -1,10 +1,14 @@
 import { defineConfig } from 'astro/config';
 import tailwind from "@astrojs/tailwind";
 import react from "@astrojs/react";
+import mdx from '@astrojs/mdx';
+
 
 // Add markdown config and content collections config
 export default defineConfig({
   integrations: [
+    mdx(),
+
     tailwind({
       applyBaseStyles: false,
       configFile: './tailwind.config.mjs',

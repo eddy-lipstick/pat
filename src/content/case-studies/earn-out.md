@@ -7,7 +7,8 @@ featured: false
 show_on_landing: false
 reading_time: 2
 service_category: "Litigation Visuals"
-
+stakeholder: "Rechters en arbiters"
+stakholder_bubble_title: "Earn-out"
 tags:
   industries:
     - "Legal"

@@ -6,7 +6,6 @@ author: "savannah-koomen"
 featured: false
 show_on_landing: false
 reading_time: 3
-
 tags:
   industries:
     - "Legal"

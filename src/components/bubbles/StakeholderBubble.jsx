@@ -2,7 +2,6 @@ import React, { useState, useContext, createContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CaseStudyBubble } from './CaseStudyBubble';
 
-// Create context for hover state
 const HoverContext = createContext({
   hoveredBubble: null,
   setHoveredBubble: () => { }
@@ -16,76 +15,71 @@ export const StakeholderBubbleProvider = ({ children }) => {
     </HoverContext.Provider>
   );
 };
-export const StakeholderBubble = ({
-  stakeholder,
-  isActive,
-  onClick,
-  onCaseStudyClick
-}) => {
+
+const BUBBLE_CONFIG = {
+  "Toezichthouders": {
+    x: -170,
+    y: -300,
+    size: 80,
+    tooltip: "Bekijk onze aanpak voor communicatie met toezichthouders"
+  },
+  "Rechters en arbiters": {
+    x: -300,
+    y: -250,
+    size: 130,
+    tooltip: "Lees over onze communicatiestrategie in juridische procedures"
+  },
+  "Investeerders": {
+    x: 10,
+    y: -260,
+    size: 80,
+    tooltip: "Ontdek hoe wij juridische communicatie met investeerders aanpakken"
+  },
+  "Bestuur": {
+    x: -10,
+    y: -150,
+    size: 120,
+    tooltip: "Bekijk onze juridische communicatieaanpak op bestuursniveau"
+  },
+  "Klanten": {
+    x: 160,
+    y: 30,
+    size: 110,
+    tooltip: "Bekijk hoe wij juridische zaken communiceren met klanten"
+  },
+  "Sales team": {
+    x: -320,
+    y: -60,
+    size: 100,
+    tooltip: "Ontdek onze juridische communicatiestrategie voor het sales team"
+  },
+  "Collega's": {
+    x: -200,
+    y: -40,
+    size: 110,
+    tooltip: "Lees over onze interne juridische communicatiepraktijken"
+  },
+  "Algemene publiek": {
+    x: -50,
+    y: 250,
+    size: 80,
+    tooltip: "Bekijk onze aanpak voor juridische communicatie met het publiek"
+  }
+};
+
+export const StakeholderBubble = ({ stakeholder, isActive, onClick, onCaseStudyClick }) => {
   const { hoveredBubble, setHoveredBubble } = useContext(HoverContext);
   const isHovered = hoveredBubble === stakeholder.name;
-  const isAnotherHovered = hoveredBubble !== null && !isHovered;
+  const shouldDim = !isActive && !isHovered && hoveredBubble !== null;
 
-  // Configuration for positions and sizes
-  const config = {
-    "Toezichthouders": {
-      x: -170,
-      y: -300,
-      size: 80,
-      tooltip: "Bekijk onze aanpak voor communicatie met toezichthouders"
-    },
-    "Rechters en arbiters": {
-      x: -300,
-      y: -250,
-      size: 130,
-      tooltip: "Lees over onze communicatiestrategie in juridische procedures"
-    },
-    "Investeerders": {
-      x: 10,
-      y: -260,
-      size: 80,
-      tooltip: "Ontdek hoe wij juridische communicatie met investeerders aanpakken"
-    },
-    "Bestuur": {
-      x: -10,
-      y: -150,
-      size: 120,
-      tooltip: "Bekijk onze juridische communicatieaanpak op bestuursniveau"
-    },
-    "Klanten": {
-      x: 160,
-      y: 30,
-      size: 110,
-      tooltip: "Bekijk hoe wij juridische zaken communiceren met klanten"
-    },
-    "Sales team": {
-      x: -320,
-      y: -60,
-      size: 100,
-      tooltip: "Ontdek onze juridische communicatiestrategie voor het sales team"
-    },
-    "Collega's": {
-      x: -200,
-      y: -40,
-      size: 110,
-      tooltip: "Lees over onze interne juridische communicatiepraktijken"
-    },
-    "Algemene publiek": {
-      x: -50,
-      y: 250,
-      size: 80,
-      tooltip: "Bekijk onze aanpak voor juridische communicatie met het publiek"
-    }
-  };
-
-  const bubbleConfig = config[stakeholder.name] || { x: 0, y: 0, size: 100, tooltip: "" };
+  const config = BUBBLE_CONFIG[stakeholder.name] || { x: 0, y: 0, size: 100, tooltip: "" };
 
   const getSubBubblePosition = (index, total) => {
-    const radius = bubbleConfig.size * 1.2;
+    const radius = config.size * 1.2;
     const angle = (index * (2 * Math.PI)) / total;
     return {
       x: Math.cos(angle) * radius,
-      y: Math.sin(angle) * radius,
+      y: Math.sin(angle) * radius
     };
   };
 
@@ -93,8 +87,8 @@ export const StakeholderBubble = ({
     <div
       className="absolute"
       style={{
-        left: `calc(50% + ${bubbleConfig.x}px)`,
-        top: `calc(50% + ${bubbleConfig.y}px)`,
+        left: `calc(50% + ${config.x}px)`,
+        top: `calc(50% + ${config.y}px)`,
         transform: 'translate(-50%, -50%)',
         zIndex: isActive ? 50 : 1
       }}
@@ -108,53 +102,47 @@ export const StakeholderBubble = ({
             exit={{ opacity: 0, y: -10 }}
             className="absolute pointer-events-none"
             style={{
-              width: Math.max(bubbleConfig.size * 2, 200),
+              width: Math.max(config.size * 2, 200),
               zIndex: 100,
-              bottom: `${bubbleConfig.size + 20}px`,  // Position above bubble
+              bottom: `${config.size + 20}px`,
               left: -50
             }}
           >
-            <div className="bg-background text-white rounded-lg px-4 py-2 text-sm
-                          max-w-xs text-center">
+            <div className="bg-background text-white rounded-lg px-4 py-2 text-sm max-w-xs text-center">
               <div className="flex flex-col gap-1">
-                <p>{bubbleConfig.tooltip}</p>
+                <p>{config.tooltip}</p>
                 <p className="text-white/60 text-xs">Klik om voorbeelden te bekijken.</p>
               </div>
-              {/* Tooltip arrow */}
-              <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2
-                            w-2 h-2 bg-gray-900/90 rotate-45" />
+              <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-900/90 rotate-45" />
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Main bubble */}
       <motion.div
-        className={`bg-white/10 backdrop-blur-[6px] rounded-full 
-                  text-white text-center border
-                  flex items-center justify-center font-medium
-                  transition-all duration-300 cursor-pointer relative z-10
-                  ${isActive ? 'border-white' : 'border-white/20'}
-                  ${!isActive ? 'hover:bg-white/15' : 'bg-white/20'}`}
+        className={`
+          bg-white/10 backdrop-blur-[6px] rounded-full 
+          text-white text-center border
+          flex items-center justify-center font-medium
+          transition-all duration-300 cursor-pointer relative z-10
+          ${isActive ? 'border-white bg-white/20' : 'border-white/20 hover:bg-white/15'}
+        `}
         style={{
-          width: `${bubbleConfig.size}px`,
-          height: `${bubbleConfig.size}px`,
-          padding: `${bubbleConfig.size * 0.16}px`,
-          fontSize: `${bubbleConfig.size * 0.14}px`,
-          opacity: isAnotherHovered ? 0.3 : 1, // Dim when another bubble is hovered
+          width: `${config.size}px`,
+          height: `${config.size}px`,
+          padding: `${config.size * 0.16}px`,
+          fontSize: `${config.size * 0.14}px`,
+          opacity: shouldDim ? 0.3 : 1,
           transition: 'opacity 0.3s ease'
         }}
         whileHover={{ scale: 1.05 }}
         onClick={() => onClick(stakeholder)}
         onMouseEnter={() => setHoveredBubble(stakeholder.name)}
-        onMouseLeave={() => setHoveredBubble(null)}
+        onMouseLeave={() => isActive ? null : setHoveredBubble(null)}
       >
-        <div className="relative">
-          {stakeholder.name}
-        </div>
+        {stakeholder.name}
       </motion.div>
 
-      {/* Case study sub-bubbles */}
       <AnimatePresence>
         {isActive && (
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -165,11 +153,7 @@ export const StakeholderBubble = ({
                   key={study.id}
                   className="absolute"
                   initial={{ scale: 0, x: 0, y: 0 }}
-                  animate={{
-                    scale: 1,
-                    x: pos.x,
-                    y: pos.y,
-                  }}
+                  animate={{ scale: 1, x: pos.x, y: pos.y }}
                   exit={{ scale: 0, x: 0, y: 0 }}
                   transition={{
                     type: "spring",
@@ -184,7 +168,8 @@ export const StakeholderBubble = ({
                 >
                   <CaseStudyBubble
                     study={study}
-                    size={bubbleConfig.size * 0.75}
+                    size={config.size * 0.75}
+                    onClick={onCaseStudyClick}
                   />
                 </motion.div>
               );
