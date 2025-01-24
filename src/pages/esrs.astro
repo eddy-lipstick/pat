@@ -2,86 +2,177 @@
 import EsrsLayout from '../layouts/EsrsLayout.astro';
 import { getFeaturedCaseStudies } from '../lib/case-studies';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import ServicesGrid from '../components/services/ServicesGrid.astro';
-import { getCollection } from 'astro:content'; 
 
-import BubbleMap from '../components/bubbles/BubbleMap';
 import LogoGrid from '../components/LogoGrid.astro';
 import { ArrowRight, MessageCircle } from "lucide-react";
-import VideoTestimonials from '../components/VideoTestimonials';
-import OurFormula from '../components/OurFormula';
 import VideoPlayer from "@/components/VideoPlayer";
 import ImageLightbox from '../components/ImageLightbox';
-
-
+import CaseQuote from '../components/CaseQuote';
+import CaseStudyHero from '../components/CaseStudyHero';
+import ExpandableText from '../components/ExpandableText';
+import CaseStudyMeta from '../components/CaseStudyMeta'
+import BeforeAfterSlider from "@/components/BeforeAfterSlider";
+import { Clock, User, Briefcase, Users, Tag, ChevronRight } from 'lucide-react';
+import TeamCTA from '../components/TeamCTA';
 
 ---
 
-<EsrsLayout title="Home">
-  <section class="relative min-h-screen overflow-visible">
-    <VideoPlayer
-      client:only="react"
-      src="/esrs/clip-1.mp4"
-      poster="/case-studies/amsterdam.jpg"
-      title="Video Title"
-    />
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <ImageLightbox
+<EsrsLayout title="Home">
+  <section class="relative min-h-screen">
+    <!-- Hero Section -->
+    <div class="">
+   
+ 
+      <CaseStudyHero 
         client:load
-        src="/esrs/still-1.jpg"
-        alt="Omschrijving"
-        className="aspect-video w-full"
-      />
-      <ImageLightbox
-        client:load
-        src="/esrs/still-2.jpg"
-        alt="Omschrijving"
-        className="aspect-video w-full"
-      />
-      <ImageLightbox
-        client:load
-        src="/esrs/still-3.jpg"
-        alt="Omschrijving"
-        className="aspect-video w-full"
-      />
-      <ImageLightbox
-        client:load
-        src="/esrs/still-4.jpg"
-        alt="Omschrijving"
-        className="aspect-video w-full"
+        title="Hoe help je ondernemers door het doolhof van nieuwe duurzaamheidsregels?"
+        introduction="Steeds meer bedrijven moeten rapporteren over hun impact op mens en milieu. Het ministerie van Economische Zaken vroeg Patroon daarom een praktische handleiding te ontwikkelen: de ESRS Navigator. Deze leidt ondernemers stap voor stap door de nieuwe Europese rapportageverplichtingen."
       />
     </div>
+    <CaseStudyMeta 
+    client="Ministerie van Economische Zaken"
+    date="Januari 2025"
+    services={["Legal Design", "UX Writing", "Content Strategy"]}  />
+    <!-- Video Section -->
+    <div class="mb-20">
+      <VideoPlayer
+        client:only="react"
+        src="/esrs/clip-1.mp4"
+        poster="/case-studies/amsterdam.jpg"
+        title="De ESRS Navigator is een interactieve gids over complexe duurzaamheidswetgeving."
+      />
+    </div>
+
+    <div class="container mx-auto px-6 py-16">
+      <ExpandableText
+        client:load
+         title="Van theorie naar praktijk"
+        firstParagraph="Om de complexe theorie concreet te maken, bedachten we FreshFood B.V.: een fictief Nederlands familiebedrijf dat kant-en-klare maaltijden produceert. Via FreshFood laten we zien hoe duurzaamheidsrapportage er in de praktijk uitziet. Wat moet je rapporteren over je CO₂-uitstoot? Hoe breng je je waterverbruik in kaart? Wat schrijf je over arbeidsomstandigheden in je keten?"
+        remainingText={[
+          "In de Navigator kan de gebruiker steeds schakelen tussen theorie en praktijk. Bij ieder onderwerp zie je eerst de theorie, en direct daarna hoe FreshFood dit heeft aangepakt. Zo wordt direct duidelijk hoe je de regels moet toepassen. We kozen bewust voor een middelgroot productiebedrijf, omdat veel van de eerste rapportageplichtige bedrijven zich hierin zullen herkennen. FreshFood worstelt met dezelfde uitdagingen als zij: van het in kaart brengen van de CO₂-uitstoot in de toeleveringsketen tot het rapporteren over arbeidsomstandigheden bij seizoensarbeiders.",
+          "Dit voorbeeld heeft nog een ander voordeel: het laat zien dat duurzaamheidsrapportage niet alleen gaat over grote multinationals, maar juist ook over gewone Nederlandse bedrijven die stap voor stap aan de slag gaan met verduurzaming."
+        ]}
+      />
+    </div>
+
 
     <ImageLightbox
-      client:load
-      src="/esrs/materialiteit.jpg"
-      alt="Omschrijving"
-      className="aspect-video w-full"
-    />
+    client:load
+    src="/esrs/scherm-2.jpg"
+    alt="Omschrijving"
+    className="aspect-video w-full"
+  />
 
-    <VideoPlayer
-      client:only="react"
-      src="/esrs/clip-1.mp4"
-      poster="/case-studies/amsterdam.jpg"
-      title="Video Title"
-    />
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+
+
+
+
+
+    <!-- First Quote Section -->
+    <div class="container mx-auto px-6 mb-32">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div class="w-full">
+          <!-- Left content -->
+        </div>
+        <div class="w-full">
+          <CaseQuote 
+            client:load
+            quote="Met de ESRS Navigator hebben we complexe Europese regelgeving toegankelijk gemaakt voor Nederlandse ondernemers. Een mooi voorbeeld van hoe de overheid het bedrijfsleven concreet ondersteunt bij de transitie naar duurzame bedrijfsvoering."
+            author="Margje de Mik"
+            role="Projectleider Ministerie van Economische Zaken"
+          />
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <!-- Full Width Image Section -->
+    <div class="container mx-auto mb-32">
       <ImageLightbox
         client:load
-        src="/esrs/scherm-1.jpg"
-        alt="Omschrijving"
-        className="aspect-video w-full"
-      />
-      <ImageLightbox
-        client:load
-        src="/esrs/scherm-2.jpg"
+        src="/esrs/materialiteit.jpg"
         alt="Omschrijving"
         className="aspect-video w-full"
       />
     </div>
+
+        <!-- Second Quote Section -->
+        <div class="container mx-auto mb-32">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div class="w-full">
+              <div class="w-full">
+                <CaseQuote 
+                  client:load
+                  quote="Dit was een fantastisch project waar alles voor ons samenkwam: ingewikkelde materie, een onderwerp dat ons aan het hart gaat, en een fantastisch team om mee samen te werken."
+                  author="Savannah Koomen"
+                  role="Legal design lead"
+                />
+              </div>    <!-- Left content -->
+            </div>
+          
+          </div>
+        </div>
+
+    <!-- Final Image Grid Section -->
+    <!-- Image Grid Section -->
+    <div class="container mx-auto px-6 mb-32">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <ImageLightbox
+          client:load
+          src="/esrs/still-1.jpg"
+          alt="Omschrijving"
+          className="aspect-video w-full"
+        />
+        <ImageLightbox
+          client:load
+          src="/esrs/still-2.jpg"
+          alt="Omschrijving"
+          className="aspect-video w-full"
+        />
+        <ImageLightbox
+          client:load
+          src="/esrs/still-3.jpg"
+          alt="Omschrijving"
+          className="aspect-video w-full"
+        />
+        <ImageLightbox
+          client:load
+          src="/esrs/still-4.jpg"
+          alt="Omschrijving"
+          className="aspect-video w-full"
+        />
+      </div>
+    </div>
+ 
+
+  
+    <BeforeAfterSlider
+    client:only="react"
+    beforeImage="/esrs/voor.jpg"
+    afterImage="/esrs/na.jpg"
+    alt="Contract transformation"
+  />
+  
+  
+
+  </section>
+
+
+  <section class="mt-32 mb-24">
+    <TeamCTA 
+      client:visible 
+      teamMember={{
+        name: "Savannah Koomen",  // Changed to match the case study's legal design lead
+        role: "Legal Design Lead",
+        imageUrl: "/images/team/savannah-koomen.webp"
+   
+      }} 
+    />
   </section>
 </EsrsLayout>
