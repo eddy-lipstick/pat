@@ -7,7 +7,7 @@ const CaseStudyHero = ({ title, introduction }) => {
         <div className="container mx-auto px-6 py-16 md:py-24">
             <div className="w-full md:w-4/5">
                 <div class="mb-4">
-                    <PulseLabel client:load />
+                    <PulseLabel client:load text="Case study" />
                 </div>
                 <h1 className="text-4xl md:text-6xl font-roc-grotesk font-bold tracking-tight mb-8 text-background">
                     {title}

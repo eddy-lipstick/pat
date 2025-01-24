@@ -12,6 +12,27 @@ import LogoGrid from '../components/LogoGrid.astro';
 import { ArrowRight, MessageCircle } from "lucide-react";
 import VideoTestimonials from '../components/VideoTestimonials';
 import OurFormula from '../components/OurFormula';
+import TeamSection from '../components/TeamSection';
+
+import TeamSection from '../components/TeamSection';
+
+const teamMembers = [
+    {
+        name: "Maurits Fornier",
+        role: "Legal Design Lead",
+        imageUrl: "/images/team/sunmoon-stokhof.jpg"
+    },
+    {
+        name: "Dielis Delen",
+        role: "Software Developer",
+        imageUrl: "/images/team/dielis-delen.webp"
+    },
+    {
+        name: "Savannah Koomen",
+        role: "Strategie Lead",
+        imageUrl: "/images/team/savannah-koomen.webp"
+    }
+];
 
 
 const featuredCaseStudies = await getFeaturedCaseStudies();
@@ -86,103 +107,8 @@ const processedStudies = await Promise.all(
 
 
   <OurFormula client:load />
+  <TeamSection client:load teamMembers={teamMembers} />
 
 
-  {/* Featured Case Studies */}
-  <section class="py-16">
-    <div class="max-w-7xl mx-auto px-4">
-      <div class="flex justify-between items-center mb-12">
-        <div>
-          <h2 class="text-3xl font-bold mb-2">Featured Projects</h2>
-          <p class="text-muted-foreground">Discover our most impactful work</p>
-        </div>
-        <Button variant="outline">
-          <a href="/case-studies" class="inline-flex items-center">
-            View All Projects
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform"
-            >
-              <path d="M5 12h14" />
-              <path d="m12 5 7 7-7 7" />
-            </svg>
-          </a>
-        </Button>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {featuredCaseStudies.map(study => (
-          <Card class="group">
-            <CardHeader>
-              {study.data.featuredImage && (
-                <div class="relative w-full aspect-video mb-4 overflow-hidden rounded-lg">
-                  <img
-                    src={study.data.featuredImage}
-                    alt={study.data.title}
-                    class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-              )}
-              <CardTitle>{study.data.title}</CardTitle>
-              <CardDescription>{study.data.summary}</CardDescription>
-            </CardHeader>
-            <CardContent>
-  <div class="flex flex-wrap gap-2">
-    {study.data.tags?.industries?.slice(0, 2).map(tag => (
-      <Badge variant="secondary">{tag}</Badge>
-    ))}
-    {study.data.tags?.technologies?.slice(0, 1).map(tag => (
-      <Badge variant="outline">{tag}</Badge>
-    ))}
-  </div>
-</CardContent>
-            <CardFooter>
-              <a 
-                href={`/case-studies/${study.slug}`} 
-                class="text-primary hover:underline inline-flex items-center group"
-              >
-                Read Case Study
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform"
-                >
-                  <path d="M5 12h14" />
-                  <path d="m12 5 7 7-7 7" />
-                </svg>
-              </a>
-            </CardFooter>
-          </Card>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  {/* CTA Section */}
-  <section class="py-16 bg-primary text-primary-foreground">
-    <div class="max-w-4xl mx-auto px-4 text-center">
-      <h2 class="text-3xl font-bold mb-4">Ready to Start Your Project?</h2>
-      <p class="text-xl opacity-90 mb-8">
-        Let's discuss how we can help transform your business
-      </p>
-      <Button size="lg" variant="secondary">
-        <a href="/contact">Get in Touch</a>
-      </Button>
-    </div>
-  </section>
+ 
 </BaseLayout>

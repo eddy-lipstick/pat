@@ -1,11 +1,8 @@
 ---
+// src/components/Navbar.astro
 import { Menu, X, ChevronDown } from 'lucide-react';
 
-interface NavItem {
-  label: string;
-  href: string;
-  children?: NavItem[];
-}
+const { variant = 'dark' } = Astro.props;
 
 const serviceItems = [
   {
@@ -22,7 +19,7 @@ const serviceItems = [
   }
 ];
 
-const navItems: NavItem[] = [
+const navItems = [
   { 
     label: 'Diensten', 
     href: '/services',
@@ -49,14 +46,45 @@ const navItems: NavItem[] = [
   { label: 'Contact', href: '/contact' },
 ];
 
-// Get current path to highlight active links
+const variantClasses = {
+  light: {
+    nav: "bg-white/95 backdrop-blur-sm",
+    text: "text-background",
+    hover: "hover:text-feitlijn-purple-700",
+    active: "text-feitlijn-purple-700",
+    mobileMenu: "bg-white",
+    mobileMenuHover: "hover:bg-feitlijn-purple-50",
+    dropdown: "bg-white",
+    dropdownHover: "hover:bg-feitlijn-purple-50",
+    button: "hover:bg-feitlijn-purple-50",
+    shadow: "shadow-lg shadow-gray-200/50"
+  },
+  dark: {
+    nav: "bg-surface-1/95 backdrop-blur-sm",
+    text: "text-text-1",
+    hover: "hover:text-feitlijn-purple-400",
+    active: "text-feitlijn-purple-400",
+    mobileMenu: "bg-surface-1",
+    mobileMenuHover: "hover:bg-surface-2",
+    dropdown: "bg-surface-1",
+    dropdownHover: "hover:bg-surface-2",
+    button: "hover:bg-surface-2",
+    shadow: "shadow-lg shadow-black/20"
+  }
+};
+
+const classes = variantClasses[variant];
 const currentPath = Astro.url.pathname;
 ---
 
 <nav 
-  class="fixed w-full z-50 transition-all duration-300 py-4 bg-background/95 backdrop-blur-sm" 
+  class:list={[
+    "fixed w-full z-50 transition-all duration-300 py-4",
+    classes.nav
+  ]}
   id="navbar"
   aria-label="Main navigation"
+  data-variant={variant}
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center">
@@ -64,7 +92,11 @@ const currentPath = Astro.url.pathname;
       <div class="flex-shrink-0">
         <a 
           href="/" 
-          class="text-2xl font-bold text-text-1 hover:text-feitlijn-purple-400 transition-colors flex items-center gap-2 font-roc-grotesk"
+          class:list={[
+            "text-2xl font-bold transition-colors flex items-center gap-2 font-roc-grotesk",
+            classes.text,
+            classes.hover
+          ]}
           aria-label="Home"
         >
           <img src="/logo.svg" alt="" class="h-6 w-auto" />
@@ -78,30 +110,38 @@ const currentPath = Astro.url.pathname;
             <div class="relative group" data-dropdown>
               <button 
                 class:list={[
-                  "text-text-1 hover:text-feitlijn-purple-400 transition-colors py-2 flex items-center gap-1 font-medium font-roc-grotesk",
-                  { "text-feitlijn-purple-400": currentPath.startsWith(item.href) }
+                  "transition-colors py-2 flex items-center gap-1 font-medium font-roc-grotesk",
+                  classes.text,
+                  classes.hover,
+                  { [classes.active]: currentPath.startsWith(item.href) }
                 ]}
                 aria-haspopup="true"
                 aria-expanded="false"
                 aria-controls={`dropdown-${item.label}`}
               >
                 {item.label}
-                <ChevronDown className="h-4 w-4 transform transition-transform group-hover:rotate-180" />
+                <ChevronDown class="h-4 w-4 transform transition-transform group-hover:rotate-180" />
               </button>
               <div 
                 id={`dropdown-${item.label}`}
-                class="absolute top-full left-0 mt-2 w-56 rounded-lg shadow-lg bg-surface-1 ring-1 ring-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-left"
+                class:list={[
+                  "absolute top-full left-0 mt-2 w-56 rounded-lg ring-1 ring-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-left",
+                  classes.dropdown,
+                  classes.shadow
+                ]}
                 role="menu"
                 aria-orientation="vertical"
                 aria-labelledby={`dropdown-button-${item.label}`}
               >
                 <div class="py-2 px-1">
                   {item.children.map(child => (
-                    <a
-                      href={child.href}
+                    
+                      <a href={child.href}
                       class:list={[
-                        "block px-4 py-2 text-sm rounded-md text-text-2 hover:bg-surface-2 hover:text-feitlijn-purple-400 transition-colors",
-                        { "bg-surface-2 text-feitlijn-purple-400": currentPath === child.href }
+                        "block px-4 py-2 text-sm rounded-md transition-colors",
+                        classes.text,
+                        classes.dropdownHover,
+                        { [classes.active]: currentPath === child.href }
                       ]}
                       role="menuitem"
                     >
@@ -112,11 +152,12 @@ const currentPath = Astro.url.pathname;
               </div>
             </div>
           ) : (
-            <a 
-              href={item.href} 
+            <a href={item.href} 
               class:list={[
-                "text-text-1 hover:text-feitlijn-purple-400 transition-colors font-medium font-roc-grotesk",
-                { "text-feitlijn-purple-400": currentPath === item.href }
+                "transition-colors font-medium font-roc-grotesk",
+                classes.text,
+                classes.hover,
+                { [classes.active]: currentPath === item.href }
               ]}
               aria-current={currentPath === item.href ? "page" : undefined}
             >
@@ -130,7 +171,12 @@ const currentPath = Astro.url.pathname;
       <div class="lg:hidden flex items-center">
         <button
           id="menuButton"
-          class="inline-flex items-center justify-center p-2 rounded-md text-text-1 hover:text-feitlijn-purple-400 hover:bg-surface-2 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-feitlijn-purple-400 transition-colors"
+          class:list={[
+            "inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-feitlijn-purple-400 transition-colors",
+            classes.text,
+            classes.hover,
+            classes.button
+          ]}
           aria-controls="mobile-menu"
           aria-expanded="false"
           aria-label="Toggle menu"
@@ -144,23 +190,32 @@ const currentPath = Astro.url.pathname;
     {/* Mobile Navigation */}
     <div 
       id="mobileMenu" 
-      class="lg:hidden hidden"
+      class:list={[
+        "lg:hidden hidden rounded-lg mt-4",
+        classes.mobileMenu,
+        classes.shadow
+      ]}
       aria-labelledby="menuButton"
     >
-      <div class="px-2 pt-4 pb-3 space-y-1 bg-surface-1 rounded-lg shadow-lg mt-4">
+      <div class="px-2 pt-4 pb-3 space-y-1">
         {navItems.map(item => (
           <>
             {item.children ? (
               <div class="space-y-1">
-                <div class="px-3 py-2 text-sm font-semibold text-feitlijn-purple-400 font-roc-grotesk">
+                <div class:list={[
+                  "px-3 py-2 text-sm font-semibold font-roc-grotesk",
+                  classes.active
+                ]}>
                   {item.label}
                 </div>
                 {item.children.map(child => (
-                  <a
-                    href={child.href}
+                  
+                    <a href={child.href}
                     class:list={[
-                      "block px-3 py-2 text-base text-text-2 hover:text-feitlijn-purple-400 hover:bg-surface-2 rounded-md pl-6 transition-colors",
-                      { "bg-surface-2 text-feitlijn-purple-400": currentPath === child.href }
+                      "block px-3 py-2 text-base rounded-md pl-6 transition-colors",
+                      classes.text,
+                      classes.mobileMenuHover,
+                      { [classes.active]: currentPath === child.href }
                     ]}
                     aria-current={currentPath === child.href ? "page" : undefined}
                   >
@@ -169,11 +224,13 @@ const currentPath = Astro.url.pathname;
                 ))}
               </div>
             ) : (
-              <a
-                href={item.href}
+              
+                <a href={item.href}
                 class:list={[
-                  "block px-3 py-2 text-base text-text-2 hover:text-feitlijn-purple-400 hover:bg-surface-2 rounded-md transition-colors",
-                  { "bg-surface-2 text-feitlijn-purple-400": currentPath === item.href }
+                  "block px-3 py-2 text-base rounded-md transition-colors",
+                  classes.text,
+                  classes.mobileMenuHover,
+                  { [classes.active]: currentPath === item.href }
                 ]}
                 aria-current={currentPath === item.href ? "page" : undefined}
               >
@@ -211,20 +268,30 @@ const currentPath = Astro.url.pathname;
     if (!navbar) return;
 
     const currentScrollPos = window.scrollY;
+    const variant = navbar.dataset.variant;
     
     // Add/remove background and shadow based on scroll position
     if (currentScrollPos > 20) {
-      navbar.classList.add('bg-surface-1/95', 'backdrop-blur-sm', 'shadow-md');
+      if (variant === 'light') {
+        navbar.classList.add('bg-white/95', 'backdrop-blur-sm', 'shadow-lg', 'shadow-gray-200/50');
+      } else {
+        navbar.classList.add('bg-surface-1/95', 'backdrop-blur-sm', 'shadow-lg', 'shadow-black/20');
+      }
     } else {
-      navbar.classList.remove('bg-surface-1/95', 'backdrop-blur-sm', 'shadow-md');
+      navbar.classList.remove(
+        'bg-white/95', 
+        'bg-surface-1/95', 
+        'backdrop-blur-sm', 
+        'shadow-lg',
+        'shadow-gray-200/50',
+        'shadow-black/20'
+      );
     }
 
     // Hide/show navbar based on scroll direction
     if (currentScrollPos > prevScrollPos && currentScrollPos > 100) {
-      // Scrolling down & not at the top
       navbar.style.transform = 'translateY(-100%)';
     } else {
-      // Scrolling up or at the top
       navbar.style.transform = 'translateY(0)';
     }
 
@@ -235,7 +302,7 @@ const currentPath = Astro.url.pathname;
   document.querySelectorAll('[data-dropdown]').forEach(dropdown => {
     const button = dropdown.querySelector('button');
     const menu = dropdown.querySelector('[role="menu"]');
-    let timeout: number;
+    let timeout;
 
     if (!button || !menu) return;
 
@@ -252,16 +319,13 @@ const currentPath = Astro.url.pathname;
       menu.classList.add('opacity-0', 'invisible');
     };
 
-    // Show menu on hover and focus
     dropdown.addEventListener('mouseenter', showMenu);
     button.addEventListener('focus', showMenu);
 
-    // Hide menu when mouse leaves with a delay
     dropdown.addEventListener('mouseleave', () => {
       timeout = setTimeout(hideMenu, 150);
     });
 
-    // Handle keyboard navigation
     button.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         hideMenu();
@@ -269,9 +333,8 @@ const currentPath = Astro.url.pathname;
       }
     });
 
-    // Close menu when clicking outside
     document.addEventListener('click', (e) => {
-      if (!dropdown.contains(e.target as Node)) {
+      if (!dropdown.contains(e.target)) {
         hideMenu();
       }
     });
@@ -279,19 +342,16 @@ const currentPath = Astro.url.pathname;
 </script>
 
 <style>
-  /* Smooth transitions for navbar background */
   #navbar {
     transform: translateY(0);
     transition: transform 0.3s ease-in-out, background-color 0.3s ease, box-shadow 0.3s ease;
   }
 
-  /* Improve dropdown animations */
   [role="menu"] {
     transform-origin: top;
     transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
   }
 
-  /* Ensure proper spacing for dropdown items */
   [role="menuitem"] {
     margin: 2px 0;
   }
