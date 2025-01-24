@@ -6,6 +6,13 @@ import mdx from '@astrojs/mdx';
 
 // Add markdown config and content collections config
 export default defineConfig({
+  vite: {
+    resolve: {
+      alias: {
+        '@': '/src'
+      }
+    }
+  },
   integrations: [
     mdx(),
 
