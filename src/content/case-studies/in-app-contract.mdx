@@ -18,15 +18,15 @@ tags:
     - "Contract Design"
     - "UX Design"
     - "Mobile Design"
-
 cover_image:
   url: "/case-studies/app.jpg"
-
   alt: "Privacy beleid visualisatie"
 ---
 
+import CaseStudyTimeline from "@/components/CaseStudyTimeline";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import VideoPlayer from "@/components/VideoPlayer";
+import { timelineData } from "@/data/timeline-data";
 
 Voor een innovatieve HR-tech startup hebben we een mobiel-vriendelijk contractsysteem ontwikkeld. Het doel was om het proces van contracteren te transformeren van een formeel document naar een intuïtieve, app-gebaseerde ervaring.
 
@@ -44,23 +44,7 @@ Voor een innovatieve HR-tech startup hebben we een mobiel-vriendelijk contractsy
   title="Video Title"
 />
 
-## Van papier naar mobiel
-
-De uitdaging was meerledig:
-
-- Juridische validiteit waarborgen
-- Gebruiksvriendelijke interface creëren
-- Veilige ondertekening mogelijk maken
-- Compliance garanderen
-
-## Innovatieve oplossingen
-
-We ontwikkelden:
-
-- Stapsgewijze contract-flow
-- Visuele uitleg van voorwaarden
-- Interactieve bevestigingsstappen
-- Beveiligde digitale handtekening
+<CaseStudyTimeline client:visible entries={timelineData.entries} />
 
 ## Impact
 
