@@ -1,23 +1,22 @@
 export const timelineData = {
     entries: [
         {
-            phase: 'Research & Analysis',
-            description: 'We begonnen met een grondige analyse van het bestaande contractproces en identificeerden de belangrijkste pijnpunten voor gebruikers. Door interviews met stakeholders kregen we inzicht in de behoeften en verwachtingen.',
-            imageUrl: '/case-studies/app.jpg'
+            phase: 'Research & analyse',
+            description: 'We begonnen met een grondige analyse van de ESRS-regelgeving en het bestaande informatiemateriaal. Er was veel beschikbaar, maar dit bleef vaak aan de oppervlakte. Het werd duidelijk dat er behoefte was aan meer diepgaande, praktische informatie.',
         },
         {
-            phase: 'Design & Prototyping',
-            description: 'We ontwikkelden een stapsgewijze contract-flow met visuele elementen en interactieve bevestigingsstappen. Gebruikerstests hielpen ons de interface te verfijnen voor optimale gebruiksvriendelijkheid.',
-            imageUrl: '/case-studies/amsterdam.jpg'
+            phase: 'Informatie-architectuur',
+            description: 'We ontwikkelden een heldere structuur die gebruikers stap voor stap door de ESRS-vereisten leidt. Om de theorie concreet te maken, creëerden we een fictief voorbeeldbedrijf: FreshFood. Door dit voorbeeldbedrijf consequent terug te laten komen, wordt abstracte regelgeving tastbaar en praktisch toepasbaar.',
+            imageUrl: '/esrs/esrs-structure.jpg'
         },
         {
-            phase: 'Technische Implementatie',
-            description: 'De focus lag op het waarborgen van juridische validiteit en veilige ondertekening. We implementeerden beveiligde digitale handtekeningen en zorgden voor volledige compliance.'
+            phase: 'Design & ontwikkeling',
+            description: 'De interactieve PDF werd ontwikkeld met focus op gebruiksgemak. We creëerden infographics die complexe concepten verduidelijken en bouwden interactieve elementen waarmee gebruikers kunnen wisselen tussen theorie en praktijkvoorbeelden. FreshFood\'s fictieve case study illustreert steeds hoe bedrijven de theorie kunnen toepassen.',
+            imageUrl: '/esrs/esrs-design.png'
         },
         {
-            phase: 'Resultaten & Impact',
-            description: 'Het nieuwe systeem resulteerde in 80% snellere contractafhandeling, verhoogde gebruikerstevredenheid en significant minder fouten in contracten. De mobiele workflow verbeterde de efficiency aanzienlijk.',
-            imageUrl: '/case-studies/area.mp4'
+            phase: 'Testen & verfijnen',
+            description: 'Samen met EZ organiseerden we twee rondes gebruikerstests: eerst met sustainability professionals uit het bedrijfsleven, daarna met experts van brancheorganisaties. Hun feedback leidde tot praktische verbeteringen zoals extra checklists, voorbeeldtabellen en verduidelijking van complexe concepten via het FreshFood voorbeeld.',
         }
     ]
 };

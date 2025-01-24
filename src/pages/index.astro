@@ -14,6 +14,8 @@ import VideoTestimonials from '../components/VideoTestimonials';
 import OurFormula from '../components/OurFormula';
 import TeamSection from '../components/TeamSection';
 
+import VennDiagram from '../components/VennDiagram';
+
 import TeamSection from '../components/TeamSection';
 
 const teamMembers = [
@@ -105,10 +107,12 @@ const processedStudies = await Promise.all(
 
   <ServicesGrid />
 
+  <VennDiagram client:visible />
 
   <OurFormula client:load />
   <TeamSection client:load teamMembers={teamMembers} />
 
 
  
+
 </BaseLayout>

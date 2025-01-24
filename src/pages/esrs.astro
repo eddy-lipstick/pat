@@ -14,6 +14,8 @@ import CaseStudyMeta from '../components/CaseStudyMeta'
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import { Clock, User, Briefcase, Users, Tag, ChevronRight } from 'lucide-react';
 import TeamCTA from '../components/TeamCTA';
+import CaseStudyTimeline from "@/components/CaseStudyTimeline";
+import { timelineData } from "@/data/timeline-data";
 
 ---
 
@@ -118,6 +120,7 @@ import TeamCTA from '../components/TeamCTA';
           
           </div>
         </div>
+        <CaseStudyTimeline client:visible entries={timelineData.entries} />
 
     <!-- Final Image Grid Section -->
     <!-- Image Grid Section -->
