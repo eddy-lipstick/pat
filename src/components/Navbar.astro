@@ -20,23 +20,22 @@ const serviceItems = [
 ];
 
 const navItems = [
-  { 
-    label: 'Diensten', 
-    href: '/services',
-    children: serviceItems
-  },
-  { label: 'Cases', href: '/case-studies' },
+
+  { label: 'Projecten', href: '/case-studies' },
+  { label: 'PatroonAI', href: '/ai' },
   { 
     label: 'Over ons',
     href: '/about',
     children: [
       { label: 'Over ons', href: '/about' },
+      { label: 'Onze aanpak', href: '/approach' },  // Added this line
+
       { label: 'Team', href: '/team' },
       { label: 'Nieuws', href: '/news' }
     ]
   },
   { 
-    label: 'Kennisbank',
+    label: 'Leren',
     href: '/learn',
     children: [
       { label: 'Artikelen', href: '/learn/articles' },

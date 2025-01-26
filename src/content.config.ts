@@ -1,5 +1,32 @@
 import { defineCollection, reference, z } from "astro:content";
 
+// Add these new type definitions
+const PILLARS = ["Tech", "Legal", "Design"] as const;
+type Pillar = (typeof PILLARS)[number];
+
+// Add the skills schema
+const skillSchema = z.object({
+  title: z.string().min(1),
+  description: z.string().min(1),
+  pillar: z.enum(PILLARS),
+  methodology: z.array(z.string()).min(1),
+  benefits: z.object({
+    description: z.string().min(1),
+    metrics: z.array(z.string()).min(1),
+  }),
+  featuredCases: z
+    .array(
+      z.object({
+        title: z.string().min(1),
+        result: z.string().min(1),
+        slug: z.string().min(1),
+      })
+    )
+    .optional(),
+  order: z.number().optional(), // For controlling display order
+  icon: z.string().optional(), // For potential icon usage
+});
+
 const STAKEHOLDERS = [
   "Toezichthouders",
   "Rechters en arbiters",
@@ -138,5 +165,9 @@ export const collections = {
   news: defineCollection({
     type: "content",
     schema: news.schema,
+  }),
+  approach: defineCollection({
+    type: "content",
+    schema: skillSchema,
   }),
 };
