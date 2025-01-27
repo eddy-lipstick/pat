@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { ArrowRight } from 'lucide-react';
+
+const allApproaches = await getCollection('approach');
+
+// Sort alphabetically by title
+const sortedApproaches = allApproaches.sort((a, b) => 
+  a.data.title.localeCompare(b.data.title, 'nl')
+);
+---
+
+<BaseLayout title="Onze aanpak">
+  <div class="py-16 space-y-16">
+    <!-- Hero Section -->
+    <div class="text-center max-w-4xl mx-auto px-4">
+      <h1 class="text-5xl font-bold mb-6">Onze aanpak</h1>
+      <p class="text-xl text-text-secondary">
+        We combineren juridische expertise, design thinking en technologie om complexe juridische uitdagingen op te lossen.
+      </p>
+    </div>
+
+    <!-- Approaches Grid -->
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {sortedApproaches.map((approach) => (
+          <a href={`/approach/${approach.id.split('/').pop()?.replace('.md', '')}`} class="group">
+            <Card className="h-full border border-border/50 bg-surface-1 hover:bg-surface-2 transition-all duration-300">
+              <CardHeader>
+                <div class="flex justify-between items-start gap-4">
+                  <div>
+                    <CardTitle className="text-2xl mb-2">{approach.data.title}</CardTitle>
+                    <CardDescription className="text-text-secondary line-clamp-3">
+                      {approach.data.description}
+                    </CardDescription>
+                  </div>
+                  <ArrowRight className="h-6 w-6 shrink-0 text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div class="flex flex-wrap gap-2">
+                  {approach.data.methodology.slice(0, 3).map((method) => (
+                    <span class="rounded-full px-3 py-1 text-sm bg-primary/10 text-primary">
+                      {method}
+                    </span>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>

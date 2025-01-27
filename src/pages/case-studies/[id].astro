@@ -1,7 +1,8 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
-import { getCollection } from 'astro:content';
+// src/pages/case-studies/[id].astro
+import ESRSLayout from '../../layouts/ESRSLayout.astro';
+import ModernCaseStudyLayout from '../../layouts/ModernCaseStudyLayout.astro';
+import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const caseStudies = await getCollection('case-studies');
@@ -12,7 +13,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content, headings } = await render(entry);
 
 // Get related case studies
 const allCaseStudies = await getCollection('case-studies');
@@ -24,20 +25,35 @@ const relatedCaseStudies = allCaseStudies
     )
   )
   .slice(0, 3);
+
+// Transform legacy data to new format if needed
+const metadata = {
+  client: entry.data.metadata?.client || entry.data.author,
+  date: entry.data.metadata?.date || entry.data.date.toLocaleDateString('nl-NL', { year: 'numeric', month: 'long' }),
+  services: entry.data.metadata?.services || [entry.data.service_category].filter(Boolean),
+  website: entry.data.metadata?.website
+};
+
+// Build the modern case study props while maintaining backwards compatibility
+const props = {
+  title: entry.data.title,
+  introduction: entry.data.introduction,
+  metadata: entry.data.metadata,
+  heroVideo: entry.data.heroVideo,
+  expandableContent: entry.data.expandableContent,
+  quotes: entry.data.quotes,
+  images: entry.data.images,
+  beforeAfter: entry.data.beforeAfter,
+  teamMember: entry.data.teamMember,
+  timeline: entry.data.timeline,
+  relatedCaseStudies
+};
 ---
 
-<BaseLayout title={entry.data.title}>
-  <CaseStudyLayout 
-    title={entry.data.title}
-    date={entry.data.date}
-    author={entry.data.author}
-    reading_time={entry.data.reading_time}
-    service_category={entry.data.service_category}
-    stakeholder={entry.data.stakeholder}
-    tags={entry.data.tags}
-    cover_image={entry.data.cover_image}
-    relatedCaseStudies={relatedCaseStudies}
-  >
-    <Content />
-  </CaseStudyLayout>
-</BaseLayout>
+  <ModernCaseStudyLayout {...props}>
+    <div class="container mx-auto px-6 py-16">
+      <div class="prose prose-lg prose-invert max-w-none">
+        <Content />
+      </div>
+    </div>
+  </ModernCaseStudyLayout>

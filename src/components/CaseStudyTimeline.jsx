@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Badge } from "@/components/ui/badge";
 
 const TimelineEntry = ({ phase, description, imageUrl, index }) => {
     const entryRef = useRef(null);
@@ -51,16 +50,14 @@ const TimelineEntry = ({ phase, description, imageUrl, index }) => {
     }
 
     const Content = () => (
-        <div>
-            <Badge
-                variant="outline"
-                className="bg-surface-1 text-primary border-primary mb-4 inline-block"
-            >
+        <div className="space-y-4">
+            <span className="transition-all duration-300 rounded-full px-3 py-1 text-sm 
+                bg-primary/10 xtext-background inline-block">
                 {phase}
-            </Badge>
-            <p className="text-text-primary text-lg mb-6">{description}</p>
+            </span>
+            <p className="text-background text-lg leading-relaxed">{description}</p>
             {imageUrl && (
-                <div className="relative rounded-lg overflow-hidden bg-surface-2 aspect-video">
+                <div className="relative rounded-lg overflow-hidden">
                     <img
                         src={imageUrl}
                         alt={`Phase ${phase}`}
@@ -78,10 +75,11 @@ const TimelineEntry = ({ phase, description, imageUrl, index }) => {
                 {!isEven && <Content />}
             </div>
 
-            {/* Center timeline - Aligned with badge */}
+            {/* Center timeline */}
             <div className="relative w-12">
                 <div className="absolute top-4 left-1/2 -translate-x-1/2">
-                    <div className="w-4 h-4 rounded-full bg-primary border-4 border-surface-1 relative z-10" />
+                    <div className="w-4 h-4 rounded-full bg-primary/20 ring-2 ring-primary 
+                        relative z-10 transition-all duration-300" />
                 </div>
             </div>
 
@@ -106,8 +104,9 @@ const CaseStudyTimeline = ({ entries }) => {
 
     return (
         <div className="max-w-6xl mx-auto py-16 px-4 relative">
-            {/* Continuous vertical line */}
-            <div className="absolute left-1/2 top-0 h-full w-0.5 bg-primary-300 transform -translate-x-1/2" />
+            {/* Vertical line */}
+            <div className="absolute left-1/2 top-0 h-full w-px bg-primary/20 
+                transform -translate-x-1/2" />
 
             {/* Timeline entries */}
             <div className="relative">
