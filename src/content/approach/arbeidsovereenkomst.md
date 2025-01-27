@@ -2,7 +2,6 @@
 title: "Arbeidsovereenkomst design"
 description: "Transformeer standaard arbeidsovereenkomsten naar documenten die je bedrijfscultuur versterken"
 pillar: "Legal"
-slug: "arbeidsovereenkomst"
 methodology:
   [
     "Brand analyse",

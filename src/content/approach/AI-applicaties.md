@@ -2,7 +2,6 @@
 title: "AI applicaties"
 description: "Juridische AI-oplossingen die slim én begrijpelijk zijn"
 pillar: "Tech"
-slug: "ai-apps"
 methodology:
   [
     "Use case analyse",

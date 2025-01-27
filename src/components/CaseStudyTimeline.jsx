@@ -52,7 +52,7 @@ const TimelineEntry = ({ phase, description, imageUrl, index }) => {
     const Content = () => (
         <div className="space-y-4">
             <span className="transition-all duration-300 rounded-full px-3 py-1 text-sm 
-                bg-primary/10 text-background inline-block">
+                bg-primary/10 xtext-background inline-block">
                 {phase}
             </span>
             <p className="text-background text-lg leading-relaxed">{description}</p>

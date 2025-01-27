@@ -2,7 +2,6 @@
 title: "Legal content design"
 description: "Visuele content voor juridische professionals die complexe materie toegankelijk maakt"
 pillar: "Design"
-slug: "legal-content"
 methodology:
   [
     "Content strategie",

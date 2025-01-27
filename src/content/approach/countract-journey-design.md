@@ -2,7 +2,6 @@
 title: "Contract journey design"
 description: "Optimaliseer de volledige contracting ervaring van eerste contact tot ondertekening"
 pillar: "Design"
-slug: "contract-journey"
 methodology:
   [
     "Journey mapping",

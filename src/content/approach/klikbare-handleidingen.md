@@ -2,7 +2,6 @@
 title: "Klikbare handleidingen"
 description: "Interactieve guides die gebruikers stap voor stap door juridische processen leiden"
 pillar: "Tech"
-slug: "click-guides"
 methodology:
   [
     "User journey mapping",

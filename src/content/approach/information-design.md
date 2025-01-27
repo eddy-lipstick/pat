@@ -2,7 +2,6 @@
 title: "Information Design"
 description: "Juridische informatie visueel aantrekkelijk en begrijpelijk maken voor alle stakeholders"
 pillar: "Design"
-slug: "visual-design"
 methodology:
   [
     "User Research & Interviews",

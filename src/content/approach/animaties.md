@@ -2,7 +2,6 @@
 title: "Juridische animaties"
 description: "Complexe juridische en technische verhalen visueel vertellen voor de rechtbank"
 pillar: "Legal"
-slug: "juridische-animaties"
 methodology:
   [
     "Narratief onderzoek",

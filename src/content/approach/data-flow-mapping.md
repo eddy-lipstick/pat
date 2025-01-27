@@ -2,7 +2,6 @@
 title: "Data flow & privacy mapping"
 description: "Visualiseer datastromen en privacyregels voor helder inzicht en compliance"
 pillar: "Tech"
-slug: "data-privacy-mapping"
 methodology:
   [
     "Data flow analyse",

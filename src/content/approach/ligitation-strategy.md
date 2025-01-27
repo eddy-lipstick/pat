@@ -2,7 +2,6 @@
 title: "Litigation strategy & visual storytelling"
 description: "Juridische strategieën overtuigend presenteren aan cliënten door visuele storytelling"
 pillar: "Legal"
-slug: "litigation-strategy"
 methodology:
   [
     "Case analyse",

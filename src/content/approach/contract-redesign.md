@@ -2,7 +2,6 @@
 title: "Contract redesign"
 description: "B2B contracten optimaliseren voor beter begrip, snellere doorlooptijd en meer vertrouwen"
 pillar: "Legal"
-slug: "contract-redesign"
 methodology:
   [
     "Contract analyse",

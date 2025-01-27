@@ -2,7 +2,6 @@
 title: "Juridische visualisatie & storytelling"
 description: "Complexe rechtszaken omzetten in heldere visuele verhalen voor rechters en andere stakeholders"
 pillar: "Legal"
-slug: "litigation-visuals"
 methodology:
   [
     "Case analyse",

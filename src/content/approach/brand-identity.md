@@ -2,7 +2,6 @@
 title: "Legal brand identity"
 description: "Versterk de marktpositie van juridische dienstverleners met een onderscheidende visuele identiteit"
 pillar: "Design"
-slug: "legal-brand-identity"
 methodology:
   [
     "Merk analyse",

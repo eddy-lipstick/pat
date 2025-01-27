@@ -1,0 +1,206 @@
+---
+// src/layouts/ModernCaseStudyLayout.astro
+import '../styles/globals.css';
+import '../styles/fonts.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer';
+import CaseStudyHero from '../components/CaseStudyHero';
+import CaseStudyMeta from '../components/CaseStudyMeta';
+import VideoPlayer from '../components/VideoPlayer';
+import ImageLightbox from '../components/ImageLightbox';
+import ExpandableText from '../components/ExpandableText';
+import CaseQuote from '../components/CaseQuote';
+import BeforeAfterSlider from '../components/BeforeAfterSlider';
+import TeamCTA from '../components/TeamCTA';
+import CaseStudyTimeline from '../components/CaseStudyTimeline';
+
+import { getEntry } from 'astro:content';
+
+// Get data from props
+const { entry } = Astro.props;
+const { 
+  title,
+  introduction,
+  metadata,
+  heroVideo,
+  expandableContent,
+  quotes,
+  images,
+  beforeAfter,
+  teamMember,
+  timeline
+} = Astro.props;
+
+// Fetch the referenced team member if it exists
+let teamMemberData;
+if (teamMember) {
+  try {
+    // If teamMember is an object with id, use that, otherwise use the string directly
+    const teamMemberId = typeof teamMember === 'object' ? teamMember.id : teamMember;
+    console.log('Fetching team member with id:', teamMemberId);
+    
+    const teamMemberEntry = await getEntry('team', teamMemberId);
+    console.log('Team member entry:', teamMemberEntry);
+    
+    if (teamMemberEntry) {
+      teamMemberData = {
+        name: teamMemberEntry.data.name,
+        role: teamMemberEntry.data.role,
+        imageUrl: teamMemberEntry.data.profileImage
+      };
+    }
+  } catch (error) {
+    console.error('Error fetching team member:', error);
+  }
+}
+
+console.log('Final team member data:', teamMemberData);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{title} | Project Kiwi</title>
+    </head>
+    <body class="min-h-screen bg-feitlijn-purple-50 text-background">
+        <Navbar variant="light" />
+        
+        <main class="mx-auto max-w-7xl p-4 pt-20">
+          <section class="relative min-h-screen">
+            <!-- Hero Section -->
+            <CaseStudyHero 
+              client:load
+              title={title}
+              introduction={introduction}
+            />
+          
+            <!-- Metadata Section -->
+            <CaseStudyMeta {...metadata} />
+          
+            <!-- Hero Video -->
+            {heroVideo && (
+              <div class="mb-20">
+                <VideoPlayer
+                  client:only="react"
+                  {...heroVideo}
+                />
+              </div>
+            )}
+          
+            <!-- Expandable Content Sections -->
+            {expandableContent?.map(content => (
+              <div class="container mx-auto px-6 py-16">
+                <ExpandableText
+                  client:load
+                  {...content}
+                />
+              </div>
+            ))}
+          
+            <!-- Images -->
+            {(() => {
+              const fullImages = images?.filter(img => img.type === 'full') || [];
+              const gridImages = images?.filter(img => img.type === 'grid') || [];
+
+              return (
+                <>
+                  {fullImages.map(image => (
+                    <div class="container mx-auto mb-32">
+                      <ImageLightbox
+                        client:load
+                        src={image.src}
+                        alt={image.alt}
+                        className="aspect-video w-full"
+                      />
+                    </div>
+                  ))}
+
+                  {gridImages.length > 0 && (
+                    <div class="container mx-auto px-6 mb-32">
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {gridImages.map(image => (
+                          <ImageLightbox
+                            client:load
+                            src={image.src}
+                            alt={image.alt}
+                            className="aspect-video w-full"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              );
+            })()}
+     
+            <!-- First Quote -->
+            {quotes?.first && (
+              <div class="container mx-auto px-6 mb-32">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                  <div class="w-full">
+                    {/* Left content */}
+                  </div>
+                  <div class="w-full">
+                    <CaseQuote 
+                      client:load
+                      {...quotes.first}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+          
+            <!-- Before/After Sliders -->
+            {beforeAfter?.map(comparison => (
+              <BeforeAfterSlider
+                client:only="react"
+                {...comparison}
+              />
+            ))}
+          
+            <!-- Second Quote -->
+            {quotes?.second && (
+              <div class="container mx-auto px-6 mb-32">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                  <div class="w-full">
+                    <CaseQuote 
+                      client:load
+                      {...quotes.second}
+                    />
+                  </div>
+                  <div class="w-full">
+                    {/* Right content */}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <!-- Content Slot -->
+            <slot />
+          
+            <!-- Timeline Section -->
+            {timeline && (
+              <div class="text-white py-24">
+                <CaseStudyTimeline 
+                  client:visible 
+                  entries={timeline.entries}
+                />
+              </div>
+            )}
+          
+          {teamMemberData && (
+            <section class="mt-32 mb-24">
+              <TeamCTA 
+                client:visible 
+                teamMember={teamMemberData}
+              />
+            </section>
+          )}
+          </section>
+        </main>
+        
+        <Footer />
+    </body>
+</html>

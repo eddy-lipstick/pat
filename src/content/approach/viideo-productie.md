@@ -2,7 +2,6 @@
 title: "Video productie"
 description: "Complexe juridische concepten uitleggen via krachtige video content"
 pillar: "Design"
-slug: "video"
 methodology:
   [
     "Script ontwikkeling",

@@ -2,7 +2,6 @@
 title: "Legal copywriting"
 description: "Heldere, begrijpelijke teksten die juridische complexiteit vertalen naar toegankelijke communicatie"
 pillar: "Legal"
-slug: "copywriting"
 methodology:
   [
     "Doelgroepanalyse",

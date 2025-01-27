@@ -4,12 +4,17 @@ import { getCollection } from 'astro:content';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { ArrowRight } from 'lucide-react';
 
-const allSkills = await getCollection('approach');
-const sortedSkills = allSkills.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
+const allApproaches = await getCollection('approach');
+
+// Sort alphabetically by title
+const sortedApproaches = allApproaches.sort((a, b) => 
+  a.data.title.localeCompare(b.data.title, 'nl')
+);
 ---
 
 <BaseLayout title="Onze aanpak">
   <div class="py-16 space-y-16">
+    <!-- Hero Section -->
     <div class="text-center max-w-4xl mx-auto px-4">
       <h1 class="text-5xl font-bold mb-6">Onze aanpak</h1>
       <p class="text-xl text-text-secondary">
@@ -17,48 +22,35 @@ const sortedSkills = allSkills.sort((a, b) => (a.data.order || 0) - (b.data.orde
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {sortedSkills.map((skill) => (
-        <a href={`/approach/${skill.slug}`} class="group">
-          <Card className="h-full border border-border/50 bg-surface-1 hover:bg-surface-2 transition-all duration-300">
-            <CardHeader>
-              <div class="flex justify-between items-start">
-                <div>
-                  <CardTitle className="text-2xl mb-2">{skill.data.title}</CardTitle>
-                  <CardDescription className="text-text-secondary">
-                    {skill.data.description}
-                  </CardDescription>
+    <!-- Approaches Grid -->
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {sortedApproaches.map((approach) => (
+          <a href={`/approach/${approach.id.split('/').pop()?.replace('.md', '')}`} class="group">
+            <Card className="h-full border border-border/50 bg-surface-1 hover:bg-surface-2 transition-all duration-300">
+              <CardHeader>
+                <div class="flex justify-between items-start gap-4">
+                  <div>
+                    <CardTitle className="text-2xl mb-2">{approach.data.title}</CardTitle>
+                    <CardDescription className="text-text-secondary line-clamp-3">
+                      {approach.data.description}
+                    </CardDescription>
+                  </div>
+                  <ArrowRight className="h-6 w-6 shrink-0 text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
-                <ArrowRight className="h-6 w-6 text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div class="flex flex-wrap gap-2">
-                {skill.data.methodology.slice(0, 3).map((method) => (
-                  <span class="rounded-full px-2 py-0.5 text-xs bg-primary/10 text-primary hover:bg-primary/20">
-                    {method}
-                  </span>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </a>
-      ))}
-    </div>
-
-    <div class="relative rounded-2xl overflow-hidden">
-      <div class="absolute -inset-4 bg-feitlijn-purple/20 rounded-xl blur-lg"></div>
-      <div class="relative bg-surface-1 rounded-xl p-8 md:p-12">
-        <div class="max-w-2xl">
-          <h2 class="text-3xl font-bold mb-4">Klaar om te starten?</h2>
-          <p class="text-lg text-text-secondary mb-6">
-            Laat ons weten waar je mee worstelt. We denken graag mee over een passende oplossing.
-          </p>
-          <a href="/contact" class="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg transition-colors duration-300">
-            Neem contact op
-            <ArrowRight className="h-4 w-4" />
+              </CardHeader>
+              <CardContent>
+                <div class="flex flex-wrap gap-2">
+                  {approach.data.methodology.slice(0, 3).map((method) => (
+                    <span class="rounded-full px-3 py-1 text-sm bg-primary/10 text-primary">
+                      {method}
+                    </span>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
           </a>
-        </div>
+        ))}
       </div>
     </div>
   </div>

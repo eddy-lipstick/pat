@@ -2,7 +2,6 @@
 title: "Legal design systems"
 description: "Creëer consistente en schaalbare design systemen voor juridische dienstverlening"
 pillar: "Design"
-slug: "legal-design-systems"
 methodology:
   [
     "Gebruikersonderzoek",

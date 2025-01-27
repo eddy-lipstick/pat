@@ -2,7 +2,6 @@
 title: "Legal Process Design"
 description: "Optimaliseer juridische workflows voor maximale efficiëntie"
 pillar: "Legal"
-slug: "process-design"
 methodology:
   [
     "Process Mapping",

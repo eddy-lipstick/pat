@@ -2,7 +2,6 @@
 title: "Legal design workshops"
 description: "Leer juridische teams de principes van legal design toe te passen in hun dagelijkse werk"
 pillar: "Design"
-slug: "legal-design-workshops"
 methodology:
   [
     "Behoefteanalyse",

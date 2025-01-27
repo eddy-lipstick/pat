@@ -1,61 +1,49 @@
 ---
+// src/pages/case-studies/index.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Image } from "astro:assets";
-import CaseStudyFilters from '@/components/CaseStudyFilters';  
 import CaseStudyCard from '@/components/CaseStudyCard';
+import { Card } from "@/components/ui/card";
+import LargeCaseStudyGrid from '@/components/LargeCaseStudyGrid';
 
 
-// Get all case studies
-const caseStudies: CollectionEntry<'case-studies'>[] = await getCollection('case-studies');
+const allCaseStudies = await getCollection('case-studies');
+const featuredCaseStudy = allCaseStudies.find(study => study.data.featured);
+// Get all case studies and sort by date
+const caseStudies = await getCollection('case-studies');
+const sortedCaseStudies = caseStudies.sort((a, b) => {
+  return new Date(b.data.metadata.date) - new Date(a.data.metadata.date);
+});
 
-// Group tags by category for better organization
-const tagCategories = {
-  industries: [...new Set(caseStudies.flatMap(study => study.data.tags.industries))].sort(),
-  technologies: [...new Set(caseStudies.flatMap(study => study.data.tags.technologies))].sort(),
-};
+// Get unique services for filtering
+const allServices = [...new Set(
+  caseStudies.flatMap(study => study.data.metadata.services)
+)].sort();
+
+// Get unique tags for filtering
+const allTags = [...new Set(
+  caseStudies.flatMap(study => study.data.tags)
+)].sort();
 ---
 
 <BaseLayout title="Case Studies">
-  <div class="min-h-screen space-y-8 relative">
-    <!-- Hero section with animated background -->
-    <div class="relative overflow-hidden py-12 mb-8">
-      <div class="absolute inset-0"></div>
-      <div class="relative z-10 max-w-6xl mx-auto px-4">
-        <h1 class="text-4xl md:text-5xl font-bold mb-4">
-          Our Work
-        </h1>
-        <p class="text-lg max-w-2xl">
-          Explore our latest projects and success stories. Each case study showcases our approach to solving complex challenges.
-        </p>
+  <div class="min-h-screen">
+    <!-- Hero section -->
+    <div class="relative py-24 mb-12">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="max-w-2xl">
+          <h1 class="text-4xl md:text-5xl font-bold mb-6">
+           Bekijk onze projecten
+          </h1>
+     
+        </div>
       </div>
     </div>
 
-    <!-- Filters section -->
-    <CaseStudyFilters 
-      client:load 
-      industries={tagCategories.industries}
-      technologies={tagCategories.technologies}
-    />
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {caseStudies.map(study => (
-        <CaseStudyCard study={study} client:load />
-      ))}
+    <div class="container mx-auto px-4 py-12">
+      <LargeCaseStudyGrid studies={allCaseStudies} client:load />
     </div>
+
+  
   </div>
 </BaseLayout>
-
-<style>
-  .case-study {
-    transition: all 0.3s ease-out;
-  }
-  
-  .case-study.hidden {
-    opacity: 0;
-    transform: translateY(20px);
-    pointer-events: none;
-  }
-</style>

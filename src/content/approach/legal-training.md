@@ -2,7 +2,6 @@
 title: "Interactieve legal training"
 description: "Ontwikkel boeiende en effectieve training materialen voor juridische educatie"
 pillar: "Tech"
-slug: "legal-training"
 methodology:
   [
     "Leerdoel analyse",
