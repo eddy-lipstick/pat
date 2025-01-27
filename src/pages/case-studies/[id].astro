@@ -17,14 +17,7 @@ const { Content, headings } = await render(entry);
 
 // Get related case studies
 const allCaseStudies = await getCollection('case-studies');
-const relatedCaseStudies = allCaseStudies
-  .filter(cs => 
-    cs.id !== entry.id && 
-    cs.data.tags.industries.some(industry => 
-      entry.data.tags.industries.includes(industry)
-    )
-  )
-  .slice(0, 3);
+
 
 // Transform legacy data to new format if needed
 const metadata = {
@@ -46,7 +39,7 @@ const props = {
   beforeAfter: entry.data.beforeAfter,
   teamMember: entry.data.teamMember,
   timeline: entry.data.timeline,
-  relatedCaseStudies
+  
 };
 ---
 

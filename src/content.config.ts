@@ -71,6 +71,12 @@ const beforeAfterSchema = z.object({
 const caseStudySchema = z.object({
   title: z.string().min(1),
   introduction: z.string(),
+  cover_image: z
+    .object({
+      src: z.string(),
+      alt: z.string().default("Case study cover image"),
+    })
+    .optional(),
 
   // Core metadata
   metadata: z.object({

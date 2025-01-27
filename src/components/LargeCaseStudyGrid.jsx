@@ -12,16 +12,14 @@ const LargeCaseStudyGrid = ({ studies }) => {
                     data: {
                         title,
                         introduction,
+                        cover_image,
                         metadata: {
                             client,
                             date,
                             relatedSkills = []
                         },
-                        images
                     }
                 } = study;
-
-                const coverImage = images?.[0]?.src;
 
                 return (
                     <div
@@ -29,20 +27,18 @@ const LargeCaseStudyGrid = ({ studies }) => {
                         className={`relative group grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? "lg:grid-flow-col-dense" : ""
                             }`}
                     >
-
-
                         {/* Image container */}
                         <div className={`
-              relative h-96 rounded-2xl overflow-hidden
-              transition-transform duration-500 ease-out group-hover:scale-[1.02]
-              shadow-xl shadow-primary-600/10
-              ${index % 2 === 1 ? "lg:order-2" : "lg:order-1"}
-            `}>
+                            relative h-96 rounded-2xl overflow-hidden
+                            transition-transform duration-500 ease-out group-hover:scale-[1.02]
+                            shadow-xl shadow-primary-600/10
+                            ${index % 2 === 1 ? "lg:order-2" : "lg:order-1"}
+                        `}>
                             <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-                            {coverImage && (
+                            {cover_image?.src && (
                                 <img
-                                    src={coverImage}
-                                    alt={title}
+                                    src={cover_image.src}
+                                    alt={cover_image.alt}
                                     className="absolute inset-0 w-full h-full object-cover"
                                 />
                             )}
@@ -50,10 +46,10 @@ const LargeCaseStudyGrid = ({ studies }) => {
 
                         {/* Content container */}
                         <div className={`
-              flex flex-col space-y-6
-              transition-transform duration-500 ease-out group-hover:translate-y-[-4px]
-              ${index % 2 === 1 ? "lg:order-1" : "lg:order-2"}
-            `}>
+                            flex flex-col space-y-6
+                            transition-transform duration-500 ease-out group-hover:translate-y-[-4px]
+                            ${index % 2 === 1 ? "lg:order-1" : "lg:order-2"}
+                        `}>
                             <div className="space-y-2">
                                 <p className="text-sm text-muted-foreground">
                                     {client} • {date}

@@ -1,6 +1,10 @@
 ---
 title: "Hoe help je ondernemers door het doolhof van nieuwe duurzaamheidsregels?"
 introduction: "Steeds meer bedrijven moeten rapporteren over hun impact op mens en milieu. Het ministerie van Economische Zaken vroeg Patroon daarom een praktische handleiding te ontwikkelen: de ESRS Navigator. Deze leidt ondernemers stap voor stap door de nieuwe Europese rapportageverplichtingen."
+
+cover_image:
+  src: "/esrs/materialiteit.jpg"
+  alt: "Interactieve sessie tijdens de conferentie in Utrecht"
 quotes:
   first:
     quote: "Met de ESRS Navigator hebben we complexe Europese regelgeving toegankelijk gemaakt voor Nederlandse ondernemers. Een mooi voorbeeld van hoe de overheid het bedrijfsleven concreet ondersteunt bij de transitie naar duurzame bedrijfsvoering."
