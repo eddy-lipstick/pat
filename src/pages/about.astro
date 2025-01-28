@@ -5,87 +5,64 @@ import RecentNews from '../components/RecentNews';
 import { getCollection } from 'astro:content';
 import SolutionsGrid from '../components/SolutionsGrid';
 import TeamSection from '../components/TeamSection';
+import Hero from '@/components/Hero.astro';
 
 const teamMembers = [
-    {
-        name: "Maurits Fornier",
-        role: "Legal Design Lead",
-        imageUrl: "/images/team/sunmoon-stokhof.jpg"
-    },
-    {
-        name: "Dielis Delen",
-        role: "Software Developer",
-        imageUrl: "/images/team/dielis-delen.webp"
-    },
-    {
-        name: "Savannah Koomen",
-        role: "Strategie Lead",
-        imageUrl: "/images/team/savannah-koomen.webp"
-    }
+  {
+    name: 'Maurits Fornier',
+    role: 'Legal Design Lead',
+    imageUrl: '/images/team/sunmoon-stokhof.jpg',
+  },
+  {
+    name: 'Dielis Delen',
+    role: 'Software Developer',
+    imageUrl: '/images/team/dielis-delen.webp',
+  },
+  {
+    name: 'Savannah Koomen',
+    role: 'Strategie Lead',
+    imageUrl: '/images/team/savannah-koomen.webp',
+  },
 ];
-
-
 
 const allNewsEntries = await getCollection('news');
 const allNews = allNewsEntries.sort((a, b) => {
-    return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
+  return new Date(b.data.date).getTime() - new Date(a.data.date).getTime();
 });
 ---
 
 <BaseLayout title="Over Ons | Patroon">
+  <Hero
+    class="min-h-[60vh]"
+    subtitle="Over Patroon"
+    title="We maken juridisch werk effectiever"
+    description="Door de combinatie van juridische expertise, slimme technologie en doordacht design helpen we organisaties met"
+    bulletPoints={[
+      'Tijdrovende juridische taken automatiseren',
+      'Complexe informatie helder maken',
+    ]}
+    primaryButtonText="Neem contact op"
+    primaryButtonHref="/contact"
+    secondaryButtonText="Lees meer"
+    secondaryButtonHref="/about"
+  >
+    <div class="">
+      <img
+        src="images/kantoor/kantoor.jpg"
+        alt="Patroon team"
+        class="relative rounded-lg w-full aspect-[5/4] object-cover"
+      />
+    </div>
+  </Hero>
+
   <Container>
     <div class="py-16 space-y-24">
       {/* Hero Section */}
-      <div class="grid lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <h1 class="text-5xl font-bold mb-6 text-text-primary">We maken juridisch werk effectiever</h1>
-          <p class="text-xl text-text-secondary max-w-2xl">
-            Door de combinatie van juridische expertise, slimme technologie en doordacht design helpen we organisaties met:
-          </p>
-          <ul class="mt-6 space-y-4 text-lg text-text-secondary">
-            <li class="flex items-start">
-              <span class="text-feitlijn-purple mr-2">→</span>
-              Tijdrovende juridische taken automatiseren
-            </li>
-            <li class="flex items-start">
-              <span class="text-feitlijn-purple mr-2">→</span>
-              Complexe informatie helder maken
-            </li>
-          </ul>
-        </div>
-        <div class="relative">
-          <div class="absolute -inset-4 bg-feitlijn-purple/20 rounded-xl blur-lg"></div>
-          <img
-            src="/path-to-hero-image.jpg"
-            alt="Patroon werkwijze"
-            class="relative rounded-lg w-full aspect-[4/3] object-cover"
-          />
-        </div>
-      </div>
 
-      {/* Team Section */}
+      {/* Problems & Solutions Section */}
       <div class="space-y-8">
-
-        
-        <div class="relative group">
-          <div class="absolute -inset-2 bg-feitlijn-yellow/20 rounded-xl blur-lg transition-opacity group-hover:opacity-75"></div>
-          <img
-            src="images/kantoor/kantoor.jpg"
-            alt="Patroon team"
-            class="relative rounded-lg w-full aspect-[16/7] object-cover"
-          />
-        </div>
-     
+        <SolutionsGrid client:load />
       </div>
-
-   
-
-    
-{/* Problems & Solutions Section */}
-<div class="space-y-8">
-  <SolutionsGrid client:load />
-</div>
-
 
       {/* News Section */}
       <div class="bg-surface-1 rounded-2xl p-12">
@@ -94,5 +71,4 @@ const allNews = allNewsEntries.sort((a, b) => {
     </div>
   </Container>
   <TeamSection client:load teamMembers={teamMembers} />
-
 </BaseLayout>

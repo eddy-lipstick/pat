@@ -3,13 +3,13 @@ title: "Van juridisch document naar begrijpelijke privacyverklaring"
 introduction: "Hoe maak je privacyverklaringen begrijpelijk voor meer dan 360.000 inwoners? De Gemeente Utrecht vroeg Patroon om hun complexe privacyverklaring te transformeren naar een toegankelijk document. We ontwikkelden een interactief privacyplein dat inwoners stap voor stap door de verschillende verwerkingsprocessen leidt."
 quotes:
   first:
-    quote: "Met het nieuwe privacyplein hebben we complexe juridische informatie toegankelijk gemaakt voor alle inwoners van Utrecht. Een mooi voorbeeld van hoe de overheid transparant kan zijn over privacy."
-    author: "Privacy Officer"
-    role: "Gemeente Utrecht"
+    quote: "Het inzicht dat de burger wordt geboden en de schaalbaarheid van dit concept spreken de jury aan: andere gemeenten kunnen dit voorbeeld volgen en dat zal burgers helpen om snel en laagdrempelig inzicht te krijgen in wat er met hun gegevens gebeurt."
+    author: "Jury"
+    role: "Stichting Privacy First"
   second:
-    quote: "Door privacy begrijpelijk te maken, versterken we het vertrouwen tussen overheid en burger. Dit project laat zien hoe legal design daaraan kan bijdragen."
-    author: "Savannah Koomen"
-    role: "Legal design lead"
+    quote: "We hebben overal taal op B1-niveau gebruikt. Een term als ‘geautomatiseerde besluitvorming’, wat vrij essentieel is in de AVG, snapt geen mens op straat."
+    author: "Yvonne Staal"
+    role: "Chief Privacy Officer bij de Gemeente Utrecht"
 
 cover_image:
   src: "/case-studies/utrecht/utrecht_cover.jpg"
@@ -21,7 +21,7 @@ metadata:
   services:
     - "Information Design"
   website: "https://www.utrecht.nl/bestuur-en-organisatie/privacy/privacyverklaring"
-  relatedSkills: ["Information Design", "Legal Content Design"]
+  relatedSkills: ["Information Design", "Legal Content"]
 
 heroVideo:
   src: "/case-studies/utrecht/utrecht-clip.mp4"
@@ -38,9 +38,6 @@ expandableContent:
 images:
   - src: "/case-studies/utrecht/utrecht-image-1.jpg"
     alt: "Overzicht van het privacyplein"
-    type: "full"
-  - src: "/gemeente-utrecht/interface.jpg"
-    alt: "Interface van het privacyplein"
     type: "full"
   - src: "/case-studies/utrecht/utrecht-2.jpg"
     alt: "Detail van de navigatie"
@@ -67,11 +64,9 @@ timeline:
 
     - phase: "Structureren en testen"
       description: "We ontwikkelden een structuur voor de 90 verwerkingsprocessen, waarbij niet de organisatorische indeling van de gemeente leidend is, maar de belevingswereld van de gebruiker. Deze structuur werd getest met een representatieve gebruikersgroep."
-      imageUrl: "/gemeente-utrecht/structure.jpg"
 
     - phase: "Ontwikkeling en testen"
       description: "We ontwikkelden een prototype van het privacyplein en testte deze met inwoners van de Gemeente Utrecht op het stadhuis. Dit leverde waardevolle inzichten op. Bijvoorbeeld: weinig mensen wisten de betekenis van 'gegevens'. We veranderden dit naar 'persoonlijke informatie'."
-      imageUrl: "/gemeente-utrecht/prototype.jpg"
 
     - phase: "Borging"
       description: "We ontwikkelden een toolkit waarmee de gemeente zelf gemakkelijk nieuwe privacyverklaringen kan maken. En trainde de beheerders in het gebruik van deze toolkit."

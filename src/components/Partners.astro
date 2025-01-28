@@ -1,0 +1,19 @@
+---
+import LegalloydLogo from './logos/LegalloydLogo.astro';
+---
+
+
+<section class="py-16">
+    <div class="max-w-6xl mx-auto">
+        <p class="text-xl lg:text-2xl text-indigo-400 mb-16 max-w-2xl">
+Dit zijn onze partners        </p>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 md:gap-16">
+            <div class="group relative flex items-center justify-center p-6">
+                <LegalloydLogo class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105" />
+                <div class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5" />
+            </div>
+
+        </div>
+    </div>
+</section>

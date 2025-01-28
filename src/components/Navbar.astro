@@ -16,71 +16,67 @@ const serviceItems = [
   {
     label: 'Policy Design',
     href: '/services/policy-design',
-  }
+  },
 ];
 
 const navItems = [
-
   { label: 'Projecten', href: '/case-studies' },
-  { label: 'PatroonAI', href: '/ai' },
-  { 
+  {
     label: 'Over ons',
     href: '/about',
     children: [
       { label: 'Over ons', href: '/about' },
-      { label: 'Onze aanpak', href: '/approach' },  // Added this line
+      { label: 'Onze aanpak', href: '/approach' }, // Added this line
 
       { label: 'Team', href: '/team' },
-      { label: 'Nieuws', href: '/news' }
-    ]
+      { label: 'Nieuws', href: '/news' },
+    ],
   },
-  { 
+  {
     label: 'Leren',
     href: '/learn',
     children: [
       { label: 'Artikelen', href: '/learn/articles' },
-      { label: 'Cursussen', href: '/learn/courses' },
-    ]
+      { label: 'MS Word Tips', href: '/learn/courses' },
+      { label: 'Trainingen', href: '/training/' },
+    ],
   },
   { label: 'Contact', href: '/contact' },
 ];
 
 const variantClasses = {
   light: {
-    nav: "bg-white/95 backdrop-blur-sm",
-    text: "text-background",
-    hover: "hover:text-feitlijn-purple-700",
-    active: "text-feitlijn-purple-700",
-    mobileMenu: "bg-white",
-    mobileMenuHover: "hover:bg-feitlijn-purple-50",
-    dropdown: "bg-white",
-    dropdownHover: "hover:bg-feitlijn-purple-50",
-    button: "hover:bg-feitlijn-purple-50",
-    shadow: "shadow-lg shadow-gray-200/50"
+    nav: 'bg-white/95 backdrop-blur-sm',
+    text: 'text-background',
+    hover: 'hover:text-feitlijn-purple-700',
+    active: 'text-feitlijn-purple-700',
+    mobileMenu: 'bg-white',
+    mobileMenuHover: 'hover:bg-feitlijn-purple-50',
+    dropdown: 'bg-white',
+    dropdownHover: 'hover:bg-feitlijn-purple-50',
+    button: 'hover:bg-feitlijn-purple-50',
+    shadow: 'shadow-lg shadow-gray-200/50',
   },
   dark: {
-    nav: "bg-surface-1/95 backdrop-blur-sm",
-    text: "text-text-1",
-    hover: "hover:text-feitlijn-purple-400",
-    active: "text-feitlijn-purple-400",
-    mobileMenu: "bg-surface-1",
-    mobileMenuHover: "hover:bg-surface-2",
-    dropdown: "bg-surface-1",
-    dropdownHover: "hover:bg-surface-2",
-    button: "hover:bg-surface-2",
-    shadow: "shadow-lg shadow-black/20"
-  }
+    nav: 'bg-surface-1/95 backdrop-blur-sm',
+    text: 'text-text-1',
+    hover: 'hover:text-feitlijn-purple-400',
+    active: 'text-feitlijn-purple-400',
+    mobileMenu: 'bg-surface-1',
+    mobileMenuHover: 'hover:bg-surface-2',
+    dropdown: 'bg-surface-1',
+    dropdownHover: 'hover:bg-surface-2',
+    button: 'hover:bg-surface-2',
+    shadow: 'shadow-lg shadow-black/20',
+  },
 };
 
 const classes = variantClasses[variant];
 const currentPath = Astro.url.pathname;
 ---
 
-<nav 
-  class:list={[
-    "fixed w-full z-50 transition-all duration-300 py-4",
-    classes.nav
-  ]}
+<nav
+  class:list={['fixed w-full z-50 transition-all duration-300 py-4', classes.nav]}
   id="navbar"
   aria-label="Main navigation"
   data-variant={variant}
@@ -89,12 +85,12 @@ const currentPath = Astro.url.pathname;
     <div class="flex justify-between items-center">
       {/* Logo */}
       <div class="flex-shrink-0">
-        <a 
-          href="/" 
+        <a
+          href="/"
           class:list={[
-            "text-2xl font-bold transition-colors flex items-center gap-2 font-roc-grotesk",
+            'text-2xl font-bold transition-colors flex items-center gap-2 font-roc-grotesk',
             classes.text,
-            classes.hover
+            classes.hover,
           ]}
           aria-label="Home"
         >
@@ -104,66 +100,69 @@ const currentPath = Astro.url.pathname;
 
       {/* Desktop Navigation */}
       <div class="hidden lg:flex items-center space-x-8">
-        {navItems.map(item => (
-          item.children ? (
-            <div class="relative group" data-dropdown>
-              <button 
-                class:list={[
-                  "transition-colors py-2 flex items-center gap-1 font-medium font-roc-grotesk",
-                  classes.text,
-                  classes.hover,
-                  { [classes.active]: currentPath.startsWith(item.href) }
-                ]}
-                aria-haspopup="true"
-                aria-expanded="false"
-                aria-controls={`dropdown-${item.label}`}
-              >
-                {item.label}
-                <ChevronDown class="h-4 w-4 transform transition-transform group-hover:rotate-180" />
-              </button>
-              <div 
-                id={`dropdown-${item.label}`}
-                class:list={[
-                  "absolute top-full left-0 mt-2 w-56 rounded-lg ring-1 ring-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-left",
-                  classes.dropdown,
-                  classes.shadow
-                ]}
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby={`dropdown-button-${item.label}`}
-              >
-                <div class="py-2 px-1">
-                  {item.children.map(child => (
-                    
-                      <a href={child.href}
-                      class:list={[
-                        "block px-4 py-2 text-sm rounded-md transition-colors",
-                        classes.text,
-                        classes.dropdownHover,
-                        { [classes.active]: currentPath === child.href }
-                      ]}
-                      role="menuitem"
-                    >
-                      {child.label}
-                    </a>
-                  ))}
+        {
+          navItems.map((item) =>
+            item.children ? (
+              <div class="relative group" data-dropdown>
+                <button
+                  class:list={[
+                    'transition-colors py-2 flex items-center gap-1 font-medium font-roc-grotesk',
+                    classes.text,
+                    classes.hover,
+                    { [classes.active]: currentPath.startsWith(item.href) },
+                  ]}
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  aria-controls={`dropdown-${item.label}`}
+                >
+                  {item.label}
+                  <ChevronDown class="h-4 w-4 transform transition-transform group-hover:rotate-180" />
+                </button>
+                <div
+                  id={`dropdown-${item.label}`}
+                  class:list={[
+                    'absolute top-full left-0 mt-2 w-56 rounded-lg ring-1 ring-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-left',
+                    classes.dropdown,
+                    classes.shadow,
+                  ]}
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby={`dropdown-button-${item.label}`}
+                >
+                  <div class="py-2 px-1">
+                    {item.children.map((child) => (
+                      <a
+                        href={child.href}
+                        class:list={[
+                          'block px-4 py-2 text-sm rounded-md transition-colors',
+                          classes.text,
+                          classes.dropdownHover,
+                          { [classes.active]: currentPath === child.href },
+                        ]}
+                        role="menuitem"
+                      >
+                        {child.label}
+                      </a>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-          ) : (
-            <a href={item.href} 
-              class:list={[
-                "transition-colors font-medium font-roc-grotesk",
-                classes.text,
-                classes.hover,
-                { [classes.active]: currentPath === item.href }
-              ]}
-              aria-current={currentPath === item.href ? "page" : undefined}
-            >
-              {item.label}
-            </a>
+            ) : (
+              <a
+                href={item.href}
+                class:list={[
+                  'transition-colors font-medium font-roc-grotesk',
+                  classes.text,
+                  classes.hover,
+                  { [classes.active]: currentPath === item.href },
+                ]}
+                aria-current={currentPath === item.href ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            )
           )
-        ))}
+        }
       </div>
 
       {/* Mobile menu button */}
@@ -171,10 +170,10 @@ const currentPath = Astro.url.pathname;
         <button
           id="menuButton"
           class:list={[
-            "inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-feitlijn-purple-400 transition-colors",
+            'inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-feitlijn-purple-400 transition-colors',
             classes.text,
             classes.hover,
-            classes.button
+            classes.button,
           ]}
           aria-controls="mobile-menu"
           aria-expanded="false"
@@ -187,57 +186,57 @@ const currentPath = Astro.url.pathname;
     </div>
 
     {/* Mobile Navigation */}
-    <div 
-      id="mobileMenu" 
-      class:list={[
-        "lg:hidden hidden rounded-lg mt-4",
-        classes.mobileMenu,
-        classes.shadow
-      ]}
+    <div
+      id="mobileMenu"
+      class:list={['lg:hidden hidden rounded-lg mt-4', classes.mobileMenu, classes.shadow]}
       aria-labelledby="menuButton"
     >
       <div class="px-2 pt-4 pb-3 space-y-1">
-        {navItems.map(item => (
-          <>
-            {item.children ? (
-              <div class="space-y-1">
-                <div class:list={[
-                  "px-3 py-2 text-sm font-semibold font-roc-grotesk",
-                  classes.active
-                ]}>
-                  {item.label}
-                </div>
-                {item.children.map(child => (
-                  
-                    <a href={child.href}
+        {
+          navItems.map((item) => (
+            <>
+              {item.children ? (
+                <div class="space-y-1">
+                  <div
                     class:list={[
-                      "block px-3 py-2 text-base rounded-md pl-6 transition-colors",
-                      classes.text,
-                      classes.mobileMenuHover,
-                      { [classes.active]: currentPath === child.href }
+                      'px-3 py-2 text-sm font-semibold font-roc-grotesk',
+                      classes.active,
                     ]}
-                    aria-current={currentPath === child.href ? "page" : undefined}
                   >
-                    {child.label}
-                  </a>
-                ))}
-              </div>
-            ) : (
-              
-                <a href={item.href}
-                class:list={[
-                  "block px-3 py-2 text-base rounded-md transition-colors",
-                  classes.text,
-                  classes.mobileMenuHover,
-                  { [classes.active]: currentPath === item.href }
-                ]}
-                aria-current={currentPath === item.href ? "page" : undefined}
-              >
-                {item.label}
-              </a>
-            )}
-          </>
-        ))}
+                    {item.label}
+                  </div>
+                  {item.children.map((child) => (
+                    <a
+                      href={child.href}
+                      class:list={[
+                        'block px-3 py-2 text-base rounded-md pl-6 transition-colors',
+                        classes.text,
+                        classes.mobileMenuHover,
+                        { [classes.active]: currentPath === child.href },
+                      ]}
+                      aria-current={currentPath === child.href ? 'page' : undefined}
+                    >
+                      {child.label}
+                    </a>
+                  ))}
+                </div>
+              ) : (
+                <a
+                  href={item.href}
+                  class:list={[
+                    'block px-3 py-2 text-base rounded-md transition-colors',
+                    classes.text,
+                    classes.mobileMenuHover,
+                    { [classes.active]: currentPath === item.href },
+                  ]}
+                  aria-current={currentPath === item.href ? 'page' : undefined}
+                >
+                  {item.label}
+                </a>
+              )}
+            </>
+          ))
+        }
       </div>
     </div>
   </div>
@@ -268,7 +267,7 @@ const currentPath = Astro.url.pathname;
 
     const currentScrollPos = window.scrollY;
     const variant = navbar.dataset.variant;
-    
+
     // Add/remove background and shadow based on scroll position
     if (currentScrollPos > 20) {
       if (variant === 'light') {
@@ -278,9 +277,9 @@ const currentPath = Astro.url.pathname;
       }
     } else {
       navbar.classList.remove(
-        'bg-white/95', 
-        'bg-surface-1/95', 
-        'backdrop-blur-sm', 
+        'bg-white/95',
+        'bg-surface-1/95',
+        'backdrop-blur-sm',
         'shadow-lg',
         'shadow-gray-200/50',
         'shadow-black/20'
@@ -298,7 +297,7 @@ const currentPath = Astro.url.pathname;
   });
 
   // Improve dropdown behavior
-  document.querySelectorAll('[data-dropdown]').forEach(dropdown => {
+  document.querySelectorAll('[data-dropdown]').forEach((dropdown) => {
     const button = dropdown.querySelector('button');
     const menu = dropdown.querySelector('[role="menu"]');
     let timeout;
@@ -343,15 +342,21 @@ const currentPath = Astro.url.pathname;
 <style>
   #navbar {
     transform: translateY(0);
-    transition: transform 0.3s ease-in-out, background-color 0.3s ease, box-shadow 0.3s ease;
+    transition:
+      transform 0.3s ease-in-out,
+      background-color 0.3s ease,
+      box-shadow 0.3s ease;
   }
 
-  [role="menu"] {
+  [role='menu'] {
     transform-origin: top;
-    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+    transition:
+      opacity 0.2s ease,
+      visibility 0.2s ease,
+      transform 0.2s ease;
   }
 
-  [role="menuitem"] {
+  [role='menuitem'] {
     margin: 2px 0;
   }
 </style>

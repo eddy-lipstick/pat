@@ -1,18 +1,27 @@
-import { defineCollection, reference, z } from "astro:content";
-import { glob } from "astro/loaders";
+import { defineCollection, reference, z } from 'astro:content';
+import { glob } from 'astro/loaders';
 
 // Constants
-const PILLARS = ["Tech", "Legal", "Design"] as const;
+const PILLARS = ['Tech', 'Legal', 'Design'] as const;
 const STAKEHOLDERS = [
-  "Toezichthouders",
-  "Rechters en arbiters",
-  "Investeerders",
-  "Bestuur",
-  "Klanten",
-  "Sales team",
+  'Toezichthouders',
+  'Rechters en arbiters',
+  'Investeerders',
+  'Bestuur',
+  'Klanten',
+  'Sales team',
   "Collega's",
-  "Algemene publiek",
+  'Algemene publiek',
 ] as const;
+
+const lessonSchema = z.object({
+  title: z.string().min(1),
+  description: z.string().min(1),
+  videoUrl: z.string().url(),
+  duration: z.string(), // Format: "MM:SS"
+  order: z.number(),
+  draft: z.boolean().default(false),
+});
 
 const timelineEntrySchema = z.object({
   phase: z.string(),
@@ -23,7 +32,7 @@ const timelineEntrySchema = z.object({
 // Shared schemas
 const imageSchema = z.object({
   url: z.string(),
-  alt: z.string().min(1, "Alt text is required"),
+  alt: z.string().min(1, 'Alt text is required'),
   width: z.number().optional(),
   height: z.number().optional(),
 });
@@ -57,7 +66,7 @@ const quoteSchema = z.object({
 const mediaSchema = z.object({
   src: z.string(),
   alt: z.string(),
-  type: z.enum(["full", "grid", "slider"]),
+  type: z.enum(['full', 'grid', 'slider']),
 });
 
 const beforeAfterSchema = z.object({
@@ -66,7 +75,6 @@ const beforeAfterSchema = z.object({
   alt: z.string(),
 });
 
-// src/content.config.js
 // Collection Schemas
 const caseStudySchema = z.object({
   title: z.string().min(1),
@@ -74,7 +82,7 @@ const caseStudySchema = z.object({
   cover_image: z
     .object({
       src: z.string(),
-      alt: z.string().default("Case study cover image"),
+      alt: z.string().default('Case study cover image'),
     })
     .optional(),
 
@@ -104,13 +112,28 @@ const caseStudySchema = z.object({
     .optional(),
   images: z.array(mediaSchema).optional(),
   beforeAfter: z.array(beforeAfterSchema).optional(),
-  teamMember: reference("team").optional(), // This replaces the old teamMemberSchema
+  teamMember: reference('team').optional(), // This replaces the old teamMemberSchema
   timeline: z
     .object({
       entries: z.array(timelineEntrySchema),
     })
     .optional(),
 });
+
+const courseSchema = z.object({
+  title: z.string().min(1),
+  description: z.string().min(1),
+  coverImage: z.string(),
+  duration: z.string(), // Total course duration
+  lessonsCount: z.number(),
+  featured: z.boolean().default(false),
+  draft: z.boolean().default(false),
+  level: z.enum(['beginner', 'Tips van Dielis', 'advanced']),
+  tags: z.array(z.string()),
+  updatedDate: z.coerce.date(),
+  publishedDate: z.coerce.date(),
+});
+
 const teamSchema = z.object({
   name: z.string().min(1),
   role: z.string().min(1),
@@ -134,14 +157,70 @@ const articleSchema = z.object({
   title: z.string().min(1),
   description: z.string().min(1),
   publishDate: z.coerce.date(),
-  author: reference("team"),
+  author: reference('team'),
   tags: z.array(z.string()).min(1),
   coverImage: z.string().optional(),
   featured: z.boolean().default(false),
-  relatedCaseStudies: z.array(reference("case-studies")).optional(),
+  relatedCaseStudies: z.array(reference('case-studies')).optional(),
   readingTime: z.number().optional(),
 });
 
+const testimonialSchema = z.object({
+  quote: z.string(),
+  author: z.string(),
+  role: z.string(),
+  company: z.string().optional(),
+  image: z.string().optional(),
+});
+
+const trainingSchema = z.object({
+  title: z.string().min(1),
+  description: z.string().min(1),
+  publishDate: z.coerce.date(),
+
+  // Training specific info
+  duration: z.string(), // e.g., "4 hours", "1 day"
+  level: z.enum(['beginner', 'intermediate', 'advanced']),
+  maxParticipants: z.number().optional(),
+  language: z.enum(['nl', 'en']).default('nl'),
+  location: z.enum(['online', 'in-person', 'hybrid']),
+  price: z.string().optional(),
+
+  // Content organization
+  learningObjectives: z.array(z.string()),
+  modules: z.array(
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      duration: z.string().optional(),
+    }),
+  ),
+
+  // Related content
+  trainers: z.array(reference('team')),
+  prerequisites: z.array(z.string()).optional(),
+  includes: z.array(z.string()).optional(), // What's included in the training
+
+  // Social proof
+  testimonials: z.array(testimonialSchema).optional(),
+
+  // Media and metadata
+  coverImage: z.string().optional(),
+  gallery: z.array(z.string()).optional(),
+  tags: z.array(z.string()).min(1),
+  featured: z.boolean().default(false),
+
+  // Upcoming dates
+  upcomingDates: z
+    .array(
+      z.object({
+        date: z.coerce.date(),
+        spots: z.number().optional(),
+        location: z.string().optional(),
+      }),
+    )
+    .optional(),
+});
 const approachSchema = z.object({
   title: z.string().min(1),
   description: z.string().min(1),
@@ -158,7 +237,7 @@ const approachSchema = z.object({
         title: z.string().min(1),
         result: z.string().min(1),
         slug: z.string().min(1),
-      })
+      }),
     )
     .optional(),
   order: z.number().optional(),
@@ -168,7 +247,7 @@ const approachSchema = z.object({
 const newsSchema = z.object({
   title: z.string(),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-  type: z.enum(["speaking", "award", "news", "project"]),
+  type: z.enum(['speaking', 'award', 'news', 'project']),
   featured: z.boolean(),
   summary: z.string(),
   labels: z.array(z.string()),
@@ -183,43 +262,67 @@ const newsSchema = z.object({
 
 // Export collections with new loader pattern
 export const collections = {
-  "case-studies": defineCollection({
+  'case-studies': defineCollection({
     loader: glob({
-      pattern: "**/[^_]*.{md,mdx}",
-      base: "./src/content/case-studies",
+      pattern: '**/[^_]*.{md,mdx}',
+      base: './src/content/case-studies',
     }),
     schema: caseStudySchema,
   }),
 
   team: defineCollection({
     loader: glob({
-      pattern: "**/[^_]*.{md,mdx}",
-      base: "./src/content/team",
+      pattern: '**/[^_]*.{md,mdx}',
+      base: './src/content/team',
     }),
     schema: teamSchema,
   }),
 
   articles: defineCollection({
     loader: glob({
-      pattern: "**/[^_]*.{md,mdx}",
-      base: "./src/content/articles",
+      pattern: '**/[^_]*.{md,mdx}',
+      base: './src/content/articles',
     }),
     schema: articleSchema,
   }),
 
+  training: defineCollection({
+    loader: glob({
+      pattern: '**/[^_]*.{md,mdx}',
+      base: './src/content/training',
+    }),
+    schema: trainingSchema,
+  }),
+
   approach: defineCollection({
     loader: glob({
-      pattern: "**/[^_]*.{md,mdx}",
-      base: "./src/content/approach",
+      pattern: '**/[^_]*.{md,mdx}',
+      base: './src/content/approach',
     }),
     schema: approachSchema,
   }),
 
   news: defineCollection({
     loader: glob({
-      pattern: "**/[^_]*.{md,mdx}",
-      base: "./src/content/news",
+      pattern: '**/[^_]*.{md,mdx}',
+      base: './src/content/news',
     }),
     schema: newsSchema,
+  }),
+
+  courses: defineCollection({
+    loader: glob({
+      pattern: '**/[^_]*.{md,mdx}',
+      base: './src/content/learn/courses',
+    }),
+    schema: courseSchema,
+  }),
+
+  lessons: defineCollection({
+    loader: glob({
+      pattern: '**/[^_]*.{md,mdx}',
+      base: './src/content/learn/lessons',
+    }),
+    schema: lessonSchema,
   }),
 };

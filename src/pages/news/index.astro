@@ -1,0 +1,63 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { Card } from '@/components/ui/card';
+import Hero from '@/components/Hero.astro';
+
+const newsItems = await getCollection('news');
+const sortedNews = newsItems.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+---
+
+<BaseLayout title="News & Updates | Legal Design Agency">
+  <div class="min-h-screen space-y-8 relative">
+    <Hero
+      class="min-h-[60vh]"
+      subtitle="Nieuws"
+      title="Het laatste nieuws van Patroon"
+      description="Blijf op de hoogte van onze projecten, evenementen en ontwikkelingen."
+    />
+
+    <div class="container mx-auto">
+      <div class="grid gap-4">
+        {
+          sortedNews.map((item) => (
+            <a href={`/news/${item.id}`} class="block group">
+              <Card class="bg-surface-1 border-surface-2 overflow-hidden transition-all duration-300 hover:bg-surface-2 hover:scale-[1.01] hover:shadow-lg">
+                <div class="grid md:grid-cols-[2fr,1fr] gap-6">
+                  <div class="p-6 space-y-4">
+                    <div class="space-y-2">
+                      <div class="flex items-center gap-2">
+                        <span class="text-sm text-text-tertiary">
+                          {new Date(item.data.date).toLocaleDateString('nl-NL', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                          })}
+                        </span>
+                      </div>
+                      <h2 class="text-xl font-bold text-text-primary group-hover:text-primary transition-colors">
+                        {item.data.title}
+                      </h2>
+                      <p class="text-text-secondary line-clamp-3">{item.data.summary}</p>
+                    </div>
+                  </div>
+                  {item.data.image && (
+                    <div class="relative h-full min-h-[200px]">
+                      <img
+                        src={item.data.image.src}
+                        alt={item.data.image.alt}
+                        class="absolute inset-0 w-full h-full object-cover"
+                      />
+                    </div>
+                  )}
+                </div>
+              </Card>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</BaseLayout>

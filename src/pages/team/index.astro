@@ -2,6 +2,8 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TeamCard from '../../components/team/TeamCard.astro';
+import Hero from '@/components/Hero.astro';
+
 
 interface TeamMember {
   id: string;  // Changed from slug to id
@@ -47,8 +49,19 @@ console.log('Sorted Team Members:', sortedTeamMembers);
 
 <BaseLayout title="Our Team | Kiwi">
   <main class="mx-auto px-4 py-8">
-    <h1 class="text-4xl font-bold mb-8">Our Team</h1>
-    
+       <!-- Hero Section -->
+       <Hero
+       class="min-h-[60vh]"
+       subtitle="Ons team"
+       title="Juristen, ontwerpers en techneuten."
+       
+     >
+       <div class="">      
+                    
+       </div>
+     </Hero>
+  
+       
     {error && (
       <div class="text-red-500 mb-4">
         Error loading team members: {error?.message}

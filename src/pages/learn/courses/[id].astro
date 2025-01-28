@@ -1,0 +1,133 @@
+---
+// src/pages/lessen/[...slug].astro
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { ChevronLeft, ChevronRight, Clock, BookOpen } from 'lucide-react';
+import VimeoPlayer from '@/components/VimeoPlayer';
+
+export async function getStaticPaths() {
+  const lessons = await getCollection('lessons');
+  return lessons.map((lesson) => ({
+    params: { id: lesson.id },
+    props: { lesson },
+  }));
+}
+
+const { lesson } = Astro.props;
+const { Content, headings } = await render(lesson);
+
+// Get all lessons for navigation
+const allLessons = await getCollection('lessons', ({ data }) => !data.draft);
+const sortedLessons = allLessons.sort((a, b) => a.data.order - b.data.order);
+const currentIndex = sortedLessons.findIndex((l) => l.id === lesson.id);
+const prevLesson = currentIndex > 0 ? sortedLessons[currentIndex - 1] : null;
+const nextLesson = currentIndex < sortedLessons.length - 1 ? sortedLessons[currentIndex + 1] : null;
+---
+
+<BaseLayout title={`${lesson.data.title} - Legal Design Academy`}>
+  <div class="container mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      {/* Main Content */}
+      <div class="lg:col-span-2">
+        {/* Video Section */}
+        <Card>
+          <div class="p-6">
+            <h1 class="text-3xl font-bold mb-4">{lesson.data.title}</h1>
+
+            <VimeoPlayer videoUrl={lesson.data.videoUrl} title={lesson.data.title} client:load />
+          </div>
+        </Card>
+
+        {/* Lesson Navigation */}
+        <div class="flex justify-between py-6">
+          <div>
+            {
+              prevLesson && (
+                <Button variant="outline" asChild>
+                  <a href={`/learn/courses/${prevLesson.id}`} class="flex items-center gap-2">
+                    <ChevronLeft class="h-4 w-4" />
+                    <div class="flex flex-col items-start">
+                      <span class="text-xs text-muted-foreground">Vorige les</span>
+                    </div>
+                  </a>
+                </Button>
+              )
+            }
+          </div>
+
+          <div>
+            {
+              nextLesson && (
+                <Button asChild>
+                  <a href={`/learn/courses/${nextLesson.id}`} class="flex items-center gap-2">
+                    <div class="flex flex-col items-end">
+                      <span class="text-xs text-muted-foreground">Volgende les</span>
+                    </div>
+                    <ChevronRight class="h-4 w-4" />
+                  </a>
+                </Button>
+              )
+            }
+          </div>
+        </div>
+
+        {/* Lesson Content */}
+        <Card>
+          <div class="p-6">
+            <article
+              class="prose prose-lg max-w-none dark:prose-invert
+              prose-h1:text-foreground
+              prose-h2:text-foreground
+              prose-h3:text-foreground
+              prose-h4:text-foreground
+              prose-h5:text-foreground
+              prose-h6:text-foreground
+              prose-p:text-foreground
+              prose-li:text-foreground
+              prose-strong:text-foreground
+              prose-em:text-foreground
+              prose-code:text-foreground
+              prose-blockquote:text-foreground
+              prose-a:text-primary prose-a:no-underline hover:prose-a:underline"
+            >
+              <Content />
+            </article>
+          </div>
+        </Card>
+      </div>
+
+      {/* Sidebar */}
+      <div class="lg:col-span-1">
+        <div class="sticky top-24">
+          <Card>
+            <div class="p-4">
+              <h2 class="text-xl font-semibold mb-4">Alle afleveringen</h2>
+              <ScrollArea class="h-[calc(100vh-300px)]">
+                <div class="space-y-2 pr-4">
+                  {
+                    sortedLessons.map((l, index) => (
+                      <a
+                        href={`/learn/courses/${l.id}`}
+                        class={`block p-3 rounded-lg transition-colors ${
+                          l.id === lesson.id
+                            ? 'bg-primary text-primary-foreground'
+                            : 'hover:bg-muted'
+                        }`}
+                      >
+                        <div class="text-sm text-muted-foreground">Aflevering {index + 1}</div>
+                        <div class="font-medium">{l.data.title}</div>
+                      </a>
+                    ))
+                  }
+                </div>
+              </ScrollArea>
+            </div>
+          </Card>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

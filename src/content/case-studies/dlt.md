@@ -1,5 +1,5 @@
 ---
-title: "De eerste kaart van het Nederlandse legal tech landschap"
+title: "Dutch Legal Tech Map"
 introduction: "Het Nederlandse legal tech ecosysteem groeit snel, maar een overzicht ontbrak. Samen met Dutch Legal Tech creëerden we de eerste interactieve kaart van alle legal tech startups in Nederland. Een levend document dat de dynamiek van de sector visualiseert en verbindingen zichtbaar maakt."
 
 cover_image:
@@ -22,7 +22,7 @@ metadata:
     - "Information Design"
     - "Visual Design"
   website: "legaltechmap.nl"
-  relatedSkills: ["Information Design", "Legal Brand Identity"]
+  relatedSkills: ["Information Design", "Brand Identity", "Legal Content"]
 
 heroVideo:
   src: "/case-studies/dlt/dlt-clip.mp4"

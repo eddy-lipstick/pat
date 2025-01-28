@@ -23,7 +23,13 @@ metadata:
     - "Contract Design"
     - "Legal Design"
     - "Employment Law"
-  relatedSkills: ["Contract Design", "Employment Law", "Sustainability"]
+  relatedSkills:
+    [
+      "Contract Redesign",
+      "Arbeidsovereenkomst",
+      "Contract UX",
+      "Brand Identity",
+    ]
 
 expandableContent:
   - title: "Van standaard naar duurzaam"

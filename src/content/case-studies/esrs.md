@@ -21,7 +21,13 @@ metadata:
   services:
     - "Information Design"
   website: "www.hoi.nl"
-  relatedSkills: ["Information Design", "Legal Content Design"]
+  relatedSkills:
+    [
+      "Information Design",
+      "Legal Content",
+      "Klikbare handleidingen",
+      "Process Design",
+    ]
 
 heroVideo:
   src: "/esrs/clip-1.mp4"

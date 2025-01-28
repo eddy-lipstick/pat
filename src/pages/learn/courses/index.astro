@@ -1,259 +1,173 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
+// src/pages/learn/courses/index.astro
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { Progress } from '@/components/ui/progress';
+import { Button } from '@/components/ui/button';
+import { Card, CardHeader, CardContent } from '@/components/ui/card';
+import { Play, Clock, ChevronRight } from 'lucide-react';
 
-const courses = await getCollection('courses');
-const allTags = [...new Set(courses.flatMap(course => course.data.tags))].sort();
-const levels = ['beginner', 'intermediate', 'advanced'];
+// Add debug logging
+let debugLog = [];
 
-// Sort by publish date
-courses.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
----
+let courseData;
+let instructor;
+let lessons = [];
+let error = null;
 
-<BaseLayout title="Video Courses">
-  <div class="max-w-7xl mx-auto px-4 py-12">
-    <!-- Header section -->
-    <div class="max-w-2xl mx-auto mb-16">
-      <h1 class="text-4xl font-bold mb-4">Video Courses</h1>
-      <p class="text-xl text-muted-foreground mb-8">
-        Master new skills with our comprehensive video courses.
-      </p>
-      
-      <div class="relative">
-        <svg
-          class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <circle cx="11" cy="11" r="8" />
-          <path d="m21 21-4.3-4.3" />
-        </svg>
-        <Input 
-          type="search" 
-          placeholder="Search courses..." 
-          class="pl-9"
-          id="searchInput"
-        />
-      </div>
-      
-      <!-- Filters -->
-      <div class="flex flex-wrap gap-4 mt-4">
-        <div>
-          <label class="text-sm font-medium mb-2 block">Level</label>
-          <div class="flex gap-2" id="levelFilters">
-            {
-              levels.map((level) => {
-                return (
-                  <button
-                    data-level={level}
-                    class="level-filter bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-full px-3 py-1 text-sm transition-colors capitalize"
-                  >
-                    {level}
-                  </button>
-                );
-              })
-            }
-          </div>
-        </div>
+try {
+  debugLog.push('Starting to fetch courses');
+  // Fetch courses
+  const courses = await getCollection('courses');
+  debugLog.push(`Found ${courses.length} courses`);
 
-        <div class="flex-1">
-          <label class="text-sm font-medium mb-2 block">Topics</label>
-          <div class="flex flex-wrap gap-2" id="tagFilters">
-            {
-              allTags.map((tag) => {
-                return (
-                  <button
-                    data-tag={tag}
-                    class="tag-filter bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-full px-3 py-1 text-sm transition-colors"
-                  >
-                    {tag}
-                  </button>
-                );
-              })
-            }
-          </div>
-        </div>
-      </div>
-    </div>
+  courseData = courses.find((course) => !course.data.draft);
+  debugLog.push(`Selected course: ${courseData?.id ?? 'None'}`);
 
-    <!-- Course Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" id="coursesGrid">
-      {
-        courses.map((course) => {
-          return (
-            <Card 
-              class="course-card" 
-              data-tags={JSON.stringify(course.data.tags)}
-              data-level={course.data.level}
-            >
-              <CardHeader>
-                {course.data.coverImage && (
-                  <div class="relative w-full aspect-video mb-4 overflow-hidden rounded-lg">
-                    <img
-                      src={course.data.coverImage}
-                      alt={course.data.title}
-                      class="object-cover w-full h-full transition-transform hover:scale-105 duration-300"
-                    />
-                  </div>
-                )}
-                <CardTitle class="line-clamp-2">{course.data.title}</CardTitle>
-                <CardDescription class="flex items-center gap-4">
-                  <span>{course.data.duration}</span>
-                  <Badge>{course.data.level}</Badge>
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p class="text-sm text-muted-foreground mb-4">
-                  {course.data.description}
-                </p>
-                <div class="space-y-2">
-                  <h4 class="font-medium">What you'll learn:</h4>
-                  <ul class="space-y-1">
-                    {
-                      course.data.modules.slice(0, 3).map((module) => {
-                        return (
-                          <li class="text-sm text-muted-foreground flex items-center gap-2">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="16"
-                              height="16"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              class="text-primary"
-                            >
-                              <path d="m8 12 2.7 2.7 5.3-5.4" />
-                            </svg>
-                            {module.title}
-                          </li>
-                        );
-                      })
-                    }
-                    {course.data.modules.length > 3 && (
-                      <li class="text-sm text-muted-foreground">
-                        + {course.data.modules.length - 3} more modules
-                      </li>
-                    )}
-                  </ul>
-                </div>
-                <div class="flex flex-wrap gap-2 mt-4">
-                  {
-                    course.data.tags.map((tag) => {
-                      return (
-                        <Badge variant="outline" class="text-xs">{tag}</Badge>
-                      );
-                    })
-                  }
-                </div>
-              </CardContent>
-              <CardFooter>
-                <a 
-                  href={`/learn/courses/${course.slug}`}
-                  class="text-primary hover:underline inline-flex items-center gap-1"
-                >
-                  Start learning
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </svg>
-                </a>
-              </CardFooter>
-            </Card>
-          );
-        })
+  if (courseData) {
+    debugLog.push('Course data:', JSON.stringify(courseData.data, null, 2));
+
+    // Only try to fetch instructor if we have a valid instructor ID
+    if (courseData.data.instructor) {
+      try {
+        debugLog.push(`Attempting to fetch instructor with ID: ${courseData.data.instructor}`);
+        instructor = await getEntry('team', courseData.data.instructor);
+        debugLog.push(`Found instructor: ${instructor?.id ?? 'None'}`);
+      } catch (instructorError) {
+        debugLog.push(`Error loading instructor: ${instructorError.message}`);
+        console.error('Error loading instructor:', instructorError);
       }
-    </div>
-  </div>
-</BaseLayout>
-
-<script is:inline>
-  document.addEventListener('DOMContentLoaded', () => {
-    const searchInput = document.getElementById('searchInput');
-    const courseCards = document.querySelectorAll('.course-card');
-    const tagFilters = document.querySelectorAll('.tag-filter');
-    const levelFilters = document.querySelectorAll('.level-filter');
-    
-    let activeTagFilters = new Set();
-    let activeLevelFilters = new Set();
-
-    function filterCourses() {
-      const searchTerm = searchInput.value.toLowerCase();
-
-      courseCards.forEach(card => {
-        const title = card.querySelector('.line-clamp-2').textContent.toLowerCase();
-        const description = card.querySelector('.text-muted-foreground').textContent.toLowerCase();
-        const tags = JSON.parse(card.dataset.tags);
-        const level = card.dataset.level;
-        
-        const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
-        const matchesTags = activeTagFilters.size === 0 || 
-          tags.some(tag => activeTagFilters.has(tag.toLowerCase()));
-        const matchesLevel = activeLevelFilters.size === 0 ||
-          activeLevelFilters.has(level);
-
-        card.style.display = matchesSearch && matchesTags && matchesLevel ? 'flex' : 'none';
-      });
+    } else {
+      debugLog.push('No instructor ID found in course data');
     }
 
-    searchInput.addEventListener('input', filterCourses);
+    // Fetch lessons
+    try {
+      const allLessons = await getCollection('lessons');
+      debugLog.push(`Found ${allLessons.length} total lessons`);
+      lessons = allLessons
+        .filter((lesson) => !lesson.data.draft)
+        .sort((a, b) => a.data.order - b.data.order);
+      debugLog.push(`Selected ${lessons.length} active lessons`);
+    } catch (lessonsError) {
+      debugLog.push(`Error loading lessons: ${lessonsError.message}`);
+      console.error('Error loading lessons:', lessonsError);
+    }
+  }
+} catch (e) {
+  error = e.message;
+  debugLog.push(`Error: ${e.message}`);
+  console.error('Error loading course data:', e);
+}
 
-    tagFilters.forEach(button => {
-      button.addEventListener('click', () => {
-        const tag = button.dataset.tag.toLowerCase();
-        
-        if (activeTagFilters.has(tag)) {
-          activeTagFilters.delete(tag);
-          button.classList.remove('bg-primary', 'text-primary-foreground');
-          button.classList.add('bg-secondary', 'text-secondary-foreground');
-        } else {
-          activeTagFilters.add(tag);
-          button.classList.remove('bg-secondary', 'text-secondary-foreground');
-          button.classList.add('bg-primary', 'text-primary-foreground');
-        }
-        
-        filterCourses();
-      });
-    });
+// Calculate progress
+const totalLessons = lessons.length;
+const completedLessons = 0;
+const progressPercentage = totalLessons > 0 ? (completedLessons / totalLessons) * 100 : 0;
+---
 
-    levelFilters.forEach(button => {
-      button.addEventListener('click', () => {
-        const level = button.dataset.level;
-        
-        if (activeLevelFilters.has(level)) {
-          activeLevelFilters.delete(level);
-          button.classList.remove('bg-primary', 'text-primary-foreground');
-          button.classList.add('bg-secondary', 'text-secondary-foreground');
-        } else {
-          activeLevelFilters.add(level);
-          button.classList.remove('bg-secondary', 'text-secondary-foreground');
-          button.classList.add('bg-primary', 'text-primary-foreground');
-        }
-        
-        filterCourses();
-      });
-    });
-  });
-</script>
+<BaseLayout title={courseData?.data.title ?? 'Legal Design Cursus'}>
+  <main class="container mx-auto px-4 py-8 max-w-7xl">
+    {/* Debug output in development */}
+
+    {
+      error && (
+        <div class="rounded-lg bg-destructive/10 text-destructive p-4 mb-8">
+          <p>Er is een fout opgetreden bij het laden van de cursus: {error}</p>
+        </div>
+      )
+    }
+
+    {
+      !error && courseData && (
+        <>
+          <section class="relative overflow-hidden rounded-lg bg-card p-8 mb-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div>
+                <div class="flex flex-wrap gap-3 mb-4">
+                  <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm">
+                    {courseData.data.level}
+                  </span>
+                </div>
+
+                <h1 class="text-4xl font-bold mb-4">{courseData.data.title}</h1>
+                <p class="text-lg text-muted-foreground mb-6">{courseData.data.description}</p>
+
+                {instructor && (
+                  <div class="flex items-center gap-4 mb-8 p-4 rounded-lg bg-card/50">
+                    {instructor.data.profileImage && (
+                      <img
+                        src={instructor.data.profileImage}
+                        alt={instructor.data.name}
+                        class="w-12 h-12 rounded-full bg-secondary/20"
+                      />
+                    )}
+                    <div>
+                      <p class="font-medium">Tips van {instructor.data.name}</p>
+                      <p class="text-sm text-muted-foreground">{instructor.data.role}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {courseData.data.coverImage && (
+                <div class="relative aspect-video rounded-lg overflow-hidden bg-card/50">
+                  <img
+                    src={courseData.data.coverImage}
+                    alt={courseData.data.title}
+                    class="object-cover w-full h-full"
+                  />
+                </div>
+              )}
+            </div>
+          </section>
+
+          {/* Lessons List */}
+          {lessons.length > 0 && (
+            <section>
+              <h2 class="text-2xl font-semibold mb-6">Lessen</h2>
+              <div class="grid gap-4">
+                {lessons.map((lesson, index) => (
+                  <Card class="relative group">
+                    <a
+                      href={`/learn/courses/${lesson.id}`}
+                      class="block p-6 hover:bg-indigo-400 transition-colors"
+                    >
+                      <div class="flex justify-between items-start gap-4">
+                        <div class="flex-1 min-w-0">
+                          <div class="flex items-center gap-2 text-sm text-muted-foreground mb-1">
+                            <span class="font-medium text-primary">Aflevering {index + 1}</span>
+                          </div>
+                          <h3 class="text-lg font-medium mb-2 truncate">{lesson.data.title}</h3>
+                          <p class="text-muted-foreground line-clamp-2">
+                            {lesson.data.description}
+                          </p>
+                        </div>
+                        <div class="flex items-center">
+                          <Button variant="ghost" size="icon" class="text-primary">
+                            <ChevronRight class="w-5 h-5" />
+                          </Button>
+                        </div>
+                      </div>
+                    </a>
+                  </Card>
+                ))}
+              </div>
+            </section>
+          )}
+        </>
+      )
+    }
+
+    {
+      !error && !courseData && (
+        <div class="flex items-center justify-center min-h-[50vh]">
+          <div class="text-center">
+            <h1 class="text-2xl font-bold mb-4">Cursus wordt geladen...</h1>
+            <p class="text-muted-foreground">Even geduld terwijl we de cursusinhoud laden.</p>
+          </div>
+        </div>
+      )
+    }
+  </main>
+</BaseLayout>

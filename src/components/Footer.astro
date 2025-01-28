@@ -1,0 +1,196 @@
+---
+import { getCollection } from 'astro:content';
+import { Separator } from '@/components/ui/separator';
+import { Icon } from 'astro-icon';
+
+// Fetch data at build time
+const allNews = await getCollection('news');
+const allCases = await getCollection('case-studies');
+const allArticles = await getCollection('articles');
+const allApproaches = await getCollection('approach');
+
+// Get latest 5 items from each collection, sorted by date if available
+const recentNews = allNews
+  .sort((a, b) => {
+    const dateA = new Date(a.data.date);
+    const dateB = new Date(b.data.date);
+    return isNaN(dateB) || isNaN(dateA) ? 0 : dateB.getTime() - dateA.getTime();
+  })
+  .slice(0, 5);
+
+const recentCases = allCases.slice(0, 5);
+
+const recentArticles = allArticles
+  .sort((a, b) => {
+    const dateA = a.data.publishDate;
+    const dateB = b.data.publishDate;
+    return isNaN(dateB) || isNaN(dateA) ? 0 : dateB.getTime() - dateA.getTime();
+  })
+  .slice(0, 5);
+
+const recentApproaches = allApproaches
+  .sort((a, b) => (b.data.order || 0) - (a.data.order || 0))
+  .slice(0, 15);
+
+const currentYear = new Date().getFullYear();
+
+// Define the props interface for the FooterLink component
+interface FooterLinkProps {
+  href: string;
+  text: string;
+}
+---
+
+<!-- Helper component for consistent link styling -->{
+  /* Create FooterLink as an Astro component template */
+}
+{/* Use fragment to avoid unnecessary wrapper elements */}
+<Fragment>
+  {/* Main Footer Component */}
+  <footer class="bg-surface-1 text-text-primary w-full py-16">
+    <div class="container mx-auto">
+      <!-- Main Content Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <!-- Company Info -->
+        <div class="space-y-6">
+          <a
+            href="/"
+            class="text-2xl font-bold text-text-1 hover:text-feitlijn-purple transition-colors flex items-center gap-2 font-roc-grotesk"
+            aria-label="Patroon Home"
+          >
+            <img src="/logo.svg" alt="Patroon Logo" class="h-8 w-auto" />
+          </a>
+          <p class="text-base text-text-secondary">
+            Making legal design accessible and engaging through innovative solutions.
+          </p>
+          <div class="flex flex-col space-y-2">
+            <a
+              href="mailto:info@patroon.nl"
+              class="text-sm hover:text-feitlijn-purple transition-colors"
+              aria-label="Email us"
+            >
+              info@patroon.nl
+            </a>
+            <a
+              href="tel:+31612345678"
+              class="text-sm hover:text-feitlijn-purple transition-colors"
+              aria-label="Call us"
+            >
+              +31 6 12345678
+            </a>
+          </div>
+        </div>
+
+        <!-- News Column -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-2 text-feitlijn-purple">
+            <h3 class="text-lg font-roc-grotesk font-semibold">Nieuws</h3>
+          </div>
+          <ul class="space-y-3" role="list">
+            {
+              recentNews.map((item) => (
+                <li>
+                  <a
+                    href={`/news/${item.id}`}
+                    class="text-sm text-text-secondary hover:text-feitlijn-purple transition-colors duration-200 flex items-center gap-2 group"
+                  >
+                    {item.data.title}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <!-- Cases Column -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-2 text-feitlijn-purple">
+            <h3 class="text-lg font-roc-grotesk font-semibold">Projecten</h3>
+          </div>
+          <ul class="space-y-3" role="list">
+            {
+              recentCases.map((item) => (
+                <li>
+                  <a
+                    href={`/case-studies/${item.id}`}
+                    class="text-sm text-text-secondary hover:text-feitlijn-purple transition-colors duration-200 flex items-center gap-2 group"
+                  >
+                    {item.data.title}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <!-- Articles Column -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-2 text-feitlijn-purple">
+            <h3 class="text-lg font-roc-grotesk font-semibold">Blog</h3>
+          </div>
+          <ul class="space-y-3" role="list">
+            {
+              recentArticles.map((item) => (
+                <li>
+                  <a
+                    href={`/learn/articles/${item.id}`}
+                    class="text-sm text-text-secondary hover:text-feitlijn-purple transition-colors duration-200 flex items-center gap-2 group"
+                  >
+                    {item.data.title}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <!-- Approach Links -->
+      <div class="mb-16">
+        <div class="flex items-center gap-2 text-feitlijn-purple mb-6">
+          <h3 class="text-lg font-roc-grotesk font-semibold">Onze aanpak</h3>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {
+            recentApproaches.map((approach) => (
+              <a
+                href={`/approach/${approach.id}`}
+                class="px-4 py-3 bg-surface-2 rounded-lg hover:bg-surface-3 transition-colors duration-200 text-sm text-text-secondary hover:text-text-primary group flex items-center justify-between"
+                aria-label={`Learn about ${approach.data.title}`}
+              >
+                {approach.data.title}
+              </a>
+            ))
+          }
+        </div>
+      </div>
+
+      <Separator className="my-8 bg-surface-2" />
+
+      <!-- Bottom Section -->
+      <div
+        class="flex flex-col md:flex-row justify-between items-center text-sm text-text-tertiary"
+      >
+        <div class="mb-4 md:mb-0">
+          © {currentYear} Patroon Legal Design B.V.
+        </div>
+        <div class="flex space-x-6">
+          <a
+            href="/privacy"
+            class="hover:text-feitlijn-purple transition-colors"
+            aria-label="Privacy Policy"
+          >
+            Privacy Policy
+          </a>
+          <a
+            href="/terms"
+            class="hover:text-feitlijn-purple transition-colors"
+            aria-label="Terms of Service"
+          >
+            Terms of Service
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</Fragment>

@@ -25,10 +25,10 @@ metadata:
   client: "LC Energy"
   date: "Augustus 2022"
   services:
-    - "Contract Design"
+    - "Contract Redesign"
     - "Legal Design"
     - "Visual Design"
-  relatedSkills: ["Contract Design", "Legal Design", "Visual Design"]
+  relatedSkills: ["Contract Redesign", "Contract UX"]
 
 expandableContent:
   - title: "Van complex naar transparant"

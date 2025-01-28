@@ -4,8 +4,22 @@ import { Button } from '../ui/button';
 import LargeCaseStudyGrid from '@/components/LargeCaseStudyGrid';
 import { getCollection } from 'astro:content';
 
+// Get all case studies and sort by date
 const allCaseStudies = await getCollection('case-studies');
+const sortedCaseStudies = allCaseStudies.sort((a, b) => {
+  // Parse the dates and sort in descending order (newest first)
+  return new Date(b.data.metadata.date).getTime() - new Date(a.data.metadata.date).getTime();
+});
 
+// Get unique services for filtering (if you still need this)
+const allServices = [...new Set(
+  allCaseStudies.flatMap(study => study.data.metadata.relatedSkills)
+)].sort();
+
+// Get unique tags for filtering (if you still need this)
+const allTags = [...new Set(
+  allCaseStudies.flatMap(study => study.data.tags || [])
+)].sort();
 ---
 
 <section class="py-24">
@@ -20,7 +34,7 @@ Bekijk onze projecten      </h2>
     </div>
 
     <div class="container mx-auto px-4 py-12">
-      <LargeCaseStudyGrid studies={allCaseStudies} client:load />
+      <LargeCaseStudyGrid studies={sortedCaseStudies} client:load />
     </div>
   </div>
 </section>

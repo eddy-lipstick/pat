@@ -13,8 +13,11 @@ import { ArrowRight, MessageCircle } from "lucide-react";
 import VideoTestimonials from '../components/VideoTestimonials';
 import OurFormula from '../components/OurFormula';
 import TeamSection from '../components/TeamSection';
+import Hero from '@/components/Hero.astro';
+import Partners from '../components/Partners.astro';
 
-import VennDiagram from '../components/VennDiagram';
+
+
 
 import TeamSection from '../components/TeamSection';
 
@@ -56,67 +59,41 @@ const processedStudies = await Promise.all(
 
 <BaseLayout title="Home">
   {/* Hero Section */}
-    
-<section class="relative min-h-screen overflow-visible">
-  {/* Text Content */}
-  <div class="grid grid-cols-1 lg:grid-cols-2 min-h-screen items-center relative">
-    <div class="px-6 py-16 lg:py-24">
-      <p class="text-[#A5B4FC] text-lg mb-4">Legal design & legal tech studio</p>
-      
-   
-        <h1 class="text-5xl font-bold mb-6 text-text-primary">We maken juridisch werk effectiever</h1>
-        <p class="text-xl text-text-secondary max-w-2xl">
-          Door de combinatie van juridische expertise, slimme technologie en doordacht design helpen we organisaties met:
-        </p>
-        <ul class="mt-6 space-y-4 text-lg text-text-secondary">
-          <li class="flex items-start">
-            <span class="text-feitlijn-purple mr-2">→</span>
-            Tijdrovende juridische taken automatiseren
-          </li>
-          <li class="flex items-start">
-            <span class="text-feitlijn-purple mr-2">→</span>
-            Complexe informatie helder maken
-          </li>
-        </ul>
-  
-      <div class="flex flex-col mt-6 sm:flex-row gap-4">
-        <Button 
-          size="lg" 
-          class="bg-[#E1FF4C] hover:bg-[#E1FF4C]/90 text-black font-medium px-8"
-        >
-          Neem contact op
-        </Button>
-        <Button 
-          size="lg" 
-          variant="outline" 
-          class="border-white/20 text-white hover:bg-white/10"
-        >
-          Lees meer
-        </Button>
-      </div>
-    </div>
 
-    {/* Placeholder for visual balance */}
-    <div class="hidden lg:block"></div>
-  </div>
-
-  {/* BubbleMap positioned higher in the stacking context */}
+  <Hero
+  class="min-h-screen"
+  subtitle="Legal design & legal tech studio"
+  title="We maken juridisch werk effectiever"
+  description="Door de combinatie van juridische expertise, slimme technologie en doordacht design helpen we organisaties met"
+  bulletPoints={[
+    "Tijdrovende juridische taken automatiseren",
+    "Complexe informatie helder maken"
+  ]}
+  primaryButtonText="Neem contact op"
+  primaryButtonHref="/contact"
+  secondaryButtonText="Lees meer"
+  secondaryButtonHref="/about"
+>
   <div class="absolute top-0 right-[-20%] w-[70%] h-full hidden lg:block z-20">
     <BubbleMap client:load caseStudies={bubbleMapCaseStudies} />
   </div>
-</section>  
+</Hero>
+
+    
+
 
   <LogoGrid />
 
-  <VideoTestimonials client:load />
+ 
+ <!-- <VideoTestimonials client:load /> -->
 
 
 
   <ServicesGrid />
 
-  <VennDiagram client:visible />
 
   <OurFormula client:load />
+  <Partners />
   <TeamSection client:load teamMembers={teamMembers} />
 
 
