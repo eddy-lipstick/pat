@@ -99,9 +99,9 @@
     -webkit-hyphens: auto;
     -ms-hyphens: auto;
     hyphens: auto;
-    hyphenate-limit-chars: 6 3 2;
+    hyphenate-limit-chars: 10 4 3;
     hyphenate-limit-lines: 2;
-    hyphenate-limit-zone: 8%;
+    hyphenate-limit-zone: 12%;
     lang: 'nl';
   }
   * {

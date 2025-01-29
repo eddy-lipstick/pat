@@ -186,44 +186,12 @@ const levelColors = {
 
           {/* Training Content */}
           <Card>
-            <CardContent class="prose dark:prose-invert pt-6 max-w-none">
-              <Content />
+            <CardContent>
+              <div class="prose prose-lg max-w-none mb-16 text-foreground">
+                <Content />
+              </div>
             </CardContent>
           </Card>
-
-          {/* Testimonials */}
-          {
-            testimonials && testimonials.length > 0 && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Wat deelnemers zeggen</CardTitle>
-                </CardHeader>
-                <CardContent class="grid gap-6">
-                  {testimonials.map((testimonial) => (
-                    <div class="space-y-4">
-                      <p class="italic text-lg">"{testimonial.quote}"</p>
-                      <div class="flex items-center gap-4">
-                        {testimonial.image && (
-                          <img
-                            src={testimonial.image}
-                            alt={testimonial.author}
-                            class="w-12 h-12 rounded-full"
-                          />
-                        )}
-                        <div>
-                          <p class="font-semibold">{testimonial.author}</p>
-                          <p class="text-sm text-muted-foreground">
-                            {testimonial.role}
-                            {testimonial.company && ` • ${testimonial.company}`}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            )
-          }
         </div>
 
         {/* Sidebar */}

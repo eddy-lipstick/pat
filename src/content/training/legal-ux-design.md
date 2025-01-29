@@ -60,7 +60,7 @@ coverImage: '/images/trainingen/legal-ux.jpg'
 featured: true
 ---
 
-## Voor wie is deze training?
+#### Voor wie is deze training?
 
 Deze workshop is specifiek ontwikkeld voor juridische teams die hun documenten en processen gebruiksvriendelijker willen maken. Ideaal voor:
 
@@ -69,7 +69,7 @@ Deze workshop is specifiek ontwikkeld voor juridische teams die hun documenten e
 - Compliance officers
 - Legal tech specialisten
 
-## Waarom deze training?
+#### Waarom deze training?
 
 In de huidige tijd worden juridische producten steeds vaker direct door de eindgebruiker gebruikt. Goede UX design is daarom essentieel voor:
 
@@ -78,13 +78,13 @@ In de huidige tijd worden juridische producten steeds vaker direct door de eindg
 - Minder vragen en onduidelijkheid
 - Efficiëntere juridische processen
 
-## Praktische informatie
+#### Praktische informatie
 
-### Voorbereiding
+Voorbereiding
 
 We vragen deelnemers om vooraf een juridisch document of proces aan te leveren dat ze willen verbeteren.
 
-### Werkvormen
+Werkvormen
 
 - Interactieve theorie sessies
 - Hands-on workshops

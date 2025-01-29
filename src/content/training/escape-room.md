@@ -60,7 +60,7 @@ coverImage: '/images/trainingen/escape-room.jpg'
 featured: true
 ---
 
-## Voor wie is deze training?
+#### Voor wie is deze training?
 
 Deze escape room is specifiek ontwikkeld voor studenten die kennis willen maken met legal design in een uitdagende, praktijkgerichte setting. Perfect voor:
 
@@ -69,7 +69,7 @@ Deze escape room is specifiek ontwikkeld voor studenten die kennis willen maken 
 - In-house dagen
 - Business courses
 
-## Waarom deze training?
+#### Waarom deze training?
 
 De Legal Design Escape Room biedt een unieke, hands-on ervaring waarin deelnemers:
 
@@ -78,20 +78,20 @@ De Legal Design Escape Room biedt een unieke, hands-on ervaring waarin deelnemer
 - Creatief denken over juridische oplossingen
 - Legal design principes in de praktijk toepassen
 
-## Praktische informatie
+#### Praktische informatie
 
-### Voorbereiding
+Voorbereiding
 
 Geen specifieke voorbereiding nodig. Wij zorgen voor alle materialen en een complete briefing ter plekke.
 
-### Werkvormen
+Werkvormen
 
 - Interactieve cliënt briefing
 - Teamwork challenges
 - Visuele puzzels
 - Praktische legal design opdrachten
 
-### Locatie
+Locatie
 
 De escape room kan worden opgezet op iedere gewenste locatie, bijvoorbeeld:
 

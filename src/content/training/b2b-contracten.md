@@ -46,7 +46,7 @@ coverImage: '/images/trainingen/workshop.jpg'
 featured: false
 ---
 
-## Voor wie is deze training?
+#### Voor wie is deze training?
 
 Deze masterclass is ontwikkeld voor juridische professionals die hun contracten effectiever willen maken. Specifiek geschikt voor:
 
@@ -55,7 +55,7 @@ Deze masterclass is ontwikkeld voor juridische professionals die hun contracten 
 - Advocaten
 - Legal operations professionals
 
-## Waarom deze training?
+#### Waarom deze training?
 
 Moderne B2B contracten moeten niet alleen juridisch waterdicht zijn, maar ook gebruiksvriendelijk. Deze training helpt je bij:
 
@@ -64,13 +64,13 @@ Moderne B2B contracten moeten niet alleen juridisch waterdicht zijn, maar ook ge
 - Verbeteren van de compliance
 - Versterken van zakelijke relaties
 
-## Praktische informatie
+#### Praktische informatie
 
-### Voorbereiding
+Voorbereiding
 
 Deelnemers wordt gevraagd om vooraf een eigen contract aan te leveren voor analyse en verbetering.
 
-### Werkvormen
+Werkvormen
 
 - Expert presentaties
 - Interactieve workshops

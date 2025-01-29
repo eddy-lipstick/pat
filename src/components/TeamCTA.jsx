@@ -95,7 +95,7 @@ const TeamCTA = ({ teamMember }) => {
               onClick={() => setShowCallbackForm((prev) => !prev)}
             >
               <span className="flex items-center justify-center w-full">
-                Bel me terug
+                Bel me
                 <Phone className="ml-2 w-4 h-4" />
               </span>
             </Button>

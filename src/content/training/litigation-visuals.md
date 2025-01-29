@@ -55,7 +55,7 @@ coverImage: '/images/trainingen/litigation-visuals.webp'
 featured: true
 ---
 
-## Voor wie is deze training?
+#### Voor wie is deze training?
 
 Deze masterclass is specifiek ontwikkeld voor advocaten die hun argumentatie willen versterken met effectieve visualisaties. Perfect voor:
 
@@ -64,7 +64,7 @@ Deze masterclass is specifiek ontwikkeld voor advocaten die hun argumentatie wil
 - Advocaten
 - Juridische consultants
 
-## Waarom deze training?
+#### Waarom deze training?
 
 In complexe procedures kan visuele ondersteuning het verschil maken. Deze masterclass helpt je bij:
 
@@ -73,13 +73,13 @@ In complexe procedures kan visuele ondersteuning het verschil maken. Deze master
 - Overtuigende ondersteuning van argumentatie
 - Professionele integratie van visuals in processtukken
 
-## Praktische informatie
+#### Praktische informatie
 
-### Voorbereiding
+Voorbereiding
 
 Deelnemers kunnen vooraf een casus aanleveren waar ze aan werken voor praktische toepassing.
 
-### Werkvormen
+Werkvormen
 
 - Theoretische onderbouwing
 - Praktijkvoorbeelden

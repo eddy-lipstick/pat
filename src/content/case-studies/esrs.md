@@ -20,7 +20,7 @@ metadata:
   date: 'Januari 2025'
   services:
     - 'Information Design'
-  website: 'www.hoi.nl'
+  website: 'https://www.duurzaam-ondernemen.nl/de-esrs-navigator-staat-online/'
   relatedSkills: ['Information Design', 'Legal Content', 'Klikbare handleidingen', 'Process Design']
 
 heroVideo:
