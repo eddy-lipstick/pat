@@ -1,5 +1,5 @@
 ---
-title: 'Patroon genomineerd voor Privacy Awards'
+title: 'Patroon genomineerd voor Privacy Award'
 date: '2024-12-10'
 type: 'award'
 featured: true

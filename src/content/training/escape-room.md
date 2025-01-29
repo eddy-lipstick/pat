@@ -56,7 +56,7 @@ testimonials:
   ]
 
 tags: ['legal design', 'escape room', 'teamwork', 'student event']
-coverImage: '/trainingen/legal-design-escape-room.png'
+coverImage: '/images/trainingen/escape-room.jpg'
 featured: true
 ---
 

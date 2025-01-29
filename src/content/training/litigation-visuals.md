@@ -7,7 +7,7 @@ level: 'advanced'
 maxParticipants: 12
 language: 'nl'
 location: 'hybrid'
-price: '€895 ex. BTW'
+price: 'Op aanvraag'
 
 learningObjectives:
   [
@@ -51,7 +51,7 @@ testimonials:
   ]
 
 tags: ['litigation', 'visualisatie', 'procedures', 'arbitrage']
-coverImage: '/trainingen/litigation-visuals.png'
+coverImage: '/images/trainingen/litigation-visuals.webp'
 featured: true
 ---
 

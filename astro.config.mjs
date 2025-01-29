@@ -2,8 +2,10 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
+  site: 'https://www.patroon.nl',
   vite: {
     resolve: {
       alias: {
@@ -18,6 +20,7 @@ export default defineConfig({
       configFile: './tailwind.config.mjs',
     }),
     react(),
+    sitemap(),
   ],
   markdown: {
     shikiConfig: {

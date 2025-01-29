@@ -12,28 +12,26 @@ const sortedCaseStudies = allCaseStudies.sort((a, b) => {
 });
 
 // Get unique services for filtering (if you still need this)
-const allServices = [...new Set(
-  allCaseStudies.flatMap(study => study.data.metadata.relatedSkills)
-)].sort();
+const allServices = [
+  ...new Set(allCaseStudies.flatMap((study) => study.data.metadata.relatedSkills)),
+].sort();
 
 // Get unique tags for filtering (if you still need this)
-const allTags = [...new Set(
-  allCaseStudies.flatMap(study => study.data.tags || [])
-)].sort();
+const allTags = [...new Set(allCaseStudies.flatMap((study) => study.data.tags || []))].sort();
 ---
 
 <section class="py-24">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto lg:px-8">
     <div class="text-center mb-16">
       <div class="inline-block">
-        <span class="text-sm font-semibold text-primary tracking-wider uppercase">Onze expertise</span>
+        <span class="text-sm font-semibold text-primary tracking-wider uppercase"
+          >Onze expertise</span
+        >
       </div>
-      <h2 class="mt-4 text-4xl font-bold text-text-primary mb-4">
-Bekijk onze projecten      </h2>
- 
+      <h2 class="mt-4 text-4xl font-bold text-text-primary mb-4">Bekijk onze projecten</h2>
     </div>
 
-    <div class="container mx-auto px-4 py-12">
+    <div class="container mx-auto py-12">
       <LargeCaseStudyGrid studies={sortedCaseStudies} client:load />
     </div>
   </div>

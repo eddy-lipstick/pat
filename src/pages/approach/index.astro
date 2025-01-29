@@ -1,67 +1,55 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { ArrowRight } from 'lucide-react';
+import Hero from '@/components/Hero.astro';
 
 const allApproaches = await getCollection('approach');
 
 // Sort alphabetically by title
-const sortedApproaches = allApproaches.sort((a, b) => 
+const sortedApproaches = allApproaches.sort((a, b) =>
   a.data.title.localeCompare(b.data.title, 'nl')
 );
 ---
 
 <BaseLayout title="Onze aanpak">
   <div class="py-8 space-y-16">
-    <!-- Hero Section -->
-
-  
-    <div class="w-1/2 px-8 md:py-20 lg:py-20">
-      <div>
-        <p class="text-feitlijn-purple text-lg mb-6">Onze expertise</p>
-        
-        <h1 class="text-4xl lg:text-5xl xl:text-6xl font-bold mb-8 text-text-primary leading-tight">
-          We versterken juridisch werk 
-          <br />
-          met design en technologie
-        </h1>
-        
-      
-               </div>
-    </div>
-
-   
+    <Hero class="min-h-[60vh]" subtitle="Wat we doen" title="Ontdek onze aanpak">
+      <div class=""></div>
+    </Hero>
 
     <!-- Approaches Grid -->
     <div class="max-w-7xl mx-auto px-4">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {sortedApproaches.map((approach) => (
-          <a href={`/approach/${approach.id.split('/').pop()?.replace('.md', '')}`} class="group">
-            <Card className="h-full border border-border/50 bg-surface-1 hover:bg-surface-2 transition-all duration-300">
-              <CardHeader>
-                <div class="flex justify-between items-start gap-4">
-                  <div>
-                    <CardTitle className="text-2xl mb-2">{approach.data.title}</CardTitle>
-                    <CardDescription className="text-text-secondary line-clamp-3">
-                      {approach.data.description}
-                    </CardDescription>
+        {
+          sortedApproaches.map((approach) => (
+            <a href={`/approach/${approach.id.split('/').pop()?.replace('.md', '')}`} class="group">
+              <Card className="h-full border border-border/50 bg-surface-1 hover:bg-surface-2 transition-all duration-300">
+                <CardHeader>
+                  <div class="flex justify-between items-start gap-4">
+                    <div>
+                      <CardTitle className="text-2xl mb-2">{approach.data.title}</CardTitle>
+                      <CardDescription className="text-text-secondary line-clamp-3">
+                        {approach.data.description}
+                      </CardDescription>
+                    </div>
+                    <ArrowRight className="h-6 w-6 shrink-0 text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
-                  <ArrowRight className="h-6 w-6 shrink-0 text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div class="flex flex-wrap gap-2">
-                  {approach.data.methodology.slice(0, 3).map((method) => (
-                    <span class="rounded-full px-3 py-1 text-sm bg-primary/10 text-primary">
-                      {method}
-                    </span>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </a>
-        ))}
+                </CardHeader>
+                <CardContent>
+                  <div class="flex flex-wrap gap-2">
+                    {approach.data.methodology.slice(0, 3).map((method) => (
+                      <span class="rounded-full px-3 py-1 text-sm bg-primary/10 text-primary">
+                        {method}
+                      </span>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </a>
+          ))
+        }
       </div>
     </div>
   </div>

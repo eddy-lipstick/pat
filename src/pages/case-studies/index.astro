@@ -3,10 +3,9 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import CaseStudyCard from '@/components/CaseStudyCard';
-import { Card } from "@/components/ui/card";
+import { Card } from '@/components/ui/card';
 import LargeCaseStudyGrid from '@/components/LargeCaseStudyGrid';
-
-
+import Hero from '@/components/Hero.astro';
 
 // Get all case studies and sort by date
 const allCaseStudies = await getCollection('case-studies');
@@ -16,43 +15,27 @@ const sortedCaseStudies = allCaseStudies.sort((a, b) => {
 });
 
 // Get unique services for filtering (if you still need this)
-const allServices = [...new Set(
-  allCaseStudies.flatMap(study => study.data.metadata.relatedSkills)
-)].sort();
+const allServices = [
+  ...new Set(allCaseStudies.flatMap((study) => study.data.metadata.relatedSkills)),
+].sort();
 
 // Get unique tags for filtering (if you still need this)
-const allTags = [...new Set(
-  allCaseStudies.flatMap(study => study.data.tags || [])
-)].sort();
+const allTags = [...new Set(allCaseStudies.flatMap((study) => study.data.tags || []))].sort();
 ---
 
 <BaseLayout title="Case Studies">
   <div>
-    <!-- Hero section -->
-    <div class="relative">
-    
-     
-      <div class="w-1/2 px-8 py-12 md:py-32 lg:py-40">
-        <div>
-          <p class="text-feitlijn-purple text-lg mb-6">Recht in beeld</p>
-          
-          <h1 class="text-4xl lg:text-5xl xl:text-6xl font-bold mb-8 text-text-primary leading-tight">
-            Complexe juridische materie,<br />
-            helder verbeeld
-          </h1>
-          
-          <p class="text-xl text-text-secondary max-w-2xl">
-            Van contracten tot rechtszaken - zie hoe we juridische expertise omzetten in visuele impact.
-          </p>
-      
-                 </div>
-      </div>
-    </div>
+    <!-- Hero Section -->
+    <Hero
+      class="min-h-[60vh]"
+      subtitle="Recht in beeld"
+      title="  Complexe juridische materie, helder verbeeld"
+    >
+      <div class=""></div>
+    </Hero>
 
     <div class="container mx-auto px-4 py-12">
       <LargeCaseStudyGrid studies={sortedCaseStudies} client:load />
     </div>
-
-  
   </div>
 </BaseLayout>

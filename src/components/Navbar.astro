@@ -4,21 +4,6 @@ import { Menu, X, ChevronDown } from 'lucide-react';
 
 const { variant = 'dark' } = Astro.props;
 
-const serviceItems = [
-  {
-    label: 'Litigation Visuals',
-    href: '/services/litigation-visuals',
-  },
-  {
-    label: 'Arbeidsovereenkomst',
-    href: '/services/arbeidsovereenkomst',
-  },
-  {
-    label: 'Policy Design',
-    href: '/services/policy-design',
-  },
-];
-
 const navItems = [
   { label: 'Projecten', href: '/case-studies' },
   {
@@ -26,8 +11,7 @@ const navItems = [
     href: '/about',
     children: [
       { label: 'Over ons', href: '/about' },
-      { label: 'Onze aanpak', href: '/approach' }, // Added this line
-
+      { label: 'Onze aanpak', href: '/approach' },
       { label: 'Team', href: '/team' },
       { label: 'Nieuws', href: '/news' },
     ],
@@ -83,63 +67,53 @@ const currentPath = Astro.url.pathname;
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center">
-      {/* Logo */}
       <div class="flex-shrink-0">
         <a
           href="/"
           class:list={[
-            'text-2xl font-bold transition-colors flex items-center gap-2 font-roc-grotesk',
+            'text-2xl transition-colors flex items-center gap-2 font-roc-grotesk',
             classes.text,
             classes.hover,
           ]}
-          aria-label="Home"
         >
           <img src="/logo.svg" alt="" class="h-6 w-auto" />
         </a>
       </div>
 
-      {/* Desktop Navigation */}
       <div class="hidden lg:flex items-center space-x-8">
         {
           navItems.map((item) =>
             item.children ? (
-              <div class="relative group" data-dropdown>
+              <div class="relative group">
                 <button
+                  type="button"
                   class:list={[
-                    'transition-colors py-2 flex items-center gap-1 font-medium font-roc-grotesk',
+                    'inline-flex items-center gap-1 px-3 py-2 text-base font-medium rounded-md transition-colors font-roc-grotesk',
                     classes.text,
                     classes.hover,
-                    { [classes.active]: currentPath.startsWith(item.href) },
+                    currentPath.startsWith(item.href) ? classes.active : '',
                   ]}
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  aria-controls={`dropdown-${item.label}`}
                 >
                   {item.label}
-                  <ChevronDown class="h-4 w-4 transform transition-transform group-hover:rotate-180" />
+                  <ChevronDown class="h-4 w-4 transition-transform group-hover:rotate-180" />
                 </button>
                 <div
-                  id={`dropdown-${item.label}`}
                   class:list={[
-                    'absolute top-full left-0 mt-2 w-56 rounded-lg ring-1 ring-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-left',
+                    'absolute left-0 z-10 mt-2 w-48 rounded-md overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200',
                     classes.dropdown,
                     classes.shadow,
                   ]}
-                  role="menu"
-                  aria-orientation="vertical"
-                  aria-labelledby={`dropdown-button-${item.label}`}
                 >
-                  <div class="py-2 px-1">
+                  <div class="py-1">
                     {item.children.map((child) => (
                       <a
                         href={child.href}
                         class:list={[
-                          'block px-4 py-2 text-sm rounded-md transition-colors',
+                          'block px-4 py-2 text-sm transition-colors',
                           classes.text,
                           classes.dropdownHover,
-                          { [classes.active]: currentPath === child.href },
+                          currentPath === child.href ? classes.active : '',
                         ]}
-                        role="menuitem"
                       >
                         {child.label}
                       </a>
@@ -151,12 +125,11 @@ const currentPath = Astro.url.pathname;
               <a
                 href={item.href}
                 class:list={[
-                  'transition-colors font-medium font-roc-grotesk',
+                  'px-3 py-2 text-base font-medium rounded-md transition-colors font-roc-grotesk',
                   classes.text,
                   classes.hover,
-                  { [classes.active]: currentPath === item.href },
+                  currentPath === item.href ? classes.active : '',
                 ]}
-                aria-current={currentPath === item.href ? 'page' : undefined}
               >
                 {item.label}
               </a>
@@ -165,198 +138,130 @@ const currentPath = Astro.url.pathname;
         }
       </div>
 
-      {/* Mobile menu button */}
-      <div class="lg:hidden flex items-center">
+      <div class="lg:hidden">
         <button
+          type="button"
           id="menuButton"
           class:list={[
-            'inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-feitlijn-purple-400 transition-colors',
+            'inline-flex items-center justify-center p-2 rounded-md transition-colors',
             classes.text,
-            classes.hover,
             classes.button,
           ]}
-          aria-controls="mobile-menu"
           aria-expanded="false"
-          aria-label="Toggle menu"
         >
-          <Menu class="h-6 w-6 menu-icon" aria-hidden="true" />
-          <X class="h-6 w-6 close-icon hidden" aria-hidden="true" />
+          <span class="menu-icon">
+            <Menu class="h-6 w-6" />
+          </span>
+          <span class="close-icon hidden">
+            <X class="h-6 w-6" />
+          </span>
         </button>
       </div>
     </div>
 
-    {/* Mobile Navigation */}
     <div
       id="mobileMenu"
-      class:list={['lg:hidden hidden rounded-lg mt-4', classes.mobileMenu, classes.shadow]}
-      aria-labelledby="menuButton"
+      class:list={['lg:hidden hidden mt-4', classes.mobileMenu, classes.shadow]}
+      role="menu"
     >
-      <div class="px-2 pt-4 pb-3 space-y-1">
+      <div class="px-2 pt-2 pb-3 space-y-1">
         {
-          navItems.map((item) => (
-            <>
-              {item.children ? (
-                <div class="space-y-1">
-                  <div
-                    class:list={[
-                      'px-3 py-2 text-sm font-semibold font-roc-grotesk',
-                      classes.active,
-                    ]}
-                  >
-                    {item.label}
-                  </div>
+          navItems.map((item) =>
+            item.children ? (
+              <div class="space-y-1">
+                <div
+                  class:list={['px-3 py-2 text-base font-medium font-roc-grotesk', classes.text]}
+                >
+                  {item.label}
+                </div>
+                <div class="pl-4">
                   {item.children.map((child) => (
                     <a
                       href={child.href}
                       class:list={[
-                        'block px-3 py-2 text-base rounded-md pl-6 transition-colors',
+                        'block px-3 py-2 text-base font-medium rounded-md transition-colors',
                         classes.text,
                         classes.mobileMenuHover,
-                        { [classes.active]: currentPath === child.href },
+                        currentPath === child.href ? classes.active : '',
                       ]}
-                      aria-current={currentPath === child.href ? 'page' : undefined}
                     >
                       {child.label}
                     </a>
                   ))}
                 </div>
-              ) : (
-                <a
-                  href={item.href}
-                  class:list={[
-                    'block px-3 py-2 text-base rounded-md transition-colors',
-                    classes.text,
-                    classes.mobileMenuHover,
-                    { [classes.active]: currentPath === item.href },
-                  ]}
-                  aria-current={currentPath === item.href ? 'page' : undefined}
-                >
-                  {item.label}
-                </a>
-              )}
-            </>
-          ))
+              </div>
+            ) : (
+              <a
+                href={item.href}
+                class:list={[
+                  'block px-3 py-2 text-base font-medium rounded-md transition-colors',
+                  classes.text,
+                  classes.mobileMenuHover,
+                  currentPath === item.href ? classes.active : '',
+                ]}
+              >
+                {item.label}
+              </a>
+            )
+          )
         }
       </div>
     </div>
   </div>
 </nav>
 
+<style>
+  .group:hover .group-hover\:rotate-180 {
+    transform: rotate(180deg);
+  }
+
+  .group:hover .group-hover\:opacity-100 {
+    opacity: 1;
+  }
+
+  .group:hover .group-hover\:visible {
+    visibility: visible;
+  }
+
+  .close-icon,
+  .menu-icon {
+    transition: all 0.3s ease;
+  }
+</style>
+
 <script>
-  let prevScrollPos = window.scrollY;
-  const navbar = document.getElementById('navbar');
   const menuButton = document.getElementById('menuButton');
   const mobileMenu = document.getElementById('mobileMenu');
   const menuIcon = document.querySelector('.menu-icon');
   const closeIcon = document.querySelector('.close-icon');
 
-  // Handle mobile menu toggle
   if (menuButton && mobileMenu && menuIcon && closeIcon) {
     menuButton.addEventListener('click', () => {
       const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+
       menuButton.setAttribute('aria-expanded', (!isExpanded).toString());
       mobileMenu.classList.toggle('hidden');
+
       menuIcon.classList.toggle('hidden');
       closeIcon.classList.toggle('hidden');
     });
   }
 
-  // Handle scroll behavior
+  // Handle navbar visibility on scroll
+  let lastScrollTop = 0;
+  const navbar = document.getElementById('navbar');
+
   window.addEventListener('scroll', () => {
     if (!navbar) return;
 
-    const currentScrollPos = window.scrollY;
-    const variant = navbar.dataset.variant;
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-    // Add/remove background and shadow based on scroll position
-    if (currentScrollPos > 20) {
-      if (variant === 'light') {
-        navbar.classList.add('bg-white/95', 'backdrop-blur-sm', 'shadow-lg', 'shadow-gray-200/50');
-      } else {
-        navbar.classList.add('bg-surface-1/95', 'backdrop-blur-sm', 'shadow-lg', 'shadow-black/20');
-      }
-    } else {
-      navbar.classList.remove(
-        'bg-white/95',
-        'bg-surface-1/95',
-        'backdrop-blur-sm',
-        'shadow-lg',
-        'shadow-gray-200/50',
-        'shadow-black/20'
-      );
-    }
-
-    // Hide/show navbar based on scroll direction
-    if (currentScrollPos > prevScrollPos && currentScrollPos > 100) {
+    if (scrollTop > lastScrollTop && scrollTop > 100) {
       navbar.style.transform = 'translateY(-100%)';
     } else {
       navbar.style.transform = 'translateY(0)';
     }
 
-    prevScrollPos = currentScrollPos;
-  });
-
-  // Improve dropdown behavior
-  document.querySelectorAll('[data-dropdown]').forEach((dropdown) => {
-    const button = dropdown.querySelector('button');
-    const menu = dropdown.querySelector('[role="menu"]');
-    let timeout;
-
-    if (!button || !menu) return;
-
-    const showMenu = () => {
-      clearTimeout(timeout);
-      button.setAttribute('aria-expanded', 'true');
-      menu.classList.remove('opacity-0', 'invisible');
-      menu.classList.add('opacity-100', 'visible');
-    };
-
-    const hideMenu = () => {
-      button.setAttribute('aria-expanded', 'false');
-      menu.classList.remove('opacity-100', 'visible');
-      menu.classList.add('opacity-0', 'invisible');
-    };
-
-    dropdown.addEventListener('mouseenter', showMenu);
-    button.addEventListener('focus', showMenu);
-
-    dropdown.addEventListener('mouseleave', () => {
-      timeout = setTimeout(hideMenu, 150);
-    });
-
-    button.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        hideMenu();
-        button.focus();
-      }
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!dropdown.contains(e.target)) {
-        hideMenu();
-      }
-    });
+    lastScrollTop = scrollTop;
   });
 </script>
-
-<style>
-  #navbar {
-    transform: translateY(0);
-    transition:
-      transform 0.3s ease-in-out,
-      background-color 0.3s ease,
-      box-shadow 0.3s ease;
-  }
-
-  [role='menu'] {
-    transform-origin: top;
-    transition:
-      opacity 0.2s ease,
-      visibility 0.2s ease,
-      transform 0.2s ease;
-  }
-
-  [role='menuitem'] {
-    margin: 2px 0;
-  }
-</style>

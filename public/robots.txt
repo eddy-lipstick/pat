@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.patroon.nl/sitemap-index.xml

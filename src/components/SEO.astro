@@ -1,0 +1,94 @@
+---
+// src/components/SEO.astro
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonicalURL?: string;
+  type?: string;
+  next?: string;
+  prev?: string;
+  noindex?: boolean;
+  nofollow?: boolean;
+}
+
+// Get the base URL from site config or default to the current URL
+const baseURL = import.meta.env.SITE ?? Astro.url.origin;
+
+const {
+  title = 'Patroon Legal Design Agency',
+  description = 'Legal design agency specializing in making law more accessible through visual design and technology',
+  image = '/og-default.jpg', // Make sure to add a default OG image
+  canonicalURL = new URL(Astro.url.pathname, baseURL).toString(),
+  type = 'website',
+  next,
+  prev,
+  noindex = false,
+  nofollow = false,
+} = Astro.props;
+
+// Construct robots meta based on props
+const robotsContent = [noindex ? 'noindex' : 'index', nofollow ? 'nofollow' : 'follow'].join(', ');
+
+// Ensure image URLs are absolute
+const getAbsoluteImageUrl = (imageUrl: string) => {
+  try {
+    return new URL(imageUrl, baseURL).toString();
+  } catch (e) {
+    return new URL(imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`, baseURL).toString();
+  }
+};
+
+const absoluteImageUrl = getAbsoluteImageUrl(image);
+
+const getOGImageUrl = (type: string, slug?: string) => {
+  if (type === 'case-study' && slug) {
+    return new URL(`/og/case-studies/${slug}.png`, baseURL).toString();
+  }
+  return new URL(image, baseURL).toString();
+};
+
+const ogImageUrl = getOGImageUrl(type, Astro.params.slug);
+---
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="generator" content={Astro.generator} />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<meta name="robots" content={robotsContent} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={absoluteImageUrl} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={absoluteImageUrl} />
+
+<!-- Pagination Meta -->
+{next && <link rel="next" href={next} />}
+{prev && <link rel="prev" href={prev} />}
+
+<!-- Additional Meta Tags -->
+<meta name="format-detection" content="telephone=no" />
+<meta name="theme-color" content="#7F77F0" />
+<!-- Using your primary color from Tailwind config -->
+
+<!-- Preconnect to important third-party domains -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

@@ -1,12 +1,11 @@
 ---
 // src/pages/case-studies/[id].astro
-import ESRSLayout from '../../layouts/ESRSLayout.astro';
 import ModernCaseStudyLayout from '../../layouts/ModernCaseStudyLayout.astro';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const caseStudies = await getCollection('case-studies');
-  return caseStudies.map(entry => ({
+  return caseStudies.map((entry) => ({
     params: { id: entry.id },
     props: { entry },
   }));
@@ -18,13 +17,14 @@ const { Content, headings } = await render(entry);
 // Get related case studies
 const allCaseStudies = await getCollection('case-studies');
 
-
 // Transform legacy data to new format if needed
 const metadata = {
   client: entry.data.metadata?.client || entry.data.author,
-  date: entry.data.metadata?.date || entry.data.date.toLocaleDateString('nl-NL', { year: 'numeric', month: 'long' }),
+  date:
+    entry.data.metadata?.date ||
+    entry.data.date.toLocaleDateString('nl-NL', { year: 'numeric', month: 'long' }),
   services: entry.data.metadata?.services || [entry.data.service_category].filter(Boolean),
-  website: entry.data.metadata?.website
+  website: entry.data.metadata?.website,
 };
 
 // Build the modern case study props while maintaining backwards compatibility
@@ -39,14 +39,13 @@ const props = {
   beforeAfter: entry.data.beforeAfter,
   teamMember: entry.data.teamMember,
   timeline: entry.data.timeline,
-  
 };
 ---
 
-  <ModernCaseStudyLayout {...props}>
-    <div class="container mx-auto px-6 py-16">
-      <div class="prose prose-lg prose-invert max-w-none">
-        <Content />
-      </div>
+<ModernCaseStudyLayout entry={entry} {...props}>
+  <div class="container mx-auto px-6 py-16">
+    <div class="prose prose-lg prose-invert max-w-none">
+      <Content />
     </div>
-  </ModernCaseStudyLayout>
+  </div>
+</ModernCaseStudyLayout>

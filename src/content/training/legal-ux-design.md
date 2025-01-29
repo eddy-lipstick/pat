@@ -7,7 +7,7 @@ level: 'intermediate'
 maxParticipants: 15
 language: 'nl'
 location: 'hybrid'
-price: '€795 ex. BTW'
+price: 'Op aanvraag'
 
 learningObjectives:
   [
@@ -56,7 +56,7 @@ testimonials:
   ]
 
 tags: ['legal design', 'UX design', 'user experience', 'juridische producten']
-coverImage: '/trainingen/legal-ux-design.png'
+coverImage: '/images/trainingen/legal-ux.jpg'
 featured: true
 ---
 

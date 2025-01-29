@@ -7,7 +7,7 @@ level: 'intermediate'
 maxParticipants: 15
 language: 'nl'
 location: 'hybrid'
-price: '€795 ex. BTW'
+price: 'Op aanvraag'
 
 learningObjectives:
   [
@@ -42,7 +42,7 @@ includes:
   ['2 PO-punten', 'Praktische voorbeelden', 'Template bibliotheek', 'Certificaat van deelname']
 
 tags: ['contracten', 'B2B', 'legal design', 'UX design']
-coverImage: '/trainingen/b2b-contracten.png'
+coverImage: '/images/trainingen/workshop.jpg'
 featured: false
 ---
 
