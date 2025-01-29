@@ -13,6 +13,7 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { render } from 'astro:content';
+import Breadcrumb from '@/components/Breadcrumb';
 
 export async function getStaticPaths() {
   const trainings = await getCollection('training');
@@ -93,10 +94,17 @@ const levelColors = {
   intermediate: 'bg-warning/20 text-warning',
   advanced: 'bg-destructive/20 text-destructive',
 };
+const breadcrumbItems = [
+  { label: 'Leren', href: '/learn' },
+  { label: 'Trainingsaanbod', href: '/training' },
+  { label: title },
+];
 ---
 
 <BaseLayout title={title}>
   <div class="space-y-8">
+    <Breadcrumb items={breadcrumbItems} client:load />
+
     {/* Hero Section */}
     <div class="relative">
       {

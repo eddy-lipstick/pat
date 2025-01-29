@@ -4,6 +4,7 @@ import { getCollection, getEntry, render } from 'astro:content';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { ArrowRight, ArrowLeft } from 'lucide-react';
 import CaseStudyCard from '@/components/CaseStudyCard';
+import Breadcrumb from '@/components/Breadcrumb';
 
 export async function getStaticPaths() {
   const approaches = await getCollection('approach');
@@ -56,18 +57,18 @@ const nextApproach =
   currentIndex < sortedApproaches.length - 1
     ? sortedApproaches[currentIndex + 1]
     : sortedApproaches[0]; // Loop to beginning
+
+const breadcrumbItems = [
+  { label: 'Over ons', href: '/about' },
+  { label: 'Aanpak', href: '/approach' },
+  { label: approach.data.title },
+];
 ---
 
 <BaseLayout title={approach.data.title}>
-  <div class="py-16 max-w-6xl mx-auto px-4">
+  <div class="space-y-8">
+    <Breadcrumb items={breadcrumbItems} client:load />
     <!-- Back Navigation -->
-    <a
-      href="/approach"
-      class="inline-flex items-center gap-2 text-text-secondary hover:text-primary mb-8 transition-colors"
-    >
-      <ArrowLeft className="h-4 w-4" />
-      Terug naar overzicht
-    </a>
 
     <!-- Hero -->
     <h1 class="text-5xl font-bold mb-6">{approach.data.title}</h1>

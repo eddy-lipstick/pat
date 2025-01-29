@@ -1,9 +1,9 @@
-import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import PulseLabel from "./PulseLabel";
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import { ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import PulseLabel from './PulseLabel';
 
 const OurFormula = () => {
   const containerRef = useRef(null);
@@ -33,8 +33,8 @@ const OurFormula = () => {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: containerRef.current,
-        start: "top 90%",
-        end: "bottom center",
+        start: 'top 90%',
+        end: 'bottom center',
         scrub: 1,
         markers: false,
       },
@@ -73,16 +73,11 @@ const OurFormula = () => {
               : overlappedPositions.tech.y,
         opacity: 0.7,
         duration: 1,
-      }
+      },
     );
 
     // Animate intersection text
-    tl.fromTo(
-      intersectionTextRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 0.5 },
-      0.5
-    );
+    tl.fromTo(intersectionTextRef.current, { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0.5);
 
     return () => {
       if (tl.scrollTrigger) {
@@ -104,9 +99,8 @@ const OurFormula = () => {
               Juristen, ontwerpers en techneuten
             </h3>
             <p className="text-lg text-text-secondary mb-8">
-              Ons team bestaat uit een unieke mix van mensen, die samenwerken om
-              juridische complexiteit om te zetten in heldere, toegankelijke en
-              overtuigende communicatie.
+              Ons team bestaat uit een unieke mix van mensen, die samenwerken om juridische
+              complexiteit om te zetten in heldere, toegankelijke en overtuigende communicatie.
             </p>
           </div>
           {/* Venn Diagram */}
@@ -123,13 +117,7 @@ const OurFormula = () => {
                     <feMergeNode in="SourceGraphic" />
                   </feMerge>
                 </filter>
-                <filter
-                  id="softGlow"
-                  x="-50%"
-                  y="-50%"
-                  width="200%"
-                  height="200%"
-                >
+                <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
                   <feGaussianBlur stdDeviation="5" result="blur" />
                   <feComposite in="SourceGraphic" in2="blur" operator="over" />
                 </filter>
@@ -224,14 +212,17 @@ const OurFormula = () => {
             </svg>
           </div>
           <div className="text-center">
-            <Button variant="default" className="group" asChild>
+            <Button
+              variant="default"
+              className="w-full sm:w-auto bg-[#E1FF4C] hover:bg-[#E1FF4C]/90 text-black font-medium px-8 h-11 rounded-md inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+              asChild
+            >
               <a href="/team" className="inline-flex items-center text-lg">
                 Lees meer over ons team
                 <ArrowRight className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" />
               </a>
             </Button>
           </div>
-
         </div>
       </div>
     </div>

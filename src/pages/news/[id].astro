@@ -5,6 +5,7 @@ import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Hero from '@/components/Hero.astro';
 import { render } from 'astro:content';
+import Breadcrumb from '@/components/Breadcrumb';
 
 export async function getStaticPaths() {
   const newsItems = await getCollection('news');
@@ -23,10 +24,19 @@ const formattedDate = new Date(entry.data.date).toLocaleDateString('nl-NL', {
   month: 'long',
   day: 'numeric',
 });
+
+// Breadcrumb items for news story
+const breadcrumbItems = [
+  { label: 'Over ons', href: '/about' },
+  { label: 'Nieuws', href: '/news' },
+  { label: entry.data.title },
+];
 ---
 
-<BaseLayout title={`${entry.data.title} | Legal Design Agency`}>
-  <div class="relative">
+<BaseLayout title={`${entry.data.title}`}>
+  <div class="space-y-8">
+    <Breadcrumb items={breadcrumbItems} client:load />
+
     <Hero subtitle={formattedDate} title={entry.data.title} description={entry.data.summary} />
 
     <div class="container mx-auto px-4 -mt-16 relative z-10">

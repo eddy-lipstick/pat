@@ -1,41 +1,41 @@
 ---
-title: "Juridische animaties"
-description: "Complexe juridische en technische verhalen visueel vertellen voor de rechtbank"
-pillar: "Legal"
+title: 'Animaties'
+description: 'Complexe juridische en technische verhalen visueel vertellen voor de rechtbank'
+pillar: 'Legal'
 methodology:
   [
-    "Narratief onderzoek",
-    "Technische analyse",
-    "Forensische visualisatie",
-    "Procesmatige storytelling",
-    "Expert verificatie",
+    'Narratief onderzoek',
+    'Technische analyse',
+    'Forensische visualisatie',
+    'Procesmatige storytelling',
+    'Expert verificatie',
   ]
 benefits:
   {
-    description: "Verhoog de effectiviteit van juridische argumentatie met 80% door heldere visuele uitleg van complexe situaties",
+    description: 'Verhoog de effectiviteit van juridische argumentatie met 80% door heldere visuele uitleg van complexe situaties',
     metrics:
       [
-        "85% betere begrip bij rechters",
-        "75% effectievere presentatie van bewijs",
-        "90% positieve feedback van advocaten",
-        "65% snellere acceptatie van technische argumenten",
+        '85% betere begrip bij rechters',
+        '75% effectievere presentatie van bewijs',
+        '90% positieve feedback van advocaten',
+        '65% snellere acceptatie van technische argumenten',
       ],
   }
 featuredCases:
   [
     {
-      title: "Technisch proces animatie",
-      result: "Succesvolle uitleg van patentinbreuk",
-      slug: "patent-animatie",
+      title: 'Technisch proces animatie',
+      result: 'Succesvolle uitleg van patentinbreuk',
+      slug: 'patent-animatie',
     },
     {
-      title: "Reconstructie incident",
-      result: "Doorslaggevend in rechtszaak",
-      slug: "reconstructie-animatie",
+      title: 'Reconstructie incident',
+      result: 'Doorslaggevend in rechtszaak',
+      slug: 'reconstructie-animatie',
     },
   ]
 order: 3
-icon: "Video"
+icon: 'Video'
 ---
 
 Bij Patroon maken we complexe technische en juridische verhalen begrijpelijk voor de rechtbank. We combineren forensische precisie met heldere visuele storytelling om rechters en andere belanghebbenden effectief te informeren.

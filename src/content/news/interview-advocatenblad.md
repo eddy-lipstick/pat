@@ -1,13 +1,13 @@
 ---
-title: "Beter met beeld"
-description: "..."
-author: { collection: "team", slug: "savannah-koomen" }
-
-publishDate: "2018-04-10"
-coverImage: "https://cdn.prod.website-files.com/612781ea47c7ce0c69cba884/61652ab3fe7888865c867de8_Screenshot%202021-10-12%20at%2008.24%201%20(1).jpg"
-tags: ["what-is-legal-design"]
-readingTime: 10
+title: 'Op de cover van het Advocatenblad'
+date: '2018-04-10'
+type: 'speaking'
 featured: false
+summary: 'Het Advocatenblad pakt groot uit met een stuk over legal design, met Maurits op de cover... Een mijlpaal!'
+labels: ['kennisdeling']
+image:
+  src: '/images/news/advocatenblad.jpg'
+  alt: 'Maurits op de cover.'
 ---
 
 ## Visuele middelen in de advocatuur zijn in opkomst. Legal design schept orde in de woordenbrij.

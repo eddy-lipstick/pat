@@ -1,44 +1,47 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getFeaturedCaseStudies } from '../lib/case-studies';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import ServicesGrid from '../components/services/ServicesGrid.astro';
-import { getCollection } from 'astro:content'; 
+import { getCollection } from 'astro:content';
 
 import BubbleMap from '../components/bubbles/BubbleMap';
 import LogoGrid from '../components/LogoGrid.astro';
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { ArrowRight, MessageCircle } from 'lucide-react';
 import VideoTestimonials from '../components/VideoTestimonials';
 import OurFormula from '../components/OurFormula';
 import TeamSection from '../components/TeamSection';
 import Hero from '@/components/Hero.astro';
 import Partners from '../components/Partners.astro';
 
-
-
-
 import TeamSection from '../components/TeamSection';
 
 const teamMembers = [
-    {
-        name: "Maurits Fornier",
-        role: "Legal Design Lead",
-        imageUrl: "/images/team/sunmoon-stokhof.jpg"
-    },
-    {
-        name: "Dielis Delen",
-        role: "Software Developer",
-        imageUrl: "/images/team/dielis-delen.webp"
-    },
-    {
-        name: "Savannah Koomen",
-        role: "Strategie Lead",
-        imageUrl: "/images/team/savannah-koomen.webp"
-    }
+  {
+    name: 'Maurits Fornier',
+    role: 'Legal Design Lead',
+    imageUrl: '/images/team/sunmoon-stokhof.jpg',
+  },
+  {
+    name: 'Dielis Delen',
+    role: 'Software Developer',
+    imageUrl: '/images/team/dielis-delen.webp',
+  },
+  {
+    name: 'Savannah Koomen',
+    role: 'Strategie Lead',
+    imageUrl: '/images/team/savannah-koomen.webp',
+  },
 ];
-
 
 const featuredCaseStudies = await getFeaturedCaseStudies();
 
@@ -46,7 +49,7 @@ const featuredCaseStudies = await getFeaturedCaseStudies();
 const allCaseStudies = await getCollection('case-studies');
 
 // Filter to only get case studies that have a stakeholder assigned
-const bubbleMapCaseStudies = allCaseStudies.filter(study => study.data.stakeholder);
+const bubbleMapCaseStudies = allCaseStudies.filter((study) => study.data.stakeholder);
 
 // Process the content for each case study
 const processedStudies = await Promise.all(
@@ -61,42 +64,31 @@ const processedStudies = await Promise.all(
   {/* Hero Section */}
 
   <Hero
-  class="min-h-screen"
-  subtitle="Legal design & legal tech studio"
-  title="We maken juridisch werk effectiever"
-  description="Door de combinatie van juridische expertise, slimme technologie en doordacht design helpen we organisaties met"
-  bulletPoints={[
-    "Tijdrovende juridische taken automatiseren",
-    "Complexe informatie helder maken"
-  ]}
-  primaryButtonText="Neem contact op"
-  primaryButtonHref="/contact"
-  secondaryButtonText="Lees meer"
-  secondaryButtonHref="/about"
->
-  <div class="absolute top-0 right-[-20%] w-[70%] h-full hidden lg:block z-20">
-    <BubbleMap client:load caseStudies={bubbleMapCaseStudies} />
-  </div>
-</Hero>
-
-    
-
+    class="min-h-screen"
+    subtitle="Legal design & legal tech studio"
+    title="Wij maken juridische complexiteit toegankelijk met slimme technologie en goed ontwerp"
+    description="Door de combinatie van juridische expertise, slimme technologie en doordacht design helpen we organisaties met"
+    bulletPoints={[
+      'Tijdrovende juridische taken automatiseren',
+      'Complexe informatie helder maken',
+    ]}
+    primaryButtonText="Neem contact op"
+    primaryButtonHref="/contact"
+    secondaryButtonText="Lees meer"
+    secondaryButtonHref="/about"
+  >
+    <div class="absolute top-0 right-[-20%] w-[70%] h-full hidden lg:block z-20">
+      <BubbleMap client:load caseStudies={bubbleMapCaseStudies} />
+    </div>
+  </Hero>
 
   <LogoGrid />
 
- 
- <!-- <VideoTestimonials client:load /> -->
-
-
+  <!-- <VideoTestimonials client:load /> -->
 
   <ServicesGrid />
-
 
   <OurFormula client:load />
   <Partners />
   <TeamSection client:load teamMembers={teamMembers} />
-
-
- 
-
 </BaseLayout>

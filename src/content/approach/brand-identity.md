@@ -1,41 +1,41 @@
 ---
-title: "Legal brand identity"
-description: "Versterk de marktpositie van juridische dienstverleners met een onderscheidende visuele identiteit"
-pillar: "Design"
+title: 'Brand identity'
+description: 'Versterk de marktpositie van juridische dienstverleners met een onderscheidende visuele identiteit'
+pillar: 'Design'
 methodology:
   [
-    "Merk analyse",
-    "Doelgroep onderzoek",
-    "Identiteit ontwikkeling",
-    "Design systeem creatie",
-    "Implementatie begeleiding",
+    'Merk analyse',
+    'Doelgroep onderzoek',
+    'Identiteit ontwikkeling',
+    'Design systeem creatie',
+    'Implementatie begeleiding',
   ]
 benefits:
   {
-    description: "Versterk de marktpositie van juridische dienstverleners met 65% door een professionele en onderscheidende merkidentiteit",
+    description: 'Versterk de marktpositie van juridische dienstverleners met 65% door een professionele en onderscheidende merkidentiteit',
     metrics:
       [
-        "85% sterkere merkherkenning",
-        "75% professionelere uitstraling",
-        "70% hogere waardepropositie",
-        "80% consistentere communicatie",
+        '85% sterkere merkherkenning',
+        '75% professionelere uitstraling',
+        '70% hogere waardepropositie',
+        '80% consistentere communicatie',
       ],
   }
 featuredCases:
   [
     {
-      title: "Advocatenkantoor huisstijl",
-      result: "85% versterking van marktpositie",
-      slug: "law-firm-identity",
+      title: 'Advocatenkantoor huisstijl',
+      result: '85% versterking van marktpositie',
+      slug: 'law-firm-identity',
     },
     {
-      title: "Legal tech merkidentiteit",
-      result: "75% hogere merkwaarde",
-      slug: "legal-tech-identity",
+      title: 'Legal tech merkidentiteit',
+      result: '75% hogere merkwaarde',
+      slug: 'legal-tech-identity',
     },
   ]
 order: 4
-icon: "Brush"
+icon: 'Brush'
 ---
 
 Bij Patroon helpen we juridische dienstverleners hun expertise te vertalen naar een krachtige visuele identiteit. We combineren juridische professionaliteit met modern design om merken te creëren die vertrouwen wekken en zich onderscheiden in de markt.

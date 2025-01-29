@@ -21,7 +21,8 @@ metadata:
   services:
     - 'Information Design'
   website: 'https://www.duurzaam-ondernemen.nl/de-esrs-navigator-staat-online/'
-  relatedSkills: ['Information Design', 'Legal Content', 'Klikbare handleidingen', 'Process Design']
+  relatedSkills:
+    ['Information Design', 'Legal Content Design', 'Klikbare handleidingen', 'Legal Process Design']
 
 heroVideo:
   src: '/esrs/clip-1.mp4'

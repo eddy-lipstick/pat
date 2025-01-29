@@ -1,11 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Container from '../components/Container.astro';
-import RecentNews from '../components/RecentNews';
 import { getCollection } from 'astro:content';
 import SolutionsGrid from '../components/SolutionsGrid';
 import TeamSection from '../components/TeamSection';
 import Hero from '@/components/Hero.astro';
+import RecentNewsSection from '@/components/RecentNewsSection';
+
+const newsItems = await getCollection('news');
+const sortedNews = newsItems.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
 
 const teamMembers = [
   {
@@ -35,16 +40,8 @@ const allNews = allNewsEntries.sort((a, b) => {
   <Hero
     class="min-h-[60vh]"
     subtitle="Over Patroon"
-    title="We maken juridisch werk effectiever"
-    description="Door de combinatie van juridische expertise, slimme technologie en doordacht design helpen we organisaties met"
-    bulletPoints={[
-      'Tijdrovende juridische taken automatiseren',
-      'Complexe informatie helder maken',
-    ]}
-    primaryButtonText="Neem contact op"
-    primaryButtonHref="/contact"
-    secondaryButtonText="Lees meer"
-    secondaryButtonHref="/about"
+    title="Duidelijkmakers van het recht"
+    description="De uitdrukking ‘schrijven is schrappen’ lijkt niet voor juristen te gelden. Contracten hebben de neiging uit de dijen, regels trekken meer regels aan. Het is de hoogste tijd voor nieuw gereedschap. We geloven dat juridisch werk zoveel slimmer, sneller en duidelijker kan. We combineren juridische expertise, technologie en design om dagelijkse uitdagingen van de moderne jurist op te lossen."
   >
     <div class="">
       <img
@@ -55,20 +52,11 @@ const allNews = allNewsEntries.sort((a, b) => {
     </div>
   </Hero>
 
-  <Container>
-    <div class="py-16 space-y-24">
-      {/* Hero Section */}
+  {/* Hero Section */}
 
-      {/* Problems & Solutions Section */}
-      <div class="space-y-8">
-        <SolutionsGrid client:load />
-      </div>
+  {/* Problems & Solutions Section */}
 
-      {/* News Section */}
-      <div class="bg-surface-1 rounded-2xl p-12">
-        <RecentNews news={allNews} client:load />
-      </div>
-    </div>
-  </Container>
+  <SolutionsGrid client:load />
+
   <TeamSection client:load teamMembers={teamMembers} />
 </BaseLayout>

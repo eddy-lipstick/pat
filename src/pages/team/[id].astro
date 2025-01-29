@@ -8,6 +8,8 @@ import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { Badge } from "@/components/ui/badge";
+import Breadcrumb from '@/components/Breadcrumb';
+
 
 export async function getStaticPaths() {
   const team = await getCollection('team');
@@ -25,10 +27,19 @@ const allCaseStudies = await getCaseStudies();
 const relatedCaseStudies = allCaseStudies.filter(
   study => study.data.team?.includes(entry.id)  // Make sure this matches your case studies schema
 );
+const breadcrumbItems = [
+  { label: 'Over ons', href: '/about' },
+  { label: 'Team', href: '/team' },
+  { label: entry.data.name },
+];
 ---
 
 <BaseLayout title={entry.data.name}>
-  <article class="max-w-4xl mx-auto">
+  <div class="space-y-8">
+    <Breadcrumb items={breadcrumbItems} client:load />
+
+
+  <article class="mx-auto">
     <!-- Header Section -->
     <div class="flex flex-col md:flex-row gap-8 mb-12">
       <!-- Profile Image -->
@@ -103,4 +114,5 @@ const relatedCaseStudies = allCaseStudies.filter(
       </section>
     )}
   </article>
+  </div>
 </BaseLayout>
