@@ -7,21 +7,34 @@ import { Card } from '../../components/ui/card';
 import Hero from '@/components/Hero.astro';
 import ImageLightbox from '@/components/ImageLightbox';
 import ContactForm from '@/components/ContactForm';
+import TeamSection from '@/components/TeamSection';
+import HeroContactPage from '@/components/HeroContactPage';
+
+const teamMembers = [
+  {
+    name: 'Maurits Fornier',
+    role: 'Legal Design Lead',
+    imageUrl: '/images/team/sunmoon-stokhof.jpg',
+  },
+  {
+    name: 'Dielis Delen',
+    role: 'Software Developer',
+    imageUrl: '/images/team/dielis-delen.webp',
+  },
+  {
+    name: 'Savannah Koomen',
+    role: 'Strategie Lead',
+    imageUrl: '/images/team/savannah-koomen.webp',
+  },
+];
 ---
 
 <BaseLayout title="Contact Us | Project Kiwi" description="Get in touch with us">
   <div class="relative">
     <!-- Hero Section -->
-    <Hero
-      class="min-h-[60vh]"
-      subtitle="Contact"
-      title="Neem contact op met Patroon"
-      description="Benieuwd wat we voor jouw organisatie kunnen betekenen? We denken graag met je mee."
-    >
-      <div class=""></div>
-    </Hero>
+    <HeroContactPage client:load teamMembers={teamMembers} />
 
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto px-4 py-8" id="afspraak">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Left Column -->
         <div class="bg-surface-1 p-6 rounded-lg">

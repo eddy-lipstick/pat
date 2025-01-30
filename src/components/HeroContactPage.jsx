@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
-const TeamSection = () => {
+const HeroContactPage = () => {
   const [showCallbackForm, setShowCallbackForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({ success: false, message: '' });
@@ -101,7 +101,7 @@ const TeamSection = () => {
             <Button
               size="lg"
               className="w-full sm:w-auto group bg-feitlijn-purple hover:bg-feitlijn-purple-600 text-white transition-all duration-300"
-              onClick={() => (window.location.href = '/contact')}
+              onClick={() => (window.location.href = '#afspraak')}
             >
               <span className="flex items-center justify-center w-full">
                 Plan een gesprek
@@ -230,4 +230,4 @@ const TeamSection = () => {
   );
 };
 
-export default TeamSection;
+export default HeroContactPage;
