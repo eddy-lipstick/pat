@@ -1,173 +1,41 @@
 ---
-// src/pages/learn/courses/index.astro
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Progress } from '@/components/ui/progress';
-import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
-import { Play, Clock, ChevronRight } from 'lucide-react';
+import CourseCard from '@/components/CourseCard.astro';
 
-// Add debug logging
-let debugLog = [];
+const courses = await getCollection('courses');
 
-let courseData;
-let instructor;
-let lessons = [];
-let error = null;
+// Log to debug
+console.log('Found courses:', courses);
 
-try {
-  debugLog.push('Starting to fetch courses');
-  // Fetch courses
-  const courses = await getCollection('courses');
-  debugLog.push(`Found ${courses.length} courses`);
+// Filter out drafts
+const publishedCourses = courses.filter((course) => !course.data.draft);
 
-  courseData = courses.find((course) => !course.data.draft);
-  debugLog.push(`Selected course: ${courseData?.id ?? 'None'}`);
-
-  if (courseData) {
-    debugLog.push('Course data:', JSON.stringify(courseData.data, null, 2));
-
-    // Only try to fetch instructor if we have a valid instructor ID
-    if (courseData.data.instructor) {
-      try {
-        debugLog.push(`Attempting to fetch instructor with ID: ${courseData.data.instructor}`);
-        instructor = await getEntry('team', courseData.data.instructor);
-        debugLog.push(`Found instructor: ${instructor?.id ?? 'None'}`);
-      } catch (instructorError) {
-        debugLog.push(`Error loading instructor: ${instructorError.message}`);
-        console.error('Error loading instructor:', instructorError);
-      }
-    } else {
-      debugLog.push('No instructor ID found in course data');
-    }
-
-    // Fetch lessons
-    try {
-      const allLessons = await getCollection('lessons');
-      debugLog.push(`Found ${allLessons.length} total lessons`);
-      lessons = allLessons
-        .filter((lesson) => !lesson.data.draft)
-        .sort((a, b) => a.data.order - b.data.order);
-      debugLog.push(`Selected ${lessons.length} active lessons`);
-    } catch (lessonsError) {
-      debugLog.push(`Error loading lessons: ${lessonsError.message}`);
-      console.error('Error loading lessons:', lessonsError);
-    }
-  }
-} catch (e) {
-  error = e.message;
-  debugLog.push(`Error: ${e.message}`);
-  console.error('Error loading course data:', e);
-}
-
-// Calculate progress
-const totalLessons = lessons.length;
-const completedLessons = 0;
-const progressPercentage = totalLessons > 0 ? (completedLessons / totalLessons) * 100 : 0;
+// Sort by published date
+const sortedCourses = publishedCourses.sort((a, b) => {
+  return new Date(b.data.publishedDate).getTime() - new Date(a.data.publishedDate).getTime();
+});
 ---
 
-<BaseLayout title={courseData?.data.title ?? 'Legal Design Cursus'}>
-  <main class="container mx-auto px-4 py-8 max-w-7xl">
-    {/* Debug output in development */}
+<BaseLayout title="Video Courses">
+  <div class="container py-8">
+    <h1 class="text-4xl font-bold mb-8">Our Courses</h1>
 
-    {
-      error && (
-        <div class="rounded-lg bg-destructive/10 text-destructive p-4 mb-8">
-          <p>Er is een fout opgetreden bij het laden van de cursus: {error}</p>
-        </div>
-      )
-    }
-
-    {
-      !error && courseData && (
-        <>
-          <section class="relative overflow-hidden rounded-lg bg-card p-8 mb-12">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-              <div>
-                <div class="flex flex-wrap gap-3 mb-4">
-                  <span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm">
-                    {courseData.data.level}
-                  </span>
-                </div>
-
-                <h1 class="text-4xl font-bold mb-4">{courseData.data.title}</h1>
-                <p class="text-lg text-muted-foreground mb-6">{courseData.data.description}</p>
-
-                {instructor && (
-                  <div class="flex items-center gap-4 mb-8 p-4 rounded-lg bg-card/50">
-                    {instructor.data.profileImage && (
-                      <img
-                        src={instructor.data.profileImage}
-                        alt={instructor.data.name}
-                        class="w-12 h-12 rounded-full bg-secondary/20"
-                      />
-                    )}
-                    <div>
-                      <p class="font-medium">Tips van {instructor.data.name}</p>
-                      <p class="text-sm text-muted-foreground">{instructor.data.role}</p>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {courseData.data.coverImage && (
-                <div class="relative aspect-video rounded-lg overflow-hidden bg-card/50">
-                  <img
-                    src={courseData.data.coverImage}
-                    alt={courseData.data.title}
-                    class="object-cover w-full h-full"
-                  />
-                </div>
-              )}
-            </div>
-          </section>
-
-          {/* Lessons List */}
-          {lessons.length > 0 && (
-            <section>
-              <h2 class="text-2xl font-semibold mb-6">Lessen</h2>
-              <div class="grid gap-4">
-                {lessons.map((lesson, index) => (
-                  <Card class="relative group">
-                    <a
-                      href={`/learn/courses/${lesson.id}`}
-                      class="block p-6 hover:bg-indigo-400 transition-colors"
-                    >
-                      <div class="flex justify-between items-start gap-4">
-                        <div class="flex-1 min-w-0">
-                          <div class="flex items-center gap-2 text-sm text-muted-foreground mb-1">
-                            <span class="font-medium text-primary">Aflevering {index + 1}</span>
-                          </div>
-                          <h3 class="text-lg font-medium mb-2 truncate">{lesson.data.title}</h3>
-                          <p class="text-muted-foreground line-clamp-2">
-                            {lesson.data.description}
-                          </p>
-                        </div>
-                        <div class="flex items-center">
-                          <Button variant="ghost" size="icon" class="text-primary">
-                            <ChevronRight class="w-5 h-5" />
-                          </Button>
-                        </div>
-                      </div>
-                    </a>
-                  </Card>
-                ))}
-              </div>
-            </section>
-          )}
-        </>
-      )
-    }
-
-    {
-      !error && !courseData && (
-        <div class="flex items-center justify-center min-h-[50vh]">
-          <div class="text-center">
-            <h1 class="text-2xl font-bold mb-4">Cursus wordt geladen...</h1>
-            <p class="text-muted-foreground">Even geduld terwijl we de cursusinhoud laden.</p>
-          </div>
-        </div>
-      )
-    }
-  </main>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {
+        sortedCourses.map((course) => (
+          <CourseCard
+            title={course.data.title}
+            subtitle={course.data.subtitle}
+            description={course.data.description}
+            coverImage={course.data.coverImage}
+            duration={course.data.duration}
+            level={course.data.level}
+            lessonsCount={course.data.lessonsCount}
+            href={`/learn/courses/${course.id}`}
+          />
+        ))
+      }
+    </div>
+  </div>
 </BaseLayout>

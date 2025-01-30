@@ -14,15 +14,6 @@ const STAKEHOLDERS = [
   'Algemene publiek',
 ] as const;
 
-const lessonSchema = z.object({
-  title: z.string().min(1),
-  description: z.string().min(1),
-  videoUrl: z.string().url(),
-  duration: z.string(), // Format: "MM:SS"
-  order: z.number(),
-  draft: z.boolean().default(false),
-});
-
 const timelineEntrySchema = z.object({
   phase: z.string(),
   description: z.string(),
@@ -121,10 +112,12 @@ const caseStudySchema = z.object({
 });
 
 const courseSchema = z.object({
-  title: z.string().min(1),
-  description: z.string().min(1),
+  title: z.string(),
+  subtitle: z.string(),
+  description: z.string(),
+  instructor: z.string(),
   coverImage: z.string(),
-  duration: z.string(), // Total course duration
+  duration: z.string(),
   lessonsCount: z.number(),
   featured: z.boolean().default(false),
   draft: z.boolean().default(false),
@@ -244,6 +237,15 @@ const approachSchema = z.object({
   icon: z.string().optional(),
 });
 
+const lessonSchema = z.object({
+  title: z.string().min(1),
+  description: z.string().min(1),
+  videoUrl: z.string().url(),
+  duration: z.string(), // Format: "MM:SS"
+  order: z.number(),
+  draft: z.boolean().default(false),
+});
+
 const newsSchema = z.object({
   title: z.string(),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
@@ -312,7 +314,7 @@ export const collections = {
 
   courses: defineCollection({
     loader: glob({
-      pattern: '**/[^_]*.{md,mdx}',
+      pattern: '**/index.{md,mdx}',
       base: './src/content/learn/courses',
     }),
     schema: courseSchema,
@@ -320,8 +322,8 @@ export const collections = {
 
   lessons: defineCollection({
     loader: glob({
-      pattern: '**/[^_]*.{md,mdx}',
-      base: './src/content/learn/lessons',
+      pattern: '**/lessons/*.{md,mdx}', // Changed pattern
+      base: './src/content/learn/courses',
     }),
     schema: lessonSchema,
   }),

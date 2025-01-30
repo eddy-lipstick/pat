@@ -1,0 +1,100 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const courses = await getCollection('courses', ({ data }) => {
+    return !data.draft;
+  });
+
+  return courses.map((course) => ({
+    params: { courseid: course.id },
+    props: { course },
+  }));
+}
+
+const { course } = Astro.props;
+const { Content } = await render(course);
+
+// Get all lessons
+const allLessons = await getCollection('lessons');
+console.log(
+  'All lessons found:',
+  allLessons.map((l) => l.id)
+);
+
+// Filter lessons for this course
+const courseLessons = allLessons.filter((lesson) => {
+  return lesson.id.startsWith(`${course.id}/lessons/`) && !lesson.data.draft;
+});
+
+// Sort lessons by order
+const sortedLessons = courseLessons.sort((a, b) => a.data.order - b.data.order);
+
+// Helper function to clean lesson URLs
+function getLessonSlug(lessonId) {
+  // Remove the course ID and 'lessons/' prefix
+  return lessonId.split('/lessons/')[1];
+}
+---
+
+<BaseLayout title={course.data.title}>
+  <div class="container py-8">
+    <div class="max-w-4xl mx-auto">
+      <div class="mb-8">
+        <h1 class="text-4xl font-bold mb-4">{course.data.title}</h1>
+        {
+          course.data.subtitle && (
+            <p class="text-xl text-text-secondary mb-4">{course.data.subtitle}</p>
+          )
+        }
+
+        <div class="flex gap-4 text-sm text-text-tertiary mb-6">
+          <span>{course.data.duration}</span>
+          <span>{course.data.lessonsCount} lessons</span>
+          <span>{course.data.level}</span>
+        </div>
+
+        <img src={course.data.coverImage} alt={course.data.title} class="w-full rounded-lg mb-8" />
+
+        <div class="prose prose-invert max-w-none">
+          <Content />
+        </div>
+      </div>
+
+      <div class="mt-12">
+        <h2 class="text-2xl font-bold mb-6">Video's</h2>
+        <div class="space-y-4">
+          {
+            sortedLessons.length === 0 ? (
+              <div>
+                <p class="text-text-secondary">No lessons found for this course.</p>
+                <p class="text-text-tertiary text-sm mt-2">Debug info:</p>
+                <pre class="text-xs mt-1 p-2 bg-surface-2 rounded">Course ID: {course.id}</pre>
+              </div>
+            ) : (
+              sortedLessons.map((lesson, index) => {
+                const lessonSlug = getLessonSlug(lesson.id);
+                return (
+                  <a
+                    href={`/learn/courses/${course.id}/lessons/${lessonSlug}`}
+                    class="block bg-surface-1 p-4 rounded-lg hover:bg-surface-2 transition-colors"
+                  >
+                    <div class="flex justify-between items-center">
+                      <div>
+                        <span class="text-text-tertiary mr-3">Les {index + 1}</span>
+                        <span class="font-medium">{lesson.data.title}</span>
+                      </div>
+                      <span class="text-sm text-text-tertiary">{lesson.data.duration}</span>
+                    </div>
+                  </a>
+                );
+              })
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
