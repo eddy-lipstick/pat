@@ -4,9 +4,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import TeamCard from '../../components/team/TeamCard.astro';
 import Hero from '@/components/Hero.astro';
 
-
 interface TeamMember {
-  id: string;  // Changed from slug to id
+  id: string; // Changed from slug to id
   data: {
     name: string;
     role: string;
@@ -48,36 +47,18 @@ console.log('Sorted Team Members:', sortedTeamMembers);
 ---
 
 <BaseLayout title="Our Team | Kiwi">
-  <main class="mx-auto px-4 py-8">
-       <!-- Hero Section -->
-       <Hero
-       class="min-h-[60vh]"
-       subtitle="Ons team"
-       title="Juristen, ontwerpers en techneuten."
-       
-     >
-       <div class="">      
-                    
-       </div>
-     </Hero>
-  
-       
-    {error && (
-      <div class="text-red-500 mb-4">
-        Error loading team members: {error?.message}
-      </div>
-    )}
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {sortedTeamMembers.length === 0 ? (
-        <p class="col-span-3 text-center text-muted-foreground">No team members found.</p>
-      ) : (
-        sortedTeamMembers.map((member) => (
-          <TeamCard member={member} />
-        ))
-      )}
-    </div>
+  <!-- Hero Section -->
+  <Hero variant="small" subtitle="Ons team" title="Juristen, ontwerpers en techneuten" />
 
-   
-  </main>
+  <section>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {
+        sortedTeamMembers.length === 0 ? (
+          <p class="col-span-3 text-center text-muted-foreground">No team members found.</p>
+        ) : (
+          sortedTeamMembers.map((member) => <TeamCard member={member} />)
+        )
+      }
+    </div>
+  </section>
 </BaseLayout>

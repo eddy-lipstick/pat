@@ -26,7 +26,7 @@ const navItems = [
       { label: 'Tips van Diel', href: '/learn/courses/tips-van-diel' },
     ],
   },
-  { label: 'Contact', href: '/contact' },
+  { label: 'Contact', href: '/contact', isCTA: true },
 ];
 
 const variantClasses = {
@@ -126,10 +126,13 @@ const currentPath = Astro.url.pathname;
               <a
                 href={item.href}
                 class:list={[
-                  'px-3 py-2 text-base font-medium rounded-md transition-colors font-roc-grotesk',
-                  classes.text,
-                  classes.hover,
-                  currentPath === item.href ? classes.active : '',
+                  'px-4 py-2 text-base font-medium rounded-md transition-colors font-roc-grotesk',
+                  item.isCTA
+                    ? variant === 'dark'
+                      ? 'bg-feitlijn-purple-500 text-white hover:bg-feitlijn-purple-400'
+                      : 'bg-feitlijn-purple-600 text-white hover:bg-feitlijn-purple-500'
+                    : [classes.text, classes.hover],
+                  currentPath === item.href && !item.isCTA ? classes.active : '',
                 ]}
               >
                 {item.label}
@@ -195,10 +198,13 @@ const currentPath = Astro.url.pathname;
               <a
                 href={item.href}
                 class:list={[
-                  'block px-3 py-2 text-base font-medium rounded-md transition-colors',
-                  classes.text,
-                  classes.mobileMenuHover,
-                  currentPath === item.href ? classes.active : '',
+                  'block px-4 py-2 text-base font-medium rounded-md transition-colors',
+                  item.isCTA
+                    ? variant === 'dark'
+                      ? 'bg-feitlijn-purple-500 text-white hover:bg-feitlijn-purple-400 mx-3 my-2 text-center'
+                      : 'bg-feitlijn-purple-600 text-white hover:bg-feitlijn-purple-500 mx-3 my-2 text-center'
+                    : [classes.text, classes.mobileMenuHover],
+                  currentPath === item.href && !item.isCTA ? classes.active : '',
                 ]}
               >
                 {item.label}

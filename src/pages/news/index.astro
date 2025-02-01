@@ -11,15 +11,15 @@ const sortedNews = newsItems.sort(
 ---
 
 <BaseLayout title="News & Updates | Legal Design Agency">
-  <div class="min-h-screen space-y-8 relative">
+  <div class="min-h-screen relative">
     <Hero
-      class="min-h-[60vh]"
+      variant="small"
       subtitle="Nieuws"
       title="Het laatste nieuws van Patroon"
       description="Blijf op de hoogte van onze projecten, evenementen en ontwikkelingen."
     />
 
-    <div class="mx-auto pb-16">
+    <div class="mx-auto">
       <NewsList client:load newsItems={sortedNews} />
     </div>
   </div>

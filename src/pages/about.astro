@@ -38,7 +38,7 @@ const allNews = allNewsEntries.sort((a, b) => {
 
 <BaseLayout title="Over Ons | Patroon">
   <Hero
-    class="min-h-[60vh]"
+    variant="small"
     subtitle="Over Patroon"
     title="Duidelijkmakers van het recht"
     description="De uitdrukking ‘schrijven is schrappen’ lijkt niet voor juristen te gelden. Contracten hebben de neiging uit de dijen, regels trekken meer regels aan. Het is de hoogste tijd voor nieuw gereedschap. We geloven dat juridisch werk zoveel slimmer, sneller en duidelijker kan. We combineren juridische expertise, technologie en design om dagelijkse uitdagingen van de moderne jurist op te lossen."
@@ -47,16 +47,13 @@ const allNews = allNewsEntries.sort((a, b) => {
       <img
         src="images/kantoor/kantoor.jpg"
         alt="Patroon team"
-        class="relative rounded-lg w-full aspect-[5/4] object-cover"
+        class="rounded-lg w-full object-cover"
       />
     </div>
   </Hero>
-
-  {/* Hero Section */}
-
-  {/* Problems & Solutions Section */}
-
-  <SolutionsGrid client:load />
+  <section class="py-16">
+    <SolutionsGrid client:load />
+  </section>
 
   <TeamSection client:load teamMembers={teamMembers} />
 </BaseLayout>

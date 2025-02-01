@@ -3,7 +3,7 @@ import NewsCard from './NewsCard';
 
 const NewsList = ({ newsItems }) => {
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-6">
       {newsItems.map((item) => (
         <NewsCard
           key={item.id}

@@ -102,7 +102,7 @@ const breadcrumbItems = [
 ---
 
 <BaseLayout title={title}>
-  <div class="space-y-8">
+  <div class="flex flex-col gap-8">
     <Breadcrumb items={breadcrumbItems} client:load />
 
     {/* Hero Section */}
@@ -123,17 +123,15 @@ const breadcrumbItems = [
 
       <div class="absolute bottom-0 left-0 right-0 p-8">
         <div class="container mx-auto">
-          <div class="max-w-3xl">
-            <div class="space-y-4">
-              <div class="flex flex-wrap gap-2">
-                {
-                  tags.map((tag) => (
-                    <Badge className="bg-primary/20 text-primary hover:bg-primary/30">{tag}</Badge>
-                  ))
-                }
-              </div>
-              <h1 class="text-4xl font-bold text-white">{title}</h1>
+          <div class="max-w-3xl flex flex-col gap-4">
+            <div class="flex flex-wrap gap-2">
+              {
+                tags.map((tag) => (
+                  <Badge className="bg-primary/20 text-primary hover:bg-primary/30">{tag}</Badge>
+                ))
+              }
             </div>
+            <h1 class="text-4xl font-bold text-white">{title}</h1>
           </div>
         </div>
       </div>
@@ -143,19 +141,18 @@ const breadcrumbItems = [
     <div class="container mx-auto px-4">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Content Column */}
-        <div class="lg:col-span-2 space-y-8">
+        <div class="lg:col-span-2 flex flex-col gap-8">
           {/* Description Card */}
           <Card>
             <CardHeader>
               <CardTitle>Over deze training</CardTitle>
             </CardHeader>
-            <CardContent class="prose prose-lg dark:prose-invert pt-6">
+            <CardContent class="prose prose-lg dark:prose-invert">
               <p>{description}</p>
 
-              {/* Learning Objectives */}
-              <div class="mt-8">
-                <h3 class="text-xl font-semibold mb-4">Na deze training kun je:</h3>
-                <ul class="space-y-2">
+              <div class="flex flex-col gap-4">
+                <h3 class="text-xl font-semibold">Na deze training kun je:</h3>
+                <ul class="flex flex-col gap-2">
                   {
                     learningObjectives.map((objective) => (
                       <li class="flex items-start gap-2">
@@ -174,14 +171,16 @@ const breadcrumbItems = [
             <CardHeader>
               <CardTitle>Programma</CardTitle>
             </CardHeader>
-            <CardContent class="space-y-6">
+            <CardContent class="flex flex-col gap-6">
               {
-                modules.map((module) => (
-                  <div class="border-b last:border-0 pb-4 last:pb-0">
-                    <h3 class="font-semibold text-lg mb-2">{module.title}</h3>
+                modules.map((module, index) => (
+                  <div
+                    class={`flex flex-col gap-2 ${index !== modules.length - 1 ? 'border-b pb-4' : ''}`}
+                  >
+                    <h3 class="font-semibold text-lg">{module.title}</h3>
                     <p class="text-muted-foreground">{module.description}</p>
                     {module.duration && (
-                      <div class="flex items-center gap-2 mt-2 text-sm text-muted-foreground">
+                      <div class="flex items-center gap-2 text-sm text-muted-foreground">
                         <Clock className="w-4 h-4" />
                         <span>{module.duration}</span>
                       </div>
@@ -194,8 +193,11 @@ const breadcrumbItems = [
 
           {/* Training Content */}
           <Card>
+            <CardHeader>
+              <CardTitle>Beschrijving</CardTitle>
+            </CardHeader>
             <CardContent>
-              <div class="prose prose-lg max-w-none mb-16 text-foreground">
+              <div class="prose prose-lg max-w-none text-foreground">
                 <Content />
               </div>
             </CardContent>
@@ -203,13 +205,13 @@ const breadcrumbItems = [
         </div>
 
         {/* Sidebar */}
-        <div class="space-y-6">
+        <div class="flex flex-col gap-6">
           {/* Training Info Card */}
           <Card>
             <CardHeader>
               <CardTitle>Info</CardTitle>
             </CardHeader>
-            <CardContent class="p-6 space-y-4">
+            <CardContent class="flex flex-col gap-4">
               <div class="flex items-center gap-2 text-sm">
                 <Clock className="w-4 h-4" />
                 <span>{duration}</span>
@@ -239,7 +241,7 @@ const breadcrumbItems = [
                 <span>{language === 'nl' ? 'Nederlands' : 'English'}</span>
               </div>
 
-              {price && <div class="mt-4 text-xl font-bold">{price}</div>}
+              {price && <div class="text-xl font-bold">{price}</div>}
             </CardContent>
           </Card>
 
@@ -250,37 +252,30 @@ const breadcrumbItems = [
                 <CardHeader>
                   <CardTitle>Trainers</CardTitle>
                 </CardHeader>
-                <CardContent class="space-y-4">
-                  {trainers.map((trainer) => {
-                    if (!trainer || !trainer.data) {
-                      console.log('Invalid trainer data:', trainer);
-                      return null;
-                    }
-
-                    const { name, role, profileImage } = trainer.data;
-
-                    return (
-                      <div class="flex items-center gap-4">
-                        {profileImage ? (
-                          <img
-                            src={profileImage}
-                            alt={`Profile photo of ${name}`}
-                            class="w-12 h-12 rounded-full object-cover"
-                          />
-                        ) : (
-                          <div class="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
-                            <span class="text-muted-foreground text-lg">
-                              {name?.charAt(0) || '?'}
-                            </span>
-                          </div>
-                        )}
-                        <div>
-                          <p class="font-semibold">{name || 'Unknown Trainer'}</p>
-                          {role && <p class="text-sm text-muted-foreground">{role}</p>}
+                <CardContent class="flex flex-col gap-4">
+                  {trainers.map((trainer) => (
+                    <div class="flex items-center gap-4">
+                      {trainer.data.profileImage ? (
+                        <img
+                          src={trainer.data.profileImage}
+                          alt={`Profile photo of ${trainer.data.name}`}
+                          class="w-12 h-12 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div class="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
+                          <span class="text-muted-foreground text-lg">
+                            {trainer.data.name?.charAt(0) || '?'}
+                          </span>
                         </div>
+                      )}
+                      <div class="flex flex-col gap-1">
+                        <p class="font-semibold">{trainer.data.name || 'Unknown Trainer'}</p>
+                        {trainer.data.role && (
+                          <p class="text-sm text-muted-foreground">{trainer.data.role}</p>
+                        )}
                       </div>
-                    );
-                  })}
+                    </div>
+                  ))}
                 </CardContent>
               </Card>
             )
@@ -294,7 +289,7 @@ const breadcrumbItems = [
                   <CardTitle>In het kort</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ul class="space-y-2">
+                  <ul class="flex flex-col gap-2">
                     {includes.map((item) => (
                       <li class="flex items-center gap-2">
                         <CheckCircle2 className="w-4 h-4 text-primary" />
@@ -312,8 +307,8 @@ const breadcrumbItems = [
             <CardHeader>
               <CardTitle>Interesse?</CardTitle>
             </CardHeader>
-            <CardContent class="p-6">
-              <p class="text-sm text-muted-foreground mb-4">
+            <CardContent class="flex flex-col gap-4">
+              <p class="text-sm text-muted-foreground">
                 Neem contact op voor meer informatie over deze training.
               </p>
 

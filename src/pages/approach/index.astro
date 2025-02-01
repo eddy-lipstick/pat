@@ -14,43 +14,39 @@ const sortedApproaches = allApproaches.sort((a, b) =>
 ---
 
 <BaseLayout title="Onze aanpak">
-  <div class="py-8 space-y-16">
-    <Hero class="min-h-[60vh]" subtitle="Wat we doen" title="Ontdek onze aanpak">
-      <div class=""></div>
-    </Hero>
-
+  <Hero variant="small" subtitle="Wat we doen" title="Ontdek onze aanpak" />
+  <section>
     <!-- Approaches Grid -->
-    <div class="max-w-7xl mx-auto px-4">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {
-          sortedApproaches.map((approach) => (
-            <a href={`/approach/${approach.id.split('/').pop()?.replace('.md', '')}`} class="group">
-              <Card className="h-full border border-border/50 bg-surface-1 hover:bg-surface-2 transition-all duration-300">
-                <CardHeader>
-                  <div class="flex justify-between items-start gap-4">
-                    <div>
-                      <CardTitle className="text-2xl mb-2">{approach.data.title}</CardTitle>
-                      <CardDescription className="text-text-secondary line-clamp-3">
-                        {approach.data.description}
-                      </CardDescription>
-                    </div>
-                    <ArrowRight className="h-6 w-6 shrink-0 text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {
+        sortedApproaches.map((approach) => (
+          <a href={`/approach/${approach.id.split('/').pop()?.replace('.md', '')}`} class="group">
+            <Card className="h-full border border-border/50 bg-surface-1 hover:bg-surface-2 transition-all duration-300">
+              <CardHeader>
+                <div class="flex justify-between items-start gap-4">
+                  <div>
+                    <CardTitle className="text-2xl mb-2">{approach.data.title}</CardTitle>
+                    <CardDescription className="text-text-secondary line-clamp-3">
+                      {approach.data.description}
+                    </CardDescription>
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <div class="flex flex-wrap gap-2">
-                    {approach.data.methodology.slice(0, 3).map((method) => (
-                      <span class="rounded-full px-3 py-1 text-sm bg-primary/10 text-primary">
-                        {method}
-                      </span>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </a>
-          ))
-        }
-      </div>
+                  <ArrowRight className="h-6 w-6 shrink-0 text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div class="flex flex-wrap gap-2">
+                  {approach.data.methodology.slice(0, 3).map((method) => (
+                    <span class="rounded-full px-3 py-1 text-sm bg-primary/10 text-primary">
+                      {method}
+                    </span>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </a>
+        ))
+      }
     </div>
-  </div>
+  </section>
 </BaseLayout>

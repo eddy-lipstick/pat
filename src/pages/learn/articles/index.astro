@@ -23,18 +23,15 @@ const authors = await getCollection('team');
 const authorsMap = new Map(authors.map((author) => [author.id, author]));
 ---
 
-<BaseLayout title="Articles | Kiwi">
+<BaseLayout title="Blog - Patroon">
   <Hero
-    class="min-h-[60vh]"
+    variant="small"
     subtitle="Blog"
     title="Juridische innovatie in de praktijk"
     description="Ontdek hoe legal design en technologie het juridische werkveld transformeren via onze artikelen, cases en analyses"
-  >
-    <div class=""></div>
-  </Hero>
-  <div class="min-h-screen space-y-8 relative">
-    <!-- Articles List -->
+  />
 
+  <section>
     <div class="grid grid-cols-1 gap-6" id="articles-grid">
       {
         sortedArticles.map((article) => {
@@ -120,7 +117,7 @@ const authorsMap = new Map(authors.map((author) => [author.id, author]));
         </div>
       )
     }
-  </div>
+  </section>
 </BaseLayout>
 
 <style>

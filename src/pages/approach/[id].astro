@@ -5,6 +5,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { ArrowRight, ArrowLeft } from 'lucide-react';
 import CaseStudyCard from '@/components/CaseStudyCard';
 import Breadcrumb from '@/components/Breadcrumb';
+import Hero from '@/components/Hero.astro';
 
 export async function getStaticPaths() {
   const approaches = await getCollection('approach');
@@ -66,59 +67,56 @@ const breadcrumbItems = [
 ---
 
 <BaseLayout title={approach.data.title}>
-  <div class="space-y-8">
-    <Breadcrumb items={breadcrumbItems} client:load />
-    <!-- Back Navigation -->
+  <Breadcrumb items={breadcrumbItems} client:load />
+  <Hero
+    variant="small"
+    subtitle="Wat we doen"
+    title={approach.data.title}
+    description={approach.data.description}
+  />
 
-    <!-- Hero -->
-    <h1 class="text-5xl font-bold mb-6">{approach.data.title}</h1>
-    <p class="text-xl text-text-secondary mb-16">{approach.data.description}</p>
-
-    <!-- Content -->
-    <div class="prose prose-invert max-w-none mb-16">
-      <Content />
-    </div>
-
-    <!-- Related Cases -->
-    {
-      relatedCases.length > 0 && (
-        <section class="mb-16">
-          <h2 class="text-2xl font-bold mb-6">Bekijk projecten</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {relatedCases.map((study) => (
-              <CaseStudyCard study={study} />
-            ))}
-          </div>
-        </section>
-      )
-    }
-
-    <!-- Navigation -->
-    <nav class="grid grid-cols-2 gap-4 border-t border-border/50 pt-8">
-      <a
-        href={`/approach/${prevApproach.id.split('/').pop()?.replace('.md', '')}`}
-        class="group flex items-center gap-3 hover:text-primary transition-colors"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        <div>
-          <div class="text-sm text-text-secondary">Vorige</div>
-          <div class="font-medium group-hover:text-primary transition-colors">
-            {prevApproach.data.title}
-          </div>
-        </div>
-      </a>
-      <a
-        href={`/approach/${nextApproach.id.split('/').pop()?.replace('.md', '')}`}
-        class="group flex items-center justify-end gap-3 hover:text-primary transition-colors ml-auto"
-      >
-        <div class="text-right">
-          <div class="text-sm text-text-secondary">Volgende</div>
-          <div class="font-medium group-hover:text-primary transition-colors">
-            {nextApproach.data.title}
-          </div>
-        </div>
-        <ArrowRight className="h-4 w-4" />
-      </a>
-    </nav>
-  </div>
+  <section class="prose prose-invert max-w-none mb-16">
+    <Content />
+  </section>
 </BaseLayout>
+<!-- Related Cases -->
+{
+  relatedCases.length > 0 && (
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6">Bekijk projecten</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {relatedCases.map((study) => (
+          <CaseStudyCard study={study} />
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<!-- Navigation -->
+<nav class="grid grid-cols-2 gap-4 border-t border-border/50 pt-8">
+  <a
+    href={`/approach/${prevApproach.id.split('/').pop()?.replace('.md', '')}`}
+    class="group flex items-center gap-3 hover:text-primary transition-colors"
+  >
+    <ArrowLeft className="h-4 w-4" />
+    <div>
+      <div class="text-sm text-text-secondary">Vorige</div>
+      <div class="font-medium group-hover:text-primary transition-colors">
+        {prevApproach.data.title}
+      </div>
+    </div>
+  </a>
+  <a
+    href={`/approach/${nextApproach.id.split('/').pop()?.replace('.md', '')}`}
+    class="group flex items-center justify-end gap-3 hover:text-primary transition-colors ml-auto"
+  >
+    <div class="text-right">
+      <div class="text-sm text-text-secondary">Volgende</div>
+      <div class="font-medium group-hover:text-primary transition-colors">
+        {nextApproach.data.title}
+      </div>
+    </div>
+    <ArrowRight className="h-4 w-4" />
+  </a>
+</nav>

@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import VideoEmbed from '@/components/VideoEmbed';
+import Hero from '@/components/Hero.astro';
 
 export async function getStaticPaths() {
   const allLessons = await getCollection('lessons');
@@ -44,15 +45,14 @@ function getLessonSlug(lessonId) {
 ---
 
 <BaseLayout title={`${lesson.data.title} - Legal Design Academy`}>
-  <div class="container mx-auto px-4 py-8">
+  <Hero variant="small" subtitle="Aflevering" title={lesson.data.title} />
+  <div class="mx-auto">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       {/* Main Content */}
       <div class="lg:col-span-2">
         {/* Video Section */}
         <Card>
-          <div class="p-6">
-            <h1 class="text-3xl font-bold mb-4">{lesson.data.title}</h1>
-
+          <div class="p-1">
             <VideoEmbed url={lesson.data.videoUrl} />
           </div>
         </Card>

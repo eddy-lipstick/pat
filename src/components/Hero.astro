@@ -1,8 +1,10 @@
 ---
 // src/components/Hero.astro
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface Props {
+  variant?: 'default' | 'small'; // Add variant prop
   subtitle: string;
   title: string;
   description: string;
@@ -15,6 +17,7 @@ interface Props {
 }
 
 const {
+  variant = 'default',
   subtitle,
   title,
   description,
@@ -27,37 +30,77 @@ const {
 } = Astro.props;
 ---
 
-<section class={`relative overflow-visible flex items-center ${className}`}>
-  <div class="grid grid-cols-1 lg:grid-cols-2 h-full items-center relative">
+<section
+  class={cn(
+    'relative overflow-visible flex items-center',
+    // Variant-specific classes
+    variant === 'default' && 'min-h-screen',
+    variant === 'small' && 'py-12 lg:py-24',
+    className
+  )}
+>
+  <div
+    class={cn(
+      'grid grid-cols-1 lg:grid-cols-2 items-center relative gap-8',
+      variant === 'small' && 'gap-4 lg:gap-8'
+    )}
+  >
     <!-- Left Content -->
-    <div class="py-16 lg:py-24">
-      <p class="text-indigo-400 text-xl mb-4">{subtitle}</p>
+    <div
+      class={cn('flex flex-col', variant === 'default' && 'gap-8', variant === 'small' && 'gap-4')}
+    >
+      <div class="flex flex-col gap-4">
+        <p class="text-indigo-400 text-xl">{subtitle}</p>
 
-      <h1 class="text-5xl font-bold mb-6 text-text-primary">{title}</h1>
-      <p class="text-xl text-text-secondary max-w-2xl">
-        {description}
-      </p>
+        <h1
+          class={cn(
+            'font-bold text-text-primary',
+            variant === 'default' && 'text-5xl lg:text-6xl',
+            variant === 'small' && 'text-4xl lg:text-5xl'
+          )}
+        >
+          {title}
+        </h1>
+
+        <p
+          class={cn(
+            'text-text-secondary max-w-2xl',
+            variant === 'default' && 'text-xl',
+            variant === 'small' && 'text-lg'
+          )}
+        >
+          {description}
+        </p>
+      </div>
 
       {
         bulletPoints.length > 0 && (
-          <ul class="mt-6 space-y-4 text-lg text-text-secondary">
+          <ul class="flex flex-col gap-3">
             {bulletPoints.map((point) => (
-              <li class="flex items-start">
-                <span class="text-feitlijn-purple mr-2">→</span>
-                {point}
+              <li class="flex items-start gap-2">
+                <span class="text-feitlijn-purple">→</span>
+                <span
+                  class={cn(
+                    'text-text-secondary',
+                    variant === 'default' && 'text-lg',
+                    variant === 'small' && 'text-base'
+                  )}
+                >
+                  {point}
+                </span>
               </li>
             ))}
           </ul>
         )
       }
 
-      <div class="flex flex-col w-full mt-6 sm:flex-row gap-4">
+      <div class="flex flex-col sm:flex-row gap-4">
         {
           primaryButtonText && (
             <a href={primaryButtonHref} class="w-full sm:w-auto">
-              <button class="w-full sm:w-auto bg-[#E1FF4C] hover:bg-[#E1FF4C]/90 text-black font-medium px-8 h-11 rounded-md inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+              <Button variant="accent" size="lg" class="w-full">
                 {primaryButtonText}
-              </button>
+              </Button>
             </a>
           )
         }
@@ -65,9 +108,9 @@ const {
         {
           secondaryButtonText && (
             <a href={secondaryButtonHref} class="w-full sm:w-auto">
-              <button class="w-full sm:w-auto border border-white/20 text-white hover:bg-white/10 h-11 px-8 rounded-md inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+              <Button variant="outline" size="lg" class="w-full">
                 {secondaryButtonText}
-              </button>
+              </Button>
             </a>
           )
         }

@@ -14,6 +14,7 @@ import BeforeAfterSlider from '../components/BeforeAfterSlider';
 import TeamCTA from '../components/TeamCTA';
 import CaseStudyTimeline from '../components/CaseStudyTimeline';
 import SEO from '@/components/SEO.astro';
+import Container from '../components/Container.astro';
 
 import { getEntry } from 'astro:content';
 
@@ -132,8 +133,8 @@ const breadcrumbsStructuredData = {
 </html>
 <body class="min-h-screen bg-feitlijn-purple-50 text-background">
   <Navbar variant="light" />
-  <div class="px-4 sm:px-6 lg:px-8">
-    <main class="mx-auto max-w-7xl pt-20">
+  <main>
+    <Container>
       <section class="relative min-h-screen">
         <!-- Hero Section -->
         <CaseStudyHero client:load title={title} introduction={introduction} />
@@ -249,8 +250,8 @@ const breadcrumbsStructuredData = {
           )
         }
       </section>
-    </main>
-  </div>
+    </Container>
+  </main>
 
   <Footer />
 </body>

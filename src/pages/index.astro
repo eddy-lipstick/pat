@@ -60,7 +60,7 @@ const processedStudies = await Promise.all(
 );
 ---
 
-<BaseLayout title="Home">
+<BaseLayout title="Patroon">
   {/* Hero Section */}
 
   <Hero
@@ -74,8 +74,8 @@ const processedStudies = await Promise.all(
     ]}
     primaryButtonText="Neem contact op"
     primaryButtonHref="/contact"
-    secondaryButtonText="Lees meer"
-    secondaryButtonHref="/about"
+    secondaryButtonText="Bekijk ons werk"
+    secondaryButtonHref="/case-studies"
   >
     <div class="absolute top-0 right-[-20%] w-[70%] h-full hidden lg:block z-20">
       <BubbleMap client:load caseStudies={bubbleMapCaseStudies} />

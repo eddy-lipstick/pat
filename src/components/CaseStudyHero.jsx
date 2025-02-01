@@ -3,7 +3,7 @@ import PulseLabel from '../components/PulseLabel';
 
 const CaseStudyHero = ({ title, introduction }) => {
   return (
-    <div className="container mx-auto px-6 py-16 md:py-24">
+    <div className="mx-auto py-16 md:py-24">
       <div className="w-full md:w-4/5">
         <div class="mb-4">
           <PulseLabel client:load text="Case study" />

@@ -145,7 +145,7 @@ const SolutionsGrid = () => {
   ];
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-4 py-12">
+    <div className="w-full mx-auto">
       <div className="space-y-16">
         {categories.map((category, index) => (
           <CategoryRow
