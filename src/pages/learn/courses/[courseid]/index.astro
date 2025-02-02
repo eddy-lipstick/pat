@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { render } from 'astro:content';
 import Hero from '@/components/Hero.astro';
+import Breadcrumb from '@/components/Breadcrumb';
 
 export async function getStaticPaths() {
   const courses = await getCollection('courses', ({ data }) => {
@@ -38,9 +39,13 @@ function getLessonSlug(lessonId) {
   // Remove the course ID and 'lessons/' prefix
   return lessonId.split('/lessons/')[1];
 }
+
+const breadcrumbItems = [{ label: 'Leren' }, { label: course.data.title }];
 ---
 
 <BaseLayout title={course.data.title}>
+  <Breadcrumb items={breadcrumbItems} client:load />
+
   <Hero
     variant="small"
     subtitle="Video cursus"

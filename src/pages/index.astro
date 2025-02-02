@@ -22,6 +22,7 @@ import OurFormula from '../components/OurFormula';
 import TeamSection from '../components/TeamSection';
 import Hero from '@/components/Hero.astro';
 import Partners from '../components/Partners.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
 
 import TeamSection from '../components/TeamSection';
 
@@ -77,7 +78,7 @@ const processedStudies = await Promise.all(
     secondaryButtonText="Bekijk ons werk"
     secondaryButtonHref="/case-studies"
   >
-    <div class="absolute top-0 right-[-20%] w-[70%] h-full hidden lg:block z-20">
+    <div class="top-[10%] h-full hidden lg:block z-20">
       <BubbleMap client:load caseStudies={bubbleMapCaseStudies} />
     </div>
   </Hero>
@@ -87,6 +88,11 @@ const processedStudies = await Promise.all(
   <!-- <VideoTestimonials client:load /> -->
 
   <ServicesGrid />
+  <SectionHeader
+    eyebrow="Onze formule"
+    title="Juristen, ontwerpers en techneuten"
+    description="Ons team bestaat uit een unieke mix van mensen, die samenwerken om juridische complexiteit om te zetten in heldere, toegankelijke en overtuigende communicatie."
+  />
 
   <OurFormula client:load />
   <Partners />

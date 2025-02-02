@@ -5,11 +5,15 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { ArrowRight } from 'lucide-react';
 import TrainingCard from '@/components/TrainingCard';
 import Hero from '@/components/Hero.astro';
+import Breadcrumb from '@/components/Breadcrumb';
 
 const allTraining = await getCollection('training');
+const breadcrumbItems = [{ label: 'Leren' }, { label: 'Trainingsaanbod', href: '/training' }];
 ---
 
 <BaseLayout title="Onze trainingen">
+  <Breadcrumb items={breadcrumbItems} client:load />
+
   <Hero variant="small" subtitle="Onze trainingen" title="Zelf aan de slag" />
 
   <!-- Training Grid -->

@@ -112,20 +112,69 @@
     @apply bg-background text-foreground;
   }
 
+  /* Base prose styles */
+  .prose {
+    @apply text-foreground;
+  }
+
+  /* Headings */
   .prose :is(h1, h2, h3, h4, h5, h6) {
-    color: var(--foreground);
+    @apply text-foreground mb-4;
     line-height: 1.2;
   }
 
-  .prose strong {
-    @apply font-bold text-foreground;
+  .prose h1 {
+    @apply text-4xl mb-6;
   }
 
-  .prose blockquote {
-    @apply pl-4 border-l-4 border-primary italic text-foreground;
+  .prose h2 {
+    @apply text-3xl mb-5;
   }
 
+  .prose h3 {
+    @apply text-2xl mb-4;
+  }
+
+  .prose h4 {
+    @apply text-xl mb-4;
+  }
+
+  /* Paragraphs and lists */
+  .prose :is(p, ul, ol) {
+    @apply text-foreground mb-4;
+  }
+
+  /* Links */
   .prose a {
-    @apply text-foreground underline underline-offset-4 hover:text-primary/80 transition-colors;
+    @apply text-primary no-underline hover:underline transition-colors;
+  }
+
+  /* Strong and emphasis */
+  .prose :is(strong, em) {
+    @apply text-foreground;
+  }
+
+  /* Blockquotes */
+  .prose blockquote {
+    @apply border-l-4 border-primary pl-4 italic text-foreground;
+  }
+
+  /* Code blocks */
+  .prose :is(code, pre) {
+    @apply text-foreground bg-surface-1 px-1 py-0.5 rounded;
+  }
+
+  /* Lists */
+  .prose :is(ul, ol) {
+    @apply pl-6;
+  }
+
+  .prose li {
+    @apply mb-2;
+  }
+
+  /* Images */
+  .prose img {
+    @apply rounded-lg my-6;
   }
 }

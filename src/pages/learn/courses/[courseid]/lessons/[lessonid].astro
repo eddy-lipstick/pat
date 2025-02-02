@@ -1,5 +1,5 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -7,6 +7,8 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import VideoEmbed from '@/components/VideoEmbed';
 import Hero from '@/components/Hero.astro';
+import Breadcrumb from '@/components/Breadcrumb';
+import Article from '@/components/Article.astro';
 
 export async function getStaticPaths() {
   const allLessons = await getCollection('lessons');
@@ -26,6 +28,13 @@ export async function getStaticPaths() {
 }
 
 const { lesson } = Astro.props;
+
+// Get the course data
+const course = await getEntry('courses', Astro.params.courseid);
+if (!course) {
+  throw new Error(`No course found with id ${Astro.params.courseid}`);
+}
+
 const { Content } = await render(lesson);
 
 // Get all lessons for this course for navigation
@@ -42,17 +51,26 @@ const nextLesson = currentIndex < sortedLessons.length - 1 ? sortedLessons[curre
 function getLessonSlug(lessonId) {
   return lessonId.split('/lessons/')[1];
 }
+
+const breadcrumbItems = [
+  { label: 'Leren', href: '/learn' },
+  { label: course.data.title, href: `/learn/courses/${Astro.params.courseid}` },
+  { label: lesson.data.title },
+];
 ---
 
-<BaseLayout title={`${lesson.data.title} - Legal Design Academy`}>
-  <Hero variant="small" subtitle="Aflevering" title={lesson.data.title} />
+<BaseLayout title={`${lesson.data.title} - ${course.data.title} - Legal Design Academy`}>
   <div class="mx-auto">
+    <div class="mb-6">
+      <Breadcrumb items={breadcrumbItems} />
+    </div>
+
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       {/* Main Content */}
       <div class="lg:col-span-2">
         {/* Video Section */}
         <Card>
-          <div class="p-1">
+          <div class="p-2">
             <VideoEmbed url={lesson.data.videoUrl} />
           </div>
         </Card>
@@ -70,6 +88,7 @@ function getLessonSlug(lessonId) {
                     <ChevronLeft class="h-4 w-4" />
                     <div class="flex flex-col items-start">
                       <span class="text-xs text-muted-foreground">Vorige les</span>
+                      <span class="text-sm">{prevLesson.data.title}</span>
                     </div>
                   </a>
                 </Button>
@@ -87,6 +106,7 @@ function getLessonSlug(lessonId) {
                   >
                     <div class="flex flex-col items-end">
                       <span class="text-xs text-muted-foreground">Volgende les</span>
+                      <span class="text-sm">{nextLesson.data.title}</span>
                     </div>
                     <ChevronRight class="h-4 w-4" />
                   </a>
@@ -99,24 +119,9 @@ function getLessonSlug(lessonId) {
         {/* Lesson Content */}
         <Card>
           <div class="p-6">
-            <article
-              class="prose prose-lg max-w-none dark:prose-invert
-              prose-h1:text-foreground
-              prose-h2:text-foreground
-              prose-h3:text-foreground
-              prose-h4:text-foreground
-              prose-h5:text-foreground
-              prose-h6:text-foreground
-              prose-p:text-foreground
-              prose-li:text-foreground
-              prose-strong:text-foreground
-              prose-em:text-foreground
-              prose-code:text-foreground
-              prose-blockquote:text-foreground
-              prose-a:text-primary prose-a:no-underline hover:prose-a:underline"
-            >
+            <Article>
               <Content />
-            </article>
+            </Article>
           </div>
         </Card>
       </div>
@@ -126,7 +131,7 @@ function getLessonSlug(lessonId) {
         <div class="sticky top-24">
           <Card>
             <div class="p-4">
-              <h2 class="text-xl font-semibold mb-4">Alle afleveringen</h2>
+              <h2 class="text-l mb-4">Meer in deze serie</h2>
               <ScrollArea class="h-[calc(100vh-300px)]">
                 <div class="space-y-2 pr-4">
                   {

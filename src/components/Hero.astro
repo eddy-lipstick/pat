@@ -98,7 +98,7 @@ const {
         {
           primaryButtonText && (
             <a href={primaryButtonHref} class="w-full sm:w-auto">
-              <Button variant="accent" size="lg" class="w-full">
+              <Button variant="default" size="lg" class="w-full">
                 {primaryButtonText}
               </Button>
             </a>
@@ -118,8 +118,11 @@ const {
     </div>
 
     <!-- Right Content -->
-    <div class="hidden lg:block">
-      <slot />
+    <!-- Right Content -->
+    <div class="relative w-full lg:w-auto">
+      <div class="w-full h-full">
+        <slot />
+      </div>
     </div>
   </div>
 </section>

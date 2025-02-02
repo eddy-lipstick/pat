@@ -4,7 +4,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Hero from '@/components/Hero.astro';
-
+import Breadcrumb from '@/components/Breadcrumb';
 // Get all articles
 const articles = await getCollection('articles');
 
@@ -21,9 +21,12 @@ const sortedArticles = [...articles].sort((a, b) => {
 // Get all authors at once for better performance
 const authors = await getCollection('team');
 const authorsMap = new Map(authors.map((author) => [author.id, author]));
+const breadcrumbItems = [{ label: 'Leren' }, { label: 'Blog', href: '/learn/articles' }];
 ---
 
 <BaseLayout title="Blog - Patroon">
+  <Breadcrumb items={breadcrumbItems} client:load />
+
   <Hero
     variant="small"
     subtitle="Blog"

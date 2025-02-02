@@ -15,6 +15,7 @@ import TeamCTA from '../components/TeamCTA';
 import CaseStudyTimeline from '../components/CaseStudyTimeline';
 import SEO from '@/components/SEO.astro';
 import Container from '../components/Container.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
 
 import { getEntry } from 'astro:content';
 
@@ -232,7 +233,12 @@ const breadcrumbsStructuredData = {
             </div>
           )
         }
-
+        <SectionHeader
+          eyebrow="Onze expertise"
+          title="Bekijk onze projecten"
+          description="Ontdek hoe wij juridische complexiteit omzetten in heldere oplossingen"
+          variant="light"
+        />
         <!-- Timeline Section -->
         {
           timeline && (

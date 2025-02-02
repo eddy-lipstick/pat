@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TeamCard from '../../components/team/TeamCard.astro';
 import Hero from '@/components/Hero.astro';
+import Breadcrumb from '@/components/Breadcrumb';
 
 interface TeamMember {
   id: string; // Changed from slug to id
@@ -44,9 +45,16 @@ let sortedTeamMembers = teamMembers.sort((a, b) => {
 });
 
 console.log('Sorted Team Members:', sortedTeamMembers);
+
+const breadcrumbItems = [
+  { label: 'Over ons', href: '/about' },
+  { label: 'Team', href: '/team' },
+];
 ---
 
 <BaseLayout title="Our Team | Kiwi">
+  <Breadcrumb items={breadcrumbItems} client:load />
+
   <!-- Hero Section -->
   <Hero variant="small" subtitle="Ons team" title="Juristen, ontwerpers en techneuten" />
 

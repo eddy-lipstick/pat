@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Breadcrumb from '@/components/Breadcrumb';
 import Hero from '@/components/Hero.astro';
+import Article from '@/components/Article.astro';
 
 interface Props {
   entry: CollectionEntry<'articles'>;
@@ -88,14 +89,15 @@ const breadcrumbItems = [
     description={entry.data.description}
   />
 
-  <div class="mx-auto md:px-6 lg:px-8">
+  <div class="mx-auto">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 py-12">
       {/* Main Content Column */}
+
       <article class="lg:col-span-8 lg:col-start-1">
         {/* Article Content */}
-        <div class="prose prose-lg prose-primary mx-auto text-foreground">
+        <Article>
           <Content />
-        </div>
+        </Article>
 
         {/* Author Bio */}
         {authorData && (

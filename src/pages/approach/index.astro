@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { ArrowRight } from 'lucide-react';
 import Hero from '@/components/Hero.astro';
+import Breadcrumb from '@/components/Breadcrumb';
 
 const allApproaches = await getCollection('approach');
 
@@ -11,9 +12,16 @@ const allApproaches = await getCollection('approach');
 const sortedApproaches = allApproaches.sort((a, b) =>
   a.data.title.localeCompare(b.data.title, 'nl')
 );
+
+const breadcrumbItems = [
+  { label: 'Over ons', href: '/about' },
+  { label: 'Aanpak', href: '/approach' },
+];
 ---
 
 <BaseLayout title="Onze aanpak">
+  <Breadcrumb items={breadcrumbItems} client:load />
+
   <Hero variant="small" subtitle="Wat we doen" title="Ontdek onze aanpak" />
   <section>
     <!-- Approaches Grid -->

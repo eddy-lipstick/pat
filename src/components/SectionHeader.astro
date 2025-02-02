@@ -1,0 +1,99 @@
+---
+// src/components/SectionHeader.astro
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  align?: 'center' | 'left' | 'right';
+  size?: 'small' | 'default' | 'large';
+  variant?: 'default' | 'light';
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  align = 'center',
+  size = 'default',
+  variant = 'default',
+  class: className,
+} = Astro.props;
+
+// Alignment classes
+const alignClasses = {
+  center: 'text-center items-center',
+  left: 'text-left items-start',
+  right: 'text-right items-end',
+};
+
+// Size classes
+const titleSizes = {
+  small: 'text-2xl md:text-3xl',
+  default: 'text-3xl md:text-4xl',
+  large: 'text-4xl md:text-5xl',
+};
+
+const descriptionSizes = {
+  small: 'text-base md:text-lg',
+  default: 'text-lg md:text-xl',
+  large: 'text-xl md:text-2xl',
+};
+
+// Variant classes
+const variantClasses = {
+  default: {
+    eyebrow: 'bg-primary/10 text-primary',
+    title: 'text-foreground',
+    description: 'text-muted-foreground',
+  },
+  light: {
+    eyebrow: 'bg-primary/10 text-primary-600',
+    title: 'text-gray-900',
+    description: 'text-gray-600',
+  },
+};
+---
+
+<div class:list={['flex flex-col gap-4', alignClasses[align], 'mb-12 md:mb-16', className]}>
+  {
+    eyebrow && (
+      <div
+        class:list={[
+          'inline-flex items-center px-4 py-1.5 rounded-full',
+          variantClasses[variant].eyebrow,
+        ]}
+      >
+        <span class="text-sm font-semibold tracking-wider uppercase">{eyebrow}</span>
+      </div>
+    )
+  }
+
+  {
+    title && (
+      <h2
+        class:list={[
+          'font-bold tracking-tight font-roc-grotesk',
+          titleSizes[size],
+          variantClasses[variant].title,
+        ]}
+      >
+        {title}
+      </h2>
+    )
+  }
+
+  {
+    description && (
+      <p
+        class:list={[
+          align === 'center' && 'max-w-[85%] md:max-w-[65%]',
+          descriptionSizes[size],
+          variantClasses[variant].description,
+        ]}
+      >
+        {description}
+      </p>
+    )
+  }
+</div>
