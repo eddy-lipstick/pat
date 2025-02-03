@@ -1,23 +1,23 @@
 ---
 title: 'Dutch Legal Tech Map'
-introduction: 'Het Nederlandse legal tech ecosysteem groeit snel, maar een overzicht ontbrak. Samen met Dutch Legal Tech creëerden we de eerste interactieve kaart van alle legal tech startups in Nederland. Een levend document dat de dynamiek van de sector visualiseert en verbindingen zichtbaar maakt.'
+introduction: 'The Dutch legal tech ecosystem is growing rapidly, but an overview was missing. Together with Dutch Legal Tech, we created the first interactive map of all legal tech startups in the Netherlands. A living document that visualizes the dynamics of the sector and makes connections visible.'
 
 cover_image:
   src: '/case-studies/dlt/dlt-4.jpg'
-  alt: 'Interactieve sessie tijdens de conferentie in Utrecht'
+  alt: 'Interactive session during the conference in Utrecht'
 quotes:
   first:
-    quote: 'De Legal Tech Map laat zien hoe volwassen het Nederlandse ecosysteem is geworden. Van contractautomatisering tot toegang tot het recht - we kunnen trots zijn op onze innovatieve legal tech sector.'
+    quote: 'The Legal Tech Map shows how mature the Dutch ecosystem has become. From contract automation to access to justice - we can be proud of our innovative legal tech sector.'
     author: 'Jeroen Zweers'
-    role: 'Oprichter Dutch Legal Tech'
+    role: 'Founder Dutch Legal Tech'
   second:
-    quote: 'Door de interactieve visualisatie maken we de beweging in het landschap letterlijk zichtbaar. De blobs bewegen zoals de sector zelf: dynamisch en met onverwachte verbindingen.'
+    quote: 'Through the interactive visualization, we literally make the movement in the landscape visible. The blobs move like the sector itself: dynamic and with unexpected connections.'
     author: 'Maurits Fornier'
     role: 'Design lead'
 
 metadata:
   client: 'Dutch Legal Tech'
-  date: 'Oktober 2024'
+  date: 'October 2024'
   services:
     - 'Information Design'
     - 'Visual Design'
@@ -27,61 +27,61 @@ metadata:
 heroVideo:
   src: '/case-studies/dlt/dlt-clip.mp4'
   poster: '/case-studies/dlt/dlt-1.jpg'
-  title: 'De Legal Tech Map visualiseert het Nederlandse legal tech ecosysteem.'
+  title: 'The Legal Tech Map visualizes the Dutch legal tech ecosystem.'
 
 expandableContent:
-  - title: 'Een landschap in beweging'
-    firstParagraph: 'Legal tech verandert de juridische sector ingrijpend. Van research tools met AI tot platforms die juridische diensten toegankelijk maken voor iedereen. Om dit ecosysteem te visualiseren, kozen we voor een organische vorm: bewegende blobs die de verschillende deelgebieden representeren. De zachte vormen en vloeiende bewegingen symboliseren hoe de grenzen tussen categorieën vervagen en bedrijven zich continu ontwikkelen.'
+  - title: 'A landscape in motion'
+    firstParagraph: 'Legal tech is profoundly changing the legal sector. From AI research tools to platforms that make legal services accessible to everyone. To visualize this ecosystem, we chose an organic form: moving blobs that represent the different areas. The soft shapes and fluid movements symbolize how boundaries between categories blur and companies continuously evolve.'
     remainingText:
-      - 'We deelden bedrijven in in vijf hoofdcategorieën: Research, Contract & Document Automation, Legal Workflow, Access to Justice, en Legal Process Outsourcing. Door de interactieve vormgeving kunnen gebruikers inzoomen op specifieke gebieden en de verbindingen tussen verschillende spelers ontdekken.'
-      - 'Naast de interactieve kaart creëerden we een serie video-interviews met founders, die het verhaal achter de innovaties vertellen. Deze persoonlijke verhalen geven context aan de visualisatie en laten zien hoe ondernemers de juridische sector transformeren.'
+      - 'We divided companies into five main categories: Research, Contract & Document Automation, Legal Workflow, Access to Justice, and Legal Process Outsourcing. Through the interactive design, users can zoom in on specific areas and discover connections between different players.'
+      - 'Besides the interactive map, we created a series of video interviews with founders, telling the story behind the innovations. These personal stories provide context to the visualization and show how entrepreneurs are transforming the legal sector.'
 
 images:
   - src: '/case-studies/dlt/dlt-legalgeek.jpg'
-    alt: 'Overview van de Legal Tech Map'
+    alt: 'Overview of the Legal Tech Map'
     type: 'full'
   - src: '/case-studies/dlt/dlt-1.jpg'
-    alt: 'Overview van de Legal Tech Map'
+    alt: 'Overview of the Legal Tech Map'
     type: 'full'
   - src: '/case-studies/dlt/dlt-2.jpg'
-    alt: 'Verschillende categorieën in de kaart'
+    alt: 'Different categories in the map'
     type: 'full'
   - src: '/case-studies/dlt/dlt-3.jpg'
-    alt: 'Detail van de bewegende blobs'
+    alt: 'Detail of moving blobs'
     type: 'grid'
   - src: '/case-studies/dlt/dlt-4.jpg'
-    alt: 'Interactieve elementen'
+    alt: 'Interactive elements'
     type: 'grid'
   - src: '/case-studies/dlt/dlt-5.jpg'
-    alt: 'Video interviews met founders'
+    alt: 'Video interviews with founders'
     type: 'grid'
   - src: '/case-studies/dlt/dlt-cover.jpg'
-    alt: 'Presentatie op Legal Geek'
+    alt: 'Presentation at Legal Geek'
     type: 'grid'
   - src: '/case-studies/dlt/dlt-press.jpg'
-    alt: 'Presentatie op Legal Geek'
+    alt: 'Presentation at Legal Geek'
     type: 'grid'
 
 beforeAfter:
   - beforeImage: '/case-studies/dlt/dlt-voor.jpg'
     afterImage: '/case-studies/dlt/dlt-na.jpg'
-    alt: 'Van statische naar interactieve visualisatie'
+    alt: 'From static to interactive visualization'
 
 timeline:
   entries:
-    - phase: 'Research & analyse'
-      description: 'We brachten alle legal tech bedrijven in Nederland in kaart en analyseerden hun focus, doelgroep en technologie. Dit leidde tot een categorisering die de sector helder in beeld brengt.'
+    - phase: 'Research & analysis'
+      description: 'We mapped all legal tech companies in the Netherlands and analyzed their focus, target audience, and technology. This led to a categorization that clearly visualizes the sector.'
 
-    - phase: 'Visueel concept'
-      description: 'We kozen voor een organisch design met bewegende blobs om de dynamiek van het ecosysteem te visualiseren. De zachte vormen en vloeiende bewegingen symboliseren hoe grenzen tussen categorieën vervagen.'
+    - phase: 'Visual concept'
+      description: 'We chose an organic design with moving blobs to visualize the dynamics of the ecosystem. The soft shapes and fluid movements symbolize how boundaries between categories blur.'
       imageUrl: '/legal-tech-map/concept.jpg'
 
-    - phase: 'Design & ontwikkeling'
-      description: 'De interactieve kaart werd ontwikkeld met focus op gebruiksgemak. We creëerden zowel een digitale als een print versie, en produceerden video-interviews met founders om het verhaal compleet te maken.'
+    - phase: 'Design & development'
+      description: 'The interactive map was developed with a focus on user experience. We created both a digital and print version, and produced video interviews with founders to complete the story.'
       imageUrl: '/legal-tech-map/development.jpg'
 
-    - phase: 'Lancering'
-      description: 'De Legal Tech Map werd gelanceerd tijdens Legal Geek Amsterdam, waar het enthousiast werd ontvangen door de legal tech community. De kaart wordt regelmatig geüpdatet om nieuwe ontwikkelingen te tonen.'
+    - phase: 'Launch'
+      description: 'The Legal Tech Map was launched during Legal Geek Amsterdam, where it was enthusiastically received by the legal tech community. The map is regularly updated to show new developments.'
 
-teamMember: 'maurits-fornier'
+teamMember: 'en/maurits-fornier'
 ---

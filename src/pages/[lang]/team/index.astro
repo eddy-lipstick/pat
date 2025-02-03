@@ -1,12 +1,24 @@
 ---
+// src/pages/[lang]/team.astro
 import { getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import TeamCard from '../../components/team/TeamCard.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import TeamCard from '@/components/team/TeamCard.astro';
 import Hero from '@/components/Hero.astro';
 import Breadcrumb from '@/components/Breadcrumb';
+import { languages, defaultLanguage } from '@/i18n/config';
+import { teamTranslations } from '@/i18n/translations/team';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params;
+const t = teamTranslations[lang] || teamTranslations[defaultLanguage];
 
 interface TeamMember {
-  id: string; // Changed from slug to id
+  id: string;
   data: {
     name: string;
     role: string;
@@ -29,9 +41,15 @@ let teamMembers: TeamMember[] = [];
 let error: Error | null = null;
 
 try {
-  teamMembers = await getCollection('team');
-  console.log('Team Members:', teamMembers);
-  console.log('Raw Team Members Data:', JSON.stringify(teamMembers, null, 2));
+  // Get all team members and filter by language
+  const allTeamMembers = await getCollection('team');
+  teamMembers = allTeamMembers
+    .filter((member) => member.id.startsWith(`${lang}/`))
+    .map((member) => ({
+      ...member,
+      id: member.id.split('/')[1], // Get the ID after the language prefix
+      lang, // Add language to each member
+    }));
 } catch (e) {
   error = e as Error;
   console.error('Error loading team members:', e);
@@ -44,25 +62,23 @@ let sortedTeamMembers = teamMembers.sort((a, b) => {
   return a.data.name.localeCompare(b.data.name);
 });
 
-console.log('Sorted Team Members:', sortedTeamMembers);
-
 const breadcrumbItems = [
-  { label: 'Over ons', href: '/about' },
-  { label: 'Team', href: '/team' },
+  { label: t.aboutUs, href: `/${lang}/about` },
+  { label: t.team, href: `/${lang}/team` },
 ];
 ---
 
-<BaseLayout title="Ons team">
+<BaseLayout title={t.title}>
   <Breadcrumb items={breadcrumbItems} client:load />
 
   <!-- Hero Section -->
-  <Hero variant="small" subtitle="Ons team" title="Juristen, ontwerpers en techneuten" />
+  <Hero variant="small" subtitle={t.subtitle} title={t.title} />
 
   <section>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {
         sortedTeamMembers.length === 0 ? (
-          <p class="col-span-3 text-center text-muted-foreground">No team members found.</p>
+          <p class="col-span-3 text-center text-muted-foreground">{t.noTeamMembers}</p>
         ) : (
           sortedTeamMembers.map((member) => <TeamCard member={member} />)
         )

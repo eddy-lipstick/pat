@@ -1,21 +1,25 @@
 import React from 'react';
 import { Card } from '@/components/ui/card';
 
-const NewsCard = ({ title, date, summary, imageSrc, imageAlt, href }) => {
+const NewsCard = ({ title, date, summary, imageSrc, imageAlt, href, lang }) => {
+  const formattedDate = new Date(date).toLocaleDateString(lang === 'nl' ? 'nl-NL' : 'en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  // Remove language prefix and .md extension to construct proper href
+  const cleanHref = href.split('/').pop()?.replace('.md', '');
+  const fullHref = `/${lang}/news/${cleanHref}`;
+
   return (
-    <a href={href} className="block group">
+    <a href={fullHref} className="block group">
       <Card className="bg-surface-1 border-surface-2 overflow-hidden transition-all duration-300 hover:bg-surface-2 hover:scale-[1.01] hover:shadow-lg">
         <div className="grid md:grid-cols-[2fr,1fr] gap-6">
           <div className="p-6 space-y-4">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
-                <span className="text-sm text-text-tertiary">
-                  {new Date(date).toLocaleDateString('nl-NL', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
-                </span>
+                <span className="text-sm text-text-tertiary">{formattedDate}</span>
               </div>
               <h2 className="text-xl font-bold text-text-primary group-hover:text-primary transition-colors">
                 {title}

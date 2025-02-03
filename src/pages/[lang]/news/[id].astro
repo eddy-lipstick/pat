@@ -1,59 +1,75 @@
 ---
+// src/pages/[lang]/news/[id].astro
 import { getCollection, getEntry } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
-import Hero from '@/components/Hero.astro';
 import { render } from 'astro:content';
+
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
 import Breadcrumb from '@/components/Breadcrumb';
+import { languages } from '@/i18n/config';
+import { newsTranslations } from '@/i18n/translations/news';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 export async function getStaticPaths() {
-  const newsItems = await getCollection('news');
-  return newsItems.map((entry) => ({
-    params: { id: entry.id },
-    props: { entry },
-  }));
+  const allNews = await getCollection('news');
+
+  return Object.keys(languages).flatMap((lang) => {
+    // Change this line - we're checking either the folder structure or the language field
+    const languageNews = allNews.filter(
+      (item) => item.id.startsWith(`${lang}/`) || item.data.language === lang
+    );
+
+    return languageNews.map((entry) => ({
+      params: {
+        lang,
+        // Fix the ID extraction to handle both folder structures
+        id: entry.id.split('/').pop()?.replace('.md', '') || entry.id.replace('.md', ''),
+      },
+      props: { entry },
+    }));
+  });
 }
 
 const { entry } = Astro.props;
+const { lang } = Astro.params;
+const t = newsTranslations[lang];
 const { Content } = await render(entry);
 
-// Format date in Dutch
-const formattedDate = new Date(entry.data.date).toLocaleDateString('nl-NL', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
+// Format date in correct language
+const formattedDate = new Date(entry.data.date).toLocaleDateString(
+  lang === 'nl' ? 'nl-NL' : 'en-US',
+  {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }
+);
 
-// Breadcrumb items for news story
 const breadcrumbItems = [
-  { label: 'Over ons', href: '/about' },
-  { label: 'Nieuws', href: '/news' },
+  { label: t.breadcrumbs.about, href: `/${lang}/about` },
+  { label: t.breadcrumbs.news, href: `/${lang}/news` },
   { label: entry.data.title },
 ];
 
-// Get all news posts and sort them by date
+// Get all news posts for current language and sort them
 const allNews = await getCollection('news');
-const sortedNews = allNews.sort(
+const languageNews = allNews.filter((item) => item.data.lang === lang);
+const sortedNews = languageNews.sort(
   (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
 
 // Find current post index
-const currentIndex = sortedNews.findIndex((post) => post.id === Astro.props.entry.id);
-
-// Get prev and next posts
+const currentIndex = sortedNews.findIndex((post) => post.id === entry.id);
 const prevNews = currentIndex < sortedNews.length - 1 ? sortedNews[currentIndex + 1] : null;
 const nextNews = currentIndex > 0 ? sortedNews[currentIndex - 1] : null;
 
-// Format date function
+// Format date helper function
 const formatDate = (dateString: string) => {
-  const date = new Date(dateString);
-  return new Intl.DateTimeFormat('nl-NL', {
+  return new Intl.DateTimeFormat(lang === 'nl' ? 'nl-NL' : 'en-US', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
-  }).format(date);
+  }).format(new Date(dateString));
 };
 ---
 
@@ -90,7 +106,7 @@ const formatDate = (dateString: string) => {
     {
       prevNews && (
         <a
-          href={`/news/${prevNews.id.split('/').pop()?.replace('.md', '')}`}
+          href={`/${lang}/news/${prevNews.id.split('/').pop()?.replace('.md', '')}`}
           class="group flex items-center gap-3 hover:text-primary transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
@@ -107,7 +123,7 @@ const formatDate = (dateString: string) => {
     {
       nextNews && (
         <a
-          href={`/news/${nextNews.id.split('/').pop()?.replace('.md', '')}`}
+          href={`/${lang}/news/${nextNews.id.split('/').pop()?.replace('.md', '')}`}
           class="group flex items-center justify-end gap-3 hover:text-primary transition-colors ml-auto"
         >
           <div class="text-right">

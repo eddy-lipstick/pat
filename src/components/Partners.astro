@@ -2,20 +2,22 @@
 import LegalloydLogo from './logos/LegalloydLogo.astro';
 import HVALogo from './logos/HVALogo.astro';
 import LogoTooltip from '@/components/LogoTooltip';
+import { partnerTranslations } from '@/i18n/translations/partners';
 
-const legalloydDesc =
-  'Een van de eerste legal tech innovators in Nederland. We delen niet alleen ons kantoorpand, maar ook ons DNA: een onophoudelijke drang naar vernieuwing in de juridische sector. Als partners in crime zetten we ons samen in om het recht toegankelijker te maken.';
+interface Props {
+  lang: keyof typeof partnerTranslations;
+}
 
-const hvaDesc =
-  'Partner in onderwijs en innovatie. Samen met de HvA hebben we het vak Legal Innovation ontwikkeld, waar we studenten klaarstomen voor de toekomst van het juridische werkveld. Door de combinatie van academische kennis en praktijkervaring creëren we een unieke leeromgeving.';
+const { lang } = Astro.props;
+const t = partnerTranslations[lang];
 ---
 
 <section class="py-16">
   <div class="max-w-6xl mx-auto">
-    <p class="text-xl lg:text-2xl text-indigo-400 mb-16 max-w-2xl">Dit zijn onze partners</p>
+    <p class="text-xl lg:text-2xl text-feitlijn-purple mb-16 max-w-2xl">{t.title}</p>
 
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 md:gap-16">
-      <LogoTooltip client:visible content={legalloydDesc}>
+      <LogoTooltip client:visible content={t.partners.legalloyd.description}>
         <div class="group relative flex items-center justify-center p-6">
           <LegalloydLogo
             class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105"
@@ -27,7 +29,7 @@ const hvaDesc =
         </div>
       </LogoTooltip>
 
-      <LogoTooltip client:visible content={hvaDesc}>
+      <LogoTooltip client:visible content={t.partners.hva.description}>
         <div class="group relative flex items-center justify-center p-6">
           <HVALogo
             class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105"

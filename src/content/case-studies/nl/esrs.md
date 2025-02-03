@@ -77,5 +77,5 @@ timeline:
     - phase: 'Testen & verfijnen'
       description: 'Samen met EZ organiseerden we twee rondes gebruikerstests: eerst met stakeholders, daarna met duurzaamheidsexperts uit het bedrijfsleven. Hun feedback leidde tot praktische verbeteringen zoals extra checklists, voorbeeldtabellen en verduidelijking van complexe concepten via het FreshFood voorbeeld.'
 
-teamMember: 'savannah-koomen' # This references the filename of the team member MDX file
+teamMember: 'nl/savannah-koomen' # This references the filename of the team member MDX file
 ---

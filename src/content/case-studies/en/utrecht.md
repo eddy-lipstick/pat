@@ -71,5 +71,5 @@ timeline:
     - phase: 'Borging'
       description: 'We ontwikkelden een toolkit waarmee de gemeente zelf gemakkelijk nieuwe privacyverklaringen kan maken. En trainde de beheerders in het gebruik van deze toolkit.'
 
-teamMember: 'savannah-koomen'
+teamMember: 'en/savannah-koomen'
 ---

@@ -198,7 +198,16 @@ const trainingSchema = z.object({
   ),
 
   // Related content
-  trainers: z.array(reference('team')),
+  trainers: z
+    .union([
+      z.array(z.string()),
+      z.array(
+        reference('team', {
+          prefixPath: ({ language }) => `${language}`,
+        }),
+      ),
+    ])
+    .optional(),
   prerequisites: z.array(z.string()).optional(),
   includes: z.array(z.string()).optional(), // What's included in the training
 
@@ -254,6 +263,7 @@ const lessonSchema = z.object({
   draft: z.boolean().default(false),
 });
 
+// Update the news schema to include language support
 const newsSchema = z.object({
   title: z.string(),
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
@@ -262,6 +272,10 @@ const newsSchema = z.object({
   summary: z.string(),
   labels: z.array(z.string()),
   link: z.string().url().optional(),
+  // Add language field
+  language: z.enum(LANGUAGES).default('nl'),
+  // Optional reference to the translation in other language
+  translationRef: z.string().optional(),
   image: z
     .object({
       src: z.string(),
@@ -281,7 +295,7 @@ export const collections = {
   }),
   team: defineCollection({
     loader: glob({
-      pattern: '**/[^_]*.{md,mdx}',
+      pattern: '**/[^_]*.{md,mdx}', // This will match files in language subdirectories
       base: './src/content/team',
     }),
     schema: teamSchema,

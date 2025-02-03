@@ -1,88 +1,81 @@
 ---
-title: "Duurzaamheid verweven in arbeidsrecht"
-introduction: "Hoe maak je duurzaamheid een natuurlijk onderdeel van je arbeidsovereenkomst? Voor een vooruitstrevende organisatie ontwikkelde Patroon een 'groene arbeidsovereenkomst' die verder gaat dan standaard bepalingen. Door duurzaamheid te integreren in de dagelijkse werkpraktijk, wordt het een vanzelfsprekend onderdeel van de bedrijfscultuur."
+title: 'Sustainability Woven into Employment Law'
+introduction: "How do you make sustainability a natural part of your employment contract? For a progressive organization, Patroon developed a 'green employment contract' that goes beyond standard provisions. By integrating sustainability into daily work practices, it becomes a natural part of the corporate culture."
 
 quotes:
   first:
-    quote: "Deze arbeidsovereenkomst reflecteert niet alleen onze waarden, maar inspireert medewerkers ook om duurzaamheid in de praktijk te brengen. Het is meer dan een contract - het is een statement van wie we zijn."
-    author: "HR Director"
-    role: "Opdrachtgever"
+    quote: "This employment contract not only reflects our values but also inspires employees to put sustainability into practice. It's more than a contract - it's a statement of who we are."
+    author: 'HR Director'
+    role: 'Client'
   second:
-    quote: "Door duurzaamheid te verweven in het arbeidsrecht, creëren we een nieuwe standaard voor moderne organisaties. Deze overeenkomst laat zien hoe juridische documenten kunnen bijdragen aan positieve verandering."
-    author: "Savannah Koomen"
-    role: "Patroon"
+    quote: 'By weaving sustainability into employment law, we create a new standard for modern organizations. This agreement shows how legal documents can contribute to positive change.'
+    author: 'Savannah Koomen'
+    role: 'Patroon'
 
 cover_image:
-  src: "/case-studies/groene-overeenkomst/groeneovereenkomst-cover.jpg"
-  alt: "Visualisatie van de groene arbeidsovereenkomst"
+  src: '/case-studies/groene-overeenkomst/groeneovereenkomst-cover.jpg'
+  alt: 'Visualization of the green employment contract'
 
 metadata:
-  client: "Eigen initiatief"
-  date: "December 2023"
+  client: 'Own initiative'
+  date: 'December 2023'
   services:
-    - "Contract Design"
-    - "Legal Design"
-    - "Employment Law"
-  relatedSkills:
-    [
-      "Contract Redesign",
-      "Arbeidsovereenkomst",
-      "Contract UX",
-      "Brand Identity",
-    ]
+    - 'Contract Design'
+    - 'Legal Design'
+    - 'Employment Law'
+  relatedSkills: ['Contract Redesign', 'Employment Agreement', 'Contract UX', 'Brand Identity']
 
 expandableContent:
-  - title: "Van standaard naar duurzaam"
-    firstParagraph: "Een arbeidsovereenkomst is vaak het eerste formele contact tussen werkgever en werknemer. Door duurzaamheid hierin te integreren, wordt direct duidelijk dat het een kernwaarde is van de organisatie. We ontwikkelden een overeenkomst die verder gaat dan wettelijke vereisten en concrete handvatten biedt voor duurzaam gedrag."
+  - title: 'From standard to sustainable'
+    firstParagraph: "An employment contract is often the first formal contact between employer and employee. By integrating sustainability into it, it immediately becomes clear that it's a core value of the organization. We developed an agreement that goes beyond legal requirements and provides concrete tools for sustainable behavior."
     remainingText:
-      - "De overeenkomst integreert duurzaamheid in verschillende aspecten van het werk: van mobiliteit en thuiswerken tot lunches en opleidingen. Door gebruik van heldere iconen en infographics worden de duurzaamheidsaspecten benadrukt en wordt het document niet alleen juridisch bindend, maar ook inspirerend."
-      - "Het resultaat is een arbeidsovereenkomst die zowel juridisch waterdicht als praktisch toepasbaar is. Het document draagt direct bij aan gedragsverandering en versterkt de duurzame bedrijfscultuur."
+      - 'The agreement integrates sustainability into various aspects of work: from mobility and remote working to lunches and training. Through the use of clear icons and infographics, the sustainability aspects are emphasized, making the document not just legally binding, but also inspiring.'
+      - 'The result is an employment agreement that is both legally sound and practically applicable. The document directly contributes to behavioral change and strengthens the sustainable corporate culture.'
 
 images:
-  - src: "/case-studies/groene-overeenkomst/groeneovereenkomst-1.jpg"
-    alt: "Overzicht van de duurzame bepalingen"
-    type: "full"
-  - src: "/case-studies/groene-overeenkomst/groeneovereenkomst-2.jpg"
-    alt: "Overzicht van de duurzame bepalingen"
-    type: "full"
-  - src: "/case-studies/groene-overeenkomst/groeneovereenkomst-3.jpg"
-    alt: "Overzicht van de duurzame bepalingen"
-    type: "full"
-  - src: "/case-studies/groene-overeenkomst/groeneovereenkomst-4.jpg"
-    alt: "Overzicht van de duurzame bepalingen"
-    type: "full"
-  - src: "/case-studies/groene-overeenkomst/groeneovereenkomst-5.jpg"
-    alt: "Overzicht van de duurzame bepalingen"
-    type: "full"
-  - src: "/case-studies/groene-overeenkomst/groeneovereenkomst-6.jpg"
-    alt: "Overzicht van de duurzame bepalingen"
-    type: "full"
-
-  - src: "/case-studies/groene-overeenkomst/groeneovereenkomst-8.jpg"
-    alt: "Overzicht van de duurzame bepalingen"
-    type: "full"
+  - src: '/case-studies/groene-overeenkomst/groeneovereenkomst-1.jpg'
+    alt: 'Overview of sustainable provisions'
+    type: 'full'
+  - src: '/case-studies/groene-overeenkomst/groeneovereenkomst-2.jpg'
+    alt: 'Overview of sustainable provisions'
+    type: 'full'
+  - src: '/case-studies/groene-overeenkomst/groeneovereenkomst-3.jpg'
+    alt: 'Overview of sustainable provisions'
+    type: 'full'
+  - src: '/case-studies/groene-overeenkomst/groeneovereenkomst-4.jpg'
+    alt: 'Overview of sustainable provisions'
+    type: 'full'
+  - src: '/case-studies/groene-overeenkomst/groeneovereenkomst-5.jpg'
+    alt: 'Overview of sustainable provisions'
+    type: 'full'
+  - src: '/case-studies/groene-overeenkomst/groeneovereenkomst-6.jpg'
+    alt: 'Overview of sustainable provisions'
+    type: 'full'
+  - src: '/case-studies/groene-overeenkomst/groeneovereenkomst-8.jpg'
+    alt: 'Overview of sustainable provisions'
+    type: 'full'
 
 timeline:
   entries:
-    - phase: "Analyse"
-      description: "We analyseerden de bestaande arbeidsovereenkomst en identificeerden mogelijkheden om duurzaamheid te integreren."
+    - phase: 'Analysis'
+      description: 'We analyzed the existing employment contract and identified opportunities to integrate sustainability.'
 
-    - phase: "Ontwikkeling"
-      description: "We ontwikkelden nieuwe clausules die duurzaamheid concreet maken en vertaalden deze naar begrijpelijke taal en visuele elementen."
+    - phase: 'Development'
+      description: 'We developed new clauses that make sustainability concrete and translated these into understandable language and visual elements.'
 
-    - phase: "Implementatie"
-      description: "De nieuwe overeenkomst werd getest met HR en nieuwe medewerkers, en verder verfijnd op basis van hun feedback."
+    - phase: 'Implementation'
+      description: 'The new agreement was tested with HR and new employees, and further refined based on their feedback.'
 
-    - phase: "Impact meting"
-      description: "We monitorden de effecten op gedrag en bewustwording bij nieuwe medewerkers en verzamelden feedback voor verdere optimalisatie."
+    - phase: 'Impact measurement'
+      description: 'We monitored the effects on behavior and awareness among new employees and gathered feedback for further optimization.'
 
 benefits:
-  description: "Deze nieuwe aanpak heeft geleid tot meetbare verbeteringen in duurzaam gedrag en betrokkenheid"
+  description: 'This new approach has led to measurable improvements in sustainable behavior and engagement'
   metrics:
-    - "85% van nieuwe medewerkers kiest voor duurzaam vervoer"
-    - "60% reductie in printpapier gebruik"
-    - "90% positieve feedback op duurzaamheidsintegratie"
-    - "40% toename in gebruik van duurzame ontwikkelingsmogelijkheden"
+    - '85% of new employees choose sustainable transportation'
+    - '60% reduction in printing paper usage'
+    - '90% positive feedback on sustainability integration'
+    - '40% increase in use of sustainable development opportunities'
 
-teamMember: "savannah-koomen"
+teamMember: 'en/savannah-koomen'
 ---

@@ -1,66 +1,66 @@
 ---
-title: "Betere contracten vergroten vertrouwen"
-introduction: "Hoe bouw je vertrouwen op met boeren voor het plaatsen van zonne-energiesystemen? LC Energy vroeg Patroon om hun juridische documenten te transformeren naar begrijpelijke communicatiemiddelen. We ontwikkelden een transparante term sheet en proces explainer die de basis leggen voor duurzame partnerschappen."
+title: 'Better Contracts Build Trust'
+introduction: 'How do you build trust with farmers for installing solar energy systems? LC Energy asked Patroon to transform their legal documents into comprehensible communication tools. We developed a transparent term sheet and process explainer that lay the foundation for sustainable partnerships.'
 
 quotes:
   first:
-    quote: "Door de nieuwe documenten kunnen we nu veel effectiever communiceren met onze partners. We zien dat het vertrouwen direct groeit als we aan de keukentafel zitten."
-    author: "Sales Manager"
-    role: "LC Energy"
+    quote: 'With the new documents, we can now communicate much more effectively with our partners. We see trust growing immediately when we sit at the kitchen table.'
+    author: 'Sales Manager'
+    role: 'LC Energy'
   second:
-    quote: "De combinatie van heldere taal en doordachte vormgeving maakt complexe contracten toegankelijk. Dit project laat zien hoe legal design bijdraagt aan duurzame partnerships."
-    author: "Savannah Koomen"
-    role: "Legal design lead"
+    quote: 'The combination of clear language and thoughtful design makes complex contracts accessible. This project shows how legal design contributes to sustainable partnerships.'
+    author: 'Savannah Koomen'
+    role: 'Legal design lead'
 
 heroVideo:
-  src: ""
-  poster: "/case-studies/lc/lc-3.jpg"
-  title: "Het privacyplein maakt privacy begrijpelijk voor alle inwoners van Utrecht."
+  src: ''
+  poster: '/case-studies/lc/lc-3.jpg'
+  title: 'The privacy plaza makes privacy understandable for all residents of Utrecht.'
 
 cover_image:
-  src: "/case-studies/b2b.png"
-  alt: "Privacy beleid visualisatie"
+  src: '/case-studies/b2b.png'
+  alt: 'Privacy policy visualization'
 
 metadata:
-  client: "LC Energy"
-  date: "Augustus 2022"
+  client: 'LC Energy'
+  date: 'August 2022'
   services:
-    - "Contract Redesign"
-    - "Legal Design"
-    - "Visual Design"
-  relatedSkills: ["Contract Redesign", "Contract UX"]
+    - 'Contract Redesign'
+    - 'Legal Design'
+    - 'Visual Design'
+  relatedSkills: ['Contract Redesign', 'Contract UX']
 
 expandableContent:
-  - title: "Van complex naar transparant"
-    firstParagraph: "LC Energy bouwt zonne-energiesystemen op landbouwgrond. Daarvoor zijn partnerschappen met boeren essentieel. We hebben de term sheet en proces explainer opnieuw ontworpen om het hele samenwerkingsproces transparant te maken. Geen kleine lettertjes of verborgen clausules, maar heldere communicatie die vertrouwen opbouwt."
+  - title: 'From complex to transparent'
+    firstParagraph: 'LC Energy builds solar energy systems on agricultural land. Partnerships with farmers are essential for this. We redesigned the term sheet and process explainer to make the entire collaboration process transparent. No fine print or hidden clauses, but clear communication that builds trust.'
     remainingText:
-      - "In plaats van marketingmateriaal kozen we voor een minimalistische vormgeving die het streven naar transparantie benadrukt. De documenten hebben een A3-formaat, perfect voor bespreking aan de keukentafel waar samen wijzigingen kunnen worden doorgevoerd."
-      - "Het resultaat is een set documenten die niet alleen juridisch waterdicht zijn, maar ook echt begrepen worden door alle betrokken partijen. Zo maken we duurzame energieprojecten toegankelijk voor iedereen."
+      - 'Instead of marketing materials, we chose a minimalist design that emphasizes the commitment to transparency. The documents are in A3 format, perfect for discussion at the kitchen table where changes can be made together.'
+      - 'The result is a set of documents that are not only legally sound but are also truly understood by all parties involved. This is how we make sustainable energy projects accessible to everyone.'
 
 images:
-  - src: "/case-studies/lc/lc-3.jpg"
-    alt: "De intentieverklaring"
-    type: "full"
-  - src: "/case-studies/lc/lc-1.jpg"
-    alt: "Term sheet"
-    type: "full"
-  - src: "/case-studies/lc/lc-2.jpg"
-    alt: "Een lijst iconen die in het contract gebruikt worden"
-    type: "full"
+  - src: '/case-studies/lc/lc-3.jpg'
+    alt: 'The letter of intent'
+    type: 'full'
+  - src: '/case-studies/lc/lc-1.jpg'
+    alt: 'Term sheet'
+    type: 'full'
+  - src: '/case-studies/lc/lc-2.jpg'
+    alt: 'A list of icons used in the contract'
+    type: 'full'
 
 timeline:
   entries:
-    - phase: "Analyse"
-      description: "We analyseerden het bestaande contractproces en identificeerden de belangrijkste pijnpunten in de communicatie met boeren."
+    - phase: 'Analysis'
+      description: 'We analyzed the existing contract process and identified the main pain points in communication with farmers.'
 
-    - phase: "Herontwerp"
-      description: "De juridische documenten werden hertaald naar begrijpelijke taal en voorzien van een heldere structuur. 'Term sheet' werd bijvoorbeeld 'Ons aanbod'."
+    - phase: 'Redesign'
+      description: "The legal documents were translated into understandable language and given a clear structure. 'Term sheet' became 'Our offer', for example."
 
-    - phase: "Ontwikkeling"
-      description: "We ontwierpen de documenten op A3-formaat met een minimalistische vormgeving die transparantie uitstraalt en vertrouwen opbouwt."
+    - phase: 'Development'
+      description: 'We designed the documents in A3 format with a minimalist design that radiates transparency and builds trust.'
 
-    - phase: "Implementatie"
-      description: "Het sales team werd getraind in het gebruik van de nieuwe documenten en de principes achter het ontwerp."
+    - phase: 'Implementation'
+      description: 'The sales team was trained in using the new documents and the principles behind the design.'
 
-teamMember: "savannah-koomen"
+teamMember: 'en/savannah-koomen'
 ---

@@ -83,5 +83,5 @@ timeline:
     - phase: 'Lancering'
       description: 'De Legal Tech Map werd gelanceerd tijdens Legal Geek Amsterdam, waar het enthousiast werd ontvangen door de legal tech community. De kaart wordt regelmatig geüpdatet om nieuwe ontwikkelingen te tonen.'
 
-teamMember: 'maurits-fornier'
+teamMember: 'nl/maurits-fornier'
 ---

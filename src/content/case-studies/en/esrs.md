@@ -77,5 +77,5 @@ timeline:
     - phase: 'Testing & Refining'
       description: 'Together with the Ministry of Economic Affairs, we organized two rounds of user testing: first with stakeholders, then with sustainability experts from the business community. Their feedback led to practical improvements such as additional checklists, example tables, and clarification of complex concepts through the FreshFood example.'
 
-teamMember: 'savannah-koomen'
+teamMember: 'en/savannah-koomen'
 ---

@@ -1,90 +1,45 @@
 ---
-import { Card } from '@/components/ui/card';
-import { Linkedin, Github, Twitter } from 'lucide-react';
-
+// src/components/team/TeamCard.astro
 interface Props {
   member: {
-    id: string;  // Changed from slug to id
+    id: string;
     data: {
       name: string;
       role: string;
       bio: string;
       profileImage?: string;
       expertise: string[];
-      socialLinks?: {
-        linkedin?: string;
-        github?: string;
-        twitter?: string;
-      };
       featured: boolean;
     };
+    lang: string;
   };
 }
 
 const { member } = Astro.props;
+// Remove .md extension if it exists
+const cleanId = member.id.replace('.md', '');
 ---
 
-<Card class={`overflow-hidden transition-transform hover:scale-[1.02] ${member.data.featured ? 'border-primary/50' : ''}`}>
-  <a href={`/team/${member.id}`} class="block">
-    {member.data.profileImage && (
-      <div class="aspect-[4/3] overflow-hidden">
-        <img 
-          src={member.data.profileImage} 
-          alt={member.data.name}
-          class="w-full h-full object-cover"
-        />
+<article class="group">
+  <a href={`/${member.lang}/team/${cleanId}`}>
+    <div
+      class="relative overflow-hidden rounded-lg border bg-card text-card-foreground transition-all hover:border-primary"
+    >
+      {
+        member.data.profileImage && (
+          <div class="aspect-square overflow-hidden">
+            <img
+              src={member.data.profileImage}
+              alt={member.data.name}
+              class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          </div>
+        )
+      }
+      <div class="p-4">
+        <h3 class="text-xl font-semibold">{member.data.name}</h3>
+        <p class="text-sm text-muted-foreground mb-2">{member.data.role}</p>
       </div>
-    )}
-    <div class="p-6">
-      <h3 class="text-xl font-bold mb-1">{member.data.name}</h3>
-      <p class="text-muted-foreground mb-4">{member.data.role}</p>
-      
-      <div class="flex flex-wrap gap-2 mb-4">
-        {member.data.expertise.slice(0, 3).map(skill => (
-          <span class="bg-primary/10 text-primary px-2 py-1 rounded-full text-xs">
-            {skill}
-          </span>
-        ))}
-      </div>
-      
-      <p class="text-muted-foreground line-clamp-3 mb-4">
-        {member.data.bio}
-      </p>
-
-      {member.data.socialLinks && (
-        <div class="flex gap-3">
-          {member.data.socialLinks.linkedin && (
-            <a 
-              href={member.data.socialLinks.linkedin}
-              class="text-muted-foreground hover:text-primary transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Linkedin className="w-5 h-5" />
-            </a>
-          )}
-          {member.data.socialLinks.github && (
-            <a 
-              href={member.data.socialLinks.github}
-              class="text-muted-foreground hover:text-primary transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Github className="w-5 h-5" />
-            </a>
-          )}
-          {member.data.socialLinks.twitter && (
-            <a 
-              href={member.data.socialLinks.twitter}
-              class="text-muted-foreground hover:text-primary transition-colors"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Twitter className="w-5 h-5" />
-            </a>
-          )}
-        </div>
-      )}
     </div>
   </a>
-</Card>
+</article>

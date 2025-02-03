@@ -31,6 +31,8 @@ import SectionHeader from '@/components/SectionHeader.astro';
 const currentLang = getLangFromUrl(Astro.url);
 const t = landingTranslations[currentLang];
 
+const { lang } = Astro.params;
+
 // Generate static paths for each language
 export function getStaticPaths() {
   return [{ params: { lang: 'en' } }, { params: { lang: 'nl' } }];
@@ -102,6 +104,6 @@ const processedStudies = await Promise.all(
   />
 
   <OurFormula client:load />
-  <Partners />
-  <TeamSection client:load teamMembers={teamMembers} />
+  <Partners lang={lang} />
+  <TeamSection lang={lang} client:load teamMembers={teamMembers} />
 </BaseLayout>

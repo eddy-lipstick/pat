@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowRight, CheckCircle, AlertCircle } from 'lucide-react';
 import { Card } from '@/components/ui/card';
+import { solutionsTranslations } from '@/i18n/translations/solutions';
 
 const ProblemSolutionCard = ({ title, items, isHovered, type, onHover, onLeave, id }) => {
   const isProblem = type === 'problem';
@@ -96,53 +97,10 @@ const CategoryRow = ({ category, problem, solution, hoveredId, setHoveredId }) =
   </div>
 );
 
-const SolutionsGrid = () => {
+const SolutionsGrid = ({ lang = 'nl' }) => {
   const [hoveredId, setHoveredId] = useState(null);
 
-  const categories = [
-    {
-      title: 'Het kan slimmer & sneller',
-      problem: {
-        id: 1,
-        title: 'Tijdrovend juridisch werk',
-        items: [
-          'Urenlang handmatig contracten nakijken',
-          'Relevante rechtspraak missen door informatieoverload',
-          'Steeds dezelfde compliance checks herhalen',
-        ],
-      },
-      solution: {
-        id: 2,
-        title: 'Slimme automatisering',
-        items: [
-          'Contracten automatisch analyseren met AI',
-          'Direct relevante rechtspraak in je inbox',
-          'Self-service tools voor compliance teams',
-        ],
-      },
-    },
-    {
-      title: 'Het kan duidelijker',
-      problem: {
-        id: 3,
-        title: 'Onbegrijpelijke documenten',
-        items: [
-          'Contracten vol juridisch jargon',
-          'Processtukken die niet overtuigen',
-          'Beleid dat niemand naleeft',
-        ],
-      },
-      solution: {
-        id: 4,
-        title: 'Effectieve communicatie',
-        items: [
-          'Heldere contracten die mensen snappen',
-          'Overtuigende visuele processtukken',
-          'Beleid dat aanzet tot naleving',
-        ],
-      },
-    },
-  ];
+  const { categories } = solutionsTranslations[lang];
 
   return (
     <div className="w-full mx-auto">

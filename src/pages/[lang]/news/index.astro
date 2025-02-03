@@ -1,0 +1,44 @@
+---
+// src/pages/[lang]/news/index.astro
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Hero from '@/components/Hero.astro';
+import NewsList from '@/components/NewsList';
+import Breadcrumb from '@/components/Breadcrumb';
+import { languages } from '@/i18n/config';
+import { newsTranslations } from '@/i18n/translations/news';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params;
+const t = newsTranslations[lang];
+
+const allNews = await getCollection('news');
+
+const languageNews = allNews.filter(
+  (item) => item.id.startsWith(`${lang}/`) || item.data.language === lang
+);
+
+const sortedNews = languageNews.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+const breadcrumbItems = [
+  { label: t.breadcrumbs.about, href: `/${lang}/about` },
+  { label: t.breadcrumbs.news, href: `/${lang}/news` },
+];
+---
+
+<BaseLayout title={t.title}>
+  <Breadcrumb items={breadcrumbItems} client:load />
+
+  <Hero variant="small" subtitle={t.subtitle} title={t.pageTitle} description={t.description} />
+
+  <div class="mx-auto">
+    <NewsList client:load newsItems={sortedNews} lang={lang} />
+  </div>
+</BaseLayout>

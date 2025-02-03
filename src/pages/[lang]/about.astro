@@ -1,0 +1,65 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Container from '@/components/Container.astro';
+import { getCollection } from 'astro:content';
+import SolutionsGrid from '@/components/SolutionsGrid';
+import TeamSection from '@/components/TeamSection';
+import Hero from '@/components/Hero.astro';
+import RecentNewsSection from '@/components/RecentNewsSection';
+import { languages } from '@/i18n/config';
+import { aboutTranslations } from '@/i18n/translations/about';
+
+export function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params;
+const t = aboutTranslations[lang];
+
+const newsItems = await getCollection('news', (entry) => entry.id.startsWith(`${lang}/`));
+const sortedNews = newsItems.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+const teamMembers = [
+  {
+    name: 'Maurits Fornier',
+    role: t.roles.legalDesignLead,
+    imageUrl: '/images/team/sunmoon-stokhof.jpg',
+  },
+  {
+    name: 'Dielis Delen',
+    role: t.roles.softwareDeveloper,
+    imageUrl: '/images/team/dielis-delen.webp',
+  },
+  {
+    name: 'Savannah Koomen',
+    role: t.roles.strategieLead,
+    imageUrl: '/images/team/savannah-koomen.webp',
+  },
+];
+---
+
+<BaseLayout title={t.title}>
+  <Hero
+    variant="small"
+    subtitle={t.heroSubtitle}
+    title={t.heroTitle}
+    description={t.heroDescription}
+  >
+    <div class="">
+      <img
+        src="/images/kantoor/kantoor.jpg"
+        alt="Patroon team"
+        class="rounded-lg w-full object-cover"
+      />
+    </div>
+  </Hero>
+  <section class="py-16">
+    <SolutionsGrid client:load lang={lang} />
+  </section>
+
+  <TeamSection lang={lang} client:load teamMembers={teamMembers} />
+</BaseLayout>
