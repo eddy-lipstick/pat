@@ -1,8 +1,10 @@
 ---
 // src/components/Navbar.astro
-import { Menu, X, ChevronDown } from 'lucide-react';
+import { Menu, X, ChevronDown, Globe } from 'lucide-react';
+import { getLangFromUrl } from '@/i18n/utils.js';
 
 const { variant = 'dark' } = Astro.props;
+const currentLang = getLangFromUrl(Astro.url);
 
 const navItems = [
   { label: 'Projecten', href: '/case-studies' },
@@ -27,6 +29,24 @@ const navItems = [
     ],
   },
   { label: 'Contact', href: '/contact', isCTA: true },
+  {
+    label: currentLang.toUpperCase(),
+    icon: Globe,
+    children: [
+      {
+        label: 'English',
+        href:
+          currentLang === 'nl' ? Astro.url.pathname.replace(/^\/nl/, '/en') : Astro.url.pathname,
+        active: currentLang === 'en',
+      },
+      {
+        label: 'Nederlands',
+        href:
+          currentLang === 'en' ? Astro.url.pathname.replace(/^\/en/, '/nl') : Astro.url.pathname,
+        active: currentLang === 'nl',
+      },
+    ],
+  },
 ];
 
 const variantClasses = {
