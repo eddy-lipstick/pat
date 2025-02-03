@@ -1,48 +1,65 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+// src/pages/[lang]/approach/[id].astro
+import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getCollection, getEntry, render } from 'astro:content';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { ArrowRight, ArrowLeft } from 'lucide-react';
 import CaseStudyCard from '@/components/CaseStudyCard';
 import Breadcrumb from '@/components/Breadcrumb';
 import Hero from '@/components/Hero.astro';
+import { languages } from '@/i18n/config';
+import { approachTranslations } from '@/i18n/translations/approach';
 
 export async function getStaticPaths() {
   const approaches = await getCollection('approach');
   const caseStudies = await getCollection('case-studies');
 
-  // Sort approaches alphabetically
-  const sortedApproaches = approaches.sort((a, b) =>
-    a.data.title.localeCompare(b.data.title, 'nl')
-  );
+  // Create paths for each language and approach combination
+  return Object.keys(languages).flatMap((lang) => {
+    // Filter approaches for current language
+    const languageApproaches = approaches.filter((approach) => approach.id.startsWith(lang + '/'));
 
-  return sortedApproaches.map((approach) => {
-    const id = approach.id.split('/').pop()?.replace('.md', '');
-
-    // Find case studies that reference this approach
-    const relatedCases = caseStudies.filter((cs) =>
-      cs.data.metadata?.relatedSkills?.some(
-        (skill) => skill.toLowerCase() === approach.data.title.toLowerCase()
-      )
+    // Sort approaches alphabetically
+    const sortedApproaches = languageApproaches.sort((a, b) =>
+      a.data.title.localeCompare(b.data.title, lang)
     );
 
-    return {
-      params: { id },
-      props: {
-        approach,
-        relatedCases,
-      },
-    };
+    return sortedApproaches.map((approach) => {
+      const id = approach.id.split('/').pop()?.replace('.md', '');
+
+      // Find case studies that reference this approach
+      const relatedCases = caseStudies
+        .filter((cs) => cs.id.startsWith(lang + '/')) // Filter case studies by language
+        .filter((cs) =>
+          cs.data.metadata?.relatedSkills?.some(
+            (skill) => skill.toLowerCase() === approach.data.title.toLowerCase()
+          )
+        );
+
+      return {
+        params: {
+          lang,
+          id,
+        },
+        props: {
+          approach,
+          relatedCases,
+        },
+      };
+    });
   });
 }
 
 const { approach, relatedCases } = Astro.props;
+const { lang } = Astro.params;
+const t = approachTranslations[lang];
 const { Content } = await render(approach);
 
-// Get all approaches and sort them alphabetically
+// Get all approaches for current language and sort them
 const allApproaches = await getCollection('approach');
-const sortedApproaches = allApproaches.sort((a, b) =>
-  a.data.title.localeCompare(b.data.title, 'nl')
+const languageApproaches = allApproaches.filter((approach) => approach.id.startsWith(lang + '/'));
+const sortedApproaches = languageApproaches.sort((a, b) =>
+  a.data.title.localeCompare(b.data.title, lang)
 );
 
 // Find current index in sorted list
@@ -52,16 +69,16 @@ const currentIndex = sortedApproaches.findIndex((a) => a.id === approach.id);
 const prevApproach =
   currentIndex > 0
     ? sortedApproaches[currentIndex - 1]
-    : sortedApproaches[sortedApproaches.length - 1]; // Loop to end
+    : sortedApproaches[sortedApproaches.length - 1];
 
 const nextApproach =
   currentIndex < sortedApproaches.length - 1
     ? sortedApproaches[currentIndex + 1]
-    : sortedApproaches[0]; // Loop to beginning
+    : sortedApproaches[0];
 
 const breadcrumbItems = [
-  { label: 'Over ons', href: '/about' },
-  { label: 'Aanpak', href: '/approach' },
+  { label: t.breadcrumb.about, href: `/${lang}/about` },
+  { label: t.breadcrumb.approach, href: `/${lang}/approach` },
   { label: approach.data.title },
 ];
 ---
@@ -70,7 +87,7 @@ const breadcrumbItems = [
   <Breadcrumb items={breadcrumbItems} client:load />
   <Hero
     variant="small"
-    subtitle="Wat we doen"
+    subtitle={t.subtitle}
     title={approach.data.title}
     description={approach.data.description}
   />
@@ -84,10 +101,10 @@ const breadcrumbItems = [
     {
       relatedCases.length > 0 && (
         <section class="mb-16">
-          <h2 class="text-2xl font-bold mb-6">Bekijk projecten</h2>
+          <h2 class="text-2xl font-bold mb-6">{t.relatedProjects}</h2>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {relatedCases.map((study) => (
-              <CaseStudyCard study={study} />
+              <CaseStudyCard study={study} lang={lang} />
             ))}
           </div>
         </section>
@@ -97,23 +114,24 @@ const breadcrumbItems = [
     <!-- Navigation -->
     <nav class="grid grid-cols-2 gap-4 border-t border-border/50 pt-8">
       <a
-        href={`/approach/${prevApproach.id.split('/').pop()?.replace('.md', '')}`}
+        href={`/${lang}/approach/${prevApproach.id.split('/').pop()?.replace('.md', '')}`}
         class="group flex items-center gap-3 hover:text-primary transition-colors"
       >
         <ArrowLeft className="h-4 w-4" />
         <div>
-          <div class="text-sm text-text-secondary">Vorige</div>
+          <div class="text-sm text-text-secondary">{t.navigation.previous}</div>
           <div class="font-medium group-hover:text-primary transition-colors">
             {prevApproach.data.title}
           </div>
         </div>
       </a>
+
       <a
-        href={`/approach/${nextApproach.id.split('/').pop()?.replace('.md', '')}`}
+        href={`/${lang}/approach/${nextApproach.id.split('/').pop()?.replace('.md', '')}`}
         class="group flex items-center justify-end gap-3 hover:text-primary transition-colors ml-auto"
       >
         <div class="text-right">
-          <div class="text-sm text-text-secondary">Volgende</div>
+          <div class="text-sm text-text-secondary">{t.navigation.next}</div>
           <div class="font-medium group-hover:text-primary transition-colors">
             {nextApproach.data.title}
           </div>

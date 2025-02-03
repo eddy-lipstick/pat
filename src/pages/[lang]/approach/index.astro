@@ -1,0 +1,78 @@
+---
+// src/pages/[lang]/approach/index.astro
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { ArrowRight } from 'lucide-react';
+import Hero from '@/components/Hero.astro';
+import Breadcrumb from '@/components/Breadcrumb';
+import { languages, defaultLanguage } from '@/i18n/config';
+import { approachTranslations } from '@/i18n/translations/approach';
+
+// Generate pages for defined languages
+export function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params;
+const t = approachTranslations[lang];
+
+// Get approaches for current language
+const allApproaches = await getCollection('approach');
+const languageApproaches = allApproaches.filter((approach) => approach.id.startsWith(lang + '/'));
+
+// Sort alphabetically by title
+const sortedApproaches = languageApproaches.sort((a, b) =>
+  a.data.title.localeCompare(b.data.title, lang)
+);
+
+const breadcrumbItems = [
+  { label: t.breadcrumb.about, href: `/${lang}/about` },
+  { label: t.breadcrumb.approach, href: `/${lang}/approach` },
+];
+---
+
+<BaseLayout title={t.title}>
+  <Breadcrumb items={breadcrumbItems} client:load />
+
+  <Hero variant="small" subtitle={t.subtitle} title={t.heroTitle} />
+
+  <section>
+    <!-- Approaches Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {
+        sortedApproaches.map((approach) => (
+          <a
+            href={`/${lang}/approach/${approach.id.split('/').pop()?.replace('.md', '')}`}
+            class="group"
+          >
+            <Card className="h-full border border-border/50 bg-surface-1 hover:bg-surface-2 transition-all duration-300">
+              <CardHeader>
+                <div class="flex justify-between items-start gap-4">
+                  <div>
+                    <CardTitle className="text-2xl mb-2">{approach.data.title}</CardTitle>
+                    <CardDescription className="text-text-secondary line-clamp-3">
+                      {approach.data.description}
+                    </CardDescription>
+                  </div>
+                  <ArrowRight className="h-6 w-6 shrink-0 text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div class="flex flex-wrap gap-2">
+                  {approach.data.methodology.slice(0, 3).map((method) => (
+                    <span class="rounded-full px-3 py-1 text-sm bg-primary/10 text-primary">
+                      {method}
+                    </span>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
