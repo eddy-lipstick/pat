@@ -2,8 +2,11 @@ import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import { caseStudiesTranslations } from '@/i18n/translations/case-studies';
 
-const LargeCaseStudyGrid = ({ studies }) => {
+const LargeCaseStudyGrid = ({ studies, lang = 'nl' }) => {
+  const t = caseStudiesTranslations[lang];
+
   return (
     <div className="space-y-16 md:space-y-32">
       {studies.map((study, index) => {
@@ -17,6 +20,12 @@ const LargeCaseStudyGrid = ({ studies }) => {
           },
         } = study;
 
+        // Extract the filename without language prefix and extension
+        const baseId = id
+          .split('/')
+          .pop()
+          ?.replace(/\.[^/.]+$/, '');
+
         return (
           <div
             key={id}
@@ -27,12 +36,12 @@ const LargeCaseStudyGrid = ({ studies }) => {
             {/* Image container with optimized mobile display */}
             <div
               className={`
-                            relative overflow-hidden rounded-2xl
-                            transition-transform duration-500 ease-out group-hover:scale-[1.02]
-                            shadow-xl shadow-primary-600/10
-                            aspect-[16/12] sm:aspect-[16/10] lg:aspect-[16/9]
-                            ${index % 2 === 1 ? 'lg:order-2' : 'lg:order-1'}
-                        `}
+                relative overflow-hidden rounded-2xl
+                transition-transform duration-500 ease-out group-hover:scale-[1.02]
+                shadow-xl shadow-primary-600/10
+                aspect-[16/12] sm:aspect-[16/10] lg:aspect-[16/9]
+                ${index % 2 === 1 ? 'lg:order-2' : 'lg:order-1'}
+              `}
             >
               <div className="absolute inset-0 z-10" />
               {cover_image?.src && (
@@ -49,14 +58,16 @@ const LargeCaseStudyGrid = ({ studies }) => {
             {/* Content container with improved spacing */}
             <div
               className={`
-                            flex flex-col space-y-4 lg:space-y-6
-                            transition-transform duration-500 ease-out group-hover:translate-y-[-4px]
-                            ${index % 2 === 1 ? 'lg:order-1' : 'lg:order-2'}
-                        `}
+                flex flex-col space-y-4 lg:space-y-6
+                transition-transform duration-500 ease-out group-hover:translate-y-[-4px]
+                ${index % 2 === 1 ? 'lg:order-1' : 'lg:order-2'}
+              `}
             >
               <div className="space-y-2 lg:space-y-3">
                 <p className="text-sm text-muted-foreground">
-                  {client} • {date}
+                  {client}
+                  {t.date.separator}
+                  {date}
                 </p>
                 <h3 className="text-2xl lg:text-3xl font-bold">{title}</h3>
                 <p className="text-base lg:text-lg text-text-secondary">{introduction}</p>
@@ -79,10 +90,10 @@ const LargeCaseStudyGrid = ({ studies }) => {
               <div className="pt-2 lg:pt-4 w-full">
                 <Button className="group relative overflow-hidden bg-feitlijn-yellow text-black hover:bg-feitlijn-yellow-400 transition-colors duration-300 w-full sm:w-auto">
                   <a
-                    href={`/case-studies/${id}`}
+                    href={`/${lang}/case-studies/${baseId}`}
                     className="inline-flex items-center justify-center w-full"
                   >
-                    Bekijk dit project
+                    {t.viewProject}
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </a>
                 </Button>

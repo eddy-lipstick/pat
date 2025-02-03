@@ -1,6 +1,8 @@
 import { defineCollection, reference, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+const LANGUAGES = ['en', 'nl'] as const;
+
 // Constants
 const PILLARS = ['Tech', 'Legal', 'Design'] as const;
 const STAKEHOLDERS = [
@@ -66,8 +68,8 @@ const beforeAfterSchema = z.object({
   alt: z.string(),
 });
 
-// Collection Schemas
 const caseStudySchema = z.object({
+  // Core fields
   title: z.string().min(1),
   introduction: z.string(),
   cover_image: z
@@ -81,9 +83,12 @@ const caseStudySchema = z.object({
   metadata: z.object({
     client: z.string(),
     date: z.string(),
-    relatedSkills: z.array(z.string()), // Changed from services
+    relatedSkills: z.array(z.string()),
     website: z.string().optional(),
   }),
+
+  // Language field (optional since it's determined by folder structure)
+  language: z.enum(LANGUAGES).optional(),
 
   // Display settings
   featured: z.boolean().default(false),
@@ -92,7 +97,7 @@ const caseStudySchema = z.object({
   // Tags for filtering/organization
   tags: z.array(z.string()).default([]),
 
-  // Modern components
+  // Modern components (keep existing schemas)
   heroVideo: heroVideoSchema.optional(),
   expandableContent: z.array(expandableContentSchema).optional(),
   quotes: z
@@ -103,12 +108,15 @@ const caseStudySchema = z.object({
     .optional(),
   images: z.array(mediaSchema).optional(),
   beforeAfter: z.array(beforeAfterSchema).optional(),
-  teamMember: reference('team').optional(), // This replaces the old teamMemberSchema
+  teamMember: reference('team').optional(),
   timeline: z
     .object({
       entries: z.array(timelineEntrySchema),
     })
     .optional(),
+
+  // Optional field to reference the translation in other language
+  translationRef: z.string().optional(),
 });
 
 const courseSchema = z.object({
@@ -266,12 +274,11 @@ const newsSchema = z.object({
 export const collections = {
   'case-studies': defineCollection({
     loader: glob({
-      pattern: '**/[^_]*.{md,mdx}',
+      pattern: '**/[^_]*.{md,mdx}', // This will match files in language subdirectories
       base: './src/content/case-studies',
     }),
     schema: caseStudySchema,
   }),
-
   team: defineCollection({
     loader: glob({
       pattern: '**/[^_]*.{md,mdx}',
@@ -328,3 +335,5 @@ export const collections = {
     schema: lessonSchema,
   }),
 };
+
+export type SupportedLanguage = (typeof LANGUAGES)[number];

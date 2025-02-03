@@ -1,53 +1,15 @@
 ---
 // src/components/Navbar.astro
 import { Menu, X, ChevronDown, Globe } from 'lucide-react';
-import { getLangFromUrl } from '@/i18n/utils.js';
+import { getLangFromUrl } from '@/i18n/utils';
+import { getNavItems } from '@/i18n/translations/navbar';
 
 const { variant = 'dark' } = Astro.props;
 const currentLang = getLangFromUrl(Astro.url);
+const currentPath = Astro.url.pathname;
 
-const navItems = [
-  { label: 'Projecten', href: '/case-studies' },
-  {
-    label: 'Over ons',
-    href: '/about',
-    children: [
-      { label: 'Over ons', href: '/about' },
-      { label: 'Aanpak', href: '/approach' },
-      { label: 'Team', href: '/team' },
-      { label: 'Nieuws', href: '/news' },
-    ],
-  },
-  {
-    label: 'Leren',
-    href: '/learn',
-    children: [
-      { label: 'Trainingsaanbod', href: '/training/' },
-      { label: 'Blog', href: '/learn/articles' },
-      { label: 'Visuele snijtafel', href: '/learn/courses/visuele-snijtafel' },
-      { label: 'Tips van Diel', href: '/learn/courses/tips-van-diel' },
-    ],
-  },
-  { label: 'Contact', href: '/contact', isCTA: true },
-  {
-    label: currentLang.toUpperCase(),
-    icon: Globe,
-    children: [
-      {
-        label: 'English',
-        href:
-          currentLang === 'nl' ? Astro.url.pathname.replace(/^\/nl/, '/en') : Astro.url.pathname,
-        active: currentLang === 'en',
-      },
-      {
-        label: 'Nederlands',
-        href:
-          currentLang === 'en' ? Astro.url.pathname.replace(/^\/en/, '/nl') : Astro.url.pathname,
-        active: currentLang === 'nl',
-      },
-    ],
-  },
-];
+// Get navigation items for current language
+const navItems = getNavItems(currentLang, currentPath);
 
 const variantClasses = {
   light: {
@@ -77,7 +39,6 @@ const variantClasses = {
 };
 
 const classes = variantClasses[variant];
-const currentPath = Astro.url.pathname;
 ---
 
 <nav
@@ -90,7 +51,7 @@ const currentPath = Astro.url.pathname;
     <div class="flex justify-between items-center">
       <div class="flex-shrink-0">
         <a
-          href="/"
+          href={`/${currentLang}`}
           class:list={[
             'text-2xl transition-colors flex items-center gap-2 font-roc-grotesk',
             classes.text,
@@ -162,6 +123,7 @@ const currentPath = Astro.url.pathname;
         }
       </div>
 
+      <!-- Mobile menu button -->
       <div class="lg:hidden">
         <button
           type="button"
@@ -183,6 +145,7 @@ const currentPath = Astro.url.pathname;
       </div>
     </div>
 
+    <!-- Mobile menu -->
     <div
       id="mobileMenu"
       class:list={['lg:hidden hidden mt-4', classes.mobileMenu, classes.shadow]}

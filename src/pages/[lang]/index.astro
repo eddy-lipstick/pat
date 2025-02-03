@@ -1,0 +1,107 @@
+---
+// src/pages/[lang]/index.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getFeaturedCaseStudies } from '../../lib/case-studies';
+import { getLangFromUrl } from '@/i18n/utils';
+import { landingTranslations } from '@/i18n/translations/landing';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import ServicesGrid from '../../components/services/ServicesGrid.astro';
+import { getCollection } from 'astro:content';
+
+import BubbleMap from '../../components/bubbles/BubbleMap';
+import LogoGrid from '../../components/LogoGrid.astro';
+import { ArrowRight, MessageCircle } from 'lucide-react';
+import VideoTestimonials from '../../components/VideoTestimonials';
+import OurFormula from '../../components/OurFormula';
+import TeamSection from '../../components/TeamSection';
+import Hero from '@/components/Hero.astro';
+import Partners from '../../components/Partners.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+
+// Get current language from URL
+const currentLang = getLangFromUrl(Astro.url);
+const t = landingTranslations[currentLang];
+
+// Generate static paths for each language
+export function getStaticPaths() {
+  return [{ params: { lang: 'en' } }, { params: { lang: 'nl' } }];
+}
+
+const teamMembers = [
+  {
+    name: 'Maurits Fornier',
+    role: t.team.roles.legalDesignLead,
+    imageUrl: '/images/team/sunmoon-stokhof.jpg',
+  },
+  {
+    name: 'Dielis Delen',
+    role: t.team.roles.softwareDeveloper,
+    imageUrl: '/images/team/dielis-delen.webp',
+  },
+  {
+    name: 'Savannah Koomen',
+    role: t.team.roles.strategyLead,
+    imageUrl: '/images/team/savannah-koomen.webp',
+  },
+];
+
+const featuredCaseStudies = await getFeaturedCaseStudies();
+
+// Get all case studies for current language
+const allCaseStudies = await getCollection('case-studies', (entry) => {
+  return entry.id.startsWith(currentLang + '/');
+});
+
+// Filter to only get case studies that have a stakeholder assigned
+const bubbleMapCaseStudies = allCaseStudies.filter((study) => study.data.stakeholder);
+
+// Process the content for each case study
+const processedStudies = await Promise.all(
+  bubbleMapCaseStudies.map(async (study) => {
+    const { Content } = await study.render();
+    return { ...study, Content };
+  })
+);
+---
+
+<BaseLayout title={t.meta.title}>
+  {/* Hero Section */}
+  <Hero
+    class="min-h-screen"
+    subtitle={t.hero.subtitle}
+    title={t.hero.title}
+    description={t.hero.description}
+    bulletPoints={t.hero.bulletPoints}
+    primaryButtonText={t.hero.buttons.primary}
+    primaryButtonHref={`/${currentLang}/contact`}
+    secondaryButtonText={t.hero.buttons.secondary}
+    secondaryButtonHref={`/${currentLang}/case-studies`}
+  >
+    <div class="top-[10%] h-full hidden lg:block z-20">
+      <BubbleMap client:load caseStudies={bubbleMapCaseStudies} />
+    </div>
+  </Hero>
+
+  <LogoGrid />
+
+  <ServicesGrid />
+
+  <SectionHeader
+    eyebrow={t.formula.eyebrow}
+    title={t.formula.title}
+    description={t.formula.description}
+  />
+
+  <OurFormula client:load />
+  <Partners />
+  <TeamSection client:load teamMembers={teamMembers} />
+</BaseLayout>

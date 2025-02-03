@@ -16,11 +16,15 @@ import CaseStudyTimeline from '../components/CaseStudyTimeline';
 import SEO from '@/components/SEO.astro';
 import Container from '../components/Container.astro';
 import SectionHeader from '@/components/SectionHeader.astro';
+import { getLangFromUrl } from '@/i18n/utils';
+import { caseStudiesTranslations } from '@/i18n/translations/case-studies';
 
 import { getEntry } from 'astro:content';
 
-// Debug props
-console.log('Astro.props:', JSON.stringify(Astro.props, null, 2));
+// Get current language and translations
+const currentLang = getLangFromUrl(Astro.url);
+const t = caseStudiesTranslations[currentLang];
+
 // Get data from props
 const { entry, ...props } = Astro.props;
 
@@ -62,8 +66,11 @@ const seoDescription = introduction?.slice(0, 155) + '...';
 
 // Determine SEO image with fallbacks
 const seoImage = entry?.id
-  ? `/og/case-studies/${entry.id}.png` // Generated OG image
-  : images?.[0]?.src || heroVideo?.poster || '/default-og-image.jpg'; // Fallbacks
+  ? `/og/case-studies/${entry.id}.png`
+  : images?.[0]?.src || heroVideo?.poster || '/default-og-image.jpg';
+
+// Base URL for structured data
+const baseUrl = import.meta.env.SITE || 'https://www.patroon.nl';
 
 // Generate structured data for the case study
 const structuredData = {
@@ -71,8 +78,9 @@ const structuredData = {
   '@type': 'Article',
   headline: title,
   description: seoDescription,
-  image: seoImage,
+  image: new URL(seoImage, baseUrl).toString(),
   datePublished: metadata?.date,
+  inLanguage: currentLang,
   author: teamMemberData
     ? {
         '@type': 'Person',
@@ -85,7 +93,7 @@ const structuredData = {
     name: 'Patroon Legal Design',
     logo: {
       '@type': 'ImageObject',
-      url: 'https://www.patroon.nl/logo.png',
+      url: new URL('/logo.png', baseUrl).toString(),
     },
   },
 };
@@ -97,14 +105,14 @@ const breadcrumbsStructuredData = {
     {
       '@type': 'ListItem',
       position: 1,
-      name: 'Home',
-      item: 'https://yourdomain.com',
+      name: t.breadcrumbs.home,
+      item: new URL(`/${currentLang}`, baseUrl).toString(),
     },
     {
       '@type': 'ListItem',
       position: 2,
-      name: 'Case Studies',
-      item: 'https://yourdomain.com/case-studies',
+      name: t.breadcrumbs.caseStudies,
+      item: new URL(`/${currentLang}/case-studies`, baseUrl).toString(),
     },
     {
       '@type': 'ListItem',
@@ -117,147 +125,156 @@ const breadcrumbsStructuredData = {
 ---
 
 <!doctype html>
-<html lang="nl">
+<html lang={currentLang}>
   <head>
     <SEO
-      title={`${title} | Patroon Legal Design Case Study`}
+      title={`${title} | ${t.meta.seoTitle}`}
       description={seoDescription}
       image={seoImage}
       type="case-study"
       canonicalURL={Astro.url.href}
+      lang={currentLang}
     />
 
     <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbsStructuredData)} />
   </head>
-</html>
-<body class="min-h-screen bg-feitlijn-purple-50 text-background">
-  <Navbar variant="light" />
-  <main>
-    <Container>
-      <section class="relative min-h-screen">
-        <!-- Hero Section -->
-        <CaseStudyHero client:load title={title} introduction={introduction} />
+  <body class="min-h-screen bg-feitlijn-purple-50 text-background">
+    <Navbar variant="light" />
+    <main>
+      <Container>
+        <section class="relative min-h-screen">
+          <!-- Hero Section -->
+          <CaseStudyHero client:load title={title} introduction={introduction} />
 
-        <!-- Metadata Section -->
-        <CaseStudyMeta {...metadata} />
+          <!-- Metadata Section -->
+          <CaseStudyMeta {...metadata} translations={t.metadata} lang={currentLang} />
 
-        <!-- Hero Video -->
-        {
-          heroVideo && (
-            <div class="mb-20">
-              <VideoPlayer client:only="react" {...heroVideo} />
-            </div>
-          )
-        }
+          <!-- Hero Video -->
+          {
+            heroVideo && (
+              <div class="mb-20">
+                <VideoPlayer client:only="react" {...heroVideo} translations={t.video} />
+              </div>
+            )
+          }
 
-        <!-- Expandable Content Sections -->
-        {
-          expandableContent?.map((content) => (
-            <div class="container mx-auto px-6 py-16">
-              <ExpandableText client:load {...content} />
-            </div>
-          ))
-        }
+          <!-- Expandable Content Sections -->
+          {
+            expandableContent?.map((content) => (
+              <div class="container mx-auto px-6 py-16">
+                <ExpandableText client:load {...content} translations={t.expandable} />
+              </div>
+            ))
+          }
 
-        <!-- Images -->
-        {
-          (() => {
-            const fullImages = images?.filter((img) => img.type === 'full') || [];
-            const gridImages = images?.filter((img) => img.type === 'grid') || [];
+          <!-- Images -->
+          {
+            (() => {
+              const fullImages = images?.filter((img) => img.type === 'full') || [];
+              const gridImages = images?.filter((img) => img.type === 'grid') || [];
 
-            return (
-              <>
-                {fullImages.map((image) => (
-                  <div class="container mx-auto mb-32">
-                    <ImageLightbox
-                      client:load
-                      src={image.src}
-                      alt={image.alt}
-                      className="aspect-video w-full"
-                    />
-                  </div>
-                ))}
-
-                {gridImages.length > 0 && (
-                  <div class="container mx-auto px-6 mb-32">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      {gridImages.map((image) => (
-                        <ImageLightbox
-                          client:load
-                          src={image.src}
-                          alt={image.alt}
-                          className="aspect-video w-full"
-                        />
-                      ))}
+              return (
+                <>
+                  {fullImages.map((image) => (
+                    <div class="container mx-auto mb-32">
+                      <ImageLightbox
+                        client:load
+                        src={image.src}
+                        alt={image.alt}
+                        className="aspect-video w-full"
+                        translations={t.images}
+                      />
                     </div>
+                  ))}
+
+                  {gridImages.length > 0 && (
+                    <div class="container mx-auto px-6 mb-32">
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {gridImages.map((image) => (
+                          <ImageLightbox
+                            client:load
+                            src={image.src}
+                            alt={image.alt}
+                            className="aspect-video w-full"
+                            translations={t.images}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              );
+            })()
+          }
+
+          <!-- First Quote -->
+          {
+            quotes?.first && (
+              <div className="container mx-auto px-6 mb-16 md:mb-24 lg:mb-32">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                  <div class="w-full">{/* Left content */}</div>
+                  <div class="w-full">
+                    <CaseQuote client:load {...quotes.first} translations={t.quotes} />
                   </div>
-                )}
-              </>
-            );
-          })()
-        }
-
-        <!-- First Quote -->
-        {
-          quotes?.first && (
-            <div className="container mx-auto px-6 mb-16 md:mb-24 lg:mb-32">
-              <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <div class="w-full">{/* Left content */}</div>
-                <div class="w-full">
-                  <CaseQuote client:load {...quotes.first} />
                 </div>
               </div>
-            </div>
-          )
-        }
+            )
+          }
 
-        <!-- Before/After Sliders -->
-        {
-          beforeAfter?.map((comparison) => (
-            <BeforeAfterSlider client:only="react" {...comparison} />
-          ))
-        }
+          <!-- Before/After Sliders -->
+          {
+            beforeAfter?.map((comparison) => (
+              <BeforeAfterSlider client:only="react" {...comparison} translations={t.beforeAfter} />
+            ))
+          }
 
-        <!-- Second Quote -->
-        {
-          quotes?.second && (
-            <div className="container mx-auto px-6 mb-16 md:mb-24 lg:mb-32">
-              <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <div class="w-full">
-                  <CaseQuote client:load {...quotes.second} />
+          <!-- Second Quote -->
+          {
+            quotes?.second && (
+              <div className="container mx-auto px-6 mb-16 md:mb-24 lg:mb-32">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                  <div class="w-full">
+                    <CaseQuote client:load {...quotes.second} translations={t.quotes} />
+                  </div>
+                  <div class="w-full">{/* Right content */}</div>
                 </div>
-                <div class="w-full">{/* Right content */}</div>
               </div>
-            </div>
-          )
-        }
-        <SectionHeader
-          eyebrow="Onze expertise"
-          title="Bekijk onze projecten"
-          description="Ontdek hoe wij juridische complexiteit omzetten in heldere oplossingen"
-          variant="light"
-        />
-        <!-- Timeline Section -->
-        {
-          timeline && (
-            <div class="text-white py-24">
-              <CaseStudyTimeline client:visible entries={timeline.entries} />
-            </div>
-          )
-        }
+            )
+          }
 
-        {
-          teamMemberData && (
-            <section class="mt-32 mb-24">
-              <TeamCTA client:visible teamMember={teamMemberData} />
-            </section>
-          )
-        }
-      </section>
-    </Container>
-  </main>
+          <SectionHeader
+            eyebrow={t.section.eyebrow}
+            title={t.section.title}
+            description={t.section.description}
+            variant="light"
+          />
 
-  <Footer />
-</body>
+          <!-- Timeline Section -->
+          {
+            timeline && (
+              <div class="text-white py-24">
+                <CaseStudyTimeline
+                  client:visible
+                  entries={timeline.entries}
+                  translations={t.timeline}
+                />
+              </div>
+            )
+          }
+
+          {
+            teamMemberData && (
+              <section class="mt-32 mb-24">
+                <TeamCTA client:visible teamMember={teamMemberData} translations={t.teamCta} />
+              </section>
+            )
+          }
+        </section>
+      </Container>
+
+      <Footer />
+    </main>
+  </body>
+</html>

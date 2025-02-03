@@ -1,0 +1,51 @@
+---
+// src/pages/[lang]/case-studies/[id].astro
+import ModernCaseStudyLayout from '@/layouts/ModernCaseStudyLayout.astro';
+import { getCollection } from 'astro:content';
+import { getLangFromUrl } from '@/i18n/utils';
+import { getCollection, getEntry, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const allCaseStudies = await getCollection('case-studies');
+
+  const paths = [];
+
+  for (const lang of ['en', 'nl']) {
+    // Filter case studies for current language
+    const languageCaseStudies = allCaseStudies.filter((entry) => entry.id.startsWith(`${lang}/`));
+
+    // Log for debugging
+    console.log(`Found ${languageCaseStudies.length} studies for ${lang}`);
+    console.log(
+      'Study IDs:',
+      languageCaseStudies.map((study) => study.id)
+    );
+
+    for (const entry of languageCaseStudies) {
+      // Get the ID without the language prefix and extension
+      const id = entry.id.split('/')[1].replace(/\.mdx?$/, '');
+
+      paths.push({
+        params: { lang, id },
+        props: { entry },
+      });
+    }
+  }
+
+  // Log all generated paths for debugging
+  console.log('Generated paths:', paths);
+
+  return paths;
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<ModernCaseStudyLayout entry={entry}>
+  <div class="container mx-auto px-6 py-16">
+    <div class="prose prose-lg prose-invert max-w-none">
+      <Content />
+    </div>
+  </div>
+</ModernCaseStudyLayout>
