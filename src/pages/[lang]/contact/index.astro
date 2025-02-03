@@ -10,6 +10,7 @@ import ContactForm from '@/components/ContactForm';
 import TeamSection from '@/components/TeamSection';
 import HeroContactPage from '@/components/HeroContactPage';
 import { languages, defaultLanguage } from '@/i18n/config';
+import { contactTranslations } from '@/i18n/translations/contact';
 
 // Generate pages only for defined languages
 export function getStaticPaths() {
@@ -19,6 +20,7 @@ export function getStaticPaths() {
 }
 
 const { lang } = Astro.params;
+const t = contactTranslations[lang];
 
 const teamMembers = [
   {
@@ -48,7 +50,7 @@ const teamMembers = [
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <!-- Left Column -->
         <div class="bg-surface-1 p-6 rounded-lg">
-          <ContactForm client:load />
+          <ContactForm client:load lang={lang} />
         </div>
 
         <!-- Right Column -->
@@ -70,33 +72,39 @@ const teamMembers = [
       <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <!-- Phone Card -->
+
           <a
             href="tel:+31203036050"
-            class="group p-6 bg-surface-1 rounded-lg hover:bg-surface-2 transition-colors"
+            class="group p-6 bg-surface-1 rounded-lg hover:bg-surface-2
+          transition-colors"
           >
             <Phone className="w-6 h-6 mb-4 text-primary" />
-            <div class="text-sm text-text-secondary mb-2">Telefoon</div>
+            <div class="text-sm text-text-secondary mb-2">{t.contact.phone}</div>
             <div class="text-lg text-foreground">(+31) 20 - 303 60 50</div>
           </a>
 
           <!-- Email Card -->
+
           <a
             href="mailto:info@patroon.nl"
-            class="group p-6 bg-surface-1 rounded-lg hover:bg-surface-2 transition-colors"
+            class="group p-6 bg-surface-1 rounded-lg hover:bg-surface-2
+        transition-colors"
           >
             <Mail className="w-6 h-6 mb-4 text-primary" />
-            <div class="text-sm text-text-secondary mb-2">E-mail</div>
+            <div class="text-sm text-text-secondary mb-2">{t.contact.email}</div>
             <div class="text-lg text-foreground">info@patroon.nl</div>
           </a>
 
           <!-- Address Card -->
+
           <a
             href="https://www.google.com/maps"
             target="_blank"
-            class="group p-6 bg-surface-1 rounded-lg hover:bg-surface-2 transition-colors"
+            class="group p-6 bg-surface-1 rounded-lg
+      hover:bg-surface-2 transition-colors"
           >
             <MapPin className="w-6 h-6 mb-4 text-primary" />
-            <div class="text-sm text-text-secondary mb-2">Adres</div>
+            <div class="text-sm text-text-secondary mb-2">{t.contact.address}</div>
             <div class="text-lg text-foreground">
               Gedempt Hamerkanaal 173<br />
               1021 KP Amsterdam
@@ -105,5 +113,5 @@ const teamMembers = [
         </div>
       </div>
     </section>
-  </div>
-</BaseLayout>
+  </div></BaseLayout
+>

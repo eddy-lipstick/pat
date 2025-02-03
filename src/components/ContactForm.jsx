@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { heroContactTranslations } from '@/i18n/translations/heroContact';
+import { languages, defaultLanguage } from '@/i18n/config';
 
-const ContactForm = () => {
+const ContactForm = ({ lang = 'nl' }) => {
+  const t = heroContactTranslations?.[lang] || heroContactTranslations?.['nl'];
+  if (!t) {
+    console.error('Translations not found for language:', lang);
+    return null; // Or some fallback UI
+  }
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({ success: false, message: '' });
 
@@ -51,7 +58,7 @@ const ContactForm = () => {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
-            Naam
+            {t.form.name}
           </label>
           <input
             type="text"
@@ -59,13 +66,13 @@ const ContactForm = () => {
             name="name"
             required
             className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-            placeholder="Je naam"
+            placeholder={t.form.namePlaceholder}
           />
         </div>
 
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-            E-mail
+            {t.form.email}
           </label>
           <input
             type="email"
@@ -73,13 +80,13 @@ const ContactForm = () => {
             name="email"
             required
             className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-            placeholder="Je e-mailadres"
+            placeholder={t.form.emailPlaceholder}
           />
         </div>
 
         <div>
           <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
-            Bericht
+            {t.form.message}
           </label>
           <textarea
             id="message"
@@ -87,7 +94,7 @@ const ContactForm = () => {
             required
             rows={5}
             className="w-full px-4 py-3 bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent resize-y"
-            placeholder="Je bericht"
+            placeholder={t.form.messagePlaceholder}
           />
         </div>
 
@@ -96,12 +103,12 @@ const ContactForm = () => {
           disabled={isSubmitting}
           className="w-full px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isSubmitting ? 'Bezig met verzenden...' : 'Verstuur'}
+          {isSubmitting ? t.form.submitting : t.form.submit}
         </button>
       </form>
 
       <p className="text-center mt-6 text-text-secondary">
-        Of stuur een mail naar{' '}
+        {t.form.alternative}{' '}
         <a href="mailto:info@patroon.nl" className="text-primary hover:underline">
           info@patroon.nl
         </a>
@@ -109,5 +116,4 @@ const ContactForm = () => {
     </div>
   );
 };
-
 export default ContactForm;

@@ -19,6 +19,17 @@ export const heroContactTranslations = {
       },
       success: "Thank you! We'll call you back as soon as possible.",
       error: 'Something went wrong. Please try again later.',
+      name: 'Name',
+      email: 'Email',
+      emailPlaceholder: 'Your email address',
+      message: 'Message',
+      messagePlaceholder: 'Your message',
+      submit: 'Send',
+      submitting: 'Sending...',
+      successMessage: "Thank you for your message. We'll get back to you as soon as possible.",
+      errorMessage: 'Something went wrong while sending.',
+      errorMessageFull: 'Something went wrong. Please try again later or send an email.',
+      alternative: 'Or send an email to',
     },
     team: {
       roles: {
@@ -48,6 +59,18 @@ export const heroContactTranslations = {
       },
       success: 'Bedankt! We bellen je zo snel mogelijk terug.',
       error: 'Er ging iets mis. Probeer het later opnieuw.',
+      name: 'Naam',
+      email: 'E-mail',
+      emailPlaceholder: 'Je e-mailadres',
+      message: 'Bericht',
+      messagePlaceholder: 'Je bericht',
+      submit: 'Verstuur',
+      submitting: 'Bezig met verzenden...',
+      successMessage: 'Bedankt voor je bericht. We nemen zo snel mogelijk contact met je op.',
+      errorMessage: 'Er ging iets mis bij het verzenden.',
+      errorMessageFull:
+        'Er ging iets mis bij het verzenden. Probeer het later opnieuw of stuur een e-mail.',
+      alternative: 'Of stuur een mail naar',
     },
     team: {
       roles: {
