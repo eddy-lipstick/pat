@@ -5,8 +5,24 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Hero from '@/components/Hero.astro';
 import Breadcrumb from '@/components/Breadcrumb';
-// Get all articles
-const articles = await getCollection('articles');
+import { languages, defaultLanguage } from '@/i18n/config';
+import { articleTranslations } from '@/i18n/translations/articles';
+
+// Generate pages for each language
+export function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({
+    params: { lang }
+  }));
+}
+
+const { lang } = Astro.params;
+const t = articleTranslations[lang];
+
+// Get all articles for the current language
+const allArticles = await getCollection('articles');
+const articles = allArticles.filter(article => 
+  article.id.startsWith(`${lang}/`)
+);
 
 // Sort articles by date
 const sortedArticles = [...articles].sort((a, b) => {
@@ -18,20 +34,24 @@ const sortedArticles = [...articles].sort((a, b) => {
   }
 });
 
-// Get all authors at once for better performance
+// Get all authors
 const authors = await getCollection('team');
 const authorsMap = new Map(authors.map((author) => [author.id, author]));
-const breadcrumbItems = [{ label: 'Leren' }, { label: 'Blog', href: '/learn/articles' }];
+
+const breadcrumbItems = [
+  { label: t.breadcrumb.learn }, 
+  { label: t.breadcrumb.blog, href: `/${lang}/learn/articles` }
+];
 ---
 
-<BaseLayout title="Blog - Patroon">
+<BaseLayout title={t.title}>
   <Breadcrumb items={breadcrumbItems} client:load />
 
   <Hero
     variant="small"
-    subtitle="Blog"
-    title="Juridische innovatie in de praktijk"
-    description="Ontdek hoe legal design en technologie het juridische werkveld transformeren via onze artikelen, cases en analyses"
+    subtitle={t.subtitle}
+    title={t.pageTitle}
+    description={t.description}
   />
 
   <section>
@@ -43,7 +63,7 @@ const breadcrumbItems = [{ label: 'Leren' }, { label: 'Blog', href: '/learn/arti
           return (
             <div class="article-card transform transition-all duration-300">
               <Card class="overflow-hidden hover:bg-accent/50 transition-colors border-l-2 border-l-transparent hover:border-l-primary">
-                <a href={`/learn/articles/${article.id}`} class="block">
+                <a href={`/${lang}/learn/articles/${article.id.split('/').pop()}`} class="block">
                   <div class="flex flex-col md:flex-row gap-6 p-6">
                     {article.data.coverImage && (
                       <div class="md:w-1/3">
@@ -60,7 +80,7 @@ const breadcrumbItems = [{ label: 'Leren' }, { label: 'Blog', href: '/learn/arti
                     <div class={article.data.coverImage ? 'md:w-2/3' : 'w-full'}>
                       <div class="flex items-center gap-2 text-sm text-muted-foreground mb-2">
                         <time datetime={article.data.publishDate.toISOString()}>
-                          {article.data.publishDate.toLocaleDateString('en-US', {
+                          {article.data.publishDate.toLocaleDateString(lang, {
                             year: 'numeric',
                             month: 'long',
                             day: 'numeric',
@@ -69,8 +89,8 @@ const breadcrumbItems = [{ label: 'Leren' }, { label: 'Blog', href: '/learn/arti
                         {author && (
                           <>
                             <span class="text-muted-foreground">•</span>
-                            <a
-                              href={`/team/${author.id}`}
+                            
+                              href={`/${lang}/team/${author.id}`}
                               class="hover:text-primary transition-colors"
                             >
                               {author.data.name}
@@ -80,7 +100,7 @@ const breadcrumbItems = [{ label: 'Leren' }, { label: 'Blog', href: '/learn/arti
                         {article.data.readingTime && (
                           <>
                             <span class="text-muted-foreground">•</span>
-                            <span>{article.data.readingTime} min read</span>
+                            <span>{article.data.readingTime} {t.readingTime}</span>
                           </>
                         )}
                       </div>
@@ -116,7 +136,7 @@ const breadcrumbItems = [{ label: 'Leren' }, { label: 'Blog', href: '/learn/arti
     {
       sortedArticles.length === 0 && (
         <div class="text-center py-12">
-          <p class="text-muted-foreground">No articles found.</p>
+          <p class="text-muted-foreground">{t.noArticles}</p>
         </div>
       )
     }

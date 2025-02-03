@@ -2,13 +2,15 @@
 import { getCollection } from 'astro:content';
 import { render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import BaseLayout from '../../../layouts/BaseLayout.astro';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Breadcrumb from '@/components/Breadcrumb';
 import Hero from '@/components/Hero.astro';
 import Article from '@/components/Article.astro';
+import { languages } from '@/i18n/config';
+import { articleTranslations } from '@/i18n/translations/articles';
 
 interface Props {
   entry: CollectionEntry<'articles'>;
@@ -26,14 +28,18 @@ export async function getStaticPaths() {
       return [];
     }
 
-    return allArticles
-      .map((entry) => {
+    return Object.keys(languages).flatMap((lang) => {
+      // Filter articles for current language
+      const languageArticles = allArticles.filter(article => 
+        article.id.startsWith(`${lang}/`)
+      );
+
+      return languageArticles.map((entry) => {
         try {
-          // Get author data - using the reference ID instead of slug
           const authorData = teamMembers.find((member) => member.id === entry.data.author);
 
-          // Get related articles based on shared tags
-          const relatedArticles = allArticles
+          // Get related articles from the same language
+          const relatedArticles = languageArticles
             .filter((article) => {
               if (article.id === entry.id) return false;
 
@@ -44,8 +50,14 @@ export async function getStaticPaths() {
             })
             .slice(0, 3);
 
+          // Extract the article ID without the language prefix
+          const articleId = entry.id.split('/').pop();
+
           return {
-            params: { id: entry.id }, // Changed from slug to id
+            params: { 
+              lang,
+              id: articleId 
+            },
             props: {
               entry,
               relatedArticles,
@@ -56,8 +68,8 @@ export async function getStaticPaths() {
           console.error(`Error processing article ${entry.id}:`, error);
           return null;
         }
-      })
-      .filter(Boolean);
+      });
+    }).filter(Boolean);
   } catch (error) {
     console.error('Error loading articles collection:', error);
     return [];
@@ -65,17 +77,20 @@ export async function getStaticPaths() {
 }
 
 const { entry, relatedArticles, authorData } = Astro.props;
-const { Content } = await render(entry); // Changed from entry.render() to render(entry)
+const { lang } = Astro.params;
+const t = articleTranslations[lang];
+const { Content } = await render(entry);
 
-// Format the publish date once
-const formattedDate = entry.data.publishDate.toLocaleDateString('en-US', {
+// Format the publish date using the current language
+const formattedDate = entry.data.publishDate.toLocaleDateString(lang, {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
 });
+
 const breadcrumbItems = [
-  { label: 'Leren', href: '/learn' },
-  { label: 'Blog', href: '/learn/articles' },
+  { label: t.breadcrumb.learn, href: `/${lang}/learn` },
+  { label: t.breadcrumb.blog, href: `/${lang}/learn/articles` },
   { label: entry.data.title },
 ];
 ---
@@ -84,17 +99,14 @@ const breadcrumbItems = [
   <Breadcrumb items={breadcrumbItems} client:load />
   <Hero
     variant="small"
-    subtitle="Blog"
+    subtitle={t.subtitle}
     title={entry.data.title}
     description={entry.data.description}
   />
 
   <div class="mx-auto">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 py-12">
-      {/* Main Content Column */}
-
       <article class="lg:col-span-8 lg:col-start-1">
-        {/* Article Content */}
         <Article>
           <Content />
         </Article>
@@ -121,11 +133,11 @@ const breadcrumbItems = [
       </article>
     </div>
 
-    {/* Related Articles - Full Width Section */}
+    {/* Related Articles */}
     {relatedArticles.length > 0 && (
       <section class="border-t py-16">
         <div class="max-w-[900px] mx-auto mb-8">
-          <h2 class="text-3xl font-bold">Related Articles</h2>
+          <h2 class="text-3xl font-bold">{t.relatedArticles}</h2>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           {relatedArticles.map((article) => (
@@ -148,10 +160,10 @@ const breadcrumbItems = [
                   {article.data.description}
                 </p>
                 
-                  href={`/learn/articles/${article.id}`}
+                  href={`/${lang}/learn/articles/${article.id.split('/').pop()}`}
                   class="text-primary hover:underline inline-flex items-center gap-1"
                 >
-                  Read article
+                  {t.readArticle}
                   <ArrowRight className="h-4 w-4" />
                 </a>
               </CardContent>

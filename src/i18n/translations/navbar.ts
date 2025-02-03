@@ -13,8 +13,6 @@ export const navbarTranslations = {
       title: 'Learn',
       training: 'Training offers',
       blog: 'Blog',
-      visualDissection: 'Visual Dissection',
-      tipsFromDiel: 'Tips from Diel',
     },
     contact: 'Contact',
   },
@@ -41,6 +39,25 @@ export const navbarTranslations = {
 export const getNavItems = (currentLang: string, currentPath: string) => {
   const t = navbarTranslations[currentLang];
 
+  const learnChildren = [
+    { label: t.learn.training, href: `/${currentLang}/training` },
+    { label: t.learn.blog, href: `/${currentLang}/learn/articles` },
+  ];
+
+  // Add Dutch-only items
+  if (currentLang === 'nl') {
+    learnChildren.push(
+      {
+        label: t.learn.visualDissection,
+        href: `/${currentLang}/learn/courses/visuele-snijtafel`,
+      },
+      {
+        label: t.learn.tipsFromDiel,
+        href: `/${currentLang}/learn/courses/tips-van-diel`,
+      },
+    );
+  }
+
   return [
     {
       label: t.projects,
@@ -59,15 +76,7 @@ export const getNavItems = (currentLang: string, currentPath: string) => {
     {
       label: t.learn.title,
       href: `/${currentLang}/learn`,
-      children: [
-        { label: t.learn.training, href: `/${currentLang}/training` },
-        { label: t.learn.blog, href: `/${currentLang}/learn/articles` },
-        {
-          label: t.learn.visualDissection,
-          href: `/${currentLang}/learn/courses/visuele-snijtafel`,
-        },
-        { label: t.learn.tipsFromDiel, href: `/${currentLang}/learn/courses/tips-van-diel` },
-      ],
+      children: learnChildren,
     },
     {
       label: t.contact,
