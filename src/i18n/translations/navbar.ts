@@ -46,16 +46,10 @@ export const getNavItems = (currentLang: string, currentPath: string) => {
 
   // Add Dutch-only items
   if (currentLang === 'nl') {
-    learnChildren.push(
-      {
-        label: t.learn.visualDissection,
-        href: `/learn/courses/visuele-snijtafel`,
-      },
-      {
-        label: t.learn.tipsFromDiel,
-        href: `/learn/courses/tips-van-diel`,
-      },
-    );
+    learnChildren.push({
+      label: t.learn.visualDissection,
+      href: `/learn/courses/visuele-snijtafel`,
+    });
   }
 
   return [
