@@ -14,7 +14,6 @@ export const trainingTranslations = {
     program: 'Programma',
     description: 'Beschrijving',
     info: 'Info',
-    trainers: 'Trainers',
     overview: 'In het kort',
     interest: 'Interesse?',
     contactText: 'Neem contact op voor meer informatie over deze training.',
@@ -50,7 +49,6 @@ export const trainingTranslations = {
     contactText: 'Contact us for more information about this training.',
     contactButton: 'Contact us',
     maxParticipants: 'Max {count} participants',
-    trainers: 'Trainers',
     trainerInfo: {
       viewProfile: 'View Profile',
       expertise: 'Expertise',

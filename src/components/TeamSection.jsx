@@ -3,7 +3,7 @@ import { ArrowRight, Phone } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { heroContactTranslations } from '@/i18n/translations/herocontact';
+import { heroContactTranslations } from '@/i18n/translations/heroContact';
 
 const TeamSection = ({ lang }) => {
   const t = heroContactTranslations[lang];

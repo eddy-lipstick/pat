@@ -32,13 +32,6 @@ export const caseStudiesTranslations = {
       about: 'Over ons',
       home: 'Home',
     },
-    metadata: {
-      client: 'Client',
-      date: 'Date',
-      services: 'Services',
-      website: 'Website',
-      viewWebsite: 'View Website',
-    },
     video: {
       play: 'Play video',
       pause: 'Pause video',
@@ -103,13 +96,6 @@ export const caseStudiesTranslations = {
     viewProject: 'Bekijk dit project',
     date: {
       separator: ' • ',
-    },
-    metadata: {
-      client: 'Klant',
-      date: 'Datum',
-      services: 'Diensten',
-      website: 'Website',
-      viewWebsite: 'Bekijk Website',
     },
     breadcrumbs: {
       about: 'Over ons',
