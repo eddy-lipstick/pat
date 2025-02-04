@@ -10,6 +10,8 @@ methodology:
     'Design implementatie',
     'Technische integratie',
   ]
+translations:
+  en: 'employment-agreement'
 benefits:
   {
     description: 'Maak een positieve eerste indruk met arbeidsovereenkomsten die aansluiten bij je merk en cultuur',

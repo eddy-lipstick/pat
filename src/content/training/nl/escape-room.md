@@ -36,8 +36,7 @@ modules:
     },
   ]
 
-trainers: ['savannah-koomen', 'dielis-delen']
-
+trainers: [{ id: 'nl/dielis-delen' }, { id: 'nl/savannah-koomen' }]
 includes:
   [
     'Begeleiding door ervaren legal designers',

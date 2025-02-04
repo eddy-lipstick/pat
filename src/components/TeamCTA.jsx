@@ -1,23 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowRight, Phone } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { heroContactTranslations } from '@/i18n/translations/heroContact';
+import { defaultLanguage } from '@/i18n/config';
 
 const TeamCTA = ({ teamMember }) => {
+  // Automatically detect language from URL
+  const getCurrentLanguage = () => {
+    if (typeof window === 'undefined') return defaultLanguage;
+    const pathParts = window.location.pathname.split('/');
+    const langFromUrl = pathParts[1]; // Assuming URL structure /{lang}/...
+    return heroContactTranslations[langFromUrl] ? langFromUrl : defaultLanguage;
+  };
+
   const [showCallbackForm, setShowCallbackForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({ success: false, message: '' });
   const [phoneError, setPhoneError] = useState('');
 
-  const validatePhoneNumber = (phone) => {
-    // Remove spaces and common special characters
-    const cleanPhone = phone.replace(/[\s\-\(\)]/g, '');
+  // Get translations for current language
+  const t = heroContactTranslations[getCurrentLanguage()];
 
-    // Check if it starts with + (international) or number
-    // and contains 8 or more digits after that
+  // Rest of the component remains the same, just using t.* for translations
+  const validatePhoneNumber = (phone) => {
+    const cleanPhone = phone.replace(/[\s\-\(\)]/g, '');
     if (!/^(\+)?[\d]{8,}$/.test(cleanPhone)) {
-      return 'Voer een geldig telefoonnummer in';
+      return t.form.validation.phoneError;
     }
     return '';
   };
@@ -47,7 +57,7 @@ const TeamCTA = ({ teamMember }) => {
       if (response.ok) {
         setSubmitStatus({
           success: true,
-          message: 'Bedankt. We bellen je zo snel mogelijk terug.',
+          message: t.form.success,
         });
         e.target.reset();
         setTimeout(() => {
@@ -55,12 +65,12 @@ const TeamCTA = ({ teamMember }) => {
           setSubmitStatus({ success: false, message: '' });
         }, 3000);
       } else {
-        throw new Error('Er ging iets mis bij het verzenden.');
+        throw new Error(t.form.errorMessage);
       }
     } catch (error) {
       setSubmitStatus({
         success: false,
-        message: 'Er ging iets mis. Probeer het later opnieuw.',
+        message: t.form.error,
       });
     } finally {
       setIsSubmitting(false);
@@ -72,19 +82,16 @@ const TeamCTA = ({ teamMember }) => {
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
         {/* Content Column */}
         <div className="space-y-6">
-          <h2 className="text-4xl font-bold">Klaar om je legal design project te starten?</h2>
-          <p className="text-text-secondary text-lg">
-            Plan een vrijblijvend gesprek in met een van onze legal designers. We denken graag met
-            je mee over hoe we jouw juridische communicatie kunnen verbeteren.
-          </p>
+          <h2 className="text-4xl font-bold">{t.title}</h2>
+          <p className="text-text-secondary text-lg">{t.subtitle}</p>
           <div className="flex flex-col sm:flex-row w-full items-center gap-4 pt-4">
             <Button
               size="lg"
               className="w-full sm:w-auto group bg-feitlijn-purple hover:bg-feitlijn-purple-600 text-white transition-all duration-300"
-              onClick={() => (window.location.href = '/contact')}
+              onClick={() => (window.location.href = `/${getCurrentLanguage()}/contact`)}
             >
               <span className="flex items-center justify-center w-full">
-                Plan een gesprek
+                {t.buttons.schedule}
                 <ArrowRight className="ml-2 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
               </span>
             </Button>
@@ -95,7 +102,7 @@ const TeamCTA = ({ teamMember }) => {
               onClick={() => setShowCallbackForm((prev) => !prev)}
             >
               <span className="flex items-center justify-center w-full">
-                Bel me
+                {t.buttons.callMe}
                 <Phone className="ml-2 w-4 h-4" />
               </span>
             </Button>
@@ -120,7 +127,7 @@ const TeamCTA = ({ teamMember }) => {
                 />
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
-                    Naam
+                    {t.form.name}
                   </label>
                   <input
                     type="text"
@@ -128,12 +135,12 @@ const TeamCTA = ({ teamMember }) => {
                     name="name"
                     required
                     className="w-full px-4 py-2 bg-background border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-                    placeholder="Je naam"
+                    placeholder={t.form.namePlaceholder}
                   />
                 </div>
                 <div>
                   <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
-                    Telefoonnummer
+                    {t.form.phone}
                   </label>
                   <input
                     type="tel"
@@ -141,7 +148,7 @@ const TeamCTA = ({ teamMember }) => {
                     name="phone"
                     required
                     className={`w-full px-4 py-2 bg-background border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent ${phoneError ? 'border-destructive' : 'border-border'}`}
-                    placeholder="Je telefoonnummer"
+                    placeholder={t.form.phonePlaceholder}
                     onChange={() => setPhoneError('')}
                   />
                   {phoneError && <p className="mt-2 text-sm text-destructive">{phoneError}</p>}
@@ -151,7 +158,7 @@ const TeamCTA = ({ teamMember }) => {
                   className="w-full bg-feitlijn-purple hover:bg-feitlijn-purple-600 text-white transition-all duration-300"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Wordt verstuurd...' : 'Verstuur'}
+                  {isSubmitting ? t.form.submitting : t.form.submit}
                 </Button>
               </form>
             </div>
@@ -165,12 +172,14 @@ const TeamCTA = ({ teamMember }) => {
             <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
             <img
               src={teamMember.imageUrl}
-              alt={`${teamMember.name} - ${teamMember.role}`}
+              alt={`${teamMember.name} - ${t.team.roles[teamMember.role] || teamMember.role}`}
               className="w-full h-full object-cover"
             />
             <div className="absolute bottom-6 left-6 right-6">
               <p className="font-medium text-lg">{teamMember.name}</p>
-              <p className="text-text-secondary">{teamMember.role}</p>
+              <p className="text-text-secondary">
+                {t.team.roles[teamMember.role] || teamMember.role}
+              </p>
             </div>
           </Card>
         </div>

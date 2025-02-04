@@ -36,7 +36,7 @@ modules:
     },
   ]
 
-trainers: ['savannah-koomen', 'maurits-fornier']
+trainers: ['nl/savannah-koomen', 'nl/maurits-fornier']
 
 includes:
   ['2 PO-punten', 'Praktische voorbeelden', 'Template bibliotheek', 'Certificaat van deelname']

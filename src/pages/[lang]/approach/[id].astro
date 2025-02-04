@@ -10,6 +10,15 @@ import Hero from '@/components/Hero.astro';
 import { languages } from '@/i18n/config';
 import { approachTranslations } from '@/i18n/translations/approach';
 
+// Simple mapping for different URLs
+const urlMapping = {
+  'employment-agreement': {
+    nl: 'arbeidsovereenkomst',
+    en: 'employment-agreement',
+  },
+  // Add more mappings as needed
+};
+
 export async function getStaticPaths() {
   const approaches = await getCollection('approach');
   const caseStudies = await getCollection('case-studies');

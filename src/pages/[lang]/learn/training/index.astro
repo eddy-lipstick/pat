@@ -1,25 +1,48 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+// src/pages/[lang]/training/index.astro
+import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { ArrowRight } from 'lucide-react';
 import TrainingCard from '@/components/TrainingCard';
 import Hero from '@/components/Hero.astro';
 import Breadcrumb from '@/components/Breadcrumb';
+import { languages, defaultLanguage } from '@/i18n/config';
+import { trainingTranslations } from '@/i18n/translations/training';
 
+// Generate pages for all supported languages
+export function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params;
+const t = trainingTranslations[lang];
+
+// Get training items for current language
 const allTraining = await getCollection('training');
-const breadcrumbItems = [{ label: 'Leren' }, { label: 'Trainingsaanbod', href: '/training' }];
+const languageTraining = allTraining.filter((item) => item.id.startsWith(lang + '/'));
+
+const breadcrumbItems = [
+  { label: t.breadcrumb.learn },
+  { label: t.breadcrumb.offerings, href: `/${lang}/training` },
+];
 ---
 
-<BaseLayout title="Onze trainingen">
+<BaseLayout title={t.title}>
   <Breadcrumb items={breadcrumbItems} client:load />
 
-  <Hero variant="small" subtitle="Onze trainingen" title="Zelf aan de slag" />
+  <Hero variant="small" subtitle={t.subtitle} title={t.heading} />
 
   <!-- Training Grid -->
   <section>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-      {allTraining.map((training) => <TrainingCard training={training} client:load />)}
+      {
+        languageTraining.map((training) => (
+          <TrainingCard training={training} lang={lang} client:load />
+        ))
+      }
     </div>
   </section>
 </BaseLayout>

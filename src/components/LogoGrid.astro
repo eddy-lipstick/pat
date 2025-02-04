@@ -3,12 +3,9 @@
 import HeinekenLogo from './logos/HeinekenLogo.astro';
 import OverheidLogo from './logos/OverheidLogo.astro';
 import NaiLogo from './logos/NaiLogo.astro';
-
 import HouthoffLogo from './logos/HouthoffLogo.astro';
 import DlaLogo from './logos/DlaLogo.astro';
-
 import CCLogo from './logos/CCLogo.astro';
-
 import BrinkhofLogo from './logos/BrinkhofLogo.astro';
 import BitvavoLogo from './logos/BitvavoLogo.astro';
 import BdLogo from './logos/BdLogo.astro';
@@ -16,69 +13,149 @@ import AmsLogo from './logos/AmsLogo.astro';
 import AholdLogo from './logos/AholdLogo.astro';
 import FbdLogo from './logos/FbdLogo.astro';
 
+const translations = {
+  nl: {
+    subtitle: 'Wij werken met de innovatieve juristen van deze bedrijven, kantoren en overheden.',
+  },
+  en: {
+    subtitle:
+      'We work with innovative legal professionals from these companies, firms, and government institutions.',
+  },
+};
+
+interface Props {
+  lang: keyof typeof translations;
+}
+
+const { lang } = Astro.props;
 ---
 
 <section class="py-16">
   <div class="max-w-6xl mx-auto">
-    <p class="text-xl lg:text-2xl text-indigo-400 mb-16 max-w-2xl">
-      Wij werken met de innovatieve juristen van deze bedrijven, kantoren en overheden.
+    <p class="text-xl lg:text-2xl text-feitlijn-purple mb-16 max-w-2xl">
+      {translations[lang].subtitle}
     </p>
 
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 md:gap-16">
       <div class="group relative flex items-center justify-center p-6">
-        <HeinekenLogo class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105" />
-        <div class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5" />
-      </div>
-      
-      <div class="group relative flex items-center justify-center p-6">
-        <OverheidLogo class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105" />
-        <div class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5" />
-      </div>
-      <div class="group relative flex items-center justify-center p-6">
-        <NaiLogo class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105" />
-        <div class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5" />
-      </div>
-      <!-- Add other logos in the same pattern -->
-
-
-      <div class="group relative flex items-center justify-center p-6">
-        <HouthoffLogo class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105" />
-        <div class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5" />
+        <HeinekenLogo
+          class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105"
+        />
+        <div
+          class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5"
+        >
+        </div>
       </div>
 
       <div class="group relative flex items-center justify-center p-6">
-        <DlaLogo class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105" />
-        <div class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5" />
-      </div>
-      <div class="group relative flex items-center justify-center p-6">
-        <CCLogo class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105" />
-        <div class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5" />
-      </div>
-      <div class="group relative flex items-center justify-center p-6">
-        <BrinkhofLogo class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105" />
-        <div class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5" />
-      </div>
-      <div class="group relative flex items-center justify-center p-6">
-        <BitvavoLogo class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105" />
-        <div class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5" />
-      </div>
-      <div class="group relative flex items-center justify-center p-6">
-        <BdLogo class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105" />
-        <div class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5" />
-      </div>
-      <div class="group relative flex items-center justify-center p-6">
-        <AmsLogo class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105" />
-        <div class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5" />
-      </div>
-      <div class="group relative flex items-center justify-center p-6">
-        <AholdLogo class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105" />
-        <div class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5" />
-      </div>
-      <div class="group relative flex items-center justify-center p-6">
-        <FbdLogo class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105" />
-        <div class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5" />
+        <OverheidLogo
+          class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105"
+        />
+        <div
+          class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5"
+        >
+        </div>
       </div>
 
+      <div class="group relative flex items-center justify-center p-6">
+        <NaiLogo
+          class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105"
+        />
+        <div
+          class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5"
+        >
+        </div>
+      </div>
+
+      <div class="group relative flex items-center justify-center p-6">
+        <HouthoffLogo
+          class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105"
+        />
+        <div
+          class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5"
+        >
+        </div>
+      </div>
+
+      <div class="group relative flex items-center justify-center p-6">
+        <DlaLogo
+          class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105"
+        />
+        <div
+          class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5"
+        >
+        </div>
+      </div>
+
+      <div class="group relative flex items-center justify-center p-6">
+        <CCLogo
+          class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105"
+        />
+        <div
+          class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5"
+        >
+        </div>
+      </div>
+
+      <div class="group relative flex items-center justify-center p-6">
+        <BrinkhofLogo
+          class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105"
+        />
+        <div
+          class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5"
+        >
+        </div>
+      </div>
+
+      <div class="group relative flex items-center justify-center p-6">
+        <BitvavoLogo
+          class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105"
+        />
+        <div
+          class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5"
+        >
+        </div>
+      </div>
+
+      <div class="group relative flex items-center justify-center p-6">
+        <BdLogo
+          class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105"
+        />
+        <div
+          class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5"
+        >
+        </div>
+      </div>
+
+      <div class="group relative flex items-center justify-center p-6">
+        <AmsLogo
+          class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105"
+        />
+        <div
+          class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5"
+        >
+        </div>
+      </div>
+
+      <div class="group relative flex items-center justify-center p-6">
+        <AholdLogo
+          class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105"
+        />
+        <div
+          class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5"
+        >
+        </div>
+      </div>
+
+      <div class="group relative flex items-center justify-center p-6">
+        <FbdLogo
+          class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105"
+        />
+        <div
+          class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5"
+        >
+        </div>
+      </div>
     </div>
   </div>
 </section>

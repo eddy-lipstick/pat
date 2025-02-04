@@ -36,8 +36,7 @@ modules:
     },
   ]
 
-trainers: ['savannah-koomen']
-
+trainers: [{ id: 'nl/maurits-fornier' }, { id: 'nl/savannah-koomen' }]
 includes:
   [
     'Begeleiding door ervaren legal designers',

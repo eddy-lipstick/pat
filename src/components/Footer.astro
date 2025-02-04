@@ -2,15 +2,23 @@
 import { getCollection } from 'astro:content';
 import { Separator } from '@/components/ui/separator';
 import { Icon } from 'astro-icon';
+import { languages, defaultLanguage } from '@/i18n/config';
+import { footerTranslations } from '@/i18n/translations/footer';
 
-// Fetch data at build time
+// Get current language from URL
+const currentPath = Astro.url.pathname;
+const lang = currentPath.split('/')[1] || defaultLanguage;
+const t = footerTranslations[lang];
+
+// Fetch data at build time and filter by language
 const allNews = await getCollection('news');
 const allCases = await getCollection('case-studies');
 const allArticles = await getCollection('articles');
 const allApproaches = await getCollection('approach');
 
-// Get latest 5 items from each collection, sorted by date if available
+// Filter and sort items by language
 const recentNews = allNews
+  .filter((item) => item.id.startsWith(`${lang}/`))
   .sort((a, b) => {
     const dateA = new Date(a.data.date);
     const dateB = new Date(b.data.date);
@@ -18,9 +26,10 @@ const recentNews = allNews
   })
   .slice(0, 5);
 
-const recentCases = allCases.slice(0, 5);
+const recentCases = allCases.filter((item) => item.id.startsWith(`${lang}/`)).slice(0, 5);
 
 const recentArticles = allArticles
+  .filter((item) => item.id.startsWith(`${lang}/`))
   .sort((a, b) => {
     const dateA = a.data.publishDate;
     const dateB = b.data.publishDate;
@@ -29,32 +38,24 @@ const recentArticles = allArticles
   .slice(0, 5);
 
 const recentApproaches = allApproaches
+  .filter((item) => item.id.startsWith(`${lang}/`))
   .sort((a, b) => (b.data.order || 0) - (a.data.order || 0))
   .slice(0, 15);
 
 const currentYear = new Date().getFullYear();
 
-// Define the props interface for the FooterLink component
-interface FooterLinkProps {
-  href: string;
-  text: string;
-}
+// Helper function to get localized URL
+const getLocalizedUrl = (path: string) => `/${lang}${path}`;
 ---
 
-<!-- Helper component for consistent link styling -->{
-  /* Create FooterLink as an Astro component template */
-}
-{/* Use fragment to avoid unnecessary wrapper elements */}
 <Fragment>
-  {/* Main Footer Component */}
   <footer class="bg-surface-1 text-text-primary w-full py-16 mt-32">
     <div class="container mx-auto">
-      <!-- Main Content Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
         <!-- Company Info -->
         <div class="space-y-6">
           <a
-            href="/"
+            href={getLocalizedUrl('/')}
             class="text-2xl text-text-1 hover:text-feitlijn-purple transition-colors flex items-center gap-2 font-roc-grotesk"
             aria-label="Patroon Home"
           >
@@ -65,14 +66,14 @@ interface FooterLinkProps {
             <a
               href="mailto:info@patroon.nl"
               class="text-sm hover:text-feitlijn-purple transition-colors"
-              aria-label="Email us"
+              aria-label={t.emailUs}
             >
               info@patroon.nl
             </a>
             <a
               href="tel:+31203036050"
               class="text-sm hover:text-feitlijn-purple transition-colors"
-              aria-label="Bel ons"
+              aria-label={t.callUs}
             >
               +31 20 303 60 50
             </a>
@@ -82,14 +83,14 @@ interface FooterLinkProps {
         <!-- News Column -->
         <div class="space-y-4">
           <div class="flex items-center gap-2 text-feitlijn-purple">
-            <h3 class="text-lg font-roc-grotesk font-">Nieuws</h3>
+            <h3 class="text-lg font-roc-grotesk">{t.news}</h3>
           </div>
           <ul class="space-y-3" role="list">
             {
               recentNews.map((item) => (
                 <li>
                   <a
-                    href={`/news/${item.id}`}
+                    href={getLocalizedUrl(`/news/${item.id.split('/')[1]}`)}
                     class="text-sm text-text-secondary hover:text-feitlijn-purple transition-colors duration-200 flex items-center gap-2 group"
                   >
                     {item.data.title}
@@ -103,14 +104,14 @@ interface FooterLinkProps {
         <!-- Cases Column -->
         <div class="space-y-4">
           <div class="flex items-center gap-2 text-feitlijn-purple">
-            <h3 class="text-lg font-roc-grotesk">Projecten</h3>
+            <h3 class="text-lg font-roc-grotesk">{t.projects}</h3>
           </div>
           <ul class="space-y-3" role="list">
             {
               recentCases.map((item) => (
                 <li>
                   <a
-                    href={`/case-studies/${item.id}`}
+                    href={getLocalizedUrl(`/case-studies/${item.id.split('/')[1]}`)}
                     class="text-sm text-text-secondary hover:text-feitlijn-purple transition-colors duration-200 flex items-center gap-2 group"
                   >
                     {item.data.title}
@@ -124,14 +125,14 @@ interface FooterLinkProps {
         <!-- Articles Column -->
         <div class="space-y-4">
           <div class="flex items-center gap-2 text-feitlijn-purple">
-            <h3 class="text-lg font-roc-grotesk">Blog</h3>
+            <h3 class="text-lg font-roc-grotesk">{t.blog}</h3>
           </div>
           <ul class="space-y-3" role="list">
             {
               recentArticles.map((item) => (
                 <li>
                   <a
-                    href={`/learn/articles/${item.id}`}
+                    href={getLocalizedUrl(`/learn/articles/${item.id.split('/')[1]}`)}
                     class="text-sm text-text-secondary hover:text-feitlijn-purple transition-colors duration-200 flex items-center gap-2 group"
                   >
                     {item.data.title}
@@ -146,15 +147,15 @@ interface FooterLinkProps {
       <!-- Approach Links -->
       <div class="mb-16">
         <div class="flex items-center gap-2 text-feitlijn-purple mb-6">
-          <h3 class="text-lg roc-grotesk">Onze aanpak</h3>
+          <h3 class="text-lg roc-grotesk">{t.ourApproach}</h3>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {
             recentApproaches.map((approach) => (
               <a
-                href={`/approach/${approach.id}`}
+                href={getLocalizedUrl(`/approach/${approach.id.split('/')[1]}`)}
                 class="px-4 py-3 bg-surface-2 rounded-lg hover:bg-surface-3 transition-colors duration-200 text-sm text-text-secondary hover:text-text-primary group flex items-center justify-between"
-                aria-label={`Learn about ${approach.data.title}`}
+                aria-label={`${t.ourApproach}: ${approach.data.title}`}
               >
                 {approach.data.title}
               </a>
@@ -171,6 +172,23 @@ interface FooterLinkProps {
       >
         <div class="mb-4 md:mb-0">
           © {currentYear} Patroon Legal Design B.V., Gedempt Hamerkanaal 173, 1021KP, Amsterdam
+        </div>
+        <div class="flex gap-4">
+          <a href={getLocalizedUrl('/terms')} class="hover:text-feitlijn-purple transition-colors">
+            {t.termsOfService}
+          </a>
+          <a
+            href={getLocalizedUrl('/privacy')}
+            class="hover:text-feitlijn-purple transition-colors"
+          >
+            {t.privacyPolicy}
+          </a>
+          <a
+            href={getLocalizedUrl('/cookies')}
+            class="hover:text-feitlijn-purple transition-colors"
+          >
+            {t.cookiePolicy}
+          </a>
         </div>
       </div>
     </div>

@@ -199,14 +199,15 @@ const trainingSchema = z.object({
 
   // Related content
   trainers: z
-    .union([
-      z.array(z.string()),
-      z.array(
-        reference('team', {
-          prefixPath: ({ language }) => `${language}`,
+    .array(
+      z.union([
+        // Accept both string IDs and object references
+        z.string(),
+        z.object({
+          id: z.string(),
         }),
-      ),
-    ])
+      ]),
+    )
     .optional(),
   prerequisites: z.array(z.string()).optional(),
   includes: z.array(z.string()).optional(), // What's included in the training
@@ -252,6 +253,12 @@ const approachSchema = z.object({
     .optional(),
   order: z.number().optional(),
   icon: z.string().optional(),
+  translations: z
+    .object({
+      en: z.string().optional(),
+      nl: z.string().optional(),
+    })
+    .optional(),
 });
 
 const lessonSchema = z.object({

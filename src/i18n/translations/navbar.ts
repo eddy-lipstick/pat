@@ -40,7 +40,7 @@ export const getNavItems = (currentLang: string, currentPath: string) => {
   const t = navbarTranslations[currentLang];
 
   const learnChildren = [
-    { label: t.learn.training, href: `/${currentLang}/training` },
+    { label: t.learn.training, href: `/${currentLang}/learn/training` },
     { label: t.learn.blog, href: `/${currentLang}/learn/articles` },
   ];
 

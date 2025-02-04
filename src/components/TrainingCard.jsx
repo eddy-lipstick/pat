@@ -10,20 +10,25 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { CalendarDays } from 'lucide-react';
 
-const TrainingCard = ({ training }) => {
+const TrainingCard = ({ training, lang = 'nl' }) => {
   const {
     id,
     data: { title, description, publishDate, author, tags = [], coverImage },
   } = training;
 
-  const formattedDate = new Date(publishDate).toLocaleDateString('nl-NL', {
+  // Format the URL correctly based on the content ID and language
+  const trainingId = id.split('/').pop()?.replace('.md', '');
+  const href = `/${lang}/learn/training/${trainingId}`;
+
+  // Use the provided language for date formatting
+  const formattedDate = new Date(publishDate).toLocaleDateString(lang, {
     year: 'numeric',
     month: 'long',
   });
 
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-all group">
-      <a href={`/training/${id}`} className="block">
+      <a href={href} className="block">
         {coverImage && (
           <div className="aspect-video w-full overflow-hidden">
             <img
@@ -36,7 +41,14 @@ const TrainingCard = ({ training }) => {
 
         <CardHeader>
           <div className="space-y-2">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground"></div>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              {publishDate && (
+                <div className="flex items-center gap-1">
+                  <CalendarDays className="w-4 h-4" />
+                  <span>{formattedDate}</span>
+                </div>
+              )}
+            </div>
             <CardTitle className="line-clamp-2">{title}</CardTitle>
             <CardDescription className="line-clamp-2">{description}</CardDescription>
           </div>

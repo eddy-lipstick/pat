@@ -10,6 +10,8 @@ methodology:
     'Design implementation',
     'Technical integration',
   ]
+translations:
+  nl: 'arbeidsovereenkomst'
 benefits:
   {
     description: 'Make a positive first impression with employment agreements that align with your brand and culture',
