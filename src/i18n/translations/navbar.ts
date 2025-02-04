@@ -49,11 +49,11 @@ export const getNavItems = (currentLang: string, currentPath: string) => {
     learnChildren.push(
       {
         label: t.learn.visualDissection,
-        href: `/${currentLang}/learn/courses/visuele-snijtafel`,
+        href: `/learn/courses/visuele-snijtafel`,
       },
       {
         label: t.learn.tipsFromDiel,
-        href: `/${currentLang}/learn/courses/tips-van-diel`,
+        href: `/learn/courses/tips-van-diel`,
       },
     );
   }
