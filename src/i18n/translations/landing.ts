@@ -7,12 +7,16 @@ export const landingTranslations = {
     },
     hero: {
       subtitle: 'Legal design & legal tech studio',
-      title: 'We make legal complexity accessible with smart technology and good design',
+      title: 'Legal work can be so much smarter and faster',
       description:
-        'By combining legal expertise, smart technology and thoughtful design, we help organizations with',
-      bulletPoints: ['Automating time-consuming legal tasks', 'Making complex information clear'],
+        'With smart technology and thoughtful design, we make legal information crystal clear and automate time-consuming processes.',
+      bulletPoints: [
+        'Videos that powerfully convey the essence of your pleadings',
+        'Interactive compliance policies that people actually use',
+        'Contracts that people understand',
+      ],
       buttons: {
-        primary: 'Contact us',
+        primary: 'Get in touch',
         secondary: 'View our work',
       },
     },
@@ -42,13 +46,13 @@ export const landingTranslations = {
     },
     hero: {
       subtitle: 'Legal design & legal tech studio',
-      title:
-        'Wij maken juridische complexiteit toegankelijk met slimme technologie en goed ontwerp',
+      title: 'Juridisch werk kan zoveel slimmer en sneller',
       description:
-        'Door de combinatie van juridische expertise, slimme technologie en doordacht design helpen we organisaties met',
+        'Met slimme technologie en goed ontwerp maken we juridische informatie glashelder en automatiseren we tijdrovende processen.',
       bulletPoints: [
-        'Tijdrovende juridische taken automatiseren',
-        'Complexe informatie helder maken',
+        "Video's, die de kern van je pleidooi krachtig neerzetten",
+        "Interactieve compliance policy's,  die worden gebruikt",
+        'Contracten, die worden gesnapt',
       ],
       buttons: {
         primary: 'Neem contact op',

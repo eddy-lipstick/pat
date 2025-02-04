@@ -1,75 +1,95 @@
 ---
-title: 'Van juridisch document naar begrijpelijke privacyverklaring'
-introduction: 'Hoe maak je privacyverklaringen begrijpelijk voor meer dan 360.000 inwoners? De Gemeente Utrecht vroeg Patroon om hun complexe privacyverklaring te transformeren naar een toegankelijk document. We ontwikkelden een interactief privacyplein dat inwoners stap voor stap door de verschillende verwerkingsprocessen leidt.'
+title: 'From legal document to understandable privacy statement'
+introduction: >-
+  How do you make privacy statements understandable for more than 360,000 residents?
+  The Municipality of Utrecht asked Patroon to transform their complex privacy statement 
+  into an accessible document. We developed an interactive privacy plaza that guides 
+  residents step by step through the various processing procedures.
 quotes:
   first:
-    quote: 'Het inzicht dat de burger wordt geboden en de schaalbaarheid van dit concept spreken de jury aan: andere gemeenten kunnen dit voorbeeld volgen en dat zal burgers helpen om snel en laagdrempelig inzicht te krijgen in wat er met hun gegevens gebeurt.'
+    quote: >-
+      The insight provided to citizens and the scalability of this concept appeals 
+      to the jury: other municipalities can follow this example, which will help 
+      citizens quickly and easily understand what happens with their data.
     author: 'Jury'
-    role: 'Stichting Privacy First'
+    role: 'Privacy First Foundation'
   second:
-    quote: 'We hebben overal taal op B1-niveau gebruikt. Een term als ‘geautomatiseerde besluitvorming’, wat vrij essentieel is in de AVG, snapt geen mens op straat.'
+    quote: >-
+      We used B1-level language throughout. A term like "automated decision-making", 
+      which is quite essential in the GDPR, is not understood by the average person.
     author: 'Yvonne Staal'
-    role: 'Chief Privacy Officer bij de Gemeente Utrecht'
-
+    role: 'Chief Privacy Officer at the Municipality of Utrecht'
 cover_image:
   src: '/case-studies/utrecht/utrecht_cover.jpg'
-  alt: 'Interactieve sessie tijdens de conferentie in Utrecht'
-
+  alt: 'Interactive session during the conference in Utrecht'
 metadata:
-  client: 'Gemeente Utrecht'
-  date: 'Januari 2024'
+  client: 'Municipality of Utrecht'
+  date: 'January 2024'
   services:
     - 'Information Design'
   website: 'https://www.utrecht.nl/bestuur-en-organisatie/privacy/privacyverklaring'
   relatedSkills: ['Information Design', 'Legal Content Design']
-
 heroVideo:
   src: '/case-studies/utrecht/utrecht-clip.mp4'
   poster: '/case-studies/utrecht-privacy.jpg'
-  title: 'Het privacyplein maakt privacy begrijpelijk voor alle inwoners van Utrecht.'
-
+  title: 'The privacy plaza makes privacy understandable for all residents of Utrecht.'
 expandableContent:
-  - title: 'Van complex naar helder'
-    firstParagraph: 'De gemeente verwerkt persoonsgegevens in meer dan 90 verschillende processen. Van parkeervergunningen tot bijstandsaanvragen. Al deze processen moeten helder uitgelegd worden aan inwoners. We ontwikkelden daarom een nieuwe structuur die niet uitgaat van de gemeentelijke organisatie, maar van de leefwereld van de inwoner.'
+  - title: 'From complex to clear'
+    firstParagraph: >-
+      The municipality processes personal data in more than 90 different processes. 
+      From parking permits to social assistance applications. All these processes 
+      need to be clearly explained to residents. We therefore developed a new structure 
+      that is not based on the municipal organization, but on the resident's world.
     remainingText:
-      - "In het privacyplein kan de gebruiker eenvoudig navigeren naar de situatie die voor hem of haar relevant is. Juridische termen als 'Fiscale parkeerhandhaving' en 'Bestuursrechtelijk instrumentarium' werden vertaald naar begrijpelijke taal, zonder de juridische betekenis te verliezen."
-      - 'Het resultaat is een privacyverklaring die niet alleen voldoet aan alle juridische eisen, maar ook echt begrepen wordt door de inwoners van Utrecht. Zo maken we privacy tot iets tastbaars dat past bij een moderne, transparante overheid.'
-
+      - >-
+        In the privacy plaza, users can easily navigate to the situation that is 
+        relevant to them. Legal terms like 'Fiscal parking enforcement' and 
+        'Administrative law instruments' were translated into understandable 
+        language without losing their legal meaning.
+      - >-
+        The result is a privacy statement that not only meets all legal requirements 
+        but is also truly understood by Utrecht residents. This makes privacy 
+        something tangible that fits with a modern, transparent government.
 images:
   - src: '/case-studies/utrecht/utrecht-image-1.jpg'
-    alt: 'Overzicht van het privacyplein'
+    alt: 'Overview of the privacy plaza'
     type: 'full'
   - src: '/case-studies/utrecht/utrecht-2.jpg'
-    alt: 'Detail van de navigatie'
+    alt: 'Navigation detail'
     type: 'grid'
   - src: '/case-studies/utrecht/utrecht-3.jpg'
-    alt: 'Voorbeeld van een verwerkingsproces'
+    alt: 'Example of a processing procedure'
     type: 'grid'
   - src: '/case-studies/utrecht/utrecht-4.jpg'
-    alt: 'Uitleg van privacy begrippen'
+    alt: 'Explanation of privacy terms'
     type: 'grid'
   - src: '/case-studies/utrecht/utrecht-5.jpg'
-    alt: 'Gebruikerstest in actie'
+    alt: 'User testing in action'
     type: 'grid'
-
 beforeAfter:
   - beforeImage: '/gemeente-utrecht/before.jpg'
     afterImage: '/gemeente-utrecht/after.jpg'
-    alt: 'Transformatie privacyverklaring'
-
+    alt: 'Privacy statement transformation'
 timeline:
   entries:
-    - phase: 'Analyse'
-      description: 'De Gemeente voert honderden taken uit voor inwoners. We brachten al deze verwerkingsprocessen in kaart en zoomden in op de 90 belangrijkste processen.'
-
-    - phase: 'Structureren en testen'
-      description: 'We ontwikkelden een structuur voor de 90 verwerkingsprocessen, waarbij niet de organisatorische indeling van de gemeente leidend is, maar de belevingswereld van de gebruiker. Deze structuur werd getest met een representatieve gebruikersgroep.'
-
-    - phase: 'Ontwikkeling en testen'
-      description: "We ontwikkelden een prototype van het privacyplein en testte deze met inwoners van de Gemeente Utrecht op het stadhuis. Dit leverde waardevolle inzichten op. Bijvoorbeeld: weinig mensen wisten de betekenis van 'gegevens'. We veranderden dit naar 'persoonlijke informatie'."
-
-    - phase: 'Borging'
-      description: 'We ontwikkelden een toolkit waarmee de gemeente zelf gemakkelijk nieuwe privacyverklaringen kan maken. En trainde de beheerders in het gebruik van deze toolkit.'
-
+    - phase: 'Analysis'
+      description: >-
+        The Municipality performs hundreds of tasks for residents. We mapped all 
+        these processing procedures and focused on the 90 most important processes.
+    - phase: 'Structuring and testing'
+      description: >-
+        We developed a structure for the 90 processing procedures, where the 
+        organizational structure of the municipality is not leading, but rather 
+        the user's perspective. This structure was tested with a representative user group.
+    - phase: 'Development and testing'
+      description: >-
+        We developed a prototype of the privacy plaza and tested it with residents 
+        of the Municipality of Utrecht at city hall. This provided valuable insights. 
+        For example: few people knew the meaning of 'data'. We changed this to 
+        'personal information'.
+    - phase: 'Implementation'
+      description: >-
+        We developed a toolkit that allows the municipality to easily create new 
+        privacy statements themselves. And trained the administrators in using this toolkit.
 teamMember: 'en/savannah-koomen'
 ---

@@ -4,7 +4,7 @@ import { CaseStudyBubble } from './CaseStudyBubble';
 
 const HoverContext = createContext({
   hoveredBubble: null,
-  setHoveredBubble: () => { }
+  setHoveredBubble: () => {},
 });
 
 export const StakeholderBubbleProvider = ({ children }) => {
@@ -17,54 +17,54 @@ export const StakeholderBubbleProvider = ({ children }) => {
 };
 
 const BUBBLE_CONFIG = {
-  "Toezichthouders": {
+  Toezichthouders: {
     x: -170,
     y: -300,
     size: 80,
-    tooltip: "Bekijk onze aanpak voor communicatie met toezichthouders"
+    tooltip: 'Bekijk onze aanpak voor communicatie met toezichthouders',
   },
-  "Rechters en arbiters": {
+  'Rechters en arbiters': {
     x: -300,
     y: -250,
     size: 130,
-    tooltip: "Lees over onze communicatiestrategie in juridische procedures"
+    tooltip: 'Lees over onze communicatiestrategie in juridische procedures',
   },
-  "Investeerders": {
+  Investeerders: {
     x: 10,
     y: -260,
     size: 80,
-    tooltip: "Ontdek hoe wij juridische communicatie met investeerders aanpakken"
+    tooltip: 'Ontdek hoe wij juridische communicatie met investeerders aanpakken',
   },
-  "Bestuur": {
+  Bestuur: {
     x: -10,
     y: -150,
     size: 120,
-    tooltip: "Bekijk onze juridische communicatieaanpak op bestuursniveau"
+    tooltip: 'Bekijk onze juridische communicatieaanpak op bestuursniveau',
   },
-  "Klanten": {
+  Klanten: {
     x: 160,
     y: 30,
     size: 110,
-    tooltip: "Bekijk hoe wij juridische zaken communiceren met klanten"
+    tooltip: 'Bekijk hoe wij juridische zaken communiceren met klanten',
   },
-  "Sales team": {
+  'Sales team': {
     x: -320,
     y: -60,
     size: 100,
-    tooltip: "Ontdek onze juridische communicatiestrategie voor het sales team"
+    tooltip: 'Ontdek onze juridische communicatiestrategie voor het sales team',
   },
   "Collega's": {
     x: -200,
     y: -40,
     size: 110,
-    tooltip: "Lees over onze interne juridische communicatiepraktijken"
+    tooltip: 'Lees over onze interne juridische communicatiepraktijken',
   },
-  "Algemene publiek": {
+  'Algemene publiek': {
     x: -50,
     y: 250,
     size: 80,
-    tooltip: "Bekijk onze aanpak voor juridische communicatie met het publiek"
-  }
+    tooltip: 'Bekijk onze aanpak voor juridische communicatie met het publiek',
+  },
 };
 
 export const StakeholderBubble = ({ stakeholder, isActive, onClick, onCaseStudyClick }) => {
@@ -72,14 +72,14 @@ export const StakeholderBubble = ({ stakeholder, isActive, onClick, onCaseStudyC
   const isHovered = hoveredBubble === stakeholder.name;
   const shouldDim = !isActive && !isHovered && hoveredBubble !== null;
 
-  const config = BUBBLE_CONFIG[stakeholder.name] || { x: 0, y: 0, size: 100, tooltip: "" };
+  const config = BUBBLE_CONFIG[stakeholder.name] || { x: 0, y: 0, size: 100, tooltip: '' };
 
   const getSubBubblePosition = (index, total) => {
     const radius = config.size * 1.2;
     const angle = (index * (2 * Math.PI)) / total;
     return {
       x: Math.cos(angle) * radius,
-      y: Math.sin(angle) * radius
+      y: Math.sin(angle) * radius,
     };
   };
 
@@ -90,7 +90,7 @@ export const StakeholderBubble = ({ stakeholder, isActive, onClick, onCaseStudyC
         left: `calc(50% + ${config.x}px)`,
         top: `calc(50% + ${config.y}px)`,
         transform: 'translate(-50%, -50%)',
-        zIndex: isActive ? 50 : 1
+        zIndex: isActive ? 50 : 1,
       }}
     >
       {/* Tooltip */}
@@ -105,7 +105,7 @@ export const StakeholderBubble = ({ stakeholder, isActive, onClick, onCaseStudyC
               width: Math.max(config.size * 2, 200),
               zIndex: 100,
               bottom: `${config.size + 20}px`,
-              left: -50
+              left: -50,
             }}
           >
             <div className="bg-background text-white rounded-lg px-4 py-2 text-sm max-w-xs text-center">
@@ -133,12 +133,12 @@ export const StakeholderBubble = ({ stakeholder, isActive, onClick, onCaseStudyC
           padding: `${config.size * 0.16}px`,
           fontSize: `${config.size * 0.14}px`,
           opacity: shouldDim ? 0.3 : 1,
-          transition: 'opacity 0.3s ease'
+          transition: 'opacity 0.3s ease',
         }}
         whileHover={{ scale: 1.05 }}
         onClick={() => onClick(stakeholder)}
         onMouseEnter={() => setHoveredBubble(stakeholder.name)}
-        onMouseLeave={() => isActive ? null : setHoveredBubble(null)}
+        onMouseLeave={() => (isActive ? null : setHoveredBubble(null))}
       >
         {stakeholder.name}
       </motion.div>
@@ -156,10 +156,10 @@ export const StakeholderBubble = ({ stakeholder, isActive, onClick, onCaseStudyC
                   animate={{ scale: 1, x: pos.x, y: pos.y }}
                   exit={{ scale: 0, x: 0, y: 0 }}
                   transition={{
-                    type: "spring",
+                    type: 'spring',
                     stiffness: 300,
                     damping: 25,
-                    delay: index * 0.05
+                    delay: index * 0.05,
                   }}
                   onClick={(e) => {
                     e.stopPropagation();

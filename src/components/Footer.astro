@@ -173,23 +173,6 @@ const getLocalizedUrl = (path: string) => `/${lang}${path}`;
         <div class="mb-4 md:mb-0">
           © {currentYear} Patroon Legal Design B.V., Gedempt Hamerkanaal 173, 1021KP, Amsterdam
         </div>
-        <div class="flex gap-4">
-          <a href={getLocalizedUrl('/terms')} class="hover:text-feitlijn-purple transition-colors">
-            {t.termsOfService}
-          </a>
-          <a
-            href={getLocalizedUrl('/privacy')}
-            class="hover:text-feitlijn-purple transition-colors"
-          >
-            {t.privacyPolicy}
-          </a>
-          <a
-            href={getLocalizedUrl('/cookies')}
-            class="hover:text-feitlijn-purple transition-colors"
-          >
-            {t.cookiePolicy}
-          </a>
-        </div>
       </div>
     </div>
   </footer>

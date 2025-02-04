@@ -88,8 +88,8 @@ const processedStudies = await Promise.all(
     secondaryButtonText={t.hero.buttons.secondary}
     secondaryButtonHref={`/${currentLang}/case-studies`}
   >
-    <div class="top-[10%] h-full hidden lg:block z-20">
-      <BubbleMap client:load caseStudies={bubbleMapCaseStudies} />
+    <div class="h-full hidden lg:block z-20 translate-x-32 translate-y-10">
+      <BubbleMap client:load lang={lang} />
     </div>
   </Hero>
 
@@ -103,7 +103,7 @@ const processedStudies = await Promise.all(
     description={t.formula.description}
   />
 
-  <OurFormula client:load />
+  <OurFormula client:load lang={lang} />
   <Partners lang={lang} />
   <TeamSection lang={lang} client:load teamMembers={teamMembers} />
 </BaseLayout>

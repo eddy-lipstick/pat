@@ -5,7 +5,7 @@ import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import PulseLabel from './PulseLabel';
 
-const OurFormula = () => {
+const OurFormula = ({ lang }) => {
   const containerRef = useRef(null);
   const lawGroupRef = useRef(null);
   const designGroupRef = useRef(null);
@@ -194,14 +194,18 @@ const OurFormula = () => {
         </svg>
       </div>
       <div className="text-center">
-        <Button
-          variant="default"
-          className="w-full sm:w-auto bg-[#E1FF4C] hover:bg-[#E1FF4C]/90 text-black font-medium px-8 h-11 rounded-md inline-flex items-center justify-center text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
-          asChild
-        >
-          <a href="/team" className="inline-flex items-center text-lg">
-            Lees meer over ons team
-            <ArrowRight className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" />
+        <Button variant="default" asChild>
+          <a
+            href={`/${lang}/team`}
+            class="group inline-flex items-center text-lg hover:text-primary/80 transition-colors"
+          >
+            {
+              {
+                en: 'Read more about our team',
+                nl: 'Lees meer over ons team',
+              }[lang || 'nl']
+            }
+            <ArrowRight class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" />
           </a>
         </Button>
       </div>
