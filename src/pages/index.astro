@@ -1,4 +1,54 @@
 ---
-import { defaultLanguage } from '../i18n/config';
-return Astro.redirect(`/${defaultLanguage}/`);
+import { languages, defaultLanguage } from '@/i18n/config';
+
+// Simple function to get preferred language
+const getPreferredLanguage = (acceptLanguage: string | null) => {
+  if (!acceptLanguage) return defaultLanguage;
+
+  const browserLang = acceptLanguage.split(',')[0].substring(0, 2);
+  return languages.hasOwnProperty(browserLang) ? browserLang : defaultLanguage;
+};
+
+const preferredLanguage = getPreferredLanguage(Astro.request.headers.get('accept-language'));
+
+// SEO metadata
+const ogTitle = 'Patroon - Legal Design and Tech Agency';
+const ogDescription =
+  'We make legal information clear and accessible through legal design and tech.';
+const ogImage = 'https://www.patroon.nl/og-image.jpg'; // Update with your actual OG image
 ---
+
+<!doctype html>
+<html lang={preferredLanguage}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>{ogTitle}</title>
+    <meta name="description" content={ogDescription} />
+
+    <!-- Social media tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={ogDescription} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Immediate redirect -->
+    <meta http-equiv="refresh" content={`0;url=/${preferredLanguage}/`} />
+
+    <!-- Prevent white flash using your theme background -->
+    <style>
+      body {
+        background-color: hsl(243 100% 11%);
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Fallback redirect if meta refresh fails -->
+    <script define:vars={{ preferredLanguage }}>
+      window.location.href = `/${preferredLanguage}/`;
+    </script>
+  </body>
+</html>
