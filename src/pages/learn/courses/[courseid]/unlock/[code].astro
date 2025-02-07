@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+// Generate static paths for each course and access code combination
+export async function getStaticPaths() {
+  const courses = await getCollection('courses');
+
+  console.log(
+    'Available courses:',
+    courses.map((c) => c.id)
+  );
+
+  return courses
+    .filter((course) => course.data.paywall?.enabled && course.data.paywall?.accessCode)
+    .map((course) => ({
+      params: {
+        courseid: course.id,
+        code: course.data.paywall.accessCode,
+      },
+      props: { course },
+    }));
+}
+
+const { course } = Astro.props;
+const { courseid, code } = Astro.params;
+
+// We already know the code is valid because of getStaticPaths
+const isValid = course.data.paywall?.accessCode === code;
+---
+
+<BaseLayout title="Toegang tot cursus">
+  <div class="container max-w-2xl mx-auto py-12">
+    <div class="text-center">
+      <h1 class="text-3xl font-bold mb-4">Welkom bij {course.data.title}!</h1>
+      <p class="text-xl mb-8">Je hebt nu volledige toegang tot deze cursus.</p>
+      <a
+        href={`/learn/courses/${courseid}`}
+        class="inline-block bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors"
+      >
+        Start de cursus
+      </a>
+    </div>
+  </div>
+
+  <script define:vars={{ courseid }}>
+    // Save access in localStorage
+    const accessCodes = JSON.parse(localStorage.getItem('courseAccess') || '{}');
+    accessCodes[courseid] = true;
+    localStorage.setItem('courseAccess', JSON.stringify(accessCodes));
+    console.log('Stored access for course:', courseid);
+    console.log('Current access codes:', accessCodes);
+
+    // Redirect to course after a short delay
+    setTimeout(() => {
+      window.location.href = `/learn/courses/${courseid}`;
+    }, 2000);
+  </script>
+</BaseLayout>

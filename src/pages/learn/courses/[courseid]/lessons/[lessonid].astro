@@ -9,6 +9,8 @@ import VideoEmbed from '@/components/VideoEmbed';
 import Hero from '@/components/Hero.astro';
 import Breadcrumb from '@/components/Breadcrumb';
 import Article from '@/components/Article.astro';
+import LessonWrapper from '@/components/LessonWrapper';
+import LessonNavigation from '@/components/LessonNavigation';
 
 export async function getStaticPaths() {
   const allLessons = await getCollection('lessons');
@@ -57,6 +59,7 @@ const breadcrumbItems = [
   { label: course.data.title, href: `/learn/courses/${Astro.params.courseid}` },
   { label: lesson.data.title },
 ];
+const lessonIndex = sortedLessons.findIndex((l) => l.id === lesson.id);
 ---
 
 <BaseLayout title={`${lesson.data.title} - ${course.data.title} - Legal Design Academy`}>
@@ -68,91 +71,57 @@ const breadcrumbItems = [
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       {/* Main Content */}
       <div class="lg:col-span-2">
-        {/* Video Section */}
-        <Card>
-          <div class="p-2">
-            <VideoEmbed url={lesson.data.videoUrl} />
-          </div>
-        </Card>
-
-        {/* Lesson Navigation */}
-        <div class="flex justify-between py-6">
-          <div>
-            {
-              prevLesson && (
-                <Button variant="outline" asChild>
-                  <a
-                    href={`/learn/courses/${Astro.params.courseid}/lessons/${getLessonSlug(prevLesson.id)}`}
-                    class="flex items-center gap-2"
-                  >
-                    <ChevronLeft class="h-4 w-4" />
-                    <div class="flex flex-col items-start">
-                      <span class="text-xs text-muted-foreground">Vorige les</span>
-                      <span class="text-sm">{prevLesson.data.title}</span>
-                    </div>
-                  </a>
-                </Button>
-              )
-            }
-          </div>
-
-          <div>
-            {
-              nextLesson && (
-                <Button asChild>
-                  <a
-                    href={`/learn/courses/${Astro.params.courseid}/lessons/${getLessonSlug(nextLesson.id)}`}
-                    class="flex items-center gap-2"
-                  >
-                    <div class="flex flex-col items-end">
-                      <span class="text-xs text-muted-foreground">Volgende les</span>
-                      <span class="text-sm">{nextLesson.data.title}</span>
-                    </div>
-                    <ChevronRight class="h-4 w-4" />
-                  </a>
-                </Button>
-              )
-            }
-          </div>
-        </div>
+        <LessonWrapper
+          client:load
+          lesson={lesson}
+          course={course}
+          lessonIndex={lessonIndex}
+          videoUrl={lesson.data.videoUrl}
+        >
+          <Article>
+            <Content />
+          </Article>
+        </LessonWrapper>
 
         {/* Lesson Content */}
-        <Card>
-          <div class="p-6">
-            <Article>
-              <Content />
-            </Article>
-          </div>
-        </Card>
       </div>
 
       {/* Sidebar */}
       <div class="lg:col-span-1">
         <div class="sticky top-24">
-          <Card>
-            <div class="p-4">
-              <h2 class="text-l mb-4">Meer in deze serie</h2>
-              <ScrollArea class="h-[calc(100vh-300px)]">
-                <div class="space-y-2 pr-4">
-                  {
-                    sortedLessons.map((l, index) => (
-                      <a
-                        href={`/learn/courses/${Astro.params.courseid}/lessons/${getLessonSlug(l.id)}`}
-                        class={`block p-3 rounded-lg transition-colors ${
-                          l.id === lesson.id
-                            ? 'bg-primary text-primary-foreground'
-                            : 'hover:bg-muted'
-                        }`}
-                      >
-                        <div class="text-sm text-muted-foreground">Aflevering {index + 1}</div>
-                        <div class="font-medium">{l.data.title}</div>
-                      </a>
-                    ))
-                  }
-                </div>
-              </ScrollArea>
-            </div>
-          </Card>
+          <div class="sticky top-24">
+            {/* Navigation now appears at the top of sidebar */}
+            <LessonNavigation
+              client:load
+              prevLesson={prevLesson}
+              nextLesson={nextLesson}
+              courseId={Astro.params.courseid}
+            />
+            <Card>
+              <div class="p-4">
+                <h2 class="text-l mb-4">Meer in deze serie</h2>
+                <ScrollArea class="h-[calc(100vh-300px)]">
+                  <div class="space-y-2 pr-4">
+                    {
+                      sortedLessons.map((l, index) => (
+                        <a
+                          href={`/learn/courses/${Astro.params.courseid}/lessons/${getLessonSlug(l.id)}`}
+                          class={`block p-3 rounded-lg transition-colors ${
+                            l.id === lesson.id
+                              ? 'bg-primary text-primary-foreground'
+                              : 'hover:bg-muted'
+                          }`}
+                        >
+                          <div class="text-sm text-muted-foreground">Les {index + 1}</div>
+                          <div class="font-medium">{l.data.title}</div>
+                        </a>
+                      ))
+                    }
+                  </div>
+                </ScrollArea>
+              </div>
+            </Card>
+          </div>
         </div>
       </div>
     </div>

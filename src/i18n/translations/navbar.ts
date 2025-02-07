@@ -50,8 +50,11 @@ export const getNavItems = (currentLang: string, currentPath: string) => {
       label: t.learn.visualDissection,
       href: `/learn/courses/visuele-snijtafel`,
     });
+    learnChildren.push({
+      label: 'Tips van Dielis',
+      href: `/learn/courses/tips-van-diel`,
+    });
   }
-
   return [
     {
       label: t.projects,
