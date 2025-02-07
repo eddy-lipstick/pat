@@ -6,6 +6,7 @@ import Footer from '../components/Footer.astro';
 import '../styles/fonts.css';
 import SEO from '@/components/SEO.astro';
 import Container from '../components/Container.astro';
+import GoogleAnalytics from '@/components/GoogleAnalytics.astro';
 
 interface Props {
   title: string;
@@ -22,6 +23,8 @@ const { title, description, image, type, noindex, nofollow } = Astro.props;
 <!doctype html>
 <html lang="nl">
   <head>
+    <GoogleAnalytics />
+
     <SEO
       title={title}
       description={description}

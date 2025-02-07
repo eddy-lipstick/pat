@@ -18,6 +18,7 @@ import Container from '../components/Container.astro';
 import SectionHeader from '@/components/SectionHeader.astro';
 import { getLangFromUrl } from '@/i18n/utils';
 import { caseStudiesTranslations } from '@/i18n/translations/case-studies';
+import GoogleAnalytics from '@/components/GoogleAnalytics.astro';
 
 import { getEntry } from 'astro:content';
 
@@ -127,6 +128,8 @@ const breadcrumbsStructuredData = {
 <!doctype html>
 <html lang={currentLang}>
   <head>
+    <GoogleAnalytics />
+
     <SEO
       title={`${title} | ${t.meta.seoTitle}`}
       description={seoDescription}
