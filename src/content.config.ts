@@ -133,6 +133,14 @@ const courseSchema = z.object({
   tags: z.array(z.string()),
   updatedDate: z.coerce.date(),
   publishedDate: z.coerce.date(),
+  paywall: z
+    .object({
+      enabled: z.boolean().default(false),
+      freeVideos: z.number().default(10),
+      price: z.string().optional(),
+      accessCode: z.string().optional(),
+    })
+    .optional(),
 });
 
 const teamSchema = z.object({
