@@ -55,7 +55,7 @@ testimonials:
   ]
 
 tags: ['legal design', 'UX design', 'user experience', 'juridische producten']
-coverImage: '/images/trainingen/legal-ux.jpg'
+coverImage: '/images/trainingen/workshop.jpg'
 featured: true
 ---
 
