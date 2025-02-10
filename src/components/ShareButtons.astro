@@ -1,19 +1,26 @@
 ---
 // src/components/ShareButtons.astro
-// @ts-nocheck  // Add this to disable TypeScript checking for this file
-import { Twitter, Linkedin, Copy, Mail } from 'lucide-react';
+
+interface Props {
+  url: URL;
+  title: string;
+  description?: string;
+}
 
 const { url, title, description = '' } = Astro.props;
+
+// Import icons correctly
+import { Twitter, Linkedin, Copy, Mail } from 'lucide-react';
 ---
 
 <div class="flex gap-2">
   <button
     class="p-2 rounded-full bg-surface-1 hover:bg-surface-2 text-muted-foreground hover:text-primary transition-colors"
-    onclick={`window.open('https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(description)}', '_blank', 'width=550,height=435')`}
+    onclick={`window.open('https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url.toString())}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(description)}', '_blank', 'width=550,height=435')`}
     title="Share on LinkedIn"
   >
     <span class="sr-only">Share on LinkedIn</span>
-    <Linkedin class="h-5 w-5" />
+    <Linkedin className="h-5 w-5" />
   </button>
 
   <button
@@ -21,7 +28,7 @@ const { url, title, description = '' } = Astro.props;
     title="Copy link"
   >
     <span class="sr-only">Copy link</span>
-    <Copy class="h-5 w-5" />
+    <Copy className="h-5 w-5" />
     <span
       class="copied-message absolute bg-background text-foreground px-2 py-1 rounded text-sm -top-8 left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none"
     >
@@ -31,11 +38,11 @@ const { url, title, description = '' } = Astro.props;
 
   <button
     class="p-2 rounded-full bg-surface-1 hover:bg-surface-2 text-muted-foreground hover:text-primary transition-colors"
-    onclick={`window.location.href='mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(url)}'`}
+    onclick={`window.location.href='mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(url.toString())}'`}
     title="Share via email"
   >
     <span class="sr-only">Share via email</span>
-    <Mail class="h-5 w-5" />
+    <Mail className="h-5 w-5" />
   </button>
 </div>
 
