@@ -1,87 +1,87 @@
 ---
-import { getCollection } from 'astro:content';
-import { render } from 'astro:content';
+// src/pages/[lang]/learn/articles/[id].astro
+import { getCollection, getEntry, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
-import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Breadcrumb from '@/components/Breadcrumb';
-import Hero from '@/components/Hero.astro';
 import Article from '@/components/Article.astro';
 import { languages } from '@/i18n/config';
 import { articleTranslations } from '@/i18n/translations/articles';
+import ArticleAuthorCard from '@/components/ArticleAuthorCard.astro';
+import ShareButtons from '@/components/ShareButtons.astro';
+import TableOfContents from '@/components/TableOfContents';
+import RelatedArticleCard from '@/components/RelatedArticleCard.astro';
+import LanguageNotice from '@/components/LanguageNotice.astro';
 
 interface Props {
   entry: CollectionEntry<'articles'>;
+  authorData: CollectionEntry<'team'>;
   relatedArticles: CollectionEntry<'articles'>[];
-  authorData: CollectionEntry<'team'> | undefined;
 }
 
 export async function getStaticPaths() {
-  try {
-    const allArticles = await getCollection('articles');
-    const teamMembers = await getCollection('team');
+  const allArticles = await getCollection('articles');
+  const allTeamMembers = await getCollection('team');
 
-    if (!allArticles || allArticles.length === 0) {
-      console.warn('No articles found in collection');
-      return [];
-    }
+  console.log(
+    'Debug: Team members found:',
+    allTeamMembers.map((t) => t.id)
+  );
 
-    return Object.keys(languages).flatMap((lang) => {
-      // Filter articles for current language
-      const languageArticles = allArticles.filter(article => 
-        article.id.startsWith(`${lang}/`)
-      );
+  const paths = await Promise.all(
+    Object.keys(languages).flatMap(async (lang) => {
+      const languageArticles = allArticles.filter((article) => article.id.startsWith(`${lang}/`));
 
-      return languageArticles.map((entry) => {
-        try {
-          const authorData = teamMembers.find((member) => member.id === entry.data.author);
+      return Promise.all(
+        languageArticles.map(async (entry) => {
+          // Log the article data for debugging
+          console.log('Processing article:', {
+            id: entry.id,
+            authorRef: entry.data.author, // Let's see what this actually is
+          });
 
-          // Get related articles from the same language
-          const relatedArticles = languageArticles
-            .filter((article) => {
-              if (article.id === entry.id) return false;
+          // Get author data - assuming author is a string ID
+          const authorId =
+            typeof entry.data.author === 'string'
+              ? entry.data.author
+              : entry.data.author.id || entry.data.author.slug;
 
-              const currentTags = entry.data.tags?.map((tag) => tag.toLowerCase().trim()) || [];
-              const articleTags = article.data.tags?.map((tag) => tag.toLowerCase().trim()) || [];
-
-              return articleTags.some((tag) => currentTags.includes(tag));
-            })
-            .slice(0, 3);
-
-          // Extract the article ID without the language prefix
-          const articleId = entry.id.split('/').pop();
+          const authorData = await getEntry('team', authorId);
+          console.log('Author lookup result:', {
+            lookupId: authorId,
+            found: !!authorData,
+          });
 
           return {
-            params: { 
+            params: {
               lang,
-              id: articleId 
+              id: entry.id
+                .split('/')
+                .pop()
+                ?.replace(/\.mdx?$/, ''),
             },
             props: {
               entry,
-              relatedArticles,
               authorData,
+              relatedArticles: [],
             },
           };
-        } catch (error) {
-          console.error(`Error processing article ${entry.id}:`, error);
-          return null;
-        }
-      });
-    }).filter(Boolean);
-  } catch (error) {
-    console.error('Error loading articles collection:', error);
-    return [];
-  }
-}
+        })
+      );
+    })
+  );
 
-const { entry, relatedArticles, authorData } = Astro.props;
+  return paths.flat();
+}
+const { entry, authorData, relatedArticles } = Astro.props;
 const { lang } = Astro.params;
 const t = articleTranslations[lang];
 const { Content } = await render(entry);
 
-// Format the publish date using the current language
+// Format date
 const formattedDate = entry.data.publishDate.toLocaleDateString(lang, {
   year: 'numeric',
   month: 'long',
@@ -97,80 +97,100 @@ const breadcrumbItems = [
 
 <BaseLayout title={entry.data.title}>
   <Breadcrumb items={breadcrumbItems} client:load />
-  <Hero
-    variant="small"
-    subtitle={t.subtitle}
-    title={entry.data.title}
-    description={entry.data.description}
-  />
 
-  <div class="mx-auto">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 py-12">
-      <article class="lg:col-span-8 lg:col-start-1">
-        <Article>
-          <Content />
-        </Article>
+  {/* Article Header */}
+  <header class="py-12 lg:py-20">
+    <div class="container max-w-4xl">
+      <div class="flex flex-col gap-4">
+        {
+          lang === 'nl' && entry.data.originalLang === 'en' && (
+            <LanguageNotice originalLang={entry.data.originalLang} />
+          )
+        }
 
-        {/* Author Bio */}
-        {authorData && (
-          <div class="mt-16 p-6 bg-muted rounded-lg">
-            <div class="flex items-start gap-4">
-              {authorData.data.profileImage && (
-                <img
-                  src={authorData.data.profileImage}
-                  alt={authorData.data.name}
-                  class="w-16 h-16 rounded-full object-cover"
-                />
-              )}
-              <div>
-                <h3 class="font-semibold">{authorData.data.name}</h3>
-                <p class="text-sm text-muted-foreground">{authorData.data.role}</p>
-                {authorData.data.bio && <p class="mt-2">{authorData.data.bio}</p>}
-              </div>
-            </div>
+        {/* Tags */}
+        <div class="flex flex-wrap gap-2">
+          {entry.data.tags.map((tag) => <Badge variant="default">{tag}</Badge>)}
+        </div>
+
+        {/* Title and description */}
+        <h1 class="text-4xl lg:text-5xl font-bold mb-4">{entry.data.title}</h1>
+        <p class="text-xl text-muted-foreground mb-6">{entry.data.description}</p>
+
+        {/* Article metadata */}
+        <div class="flex items-center gap-4 text-sm text-muted-foreground">
+          <time datetime={entry.data.publishDate.toISOString()}>
+            {formattedDate}
+          </time>
+          <span>•</span>
+          <span>{entry.data.readingTime} min read</span>
+        </div>
+      </div>
+
+      {/* Cover image */}
+      {
+        entry.data.coverImage && (
+          <div class="mt-8 aspect-video rounded-lg overflow-hidden">
+            <img
+              src={entry.data.coverImage}
+              alt={entry.data.title}
+              class="w-full h-full object-cover"
+            />
           </div>
-        )}
-      </article>
-    </div>
+        )
+      }
 
-    {/* Related Articles */}
-    {relatedArticles.length > 0 && (
-      <section class="border-t py-16">
-        <div class="max-w-[900px] mx-auto mb-8">
-          <h2 class="text-3xl font-bold">{t.relatedArticles}</h2>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {relatedArticles.map((article) => (
-            <Card>
-              <CardHeader>
-                {article.data.coverImage && (
-                  <div class="relative w-full aspect-video mb-4 overflow-hidden rounded-lg">
-                    <img
-                      src={article.data.coverImage}
-                      alt={article.data.title}
-                      class="object-cover w-full h-full transition-transform hover:scale-105 duration-300"
-                      loading="lazy"
-                    />
-                  </div>
-                )}
-                <CardTitle class="line-clamp-2">{article.data.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p class="text-sm text-muted-foreground mb-4 line-clamp-2">
-                  {article.data.description}
-                </p>
-                
-                  href={`/${lang}/learn/articles/${article.id.split('/').pop()}`}
-                  class="text-primary hover:underline inline-flex items-center gap-1"
-                >
-                  {t.readArticle}
-                  <ArrowRight className="h-4 w-4" />
-                </a>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-    )}
+      <div class="mt-8">
+        {
+          authorData && (
+            <ArticleAuthorCard
+              name={authorData.data.name}
+              role={authorData.data.role}
+              bio={authorData.data.bio}
+              profileImage={authorData.data.profileImage}
+              socialLinks={authorData.data.socialLinks}
+              slug={authorData.id.split('/').pop()}
+              lang={lang}
+            />
+          )
+        }
+      </div>
+    </div>
+  </header>
+
+  <div class="container max-w-4xl">
+    {/* Main content */}
+    <main class="lg:col-span-8">
+      <Article>
+        <Content />
+      </Article>
+
+      {/* Share buttons */}
+      <div class="mt-8 flex items-center gap-4">
+        <span class="text-sm text-muted-foreground">Share this article:</span>
+        <ShareButtons
+          client:load
+          url={Astro.url}
+          title={entry.data.title}
+          description={entry.data.description}
+        />
+      </div>
+
+      {/* Author bio */}
+    </main>
+
+    {/* Related articles */}
+    {
+      relatedArticles?.length > 0 && (
+        <section class="mt-16 pt-16 border-t">
+          <h2 class="text-2xl font-bold mb-8">More articles you might like</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {relatedArticles.map((article) => (
+              <RelatedArticleCard article={article} lang={lang} />
+            ))}
+          </div>
+        </section>
+      )
+    }
   </div>
 </BaseLayout>

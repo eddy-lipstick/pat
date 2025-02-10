@@ -34,7 +34,7 @@ const allServices = [
 const allTags = [...new Set(allCaseStudies.flatMap((study) => study.data.tags || []))].sort();
 ---
 
-<BaseLayout title={t.meta.title}>
+<BaseLayout title={t.meta.title} description={t.meta.description}>
   <div>
     <!-- Hero Section -->
     <Hero class="min-h-[60vh]" subtitle={t.hero.subtitle} title={t.hero.title}>

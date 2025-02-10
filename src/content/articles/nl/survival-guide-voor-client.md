@@ -1,10 +1,10 @@
 ---
-title: "Procederen voor beginners: een survival guide voor je client"
-description: "Partij zijn bij complexe geschillen is geen sinecure. Cliënten betreden onbekende juridische wateren vol verwarring, verwachtingen en hoge rekeningen. Wij wilden deze omgevallen boekenkast ophelderen en het leven van cliënten die een gerechtelijke procedure doorlopen gemakkelijker maken. Communicatie is de sleutel. Daarom hebben we een reeks visuals gemaakt die de klant door het hele proces leiden."
-author: { collection: "team", slug: "savannah-koomen" }
-publishDate: "2023-03-05"
-coverImage: "https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/643d27f3b12eb5ab6d68778b_survival.svg"
-tags: ["advocatenkantoren"]
+title: 'Procederen voor beginners: een survival guide voor je client'
+description: 'Partij zijn bij complexe geschillen is geen sinecure. Cliënten betreden onbekende juridische wateren vol verwarring, verwachtingen en hoge rekeningen. Wij wilden deze omgevallen boekenkast ophelderen en het leven van cliënten die een gerechtelijke procedure doorlopen gemakkelijker maken. Communicatie is de sleutel. Daarom hebben we een reeks visuals gemaakt die de klant door het hele proces leiden.'
+author: { collection: 'team', slug: 'nl/savannah-koomen' }
+publishDate: '2023-03-05'
+coverImage: 'https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/643d27f3b12eb5ab6d68778b_survival.svg'
+tags: ['advocatenkantoren']
 readingTime: 10
 featured: false
 ---

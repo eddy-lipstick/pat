@@ -1,11 +1,11 @@
 ---
-title: "De kracht van visueel denken in de advocatuur"
-description: "Visueel denken biedt tal van voordelen voor de advocatuur, zoals betere communicatie, verbeterde probleemoplossing en effectievere overtuigingskracht in rechtszaken en onderhandelingen. In dit blog bespreken we de voordelen van legal design en hoe je het in de dagelijkse praktijk kunt implementeren."
-publishDate: "2023-05-08"
-author: { collection: "team", slug: "savannah-koomen" }
+title: 'De kracht van visueel denken in de advocatuur'
+description: 'Visueel denken biedt tal van voordelen voor de advocatuur, zoals betere communicatie, verbeterde probleemoplossing en effectievere overtuigingskracht in rechtszaken en onderhandelingen. In dit blog bespreken we de voordelen van legal design en hoe je het in de dagelijkse praktijk kunt implementeren.'
+publishDate: '2023-05-08'
+author: { collection: 'team', slug: 'nl/savannah-koomen' }
 
-tags: ["legal design", "visual thinking", "advocatuur", "communicatie"]
-coverImage: "https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/6458e5a6728e9b3163e0e7fe_Frame%20(5).png"
+tags: ['legal design', 'visual thinking', 'advocatuur', 'communicatie']
+coverImage: 'https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/6458e5a6728e9b3163e0e7fe_Frame%20(5).png'
 featured: false
 ---
 

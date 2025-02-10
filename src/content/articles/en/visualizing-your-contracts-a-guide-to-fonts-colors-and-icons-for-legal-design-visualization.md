@@ -1,12 +1,15 @@
 ---
-title: "Visualizing Your Contracts: A Guide to Fonts, Colors, and Icons for Legal Design Visualization"
-description: "Enhance your legal contracts with visual elements! Discover the power of fonts, colors and icons to improve readability, communication and user experience. Get valuable tips and examples in this comprehensive guide."
-author: { collection: "team", slug: "savannah-koomen" }
-publishDate: "2023-07-03"
-coverImage: "https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/653222df9700261a3df69973_Alignment.svg"
-tags: ["legal-design-basics; legal-ux"]
+title: 'Visualizing Your Contracts: A Guide to Fonts, Colors, and Icons for Legal Design Visualization'
+description: 'Enhance your legal contracts with visual elements! Discover the power of fonts, colors and icons to improve readability, communication and user experience. Get valuable tips and examples in this comprehensive guide.'
+author:
+  collection: 'team'
+  slug: 'en/dielis-delen'
+publishDate: '2023-07-03'
+coverImage: '/images/blog/rivers.svg'
+tags: ['legal-design-basics', 'legal-ux']
 readingTime: 5
 featured: false
+originalLang: 'en'
 ---
 
 ## Introduction
@@ -31,7 +34,7 @@ Good fonts = good reading experience. Choosing the right font for legal document
 
 But this doesn't mean we must use these fonts to gain trust or heaviness. Instead of "Times New Roman," "Playfair Display," or "Space Mono," it's better to use "Arial," "Verdana," "Open Sans," "Georgia," "Helvetica," or "Roboto."
 
-![Sans-serif vs. Serif font](https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/64a29bb8a4de3a4a9e35bf30_fonts.png)  
+![Sans-serif vs. Serif font](/images/blog/fonts.png)  
 _Both of them are usable, and their legibility is often perceived better than other classical fonts such as "Times New Roman" and "Arial."_
 
 You can check out some of the best fonts here:
@@ -45,14 +48,14 @@ White space helps readers transition between points and articles without missing
 
 In legal contracts, white space is the area around and between the text, paragraphs, and other document elements intentionally left blank. White space is essential in legal contracts because it improves readability, comprehension, and the overall user experience.
 
-![Example of using white space](https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/64a29c165c54f96e67efb40d_white-space.png)  
+![Example of using white space](/images/blog/white-space.png)  
 _Example of using white space in your text._
 
 ## **Line Height and Letter Spacing**
 
 Line height and letter spacing adjustments are essential in texts because they directly impact readability. Well-designed contracts significantly enhance user experience and comprehension by making the text easier to read, visually appealing, and accessible.
 
-![Line height and letter spacing](https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/64a29c4cb8d7be583981b8eb_height%20and%20spacing.png)  
+![Line height and letter spacing](/images/blog/spacing.png)  
 _Line height and letter spacing are important elements for better readability._
 
 1. **Line height:** A line height of 120-150% of the font size is generally considered reasonable. For example, if the font size is 16 pixels, a line height of 19-24 pixels would be suitable.
@@ -62,7 +65,7 @@ _Line height and letter spacing are important elements for better readability._
 
 In general, left alignment is better for legal contracts than justified alignment because justified alignment can create uneven word spacing and rivers of white space. However, we often use justified text if the program blocks the river effect. Adding more words to a contract to address this isn't ideal since less is more. 🌱
 
-![Text alignment example](https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/64a29c84a4de3a4a9e3655df_Text%20alignment.png)  
+![Text alignment example](/images/blog/alignment.png)  
 _If your justified text lacks enough words, it can create rivers like this._
 
 ## **Colors**
@@ -92,7 +95,7 @@ Icons are simple, recognizable visual symbols that enhance clarity and visual ap
 
 One picture is worth a thousand words. Icons transform complex concepts into navigable paths. For example, a handshake icon can represent an agreement, and an exclamation mark signals important information.
 
-![Icons in contracts](https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/64a29ceabef504e2ba7d4ae8_icons.png)  
+![Icons in contracts](/images/blog/icons.png)  
 _Some icons that we use in our contracts._
 
 ### Key benefits of using icons:

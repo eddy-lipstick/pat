@@ -1,0 +1,159 @@
+---
+// src/components/NewsletterCard.astro
+import { Card } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+
+const { lang } = Astro.props;
+
+// Translation object
+const t = {
+  en: {
+    title: 'Insights',
+    description:
+      "Join Maurits' newsletter for expert insights on legal design, tech innovations, and the future of legal information.",
+    placeholder: 'Your email address',
+    subscribe: 'Subscribe',
+    by: 'By Maurits Fornier',
+    role: 'Legal Design Lead',
+    success: 'Thanks for subscribing!',
+    error: 'Oops! Something went wrong. Please try again.',
+    sending: 'Subscribing...',
+  },
+  nl: {
+    title: 'Insights',
+    description:
+      "Meld je aan voor Maurits' nieuwsbrief over legal design, tech innovaties en de toekomst van juridische informatie.",
+    placeholder: 'Jouw e-mailadres',
+    subscribe: 'Inschrijven',
+    by: 'Door Maurits Fornier',
+    role: 'Legal Design Lead',
+    success: 'Bedankt voor je aanmelding!',
+    error: 'Oeps! Er ging iets mis. Probeer het opnieuw.',
+    sending: 'Bezig met aanmelden...',
+  },
+}[lang];
+---
+
+<Card class="h-full flex flex-col relative overflow-hidden bg-feitlijn-purple-50">
+  <div class="p-8 flex flex-col h-full">
+    {/* Author section */}
+    <div class="flex items-center gap-4 mb-6">
+      <div class="w-16 h-16 flex-shrink-0">
+        <img
+          src="/images/team/maurits-fornier.webp"
+          alt="Maurits Fornier"
+          class="w-full h-full rounded-full border-2 border-primary/20 object-cover"
+        />
+      </div>
+      <div>
+        <p class="text-sm text-muted-foreground">{t.by}</p>
+        <p class="font-medium">{t.role}</p>
+      </div>
+    </div>
+
+    {/* Content */}
+    <h2 class="text-2xl font-bold mb-3">
+      {t.title}
+    </h2>
+    <p class="text-muted-foreground mb-8 leading-relaxed">
+      {t.description}
+    </p>
+
+    {/* Form */}
+    <form
+      action="https://formspree.io/f/xgvozjbz"
+      method="POST"
+      class="mt-auto space-y-6"
+      id="newsletter-form"
+    >
+      <div class="space-y-4">
+        <Input
+          type="email"
+          name="email"
+          placeholder={t.placeholder}
+          required
+          class="bg-background/50 border-primary/20 focus:border-primary"
+        />
+
+        {/* Hidden fields for additional context */}
+        <input type="hidden" name="language" value={lang} />
+        <input type="hidden" name="source" value="newsletter-card" />
+      </div>
+
+      <div class="space-y-4">
+        {/* Status messages */}
+        <div class="hidden" id="success-message">
+          <Alert variant="success">
+            <AlertDescription>{t.success}</AlertDescription>
+          </Alert>
+        </div>
+        <div class="hidden" id="error-message">
+          <Alert variant="destructive">
+            <AlertDescription>{t.error}</AlertDescription>
+          </Alert>
+        </div>
+
+        <Button
+          type="submit"
+          class="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-colors duration-200"
+          id="submit-button"
+        >
+          {t.subscribe}
+        </Button>
+      </div>
+    </form>
+  </div>
+</Card>
+
+<script>
+  // Form handling logic
+  const form = document.getElementById('newsletter-form') as HTMLFormElement;
+  const submitButton = document.getElementById('submit-button') as HTMLButtonElement;
+  const successMessage = document.getElementById('success-message');
+  const errorMessage = document.getElementById('error-message');
+
+  if (form && submitButton && successMessage && errorMessage) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Reset messages
+      successMessage.classList.add('hidden');
+      errorMessage.classList.add('hidden');
+
+      // Update button state
+      const originalButtonText = submitButton.innerHTML;
+      submitButton.innerHTML = submitButton.closest('[data-lang="nl"]')
+        ? 'Bezig met aanmelden...'
+        : 'Subscribing...';
+      submitButton.disabled = true;
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: {
+            Accept: 'application/json',
+          },
+        });
+
+        if (response.ok) {
+          // Show success message
+          successMessage.classList.remove('hidden');
+          form.reset();
+        } else {
+          // Show error message
+          errorMessage.classList.remove('hidden');
+        }
+      } catch (error) {
+        // Show error message
+        errorMessage.classList.remove('hidden');
+      } finally {
+        // Reset button state
+        submitButton.innerHTML = originalButtonText;
+        submitButton.disabled = false;
+      }
+    });
+  }
+</script>

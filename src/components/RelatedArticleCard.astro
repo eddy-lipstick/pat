@@ -1,0 +1,62 @@
+---
+// src/components/RelatedArticleCard.astro
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { ArrowRight } from 'lucide-react';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  article: CollectionEntry<'articles'>;
+  lang: string;
+}
+
+const { article, lang } = Astro.props;
+
+// Format date
+const formattedDate = article.data.publishDate.toLocaleDateString(lang, {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<Card class="group hover:shadow-lg transition-all duration-300">
+  <CardHeader>
+    {
+      article.data.coverImage && (
+        <div class="relative w-full aspect-video mb-4 overflow-hidden rounded-lg">
+          <img
+            src={article.data.coverImage}
+            alt={article.data.title}
+            class="object-cover w-full h-full transition-transform group-hover:scale-105 duration-300"
+            loading="lazy"
+          />
+        </div>
+      )
+    }
+    <CardTitle class="line-clamp-2 group-hover:text-primary transition-colors">
+      {article.data.title}
+    </CardTitle>
+  </CardHeader>
+  <CardContent>
+    <p class="text-sm text-muted-foreground mb-4 line-clamp-2">
+      {article.data.description}
+    </p>
+
+    <div class="flex items-center justify-between">
+      <time datetime={article.data.publishDate.toISOString()} class="text-sm text-muted-foreground">
+        {formattedDate}
+      </time>
+
+      <a
+        href={`/${lang}/learn/articles/${article.id
+          .split('/')
+          .pop()
+          ?.replace(/\.mdx?$/, '')}`}
+        class="text-primary hover:underline inline-flex items-center gap-1"
+      >
+        Read more
+        <ArrowRight className="h-4 w-4" />
+      </a>
+    </div>
+  </CardContent>
+</Card>

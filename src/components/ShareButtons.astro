@@ -1,0 +1,86 @@
+---
+// src/components/ShareButtons.astro
+import { Twitter, Linkedin, Copy, Mail } from 'lucide-react';
+
+interface Props {
+  url: URL;
+  title: string;
+  description?: string;
+}
+
+const { url, title, description } = Astro.props;
+---
+
+<div class="flex gap-2">
+  <button
+    class="p-2 rounded-full bg-surface-1 hover:bg-surface-2 text-muted-foreground hover:text-primary transition-colors"
+    onclick={`window.open('https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}', '_blank', 'width=550,height=435')`}
+    title="Share on Twitter"
+  >
+    <span class="sr-only">Share on Twitter</span>
+    <Twitter className="h-5 w-5" />
+  </button>
+
+  <button
+    class="p-2 rounded-full bg-surface-1 hover:bg-surface-2 text-muted-foreground hover:text-primary transition-colors"
+    onclick={`window.open('https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(description || '')}', '_blank', 'width=550,height=435')`}
+    title="Share on LinkedIn"
+  >
+    <span class="sr-only">Share on LinkedIn</span>
+    <Linkedin className="h-5 w-5" />
+  </button>
+
+  <button
+    class="p-2 rounded-full bg-surface-1 hover:bg-surface-2 text-muted-foreground hover:text-primary transition-colors"
+    onclick={`
+      navigator.clipboard.writeText('${url}').then(() => {
+        this.setAttribute('data-copied', 'true');
+        setTimeout(() => this.setAttribute('data-copied', 'false'), 2000);
+      })
+    `}
+    title="Copy link"
+  >
+    <span class="sr-only">Copy link</span>
+    <Copy className="h-5 w-5" />
+    <span
+      class="copied-message absolute bg-background text-foreground px-2 py-1 rounded text-sm -top-8 left-1/2 transform -translate-x-1/2 opacity-0 pointer-events-none"
+    >
+      Copied!
+    </span>
+  </button>
+
+  <button
+    class="p-2 rounded-full bg-surface-1 hover:bg-surface-2 text-muted-foreground hover:text-primary transition-colors"
+    onclick={`window.location.href='mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(url)}'`}
+    title="Share via email"
+  >
+    <span class="sr-only">Share via email</span>
+    <Mail className="h-5 w-5" />
+  </button>
+</div>
+
+<style>
+  button[data-copied='true'] .copied-message {
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  button {
+    position: relative;
+  }
+
+  .copied-message {
+    transition: opacity 0.2s ease-in-out;
+    white-space: nowrap;
+  }
+</style>
+
+<script>
+  // Add touch support for mobile devices
+  document.querySelectorAll('button').forEach((button) => {
+    button.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      button.click();
+    });
+  });
+</script>

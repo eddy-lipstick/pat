@@ -1,10 +1,10 @@
 ---
-title: "Beginnersgids: legal design (deel 1)"
-description: "Legal design is een innovatieve methode die de beginselen van recht en ontwerp combineert om gebruiksvriendelijke, toegankelijke en doeltreffende juridische oplossingen en processen te creëren."
-author: { collection: "team", slug: "savannah-koomen" }
+title: 'Beginnersgids: legal design (deel 1)'
+description: 'Legal design is een innovatieve methode die de beginselen van recht en ontwerp combineert om gebruiksvriendelijke, toegankelijke en doeltreffende juridische oplossingen en processen te creëren.'
+author: { collection: 'team', slug: 'nl/savannah-koomen' }
 
-publishDate: "2023-05-02"
-coverImage: "https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/64510b01c22c334fd4cce2eb_1.png"
+publishDate: '2023-05-02'
+coverImage: 'https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/64510b01c22c334fd4cce2eb_1.png'
 tags: [Legal UX]
 readingTime: 10
 featured: false

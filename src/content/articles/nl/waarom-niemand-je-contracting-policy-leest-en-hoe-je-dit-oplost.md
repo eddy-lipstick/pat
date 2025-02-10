@@ -1,10 +1,10 @@
 ---
-title: "Waarom niemand je contracting policy leest en hoe je dit oplost"
+title: 'Waarom niemand je contracting policy leest en hoe je dit oplost'
 description: "Traditionele policy's zijn vaak niet effectief. Maar hoe zorg je ervoor dat je contracting policy wél wordt gelezen (en begrepen). Het antwoord: met een interactieve click guide. Hier lees je hoe je die maakt."
-author: { collection: "team", slug: "savannah-koomen" }
-publishDate: "2024-09-10"
-coverImage: "https://cdn.prod.website-files.com/612781ea47c7ce0c69cba884/66e00914c156b4e713ac978e_whats%20the%20value%20of%20your%20contract%201.png"
-tags: ["bedrijfsjuristen; beginnersgids; publicatie"]
+author: { collection: 'team', slug: 'nl/savannah-koomen' }
+publishDate: '2023-09-10'
+coverImage: 'https://cdn.prod.website-files.com/612781ea47c7ce0c69cba884/66e00914c156b4e713ac978e_whats%20the%20value%20of%20your%20contract%201.png'
+tags: ['bedrijfsjuristen', beginnersgids', 'publicatie']
 readingTime: 6
 featured: true
 ---

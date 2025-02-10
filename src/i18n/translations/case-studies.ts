@@ -18,7 +18,10 @@ export const caseStudiesTranslations = {
     },
 
     meta: {
-      title: 'Case Studies - Patroon',
+      title: 'Our Work | Case Studies | Patroon Legal Design',
+      description:
+        'Discover how we help organizations transform complex legal information into clear, user-friendly solutions through legal design and technology.',
+      seoTitle: 'Legal Design Case Studies',
     },
     hero: {
       subtitle: 'Law in focus',
@@ -87,7 +90,10 @@ export const caseStudiesTranslations = {
       },
     },
     meta: {
-      title: 'Case Studies - Patroon',
+      title: 'Ons Werk | Cases | Patroon Legal Design',
+      description:
+        'Ontdek hoe wij organisaties helpen complexe juridische informatie te transformeren naar heldere, gebruiksvriendelijke oplossingen via legal design en technologie.',
+      seoTitle: 'Legal Design Cases',
     },
     hero: {
       subtitle: 'Recht in beeld',

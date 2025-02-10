@@ -1,0 +1,74 @@
+---
+// src/components/ArticleCard.astro
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+
+const { article, author, lang } = Astro.props;
+---
+
+<div class="h-full"> {/* Ensure outer container is full height */}
+  <Card class="flex flex-col h-full">
+    <a 
+      href={`/${lang}/learn/articles/${article.id.split('/').pop()}`} 
+      class="flex flex-col h-full"
+    >
+      {article.data.coverImage && (
+        <div class="aspect-video w-full">
+          <img
+            src={article.data.coverImage}
+            alt={article.data.title}
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      )}
+      
+      {/* Fixed padding for content area */}
+      <div class="flex flex-col flex-grow p-6">
+        {/* Meta info with fixed height */}
+        <div class="flex items-center gap-2 text-sm text-muted-foreground h-6 mb-2">
+          <time datetime={article.data.publishDate.toISOString()}>
+            {article.data.publishDate.toLocaleDateString(lang, {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </time>
+          {author && (
+            <>
+              <span class="text-muted-foreground">•</span>
+              
+                href={`/${lang}/team/${author.id}`}
+                class="hover:text-primary transition-colors"
+              >
+                {author.data.name}
+              </a>
+            </>
+          )}
+        </div>
+
+        {/* Title with fixed height for 2 lines */}
+        <h2 class="text-xl font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2 min-h-[3.5rem]">
+          {article.data.title}
+        </h2>
+
+        {/* Description with fixed height for 2 lines */}
+        <p class="text-muted-foreground mt-2 mb-4 line-clamp-2 flex-grow">
+          {article.data.description}
+        </p>
+
+        {/* Tags at the bottom */}
+        <div class="flex flex-wrap gap-2 mt-auto">
+          {article.data.tags.map((tag) => (
+            <Badge
+              variant="secondary"
+              className="bg-primary/10 text-primary hover:bg-primary/20"
+            >
+              {tag}
+            </Badge>
+          ))}
+        </div>
+      </div>
+    </a>
+  </Card>
+</div>
