@@ -1,11 +1,11 @@
 ---
-title: "Beginnersgids: design thinking en legal design (deel 2)"
-description: "In deze gids introduceren we de principes van design thinking en hoe je ze kunt toepassen in de context van de juridische wereld"
-author: { collection: "team", slug: "savannah-koomen" }
+title: 'Beginnersgids: design thinking en legal design (deel 2)'
+description: 'In deze gids introduceren we de principes van design thinking en hoe je ze kunt toepassen in de context van de juridische wereld'
+author: { collection: 'team', slug: 'nl/savannah-koomen' }
 
-publishDate: "2023-05-03"
-coverImage: "https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/6452476dce0c3997003320c2_4B.png"
-tags: ["beginnersgids"]
+publishDate: '2023-05-03'
+coverImage: 'https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/6452476dce0c3997003320c2_4B.png'
+tags: ['beginnersgids']
 readingTime: 9
 featured: false
 ---

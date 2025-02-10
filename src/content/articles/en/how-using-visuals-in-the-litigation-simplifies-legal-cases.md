@@ -1,13 +1,16 @@
 ---
 title: "Here's how using visuals in litigation simplifies complex cases"
 description: "In this blog post, we will explore the impact of litigation visuals and provide insights into their effectiveness. Then we'll talk about the practical side of using visuals in litigation."
-author: { collection: "team", slug: "savannah-koomen" }
+author:
+  collection: 'team'
+  slug: 'en/savannah-koomen'
 
-publishDate: "2023-09-13"
-coverImage: "https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/650188cf418687b059227625_Frame%20114.png"
-tags: ["litigation; legal-ux"]
+publishDate: '2023-09-13'
+coverImage: '/images/blog/lawyer.png'
+tags: ['litigation', 'legal-ux']
 readingTime: 5
 featured: false
+originalLang: 'en'
 ---
 
 ### **What is Litigation Visualization?**
@@ -16,7 +19,7 @@ First of all, let's define what litigation visualization is. Litigation visualiz
 
 It is an essential aspect of legal design, which aims to make legal information more accessible, **understandable**, and **persuasive** to various stakeholders, including judges, arbitrators, clients, and the general public.
 
-![74% reported a strong to very strong contribution to positive case outcomes](https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/650189e4a2638fec8ec8f008_Screenshot%202023-09-13%20at%2012.07.22.png)
+![74% reported a strong to very strong contribution to positive case outcomes](/images/blog/outcomes.png)
 
 ### **The impact of litigation visuals**
 
@@ -40,7 +43,7 @@ Much better, thanks. 🫡
 
 Well-designed litigation visuals can tell a compelling story, highlight key evidence, and evoke emotional responses, which can strongly influence the audience's perceptions and decisions.
 
-![Traditional courtrooms look no like this](https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/650187801e2bd5d192250e6d_Frame%201297.png)  
+![Traditional courtrooms look no like this](/images/blog/court-room.png)  
 _Traditional courtrooms look nothing like this. It’s hard to deliver your story to convince or prove your arguments to the courtroom just by telling and showing them bare-complex, heavily legal jargon text._
 
 ### **Simplifying Complexity**
@@ -49,7 +52,7 @@ Visuals can aid in simplifying complex concepts. Many legal cases involve intric
 
 Imagine you see this contract, and then a person from the future comes to you and shows the second picture.
 
-![Before and after of a complex contract](https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/650187b2c48ecf3dc227392c_Leaseplan%204.png)  
+![Before and after of a complex contract](/images/blog/contract.png)  
 _Possibly you'd choose the second one to avoid buying a new pair of glasses because of the rising myopia. 👓 Also, it's bad for your health. 🤯_
 
 ### **Better Outcomes and Improved Communication**

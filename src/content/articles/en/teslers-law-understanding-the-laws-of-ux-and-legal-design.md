@@ -1,12 +1,15 @@
 ---
 title: "Tesler's Law: Understanding the Laws of UX and Legal Design"
 description: "Explore Tesler's Law and its impact on legal design in this insightful article. Learn how complexity and simplicity intersect in user experience and contract design"
-author: { collection: "team", slug: "savannah-koomen" }
-publishDate: "2023-07-25"
-coverImage: "https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/6532230ccede3c4a7c8575b9_Tesler%27s%20law.svg"
-tags: ["legal-ux"]
+author:
+  collection: 'team'
+  slug: 'en/dielis-delen'
+publishDate: '2023-07-25'
+coverImage: '/images/blog/tesler.svg'
+tags: ['legal-ux']
 readingTime: 3
 featured: false
+originalLang: 'en'
 ---
 
 # Laws of UX and Legal Design: Tesler's Law
@@ -27,11 +30,11 @@ While working for Xerox PARC in the mid-1980s, Larry Tesler realized how users i
 
 However, Bruce Tognazzini proposes that people resist reductions to the amount of complexity in their lives. Thus, **users begin attempting more complex tasks when an application is** [**simplified.**](https://en.wikipedia.org/wiki/Law_of_conservation_of_complexity#:~:text=The%20law%20of%20conservation%20of,development%20or%20in%20user%20interaction.)
 
-![Contract and complexity correlation](https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/64bff6b4280ca501186e0b20_Contract%20complexity_1.png)
+![Contract and complexity correlation](/images/blog/complexity.png)
 
 So even though you simplify the contract, if you end up minimizing the contract, your work will be somewhat useless and may not meet the required expectation.
 
-![Illustration of an airplane interior design](https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/64bff702f919b4058e2613ee_13028-min.jpg)  
+![Illustration of an airplane interior design](/images/blog/cockpit.jpg)  
 _Image by pch.vector on [Freepik](http://freepik.com)_
 
 When you look at the interior of an Airbus A380, a massive toy carrying 850 passengers, a novice sees complexity. A pilot sees various tools, each of which is simple to use.
@@ -40,7 +43,7 @@ When you look at the interior of an Airbus A380, a massive toy carrying 850 pass
 
 Take a moment and think about applying legal design principles to a trilateral treaty of obligations or market regulation contracts. These types of legal drafts are complex-by-design and complex by default. You can't simplify the whole part of the contract because it contains a higher level of legal or financial knowledge.
 
-![Page of a complex contract](https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/64bff736a90855b7db93b5b6_spread-8.webp)  
+![Page of a complex contract](/images/blog/mh17-spread.webp)  
 _Sometimes you need to keep complexity in order to achieve the desired result and not to cause disharmony between the parties._
 
 ## Simple doesn't equal minimal.

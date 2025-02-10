@@ -166,12 +166,13 @@ const articleSchema = z.object({
   title: z.string().min(1),
   description: z.string().min(1),
   publishDate: z.coerce.date(),
-  author: reference('team'),
+  author: reference('team'), // Direct reference to team collection
   tags: z.array(z.string()).min(1),
   coverImage: z.string().optional(),
   featured: z.boolean().default(false),
   relatedCaseStudies: z.array(reference('case-studies')).optional(),
   readingTime: z.number().optional(),
+  originalLang: z.enum(['en', 'nl']).optional(),
 });
 
 const testimonialSchema = z.object({

@@ -1,10 +1,10 @@
 ---
-title: "Voordelen van het gebruik van duidelijke taal in legal design"
-description: "Ontdek de voordelen van het gebruik van duidelijke taal in juridische ontwerpen, waaronder meer toegankelijkheid, efficiëntie en vertrouwen. Leer hoe u in klare taal schrijft en vind bronnen om uw vaardigheden te verbeteren."
-author: { collection: "team", slug: "savannah-koomen" }
-publishDate: "2023-05-12"
-coverImage: "https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/645e1f7aa712b0144ad2f3de_plaincover.png"
-tags: ["beginnersgids"]
+title: 'Voordelen van het gebruik van duidelijke taal in legal design'
+description: 'Ontdek de voordelen van het gebruik van duidelijke taal in juridische ontwerpen, waaronder meer toegankelijkheid, efficiëntie en vertrouwen. Leer hoe u in klare taal schrijft en vind bronnen om uw vaardigheden te verbeteren.'
+author: { collection: 'team', slug: 'nl/savannah-koomen' }
+publishDate: '2023-05-12'
+coverImage: 'https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/645e1f7aa712b0144ad2f3de_plaincover.png'
+tags: ['beginnersgids']
 readingTime: 5
 featured: false
 ---

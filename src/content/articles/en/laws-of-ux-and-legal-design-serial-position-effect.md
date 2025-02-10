@@ -1,12 +1,15 @@
 ---
-title: "Laws of UX and Legal Design: Serial Position Effect"
-description: "Discover the impact of the Serial Position Effect on user experience and legal design. Learn how strategically placing information in contracts improves recall and enhances the overall experience."
-author: { collection: "team", slug: "savannah-koomen" }
-publishDate: "2023-07-27"
-coverImage: "https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/6532204d769b11880532a741_Serial%20Position%20Effect.svg"
-tags: ["legal-ux"]
+title: 'Laws of UX and Legal Design: Serial Position Effect'
+description: 'Discover the impact of the Serial Position Effect on user experience and legal design. Learn how strategically placing information in contracts improves recall and enhances the overall experience.'
+author:
+  collection: 'team'
+  slug: 'en/dielis-delen'
+publishDate: '2023-07-27'
+coverImage: '/images/blog/serial.svg'
+tags: ['legal-ux']
 readingTime: 3
 featured: false
+originalLang: 'en'
 ---
 
 # Laws of UX and Legal Design: Serial Position Effect
@@ -25,13 +28,13 @@ Manipulation of the serial position effect to create better user experiences is 
 
 ## Primacy and Recency Effects
 
-![This graph illustrates the tendency of a user to recall better information from the beginning and end of a list or sequence. The middle things are the most difficult to remember. Keep this in mind when you design your contract. ©Patroon.nl](https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/64c2a86db85aa036836b2f1d_Memorization.png)
+![This graph illustrates the tendency of a user to recall better information from the beginning and end of a list or sequence. The middle things are the most difficult to remember. Keep this in mind when you design your contract. ©Patroon.nl](/images/blog/memory.png)
 
 ## Using Serial Position Effect in Legal Design
 
 There are some takeaways from the serial position effect. We can think about these takeaways and find a way to apply them to legal design.
 
-![Contract, provisions and call to actions must be in sequence to represent information logically.](https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/64c2a8a8586f787a5ee9930c_serial-position-last.png)
+![Contract, provisions and call to actions must be in sequence to represent information logically.](/images/blog/position.png)
 
 - Limit the amount of recall required if it's possible. There are always some things that don't need constant recall. Placing the least essential information in the middle of the contract can be helpful because this information tends to be stored less frequently in long-term and working memory.
 - Positioning critical actions on the far left and right within elements can increase memorization.
@@ -41,7 +44,7 @@ There are some takeaways from the serial position effect. We can think about the
 
 Let’s have a look at how we can apply these ideas to legal practice.
 
-![Memorization techniques applied to employment contracts](https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/64c2a8d9002f4136c60f6b5d_Memorization.jpg)
+![Memorization techniques applied to employment contracts](/images/blog/applied-to-contracts.jpg)
 
 ## Conclusion
 

@@ -8,6 +8,7 @@ import Hero from '@/components/Hero.astro';
 import Breadcrumb from '@/components/Breadcrumb';
 import { languages, defaultLanguage } from '@/i18n/config';
 import { approachTranslations } from '@/i18n/translations/approach';
+import { Badge } from '@/components/ui/badge';
 
 // Generate pages for defined languages
 export function getStaticPaths() {
@@ -63,9 +64,7 @@ const breadcrumbItems = [
               <CardContent>
                 <div class="flex flex-wrap gap-2">
                   {approach.data.methodology.slice(0, 3).map((method) => (
-                    <span class="rounded-full px-3 py-1 text-sm bg-primary/10 text-primary">
-                      {method}
-                    </span>
+                    <Badge variant="default">{method}</Badge>
                   ))}
                 </div>
               </CardContent>

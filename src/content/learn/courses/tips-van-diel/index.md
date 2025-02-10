@@ -17,5 +17,5 @@ paywall:
   enabled: true
   freeVideos: 10
   accessCode: '2025'
-  price: '€199'
+  price: '€99'
 ---

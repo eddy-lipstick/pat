@@ -75,7 +75,7 @@ const processedStudies = await Promise.all(
 );
 ---
 
-<BaseLayout title={t.meta.title}>
+<BaseLayout title={t.meta.title} description={t.meta.description}>
   {/* Hero Section */}
   <Hero
     class="min-h-screen"
@@ -84,9 +84,7 @@ const processedStudies = await Promise.all(
     description={t.hero.description}
     bulletPoints={t.hero.bulletPoints}
     primaryButtonText={t.hero.buttons.primary}
-    primaryButtonHref={`/${currentLang}/contact`}
-    secondaryButtonText={t.hero.buttons.secondary}
-    secondaryButtonHref={`/${currentLang}/case-studies`}
+    primaryButtonHref={`/${currentLang}/case-studies`}
   >
     <div class="h-full hidden lg:block z-20 translate-x-32 translate-y-10">
       <BubbleMap client:load lang={lang} />

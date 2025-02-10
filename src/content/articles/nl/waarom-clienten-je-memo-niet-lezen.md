@@ -1,10 +1,10 @@
 ---
-title: "De kunst van effectieve communicatie: hoe advocaten hun adviezen beter kunnen overbrengen"
-description: "Het is een bekend fenomeen: een bedrijfsjurist ontvangt een zorgvuldig opgesteld advies van een gerenommeerde advocaat. Juridisch perfect onderbouwd, inclusief voetnoten en verwijzingen naar Europees recht - een absoluut meesterwerk. De bedrijfsjurist wil dit advies vervolgens delen met de rest van het bedrijf, maar stuit op weerstand. De directie heeft het te druk om het te lezen en het salesteam heeft simpelweg geen interesse."
-author: { collection: "team", slug: "savannah-koomen" }
-publishDate: "2022-07-01"
-coverImage: "https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/643d2837b12eb57d5b6879d2_memo.svg"
-tags: ["advocatenkantoren"]
+title: 'De kunst van effectieve communicatie: hoe advocaten hun adviezen beter kunnen overbrengen'
+description: 'Het is een bekend fenomeen: een bedrijfsjurist ontvangt een zorgvuldig opgesteld advies van een gerenommeerde advocaat. Juridisch perfect onderbouwd, inclusief voetnoten en verwijzingen naar Europees recht - een absoluut meesterwerk. De bedrijfsjurist wil dit advies vervolgens delen met de rest van het bedrijf, maar stuit op weerstand. De directie heeft het te druk om het te lezen en het salesteam heeft simpelweg geen interesse.'
+author: { collection: 'team', slug: 'nl/savannah-koomen' }
+publishDate: '2022-07-01'
+coverImage: 'https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/643d2837b12eb57d5b6879d2_memo.svg'
+tags: ['advocatenkantoren']
 readingTime: 8
 featured: false
 ---

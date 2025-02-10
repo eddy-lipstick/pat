@@ -1,0 +1,121 @@
+---
+// src/components/ArticleAuthorCard.astro
+import { Card } from '@/components/ui/card';
+import { Linkedin, Mail, Twitter, Github } from 'lucide-react';
+
+interface Props {
+  name: string;
+  role: string;
+  bio: string;
+  profileImage?: string;
+  socialLinks?: {
+    linkedin?: string;
+    email?: string;
+    twitter?: string;
+    github?: string;
+  };
+  slug?: string;
+  lang?: string;
+}
+
+const { name, role, bio, profileImage, socialLinks, slug, lang = 'nl' } = Astro.props;
+---
+
+<Card class="mt-16 bg-background">
+  <div class="p-6">
+    <div class="flex items-start gap-4">
+      {/* Author Image */}
+      <div class="shrink-0">
+        {
+          profileImage ? (
+            <img src={profileImage} alt={name} class="h-16 w-16 rounded-full object-cover" />
+          ) : (
+            <div class="h-16 w-16 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xl font-semibold">
+              {name.charAt(0)}
+            </div>
+          )
+        }
+      </div>
+
+      {/* Author Info */}
+      <div class="flex-1">
+        <div class="flex items-start justify-between">
+          <div>
+            {
+              slug ? (
+                <a
+                  href={`/${lang}/team/${slug}`}
+                  class="font-semibold text-lg hover:text-primary transition-colors"
+                >
+                  {name}
+                </a>
+              ) : (
+                <h3 class="font-semibold text-lg">{name}</h3>
+              )
+            }
+            <p class="text-sm text-muted-foreground">{role}</p>
+          </div>
+
+          {/* Social Links */}
+          {
+            socialLinks && (
+              <div class="flex gap-2">
+                {socialLinks.linkedin && (
+                  <a
+                    href={socialLinks.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="p-2 rounded-full hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors"
+                    title="LinkedIn"
+                  >
+                    <Linkedin className="h-5 w-5" />
+                    <span class="sr-only">LinkedIn</span>
+                  </a>
+                )}
+                {socialLinks.twitter && (
+                  <a
+                    href={socialLinks.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="p-2 rounded-full hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors"
+                    title="Twitter"
+                  >
+                    <Twitter className="h-5 w-5" />
+                    <span class="sr-only">Twitter</span>
+                  </a>
+                )}
+                {socialLinks.github && (
+                  <a
+                    href={socialLinks.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="p-2 rounded-full hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors"
+                    title="GitHub"
+                  >
+                    <Github className="h-5 w-5" />
+                    <span class="sr-only">GitHub</span>
+                  </a>
+                )}
+                {socialLinks.email && (
+                  <a
+                    href={`mailto:${socialLinks.email}`}
+                    class="p-2 rounded-full hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors"
+                    title="Email"
+                  >
+                    <Mail className="h-5 w-5" />
+                    <span class="sr-only">Email</span>
+                  </a>
+                )}
+              </div>
+            )
+          }
+        </div>
+
+        {/* Bio */}
+        <p class="mt-4 text-text-secondary text-sm leading-relaxed">
+          {bio}
+        </p>
+      </div>
+    </div>
+  </div>
+</Card>

@@ -1,10 +1,10 @@
 ---
-title: "UX Design en Legal Design: Twee Werelden, Eén Doel"
+title: 'UX Design en Legal Design: Twee Werelden, Eén Doel'
 description: "In deze blogpost verkennen we de term 'UX Design' (User Experience Design) en de toepassing ervan in de juridische sector. UX design is cruciaal voor het beheersen van legal design, omdat beide disciplines zich richten op het creëren van producten of diensten die de best mogelijke ervaring bieden voor de eindgebruiker. "
-author: { collection: "team", slug: "savannah-koomen" }
-publishDate: "2022-11-07"
-coverImage: "https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/6458ebdb635f8b35980a23d6_consistency%202.png"
-tags: ["legal-ux"]
+author: { collection: 'team', slug: 'nl/savannah-koomen' }
+publishDate: '2022-11-07'
+coverImage: 'https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/6458ebdb635f8b35980a23d6_consistency%202.png'
+tags: ['legal-ux']
 readingTime: 8
 featured: false
 ---

@@ -4,6 +4,8 @@ export const landingTranslations = {
   en: {
     meta: {
       title: 'Patroon - Legal Design & Tech Studio',
+      description:
+        'We transform complex legal information into clear, user-friendly solutions. Specializing in legal design, document automation, and legal tech solutions.',
     },
     hero: {
       subtitle: 'Legal design & legal tech studio',
@@ -16,8 +18,7 @@ export const landingTranslations = {
         'Contracts that people understand',
       ],
       buttons: {
-        primary: 'Get in touch',
-        secondary: 'View our work',
+        primary: 'Our work',
       },
     },
     services: {
@@ -43,6 +44,8 @@ export const landingTranslations = {
   nl: {
     meta: {
       title: 'Patroon - Legal Design & Tech Studio',
+      description:
+        'Wij transformeren complexe juridische informatie naar heldere, gebruiksvriendelijke oplossingen. Gespecialiseerd in legal design, documentautomatisering en legal tech.',
     },
     hero: {
       subtitle: 'Legal design & legal tech studio',
@@ -55,8 +58,7 @@ export const landingTranslations = {
         'Contracten, die worden gesnapt',
       ],
       buttons: {
-        primary: 'Neem contact op',
-        secondary: 'Bekijk ons werk',
+        primary: 'Bekijk ons werk',
       },
     },
     services: {

@@ -1,10 +1,10 @@
 ---
-title: "Visuals in de rechtzaal"
-description: " In dit artikel bespreken we de impact van legal design in de rechtszaal en presenteren we een vierstappenplan om juridische tekst om te zetten in visuele informatie. Ontdek hoe legal design kan bijdragen aan een efficiëntere en effectievere juridische ervaring voor alle betrokken partijen."
-author: { collection: "team", slug: "savannah-koomen" }
-publishDate: "2023-04-09"
-coverImage: "https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/64511a78e21cb763b64fb2d2_A4%20-%2087.svg"
-tags: ["litigation"]
+title: 'Visuals in de rechtzaal'
+description: ' In dit artikel bespreken we de impact van legal design in de rechtszaal en presenteren we een vierstappenplan om juridische tekst om te zetten in visuele informatie. Ontdek hoe legal design kan bijdragen aan een efficiëntere en effectievere juridische ervaring voor alle betrokken partijen.'
+author: { collection: 'team', slug: 'nl/savannah-koomen' }
+publishDate: '2023-04-09'
+coverImage: 'https://uploads-ssl.webflow.com/612781ea47c7ce0c69cba884/64511a78e21cb763b64fb2d2_A4%20-%2087.svg'
+tags: ['litigation']
 readingTime: 12
 featured: false
 ---
