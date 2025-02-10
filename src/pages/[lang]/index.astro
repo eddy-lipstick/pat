@@ -4,6 +4,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getFeaturedCaseStudies } from '../../lib/case-studies';
 import { getLangFromUrl } from '@/i18n/utils';
 import { landingTranslations } from '@/i18n/translations/landing';
+import NameExplanationCard from '@/components/NameExplanationCard';
+
 import {
   Card,
   CardContent,
@@ -90,6 +92,14 @@ const processedStudies = await Promise.all(
       <BubbleMap client:load lang={lang} />
     </div>
   </Hero>
+
+  {
+    lang === 'en' && (
+      <div>
+        <NameExplanationCard />
+      </div>
+    )
+  }
 
   <LogoGrid lang={lang} />
 

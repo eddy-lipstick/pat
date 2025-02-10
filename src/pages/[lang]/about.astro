@@ -8,6 +8,7 @@ import Hero from '@/components/Hero.astro';
 import RecentNewsSection from '@/components/RecentNewsSection';
 import { languages } from '@/i18n/config';
 import { aboutTranslations } from '@/i18n/translations/about';
+import AboutNameCard from '@/components/AboutNameCard';
 
 export function getStaticPaths() {
   return Object.keys(languages).map((lang) => ({
@@ -58,6 +59,8 @@ const teamMembers = [
     </div>
   </Hero>
   <section class="py-16">
+    <AboutNameCard client:load lang={lang} />
+
     <SolutionsGrid client:load lang={lang} />
   </section>
 
