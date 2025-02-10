@@ -1,39 +1,51 @@
 ---
-name: "Maurits Fornier"
-role: "Lawyer + designer"
-bio: "Maurits Fornier is een ervaren legal information designer. Zijn achtergrond als advocaat geeft hem een diepgaand inzicht in de juridische context, wat hij gebruikt om informatieve en overtuigende visuals te maken."
-profileImage: "/images/team/maurits-fornier.webp"
-expertise: ["Legal Information Design", "Visual Communication", "Legal Strategy"]
+name: 'Maurits Fornier'
+role: 'Mede-oprichter'
+bio: 'Maurits combineert juridische expertise met technische implementatie en design thinking. Met een achtergrond in de procespraktijk richt hij zich op het ontwikkelen van visuele en technische oplossingen voor complexe juridische vraagstukken.'
+profileImage: '/images/team/maurits-fornier.webp'
+expertise:
+  [
+    'Legal Information Architecture',
+    'Technical Implementation',
+    'Strategic Visualization',
+    'Compliance Solutions',
+    'Pattern Recognition',
+    'AI Integration',
+  ]
 socialLinks:
-  linkedin: "https://www.linkedin.com/in/maurits-fornier/"
-  email: "maurits@patroon.nl"
-  phone: "+ 31 6 34 92 96 89"
+  linkedin: 'https://www.linkedin.com/in/maurits-fornier/'
+  email: 'maurits@patroon.nl'
+  phone: '+ 31 6 34 92 96 89'
 publications:
-  - title: "Legal design voor advocaten"
-    publication: "De advocatuur als onderneming"
-    publisher: "Boom juridisch"
+  - title: 'Legal design voor advocaten'
+    publication: 'De advocatuur als onderneming'
+    publisher: 'Boom juridisch'
     year: 2022
-    url: "https://www.boomdenhaag.nl/webshop/de-advocatuur-als-onderneming-2"
-speaking: [
-  "Competition Law and Legal Design - Masters course at Utrecht University",
-  "Legal Design for Lawyers - LegalPlanet course",
-  "Legal design and general counsel - GCN Conference 2018",
-  "ZegalCon 2018"
-]
+    url: 'https://www.boomdenhaag.nl/webshop/de-advocatuur-als-onderneming-2'
+speaking:
+  [
+    'Competition Law and Legal Design - Masters course at Utrecht University',
+    'Legal Design for Lawyers - LegalPlanet course',
+    'Legal design and general counsel - GCN Conference 2018',
+    'ZegalCon 2018',
+  ]
 featured: true
 ---
 
-## Expertise
+Met meer dan tien jaar ervaring in het vakgebied combineert Maurits Fornier juridische expertise, technische kennis en design thinking. Zijn achtergrond in de procespraktijk vormt de basis voor een praktische aanpak in het structureren van juridische informatie.
 
-Maurits werkt samen met advocatenkantoren, bedrijven en overheden over de hele wereld om hun juridische kwesties op een begrijpelijke en overtuigende manier te communiceren. Hij specialiseert zich in:
-- Het visualiseren van complexe juridische informatie
-- Het ontwerpen van begrijpelijke contracten
-- Het ontwikkelen van overtuigende visuele presentaties voor rechtszaken
-- Het optimaliseren van interne juridische communicatie
+Als oprichter van Patroon richt hij zich op het ontwikkelen van visuele en technische oplossingen voor complexe juridische vraagstukken. Zijn werk varieert van procesvisualisatie voor advocatenkantoren tot interactieve compliance tools voor grote organisaties.
 
-## Onderwijs en Presentaties
+Maurits' werkwijze kenmerkt zich door een combinatie van:
 
-Maurits deelt zijn expertise door:
-- Het geven van masterclasses aan de Universiteit Utrecht
-- Het verzorgen van keynotes over Plain Contracting
-- Het ontwikkelen van cursussen voor juridische professionals
+- Juridische informatiestructuur en patroonherkenning
+- Technische implementatie, waaronder AI-integratie
+- Visuele frameworks en interactieve oplossingen
+
+Deze aanpak heeft geleid tot samenwerkingen met advocatenkantoren, toezichthouders en bedrijfsjuristen in Nederland en daarbuiten. Kenmerkende projecten zijn onder andere:
+
+- Strategische visualisatie voor Google Ad Platform rechtszaken
+- Interactieve documentatie over CSRD-regelgeving
+- AI compliance tools voor de farmaceutische sector
+
+Bij Patroon werken we vanuit de overtuiging dat effectieve juridische communicatie niet draait om versimpeling, maar om een doordachte structuur ondersteund door de juiste technologie.

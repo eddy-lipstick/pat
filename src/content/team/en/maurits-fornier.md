@@ -1,9 +1,17 @@
 ---
 name: 'Maurits Fornier'
-role: 'Lawyer + designer'
-bio: 'Maurits Fornier is an experienced legal information designer. His background as a lawyer gives him deep insight into the legal context, which he uses to create informative and persuasive visuals.'
+role: 'Co-founder'
+bio: 'Maurits combines legal expertise with technical implementation and design thinking. With a background in litigation, he specializes in creating strategic frameworks and technical solutions for complex legal challenges. His work focuses on making legal information more effective through thoughtful structure and technology.'
 profileImage: '/images/team/maurits-fornier.webp'
-expertise: ['Legal Information Design', 'Visual Communication', 'Legal Strategy']
+expertise:
+  [
+    'Legal Information Architecture',
+    'Technical Implementation',
+    'Strategic Visualization',
+    'Compliance Solutions',
+    'Pattern Recognition',
+    'AI Integration',
+  ]
 socialLinks:
   linkedin: 'https://www.linkedin.com/in/maurits-fornier/'
   email: 'maurits@patroon.nl'
@@ -14,29 +22,23 @@ publications:
     publisher: 'Boom juridisch'
     year: 2022
     url: 'https://www.boomdenhaag.nl/webshop/de-advocatuur-als-onderneming-2'
-speaking:
-  [
-    'Competition Law and Legal Design - Masters course at Utrecht University',
-    'Legal Design for Lawyers - LegalPlanet course',
-    'Legal design and general counsel - GCN Conference 2018',
-    'ZegalCon 2018',
-  ]
 featured: true
 ---
 
-## Expertise
+With over ten years of experience in the field, Maurits Fornier combines legal expertise, technical knowledge, and design thinking. His background in litigation forms the foundation for a practical approach to structuring legal information.
 
-Maurits works with law firms, companies, and governments worldwide to communicate their legal matters in an understandable and persuasive way. He specializes in:
+As founder of Patroon, he focuses on developing strategic frameworks and technical solutions for complex legal challenges. His work ranges from litigation visualization for law firms to interactive compliance tools for large organizations.
 
-- Visualizing complex legal information
-- Designing understandable contracts
-- Developing persuasive visual presentations for court cases
-- Optimizing internal legal communication
+Maurits' approach is characterized by a combination of:
 
-## Education and Presentations
+- Legal information architecture and pattern recognition
+- Technical implementation, including AI integration
+- Visual frameworks and interactive solutions
 
-Maurits shares his expertise through:
+This methodology has led to collaborations with law firms, regulatory bodies, and corporate legal departments across the Netherlands and beyond. Representative projects include:
 
-- Teaching master classes at Utrecht University
-- Delivering keynotes on Plain Contracting
-- Developing courses for legal professionals
+- Strategic visualization for Google Ad Platform litigation
+- Interactive documentation for CSRD regulations
+- AI-supported compliance tools for the pharmaceutical sector
+
+At Patroon, we work from the conviction that effective legal communication isn't about simplification, but about thoughtful structure supported by appropriate technology.
