@@ -8,14 +8,14 @@ export const landingTranslations = {
         'We transform complex legal information into clear, user-friendly solutions. Specializing in legal design, document automation, and legal tech solutions.',
     },
     hero: {
-      subtitle: 'Legal design & legal tech studio',
-      title: 'Legal work can be so much smarter and faster',
+      subtitle: 'Legal technology & design studio',
+      title: 'Sophisticated legal solutions through technology and design',
       description:
-        'With smart technology and thoughtful design, we make legal information crystal clear and automate time-consuming processes.',
+        'We combine deep legal expertise with advanced technology and strategic design to create sophisticated solutions for complex legal challenges.',
       bulletPoints: [
-        'Videos that powerfully convey the essence of your pleadings',
-        'Interactive compliance policies that people actually use',
-        'Contracts that people understand',
+        'Interactive compliance dashboards with AI-analyse',
+        'Strategic litigation visualization for complex cases',
+        'Automated visual B2B contracts, integrated with Salesforce',
       ],
       buttons: {
         primary: 'Our work',
@@ -48,14 +48,14 @@ export const landingTranslations = {
         'Wij transformeren complexe juridische informatie naar heldere, gebruiksvriendelijke oplossingen. Gespecialiseerd in legal design, documentautomatisering en legal tech.',
     },
     hero: {
-      subtitle: 'Legal design & legal tech studio',
-      title: 'Juridisch werk kan zoveel slimmer en sneller',
+      subtitle: 'Legal technology & design studio',
+      title: 'Geavanceerde juridische oplossingen door technologie en design',
       description:
-        'Met slimme technologie en goed ontwerp maken we juridische informatie glashelder en automatiseren we tijdrovende processen.',
+        'We combineren diepgaande juridische expertise met geavanceerde technologie en strategisch design voor complexe juridische uitdagingen.',
       bulletPoints: [
-        "Video's, die de kern van je pleidooi krachtig neerzetten",
-        "Interactieve compliance policy's,  die worden gebruikt",
-        'Contracten, die worden gesnapt',
+        'Interactieve compliance dashboards met AI-analyse',
+        'Strategische visualisaties voor complexe rechtszaken',
+        'Geautomatiseerde visuele B2B-contracten, gekoppeld aan Salesforce',
       ],
       buttons: {
         primary: 'Bekijk ons werk',
