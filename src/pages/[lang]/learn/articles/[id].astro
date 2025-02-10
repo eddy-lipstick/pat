@@ -11,7 +11,6 @@ import Article from '@/components/Article.astro';
 import { languages } from '@/i18n/config';
 import { articleTranslations } from '@/i18n/translations/articles';
 import ArticleAuthorCard from '@/components/ArticleAuthorCard.astro';
-import ShareButtons from '@/components/ShareButtons.astro';
 import TableOfContents from '@/components/TableOfContents';
 import RelatedArticleCard from '@/components/RelatedArticleCard.astro';
 import LanguageNotice from '@/components/LanguageNotice.astro';
@@ -164,17 +163,6 @@ const breadcrumbItems = [
       <Article>
         <Content />
       </Article>
-
-      {/* Share buttons */}
-      <div class="mt-8 flex items-center gap-4">
-        <span class="text-sm text-muted-foreground">Share this article:</span>
-        <ShareButtons
-          client:load
-          url={Astro.url}
-          title={entry.data.title}
-          description={entry.data.description}
-        />
-      </div>
 
       {/* Author bio */}
     </main>
