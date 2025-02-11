@@ -5,6 +5,7 @@ type: 'award'
 featured: true
 summary: 'Patroon Legal Design (voorheen Fornier Legal Design) wint de prestigieuze Gouden Zandloper 2019 voor innovatief legal design. Het bureau werd geprezen voor hun vernieuwende aanpak in het visualiseren van juridische informatie.'
 labels: ['award', 'legal-design', 'innovatie', 'gouden-zandloper', 'juridische-visualisatie']
+tags: ['award', 'legal-design', 'innovatie', 'gouden-zandloper', 'juridische-visualisatie']
 image:
   src: '/images/news/gouden-zandloper-2019.png'
   alt: 'Maurits Fornier neemt de Gouden Zandloper 2019 in ontvangst'

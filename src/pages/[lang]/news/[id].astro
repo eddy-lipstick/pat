@@ -2,78 +2,81 @@
 // src/pages/[lang]/news/[id].astro
 import { getCollection, getEntry } from 'astro:content';
 import { render } from 'astro:content';
-
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Hero from '@/components/Hero.astro';
 import Breadcrumb from '@/components/Breadcrumb';
 import { languages } from '@/i18n/config';
 import { newsTranslations } from '@/i18n/translations/news';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import TagBadge from '@/components/TagBadge.astro';
+
+// Helper function for date formatting
+function formatDate(date, lang) {
+  return new Date(date).toLocaleDateString(lang === 'nl' ? 'nl-NL' : 'en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
 
 export async function getStaticPaths() {
   const allNews = await getCollection('news');
 
   return Object.keys(languages).flatMap((lang) => {
-    // Change this line - we're checking either the folder structure or the language field
+    // Filter news for current language - check both folder structure and language field
     const languageNews = allNews.filter(
       (item) => item.id.startsWith(`${lang}/`) || item.data.language === lang
     );
 
-    return languageNews.map((entry) => ({
-      params: {
-        lang,
-        // Fix the ID extraction to handle both folder structures
-        id: entry.id.split('/').pop()?.replace('.md', '') || entry.id.replace('.md', ''),
-      },
-      props: { entry },
-    }));
+    console.log(`Found ${languageNews.length} news items for language: ${lang}`);
+
+    return languageNews.map((entry) => {
+      // Get ID from either folder structure or direct file
+      const id = entry.id.includes('/')
+        ? entry.id.split('/').pop()?.replace('.md', '')
+        : entry.id.replace('.md', '');
+
+      return {
+        params: { lang, id },
+        props: { entry },
+      };
+    });
   });
 }
 
 const { entry } = Astro.props;
 const { lang } = Astro.params;
 const t = newsTranslations[lang];
+
+// Render content
 const { Content } = await render(entry);
 
-// Format date in correct language
-const formattedDate = new Date(entry.data.date).toLocaleDateString(
-  lang === 'nl' ? 'nl-NL' : 'en-US',
-  {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }
-);
+// Format the main date
+const formattedDate = formatDate(entry.data.date, lang);
 
+// Breadcrumb setup
 const breadcrumbItems = [
   { label: t.breadcrumbs.about, href: `/${lang}/about` },
   { label: t.breadcrumbs.news, href: `/${lang}/news` },
   { label: entry.data.title },
 ];
 
-// Get all news posts for current language and sort them
+// Get navigation items
 const allNews = await getCollection('news');
-const languageNews = allNews.filter((item) => item.data.lang === lang);
+const languageNews = allNews.filter(
+  (item) => item.id.startsWith(`${lang}/`) || item.data.language === lang
+);
 const sortedNews = languageNews.sort(
   (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
 
-// Find current post index
+// Find current post index and get prev/next
 const currentIndex = sortedNews.findIndex((post) => post.id === entry.id);
 const prevNews = currentIndex < sortedNews.length - 1 ? sortedNews[currentIndex + 1] : null;
 const nextNews = currentIndex > 0 ? sortedNews[currentIndex - 1] : null;
-
-// Format date helper function
-const formatDate = (dateString: string) => {
-  return new Intl.DateTimeFormat(lang === 'nl' ? 'nl-NL' : 'en-US', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  }).format(new Date(dateString));
-};
 ---
 
-<BaseLayout title={`${entry.data.title}`}>
+<BaseLayout title={entry.data.title}>
   <Breadcrumb items={breadcrumbItems} client:load />
 
   <Hero
@@ -95,13 +98,24 @@ const formatDate = (dateString: string) => {
     }
   </Hero>
 
+  {/* Tags Section */}
+  {
+    entry.data.labels && entry.data.labels.length > 0 && (
+      <div class="flex flex-wrap gap-2 mb-8">
+        {entry.data.labels.map((tag) => (
+          <TagBadge tag={tag} lang={lang} />
+        ))}
+      </div>
+    )
+  }
+
   <div class="flex justify-start mt-12">
     <article class="prose prose-invert max-w-[50ch]">
       <Content />
     </article>
   </div>
 
-  <!-- Navigation -->
+  {/* Navigation */}
   <nav class="grid grid-cols-2 gap-4 border-t border-border/50 pt-8 mt-20">
     {
       prevNews && (
@@ -111,7 +125,7 @@ const formatDate = (dateString: string) => {
         >
           <ArrowLeft className="h-4 w-4" />
           <div>
-            <div class="text-sm text-text-secondary">{formatDate(prevNews.data.date)}</div>
+            <div class="text-sm text-text-secondary">{formatDate(prevNews.data.date, lang)}</div>
             <div class="font-medium group-hover:text-primary transition-colors">
               {prevNews.data.title}
             </div>
@@ -127,7 +141,7 @@ const formatDate = (dateString: string) => {
           class="group flex items-center justify-end gap-3 hover:text-primary transition-colors ml-auto"
         >
           <div class="text-right">
-            <div class="text-sm text-text-secondary">{formatDate(nextNews.data.date)}</div>
+            <div class="text-sm text-text-secondary">{formatDate(nextNews.data.date, lang)}</div>
             <div class="font-medium group-hover:text-primary transition-colors">
               {nextNews.data.title}
             </div>
@@ -153,20 +167,20 @@ const formatDate = (dateString: string) => {
     --tw-prose-bullets: theme('colors.text.tertiary');
   }
 
-  .prose :deep(h1),
-  .prose :deep(h2),
-  .prose :deep(h3),
-  .prose :deep(h4) {
+  .prose :global(h1),
+  .prose :global(h2),
+  .prose :global(h3),
+  .prose :global(h4) {
     scroll-margin-top: 100px;
   }
 
-  .prose :deep(a) {
+  .prose :global(a) {
     text-decoration-line: none;
     border-bottom: 1px solid theme('colors.primary.DEFAULT');
     transition: border-color 0.2s ease;
   }
 
-  .prose :deep(a:hover) {
+  .prose :global(a:hover) {
     border-color: transparent;
   }
 </style>

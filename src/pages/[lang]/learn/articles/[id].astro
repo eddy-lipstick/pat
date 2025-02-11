@@ -1,25 +1,16 @@
 ---
 // src/pages/[lang]/learn/articles/[id].astro
 import { getCollection, getEntry, render } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { Badge } from '@/components/ui/badge';
-import { Card } from '@/components/ui/card';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Breadcrumb from '@/components/Breadcrumb';
 import Article from '@/components/Article.astro';
 import { languages } from '@/i18n/config';
 import { articleTranslations } from '@/i18n/translations/articles';
 import ArticleAuthorCard from '@/components/ArticleAuthorCard.astro';
-import TableOfContents from '@/components/TableOfContents';
 import RelatedArticleCard from '@/components/RelatedArticleCard.astro';
 import LanguageNotice from '@/components/LanguageNotice.astro';
-
-interface Props {
-  entry: CollectionEntry<'articles'>;
-  authorData: CollectionEntry<'team'>;
-  relatedArticles: CollectionEntry<'articles'>[];
-}
+import TagBadge from '@/components/TagBadge.astro';
+import { getContentByTag } from '@/lib/tag-utils';
 
 export async function getStaticPaths() {
   const allArticles = await getCollection('articles');
@@ -36,13 +27,12 @@ export async function getStaticPaths() {
 
       return Promise.all(
         languageArticles.map(async (entry) => {
-          // Log the article data for debugging
           console.log('Processing article:', {
             id: entry.id,
-            authorRef: entry.data.author, // Let's see what this actually is
+            authorRef: entry.data.author,
           });
 
-          // Get author data - assuming author is a string ID
+          // Get author data
           const authorId =
             typeof entry.data.author === 'string'
               ? entry.data.author
@@ -53,6 +43,19 @@ export async function getStaticPaths() {
             lookupId: authorId,
             found: !!authorData,
           });
+
+          // Get related articles by matching tags
+          const relatedArticles = await Promise.all(
+            entry.data.tags.map(async (tag) => {
+              const taggedContent = await getContentByTag(tag, lang);
+              return taggedContent
+                .filter((item) => item.collectionType === 'articles' && item.id !== entry.id)
+                .slice(0, 3);
+            })
+          );
+
+          // Flatten and deduplicate related articles
+          const uniqueRelated = [...new Set(relatedArticles.flat())];
 
           return {
             params: {
@@ -65,7 +68,7 @@ export async function getStaticPaths() {
             props: {
               entry,
               authorData,
-              relatedArticles: [],
+              relatedArticles: uniqueRelated,
             },
           };
         })
@@ -75,6 +78,7 @@ export async function getStaticPaths() {
 
   return paths.flat();
 }
+
 const { entry, authorData, relatedArticles } = Astro.props;
 const { lang } = Astro.params;
 const t = articleTranslations[lang];
@@ -109,12 +113,16 @@ const breadcrumbItems = [
 
         {/* Tags */}
         <div class="flex flex-wrap gap-2">
-          {entry.data.tags.map((tag) => <Badge variant="default">{tag}</Badge>)}
+          {entry.data.tags.map((tag) => <TagBadge tag={tag} lang={lang} />)}
         </div>
 
         {/* Title and description */}
-        <h1 class="text-4xl lg:text-5xl font-bold mb-4">{entry.data.title}</h1>
-        <p class="text-xl text-muted-foreground mb-6">{entry.data.description}</p>
+        <h1 class="text-4xl lg:text-5xl font-bold mb-4">
+          {entry.data.title}
+        </h1>
+        <p class="text-xl text-muted-foreground mb-6">
+          {entry.data.description}
+        </p>
 
         {/* Article metadata */}
         <div class="flex items-center gap-4 text-sm text-muted-foreground">
@@ -163,15 +171,13 @@ const breadcrumbItems = [
       <Article>
         <Content />
       </Article>
-
-      {/* Author bio */}
     </main>
 
     {/* Related articles */}
     {
       relatedArticles?.length > 0 && (
         <section class="mt-16 pt-16 border-t">
-          <h2 class="text-2xl font-bold mb-8">More articles you might like</h2>
+          <h2 class="text-2xl font-bold mb-8">{t.relatedArticles}</h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             {relatedArticles.map((article) => (
               <RelatedArticleCard article={article} lang={lang} />

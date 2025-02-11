@@ -1,0 +1,24 @@
+---
+/**
+ * TagBadge Component
+ * Displays a clickable tag that links to the tag page
+ */
+
+interface Props {
+  tag: string;
+  lang: string;
+  className?: string;
+}
+
+const { tag, lang, className = '' } = Astro.props;
+
+// Ensure tag is properly formatted for URL
+const tagSlug = tag.toLowerCase().trim();
+---
+
+<a
+  href={`/${lang}/tags/${tagSlug}`}
+  class={`inline-flex items-center rounded-full px-3 py-1 text-sm bg-primary/10 text-primary hover:bg-primary/20 transition-colors ${className}`}
+>
+  #{tag}
+</a>

@@ -19,9 +19,29 @@ const t = newsTranslations[lang];
 
 const allNews = await getCollection('news');
 
-const languageNews = allNews.filter(
-  (item) => item.id.startsWith(`${lang}/`) || item.data.language === lang
-);
+// Log initial count
+console.log(`Total news items: ${allNews.length}`);
+
+// Prioritize folder structure over language field
+const languageNews = allNews.filter((item) => {
+  // First check folder structure
+  if (item.id.startsWith(`${lang}/`)) {
+    return true;
+  }
+  // Only check language field if not in language folder
+  if (!item.id.includes('/') && item.data.language === lang) {
+    return true;
+  }
+  return false;
+});
+
+// Log filtered count
+console.log(`News items for ${lang}: ${languageNews.length}`);
+
+// Debug output
+languageNews.forEach((item) => {
+  console.log(`News item: ${item.id}, Language: ${item.data.language}, Date: ${item.data.date}`);
+});
 
 const sortedNews = languageNews.sort(
   (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()

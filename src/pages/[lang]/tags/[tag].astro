@@ -1,0 +1,89 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getContentByTag, getAllTags } from '@/lib/tag-utils';
+import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { languages } from '@/i18n/config';
+import Hero from '@/components/Hero.astro';
+
+export async function getStaticPaths() {
+  const paths = [];
+
+  // Generate paths for each language and tag combination
+  for (const lang of Object.keys(languages)) {
+    const tags = await getAllTags(lang);
+
+    for (const tag of tags) {
+      paths.push({
+        params: { lang, tag },
+        props: { tag },
+      });
+    }
+  }
+
+  return paths;
+}
+
+const { lang, tag } = Astro.params;
+const taggedContent = await getContentByTag(tag, lang);
+
+// Helper function to format date
+const formatDate = (date) => {
+  return new Date(date).toLocaleDateString(lang, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};
+
+// Helper to get collection-specific icon/badge
+const getCollectionBadge = (type) => {
+  const badges = {
+    caseStudies: 'Case Study',
+    news: 'News',
+    articles: 'Article',
+  };
+  return badges[type] || type;
+};
+---
+
+<BaseLayout title={`${tag} - Tagged Content`}>
+  <Hero variant="small" title={`#${tag}`} description={`All content tagged with "${tag}"`} />
+
+  <div class="grid gap-6">
+    {
+      taggedContent.map((item) => (
+        <Card class="hover:bg-muted/50 transition-colors">
+          <a href={item.url}>
+            <CardHeader>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-sm text-muted-foreground">
+                  {getCollectionBadge(item.collectionType)}
+                </span>
+                {item.data.date && (
+                  <>
+                    <span class="text-muted-foreground">•</span>
+                    <span class="text-sm text-muted-foreground">
+                      {formatDate(item.data.date || item.data.publishDate)}
+                    </span>
+                  </>
+                )}
+              </div>
+              <CardTitle class="text-xl mb-2">{item.data.title}</CardTitle>
+              {item.data.description && (
+                <CardDescription class="line-clamp-2">{item.data.description}</CardDescription>
+              )}
+            </CardHeader>
+          </a>
+        </Card>
+      ))
+    }
+
+    {
+      taggedContent.length === 0 && (
+        <div class="text-center py-12">
+          <p class="text-muted-foreground">No content found with this tag.</p>
+        </div>
+      )
+    }
+  </div>
+</BaseLayout>
