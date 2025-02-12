@@ -20,13 +20,13 @@ metadata:
   date: 'January 2025'
   services:
     - 'Information Design'
-  website: 'https://www.duurzaam-ondernemen.nl/de-esrs-navigator-staat-online/'
+  website: 'https://www.rvo.nl/sites/default/files/2025-01/ESRS_Navigator_januari_2025.pdf'
   relatedSkills:
     ['Information Design', 'Legal Content Design', 'Interactive Guides', 'Legal Process Design']
 
 heroVideo:
   src: '/esrs/clip-1.mp4'
-  poster: '/case-studies/amsterdam.jpg'
+  poster: '/esrs/scherm-2.jpg'
   title: 'The ESRS Navigator is an interactive guide about complex sustainability legislation.'
 
 expandableContent:
