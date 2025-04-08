@@ -1,6 +1,6 @@
 ---
 name: 'Maurits Fornier'
-role: 'Mede-oprichter'
+role: 'Oprichter'
 bio: 'Maurits combineert juridische expertise met technische implementatie en design thinking. Met een achtergrond in de procespraktijk richt hij zich op het ontwikkelen van visuele en technische oplossingen voor complexe juridische vraagstukken.'
 profileImage: '/images/team/maurits-fornier.webp'
 expertise:

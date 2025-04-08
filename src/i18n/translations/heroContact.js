@@ -40,12 +40,11 @@ export const heroContactTranslations = {
     },
   },
   nl: {
-    title: 'Klaar om je legal design project te starten?',
-    subtitle:
-      'Plan een vrijblijvend gesprek in met een van onze legal designers. We denken graag met je mee.',
+    title: 'Neem contact op',
+    subtitle: 'Plan een vrijblijvend gesprek in. We denken graag met je mee.',
     buttons: {
       schedule: 'Plan een gesprek',
-      callMe: 'Bel me',
+      callMe: 'Bel me terug',
     },
     form: {
       title: 'Naam',

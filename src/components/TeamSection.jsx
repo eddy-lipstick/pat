@@ -12,6 +12,13 @@ const TeamSection = ({ lang }) => {
   const [submitStatus, setSubmitStatus] = useState({ success: false, message: '' });
   const [phoneError, setPhoneError] = useState('');
 
+  // Single team member
+  const teamMember = {
+    name: 'Maurits Fornier',
+    role: 'Legal Design Lead',
+    imageUrl: '/images/team/maurits-fornier.webp',
+  };
+
   const validatePhoneNumber = (phone) => {
     const cleanPhone = phone.replace(/[\s\-\(\)]/g, '');
     if (!/^(\+)?[\d]{8,}$/.test(cleanPhone)) {
@@ -19,24 +26,6 @@ const TeamSection = ({ lang }) => {
     }
     return '';
   };
-
-  const teamMembers = [
-    {
-      name: 'Maurits Fornier',
-      role: 'Legal Design Lead',
-      imageUrl: '/images/team/maurits-fornier.webp',
-    },
-    {
-      name: 'Dielis Delen',
-      role: 'Software Developer',
-      imageUrl: '/images/team/dielis-delen.webp',
-    },
-    {
-      name: 'Savannah Koomen',
-      role: 'Strategie Lead',
-      imageUrl: '/images/team/savannah-koomen.webp',
-    },
-  ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -85,7 +74,7 @@ const TeamSection = ({ lang }) => {
 
   return (
     <div className="w-full bg-background text-foreground py-24 px-6 rounded-sm overflow-hidden relative">
-      <div className="max-w-6xl mx-auto grid lg:grid-cols-[1fr,1.5fr] gap-12 items-start">
+      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
         {/* Content Column */}
         <div className="space-y-6">
           <h2 className="text-4xl font-bold font-roc-grotesk">{t.title}</h2>
@@ -94,7 +83,7 @@ const TeamSection = ({ lang }) => {
             <Button
               size="lg"
               className="w-full sm:w-auto group bg-feitlijn-purple hover:bg-feitlijn-purple-600 text-white transition-all duration-300"
-              onClick={() => (window.location.href = '/contact')}
+              onClick={() => (window.location.href = `/${lang}/contact`)}
             >
               <span className="flex items-center justify-center w-full">
                 {t.buttons.schedule}
@@ -171,45 +160,23 @@ const TeamSection = ({ lang }) => {
           )}
         </div>
 
-        {/* Team Images Column */}
-        <div className="relative grid grid-cols-2 gap-6 h-[500px]">
-          {/* Main (larger) image */}
-          <div className="col-span-1 row-span-2">
-            <div className="absolute -inset-4 bg-gradient-to-r from-feitlijn-purple/20 to-feitlijn-yellow/20 rounded-full blur-3xl" />
-            <Card className="relative bg-surface-2 border-0 overflow-hidden rounded-2xl h-full group">
-              <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-              <img
-                src={teamMembers[0].imageUrl}
-                alt={`${teamMembers[0].name} - ${t.team.roles[teamMembers[0].role]}`}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute bottom-6 left-6 right-6">
-                <p className="font-medium text-lg font-roc-grotesk">{teamMembers[0].name}</p>
-                <p className="text-text-secondary">{t.team.roles[teamMembers[0].role]}</p>
-              </div>
-            </Card>
-          </div>
-
-          {/* Two smaller images */}
-          <div className="col-span-1 space-y-6">
-            {teamMembers.slice(1, 3).map((member) => (
-              <Card
-                key={member.name}
-                className="relative bg-surface-2 border-0 overflow-hidden rounded-2xl h-[235px] group"
-              >
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-                <img
-                  src={member.imageUrl}
-                  alt={`${member.name} - ${t.team.roles[member.role]}`}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute bottom-4 left-4 right-4">
-                  <p className="font-medium font-roc-grotesk">{member.name}</p>
-                  <p className="text-text-secondary text-sm">{t.team.roles[member.role]}</p>
-                </div>
-              </Card>
-            ))}
-          </div>
+        {/* Team Member Image - Simplified for a single member */}
+        <div className="relative">
+          <div className="absolute -inset-4 bg-gradient-to-r from-feitlijn-purple/20 to-feitlijn-yellow/20 rounded-full blur-3xl" />
+          <Card className="relative bg-surface-2 border-0 overflow-hidden rounded-2xl aspect-[4/5] max-w-md mx-auto group">
+            <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+            <img
+              src={teamMember.imageUrl}
+              alt={`${teamMember.name} - ${typeof t.team.roles === 'object' ? t.team.roles[teamMember.role] : teamMember.role}`}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute bottom-6 left-6 right-6">
+              <p className="font-medium text-xl font-roc-grotesk">{teamMember.name}</p>
+              <p className="text-text-secondary">
+                {typeof t.team.roles === 'object' ? t.team.roles[teamMember.role] : teamMember.role}
+              </p>
+            </div>
+          </Card>
         </div>
       </div>
 
