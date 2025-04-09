@@ -1,8 +1,15 @@
 import React from 'react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
-const CaseStudyCard = ({ study }) => {
+const CaseStudyCard = ({ study, lang = 'nl' }) => {
   const {
     id,
     data: {
@@ -12,14 +19,20 @@ const CaseStudyCard = ({ study }) => {
       metadata: {
         client,
         date,
-        relatedSkills = [] // Default empty array for relatedSkills
-      }
-    }
+        relatedSkills = [], // Default empty array for relatedSkills
+      },
+    },
   } = study;
+
+  // Extract the part of the ID after the language prefix
+  const studyId = id.includes('/') ? id.split('/')[1] : id;
+
+  // Construct the correct URL with the language prefix
+  const caseStudyUrl = `/${lang}/case-studies/${studyId}`;
 
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-all group">
-      <a href={`/case-studies/${id}`} className="block">
+      <a href={caseStudyUrl} className="block">
         {cover_image?.src && (
           <div className="aspect-video w-full overflow-hidden">
             <img
@@ -35,12 +48,8 @@ const CaseStudyCard = ({ study }) => {
             <p className="text-sm text-muted-foreground">
               {client} • {date}
             </p>
-            <CardTitle className="line-clamp-2">
-              {title}
-            </CardTitle>
-            <CardDescription className="line-clamp-2">
-              {introduction}
-            </CardDescription>
+            <CardTitle className="line-clamp-2">{title}</CardTitle>
+            <CardDescription className="line-clamp-2">{introduction}</CardDescription>
           </div>
         </CardHeader>
 

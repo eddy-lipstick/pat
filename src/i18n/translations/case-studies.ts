@@ -16,6 +16,11 @@ export const caseStudiesTranslations = {
         label: 'Website',
       },
     },
+    relatedCaseStudies: {
+      title: 'More case studies',
+      description: 'Discover more of our work',
+      viewAll: 'View all case studies',
+    },
 
     meta: {
       title: 'Our Work | Case Studies | Patroon Legal Design',
@@ -88,6 +93,11 @@ export const caseStudiesTranslations = {
       website: {
         label: 'Website',
       },
+    },
+    relatedCaseStudies: {
+      title: 'Meer cases',
+      description: 'Ontdek meer van ons werk',
+      viewAll: 'Bekijk alle cases',
     },
     meta: {
       title: 'Ons Werk | Cases | Patroon Legal Design',

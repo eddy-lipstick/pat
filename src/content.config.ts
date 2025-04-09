@@ -47,7 +47,7 @@ const metadataSchema = z.object({
 const expandableContentSchema = z.object({
   title: z.string(),
   firstParagraph: z.string(),
-  remainingText: z.array(z.string()),
+  remainingText: z.array(z.string()).optional().default([]),
 });
 
 const quoteSchema = z.object({

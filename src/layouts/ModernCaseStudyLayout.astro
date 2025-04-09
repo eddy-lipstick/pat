@@ -13,6 +13,7 @@ import CaseQuote from '../components/CaseQuote';
 import BeforeAfterSlider from '../components/BeforeAfterSlider';
 import TeamCTA from '../components/TeamCTA';
 import CaseStudyTimeline from '../components/CaseStudyTimeline';
+import RelatedCaseStudiesSlider from '../components/RelatedCaseStudiesSlider';
 import SEO from '@/components/SEO.astro';
 import Container from '../components/Container.astro';
 import SectionHeader from '@/components/SectionHeader.astro';
@@ -20,7 +21,7 @@ import { getLangFromUrl } from '@/i18n/utils';
 import { caseStudiesTranslations } from '@/i18n/translations/case-studies';
 import GoogleAnalytics from '@/components/GoogleAnalytics.astro';
 
-import { getEntry } from 'astro:content';
+import { getEntry, getCollection } from 'astro:content';
 
 // Get current language and translations
 const currentLang = getLangFromUrl(Astro.url);
@@ -60,6 +61,20 @@ if (teamMember) {
   } catch (error) {
     console.error('Error fetching team member:', error);
   }
+}
+
+// Fetch all case studies (using same language, excluding current)
+let relatedCaseStudies = [];
+try {
+  // Get all case studies for the current language
+  const allCaseStudies = await getCollection('case-studies', (study) => {
+    return study.id.startsWith(currentLang + '/');
+  });
+  
+  // Get all studies except the current one
+  relatedCaseStudies = allCaseStudies.filter(study => study.id !== entry?.id);
+} catch (error) {
+  console.error('Error fetching case studies:', error);
 }
 
 // Construct SEO metadata
@@ -270,6 +285,16 @@ const breadcrumbsStructuredData = {
         </section>
       </Container>
 
+      {/* Related Case Studies Slider */}
+      {relatedCaseStudies.length > 0 && (
+        <RelatedCaseStudiesSlider
+          client:load
+          studies={relatedCaseStudies}
+          currentStudyId={entry?.id}
+          lang={currentLang}
+        />
+      )}
+      
       <Footer />
     </main>
   </body>

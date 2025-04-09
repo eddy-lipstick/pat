@@ -21,9 +21,7 @@ metadata:
   services:
     - 'Contract Design'
   website: 'https://www.wijzijnmoos.nl'
-  relatedSkills:
-    ['Contract Design', 'Legal Content Design', 'Visual Communication', 'Stakeholder Engagement']
-
+  relatedSkills: ['Contract Redesign', 'Legal Content Design', 'Contract UX']
 heroVideo:
   src: '/case-studies/moos/manifest-clip.mp4'
   poster: '/case-studies/moos/moos-manifest.jpg'
@@ -32,8 +30,6 @@ heroVideo:
 expandableContent:
   - title: "Yesterday's Contracts Have No Place in Tomorrow's Construction World"
     firstParagraph: 'In the traditional construction world, Moos consciously chooses a different approach. With their mission to solve the housing shortage sustainably, Moos is building an ecosystem of equal partners who together create modular, circular homes. The problem? Their legal documentation did not align with this vision.'
-    remainingText:
-      - 'We helped Moos by transforming their partnership principles into a powerful visual manifesto and by completely redesigning their framework agreement with accessible language, smart visualizations, and a logical structure. The manifesto was proudly presented during a special partner meeting – not a standard legal document, but a clear statement that makes the rules of the game clear for everyone.'
 
 images:
   - src: '/case-studies/moos/moos-handtekeningen.jpg'

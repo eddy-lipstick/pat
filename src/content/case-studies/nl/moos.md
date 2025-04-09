@@ -1,6 +1,6 @@
 ---
 title: 'In de bouwwereld van morgen past geen contract van gisteren'
-introduction: 'Moos bouwt aan een duurzame toekomst met modulaire, circulaire woningen. Patroon hielp hen met het herontwerpen van het partnercontract. Het doel: minder papier, minder tekst, meer beeld.'
+introduction: 'In de traditionele bouwwereld kiest Moos bewust voor een andere aanpak. Met hun missie om het woningtekort duurzaam op te lossen, bouwt Moos aan een ecosysteem van gelijkwaardige partners die samen modulaire, circulaire woningen creëren. Het probleem? Hun juridische documentatie paste niet bij deze visie.'
 
 cover_image:
   src: '/case-studies/moos/schroef.jpg'
@@ -21,8 +21,7 @@ metadata:
   services:
     - 'Contract Design'
   website: 'https://www.wijzijnmoos.nl'
-  relatedSkills:
-    ['Contract Design', 'Legal Content Design', 'Visual Communication', 'Stakeholder Engagement']
+  relatedSkills: ['Contract Redesign', 'Legal Content Design', 'Contract UX']
 
 heroVideo:
   src: '/case-studies/moos/manifest-clip.mp4'
@@ -30,10 +29,9 @@ heroVideo:
   title: 'Het partnerschap manifest van Moos verbindt juridische afspraken aan een gezamenlijke missie.'
 
 expandableContent:
-  - title: 'In de bouwwereld van morgen past geen contract van gisteren'
-    firstParagraph: 'In de traditionele bouwwereld kiest Moos bewust voor een andere aanpak. Met hun missie om het woningtekort duurzaam op te lossen, bouwt Moos aan een ecosysteem van gelijkwaardige partners die samen modulaire, circulaire woningen creëren. Het probleem? Hun juridische documentatie paste niet bij deze visie.'
-    remainingText:
-      - 'Wij hielpen Moos door hun partnerschapsprincipes om te zetten in een krachtig visueel manifest én door hun raamovereenkomst volledig te herontwerpen met toegankelijke taal, slimme visualisaties en een logische structuur. Het manifest werd met trots gepresenteerd tijdens een speciale partnerbijeenkomst – geen standaard juridisch document, maar een helder statement dat de spelregels voor iedereen duidelijk maakt.'
+  - title: 'Het doel was minder papier, minder tekst, meer beeld.'
+    firstParagraph: 'Wij hielpen Moos door hun partnerschapsprincipes om te zetten in een krachtig visueel manifest én door hun raamovereenkomst volledig te herontwerpen met toegankelijke taal, slimme visualisaties en een logische structuur. Het manifest werd met trots gepresenteerd tijdens een speciale partnerbijeenkomst – geen standaard juridisch document, maar een helder statement dat de spelregels voor iedereen duidelijk maakt.'
+    remainingText: []
 
 images:
   - src: '/case-studies/moos/moos-handtekeningen.jpg'
