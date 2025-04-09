@@ -32,7 +32,7 @@ speaking:
 featured: true
 ---
 
-Met meer dan tien jaar ervaring in het vakgebied combineert Maurits Fornier juridische expertise, technische kennis en design thinking. Zijn achtergrond in de procespraktijk vormt de basis voor een praktische aanpak in het structureren van juridische informatie.
+Met meer dan tien jaar ervaring in het vakgebied combineert Maurits juridische expertise, technische kennis en design thinking. Zijn achtergrond in de procespraktijk vormt de basis voor een praktische aanpak in het structureren van juridische informatie.
 
 Als oprichter van Patroon richt hij zich op het ontwikkelen van visuele en technische oplossingen voor complexe juridische vraagstukken. Zijn werk varieert van procesvisualisatie voor advocatenkantoren tot interactieve compliance tools voor grote organisaties.
 
