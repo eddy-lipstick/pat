@@ -3,7 +3,7 @@
 export const landingTranslations = {
   en: {
     meta: {
-      title: 'Patroon - Legal Design & Tech Studio',
+      title: 'Patroon - Creative legal minds',
       description:
         'We transform complex legal information into clear, user-friendly solutions. Specializing in legal design, document automation, and legal tech solutions.',
     },
@@ -43,7 +43,7 @@ export const landingTranslations = {
   },
   nl: {
     meta: {
-      title: 'Patroon - Legal Design & Tech Studio',
+      title: 'Patroon - Creative legal minds',
       description:
         'Wij transformeren complexe juridische informatie naar heldere, gebruiksvriendelijke oplossingen. Gespecialiseerd in legal design, documentautomatisering en legal tech.',
     },
