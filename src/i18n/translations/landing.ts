@@ -8,8 +8,8 @@ export const landingTranslations = {
         'We transform complex legal information into clear, user-friendly solutions. Specializing in legal design, document automation, and legal tech solutions.',
     },
     hero: {
-      subtitle: 'Legal technology & design studio',
-      title: 'Sophisticated legal solutions through technology and design',
+      subtitle: 'Legal design & tech',
+      title: 'Creative legal minds',
       description:
         'We combine deep legal expertise with advanced technology and strategic design to create sophisticated solutions for complex legal challenges.',
       bulletPoints: [
@@ -48,8 +48,8 @@ export const landingTranslations = {
         'Wij transformeren complexe juridische informatie naar heldere, gebruiksvriendelijke oplossingen. Gespecialiseerd in legal design, documentautomatisering en legal tech.',
     },
     hero: {
-      subtitle: 'Legal technology & design studio',
-      title: 'Geavanceerde juridische oplossingen door technologie en design',
+      subtitle: 'Legal design & tech',
+      title: 'Creative legal minds',
       description:
         'We combineren diepgaande juridische expertise met geavanceerde technologie en strategisch design voor complexe juridische uitdagingen.',
       bulletPoints: [
