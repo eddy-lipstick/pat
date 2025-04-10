@@ -12,6 +12,11 @@ export const partnerTranslations = {
         description:
           'Partner in onderwijs en innovatie. Samen met de HvA hebben we het vak Legal Innovation ontwikkeld, waar we studenten klaarstomen voor de toekomst van het juridische werkveld. Door de combinatie van academische kennis en praktijkervaring creëren we een unieke leeromgeving.',
       },
+      clca: {
+        name: 'CLCA',
+        description:
+          'De Crisis and Litigation Communicators Alliance (CLCA) is een netwerk van toonaangevende PR-bureaus in juridische- en crisiscommunicatie. Als strategische partner helpen wij deze specialisten door complexe juridische informatie te vertalen naar effectieve visuele middelen. Samen zorgen we ervoor dat de boodschap overkomt, ook onder hoge druk.',
+      },
     },
   },
   en: {
@@ -26,6 +31,11 @@ export const partnerTranslations = {
         name: 'HvA',
         description:
           'Partner in education and innovation. Together with HvA, we have developed the Legal Innovation course, where we prepare students for the future of the legal field. By combining academic knowledge with practical experience, we create a unique learning environment.',
+      },
+      clca: {
+        name: 'CLCA',
+        description:
+          'The Crisis and Litigation Communicators Alliance (CLCA) brings together elite PR firms in high-stakes legal and crisis communication. As their strategic design partner, we transform complex legal information into powerful visual assets that cut through the noise when it matters most. Our collaboration ensures critical messages resonate effectively, even under intense pressure, helping CLCA members deliver exceptional results for clients navigating challenging situations.',
       },
     },
   },

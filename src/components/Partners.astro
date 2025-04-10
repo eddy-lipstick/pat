@@ -1,6 +1,7 @@
 ---
 import LegalloydLogo from './logos/LegalloydLogo.astro';
 import HVALogo from './logos/HVALogo.astro';
+import CLCALogo from './logos/CLCALogo.astro';
 import LogoTooltip from '@/components/LogoTooltip';
 import { partnerTranslations } from '@/i18n/translations/partners';
 
@@ -34,6 +35,20 @@ const t = partnerTranslations[lang];
           <HVALogo
             class="w-full h-12 opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105"
           />
+          <div
+            class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5"
+          >
+          </div>
+        </div>
+      </LogoTooltip>
+
+      <LogoTooltip client:visible content={t.partners.clca.description}>
+        <div class="group relative flex items-center justify-center p-6">
+          <div class="w-full max-w-[120px] mx-auto h-8 flex items-center">
+            <CLCALogo
+              class="w-full opacity-30 transition-all duration-500 ease-out group-hover:opacity-90 group-hover:scale-105"
+            />
+          </div>
           <div
             class="absolute inset-0 rounded-lg transition-colors duration-300 group-hover:bg-white/5"
           >
