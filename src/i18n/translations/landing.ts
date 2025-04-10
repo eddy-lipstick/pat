@@ -51,11 +51,11 @@ export const landingTranslations = {
       subtitle: 'Legal design & tech',
       title: 'Creative legal minds',
       description:
-        'We combineren diepgaande juridische expertise met geavanceerde technologie en strategisch design voor complexe juridische uitdagingen.',
+        'We combineren diepgaande juridische expertise met geavanceerde technologie en goed ontwerp.',
       bulletPoints: [
         'Interactieve compliance dashboards met AI-analyse',
-        'Strategische visualisaties voor complexe rechtszaken',
-        'Geautomatiseerde visuele B2B-contracten, gekoppeld aan Salesforce',
+        "Strategische visuals en video's voor complexe rechtszaken",
+        'Visuele B2B-contracten',
       ],
       buttons: {
         primary: 'Bekijk ons werk',
