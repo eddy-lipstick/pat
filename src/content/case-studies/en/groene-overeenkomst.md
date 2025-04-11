@@ -16,6 +16,8 @@ cover_image:
   src: '/case-studies/groene-overeenkomst/groeneovereenkomst-cover.jpg'
   alt: 'Visualization of the green employment contract'
 
+tags: ['digital-product', 'contracts', 'ai', 'analysis']
+
 metadata:
   client: 'Own initiative'
   date: 'December 2023'

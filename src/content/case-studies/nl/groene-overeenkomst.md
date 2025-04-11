@@ -15,6 +15,7 @@ quotes:
 cover_image:
   src: '/case-studies/groene-overeenkomst/groeneovereenkomst-cover.jpg'
   alt: 'Visualisatie van de groene arbeidsovereenkomst'
+tags: ['digital-product', 'contracts', 'ai', 'analysis']
 
 metadata:
   client: 'Eigen initiatief'

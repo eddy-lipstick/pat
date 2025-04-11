@@ -2,6 +2,7 @@
 
 export const navbarTranslations = {
   en: {
+    digitalProducts: 'Digital Products',
     projects: 'Projects',
     about: {
       title: 'About us',
@@ -17,6 +18,7 @@ export const navbarTranslations = {
     contact: 'Contact',
   },
   nl: {
+    digitalProducts: 'Digitale Producten',
     projects: 'Projecten',
     about: {
       title: 'Over ons',
@@ -56,6 +58,10 @@ export const getNavItems = (currentLang: string, currentPath: string) => {
     });
   }
   return [
+    {
+      label: t.digitalProducts,
+      href: `/${currentLang}/digital-solutions`,
+    },
     {
       label: t.projects,
       href: `/${currentLang}/case-studies`,
