@@ -1,78 +1,104 @@
-export const digitalSolutionsTranslations = {
-  en: {
-    meta: {
-      title: 'Digital Studio | Patroon',
-      description:
-        'We transform complex legal information into sophisticated, actionable digital tools.',
-    },
-    hero: {
-      subtitle: 'Digital Studio',
-      title: 'Legal Tech Tools',
-      description:
-        'At Patroon, our consulting projects, training programs, and digital products form a continuous cycle of innovation. Each area informs and strengthens the others, allowing us to create sophisticated legal technology that addresses real-world challenges.',
-    },
-    intro: {
-      title: 'Where Practice Meets Innovation',
-      description:
-        'Our digital products emerge from the intersection of hands-on legal work, design expertise, and technical knowledge. We identify recurring challenges across different legal contexts, develop sophisticated solutions that address the core issues, and continuously refine our approach based on real-world feedback and implementation.',
-      points: [
-        'Built on insights from complex client projects',
-        'Designed with deep understanding of legal processes',
-        'Developed with practical implementation in mind',
-        'Continuously improved through user feedback',
-      ],
-    },
-    productCard: {
-      exploreLive: 'Explore Live',
-      viewCaseStudy: 'View Case Study',
-    },
-    products: {
-      title: 'Our Digital Solutions',
-      description: 'Sophisticated tools designed for legal professionals',
-    },
-    collaboration: {
-      title: 'Build With Us',
-      description:
-        'Have a complex legal information challenge? Work with us to develop a custom digital solution tailored to your specific needs.',
-      cta: 'Contact Us',
-    },
-  },
+// src/i18n/translations/digital-studio.ts
+
+export const digitalStudioTranslations = {
   nl: {
     meta: {
-      title: 'Digital Studio | Patroon',
-      description:
-        'Wij transformeren complexe juridische informatie naar geavanceerde, bruikbare digitale tools.',
+      title: 'Digital Studio',
+      description: 'Innovatieve juridisch-technologische producten ontwikkeld door Patroon.',
+      seoTitle: 'Digital Studio - Juridische Tech Producten',
+    },
+    breadcrumbs: {
+      home: 'Home',
+      digitalStudio: 'Digital Studio',
     },
     hero: {
-      subtitle: 'Digital Studio',
-      title: 'Legal Tech Tools',
-      description:
-        'In onze Digital Studio bouwen we legal tech oplossingen die voortkomen uit de praktijk. Onze projecten en trainingen vormen de basis voor digitale tools die juridisch werk sneller en slimmer maken.',
+      title: 'Digital Studio',
+      subtitle: 'Onze technologische oplossingen',
+      description: 'Innovatieve juridisch-technologische producten ontwikkeld door Patroon.',
     },
-    intro: {
-      title: 'Waar Praktijk Innovatie Ontmoet',
-      description:
-        'Onze digitale producten ontstaan op het snijvlak van praktisch juridisch werk, design expertise en technische kennis. We identificeren terugkerende uitdagingen in verschillende juridische contexten, ontwikkelen geavanceerde oplossingen die de kernproblemen aanpakken, en verfijnen continu onze aanpak op basis van praktijkfeedback en implementatie.',
-      points: [
-        'Gebouwd op inzichten uit complexe klantprojecten',
-        'Ontworpen met diepgaand begrip van juridische processen',
-        'Ontwikkeld met praktische implementatie in gedachten',
-        'Voortdurend verbeterd door gebruikersfeedback',
-      ],
+    buttons: {
+      visitWebsite: 'Bezoek website',
+      contactUs: 'Meer informatie',
+      goToProduct: 'Bekijk product',
     },
-    productCard: {
-      exploreLive: 'Bekijk Live',
-      viewCaseStudy: 'Bekijk Case Study',
+    labels: {
+      featured: 'Uitgelicht',
+      new: 'Nieuw',
     },
-    products: {
-      title: 'Onze Digitale Oplossingen',
-      description: 'Geavanceerde tools ontworpen voor juridische professionals',
+    sections: {
+      problem: 'Het probleem',
+      solution: 'Onze oplossing',
+      audience: 'Voor wie?',
+      features: 'Kenmerken',
+      origin: 'Oorsprong',
+      example: 'Voorbeeld',
+      related: 'Gerelateerde producten',
+      overview: 'Alle producten',
     },
-    collaboration: {
-      title: 'Ontwikkel Met Ons',
-      description:
-        'Heeft u een complexe juridische informatieuitdaging? Werk met ons samen om een op maat gemaakte digitale oplossing te ontwikkelen.',
-      cta: 'Neem Contact Op',
+    filters: {
+      all: 'Alle producten',
+      category: 'Categorie',
+      tags: 'Tags',
+    },
+    emptyState: {
+      title: 'Geen producten gevonden',
+      description: 'Probeer andere filters of zoektermen.',
+    },
+    metadata: {
+      client: 'Doelgroep',
+      date: 'Gelanceerd',
+      skills: 'Technologieën',
+      website: 'Website',
+    },
+  },
+  en: {
+    meta: {
+      title: 'Digital Studio',
+      description: 'Innovative legal technology products developed by Patroon.',
+      seoTitle: 'Digital Studio - Legal Tech Products',
+    },
+    breadcrumbs: {
+      home: 'Home',
+      digitalStudio: 'Digital Studio',
+    },
+    hero: {
+      title: 'Digital Studio',
+      subtitle: 'Our technological solutions',
+      description: 'Innovative legal technology products developed by Patroon.',
+    },
+    buttons: {
+      visitWebsite: 'Visit website',
+      contactUs: 'More information',
+      goToProduct: 'View product',
+    },
+    labels: {
+      featured: 'Featured',
+      new: 'New',
+    },
+    sections: {
+      problem: 'The problem',
+      solution: 'Our solution',
+      audience: 'Target audience',
+      features: 'Key features',
+      origin: 'Origin story',
+      example: 'Usage example',
+      related: 'Related products',
+      overview: 'All products',
+    },
+    filters: {
+      all: 'All products',
+      category: 'Category',
+      tags: 'Tags',
+    },
+    emptyState: {
+      title: 'No products found',
+      description: 'Try different filters or search terms.',
+    },
+    metadata: {
+      client: 'Target audience',
+      date: 'Launched',
+      skills: 'Technologies',
+      website: 'Website',
     },
   },
 };

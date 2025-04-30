@@ -1,0 +1,551 @@
+---
+// src/layouts/DigitalProductLayout.astro
+import '../styles/globals.css';
+import '../styles/fonts.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import SEO from '@/components/SEO.astro';
+import Container from '../components/Container.astro';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'; // Import Card components
+import { ArrowRight, ExternalLink, Check, Building, Calendar, Globe } from 'lucide-react'; // Import new icons
+import { getLangFromUrl } from '@/i18n/utils';
+import { languages } from '@/i18n/config'; // Import languages config
+import { getEntry, getCollection, type CollectionEntry } from 'astro:content'; // Import CollectionEntry
+import GoogleAnalytics from '@/components/GoogleAnalytics.astro';
+import CaseQuote from '../components/CaseQuote';
+import ImageLightbox from '../components/ImageLightbox';
+import VideoPlayer from '../components/VideoPlayer';
+
+// Get current language
+const currentLang = getLangFromUrl(Astro.url);
+
+// Get translations
+import { digitalStudioTranslations } from '@/i18n/translations/digital-studio';
+// Define Language type from config keys
+type Language = keyof typeof languages;
+// Assert currentLang is a valid key for translations
+const t = digitalStudioTranslations[currentLang as Language];
+
+// Get data from props
+const { entry, ...props } = Astro.props;
+
+// Use either entry.data or direct props
+const {
+  title,
+  introduction,
+  metadata,
+  productUrl,
+  logoImage,
+  demoVideo,
+  coverImage,
+  /* problem, - Removed */
+  /* solution, - Removed */
+  targetAudience,
+  keyFeatures,
+  originStory,
+  productOwnerQuote,
+  usageExample,
+  expandableContent,
+  quotes, // Destructure quotes
+  images,
+  relatedProducts,
+  tags, // Destructure tags
+} = entry?.data || props;
+
+/* Removed console logs */
+
+// Define type for related products data
+type DigitalStudioEntry = CollectionEntry<'digital-studio'>;
+let relatedProductsData: DigitalStudioEntry[] = [];
+
+// Fetch related products if IDs are provided
+if (relatedProducts && relatedProducts.length > 0) {
+  try {
+    const allProducts: DigitalStudioEntry[] = await getCollection('digital-studio', (product) => {
+      return product.id.startsWith(currentLang + '/');
+    });
+
+    // Filter to only include the related products
+    relatedProductsData = allProducts.filter((product) => {
+      const productId = product.id.split('/')[1].replace(/\.mdx?$/, '');
+      return relatedProducts.includes(productId) && product.id !== entry?.id;
+    });
+  } catch (error) {
+    console.error('Error fetching related products:', error);
+  }
+}
+
+// Construct SEO metadata
+const seoDescription = introduction?.slice(0, 155) + '...';
+
+// Determine SEO image with fallbacks
+const seoImage = coverImage || images?.[0]?.src || '/default-og-image.jpg';
+
+// Base URL for structured data
+const baseUrl = import.meta.env.SITE || 'https://www.patroon.nl';
+
+// Generate structured data for the product page
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: title,
+  description: seoDescription,
+  image: new URL(seoImage, baseUrl).toString(),
+  offers: {
+    '@type': 'Offer',
+    url: productUrl || Astro.url.href,
+    priceCurrency: 'EUR',
+    availability: 'https://schema.org/InStock',
+  },
+  brand: {
+    '@type': 'Organization',
+    name: 'Patroon',
+  },
+};
+
+const breadcrumbsStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: t.breadcrumbs.home,
+      item: new URL(`/${currentLang}`, baseUrl).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: t.breadcrumbs.digitalStudio,
+      item: new URL(`/${currentLang}/digital-studio`, baseUrl).toString(),
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: title,
+      item: Astro.url.href,
+    },
+  ],
+};
+
+// Function to extract slug
+function getSlug(path: string): string {
+  return path.split('/')[1].replace(/\.mdx?$/, '');
+}
+---
+
+<!doctype html>
+<html lang={currentLang}>
+  <head>
+    <GoogleAnalytics />
+
+    <SEO
+      title={`${title} | ${t.meta.seoTitle}`}
+      description={seoDescription}
+      image={seoImage}
+      type="product"
+      canonicalURL={Astro.url.href}
+    />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbsStructuredData)} />
+  </head>
+  <body class="min-h-screen bg-background text-foreground">
+    <Navbar variant="dark" />
+    <main>
+      <Container>
+        <!-- Hero Section - Different styling from case studies -->
+        <section class="py-24 border-b border-border">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <!-- Left column: Product info -->
+            <div class="flex flex-col gap-6">
+              {
+                logoImage && (
+                  <div class="mb-6">
+                    <img src={logoImage} alt={`${title} logo`} class="h-16 w-auto object-contain" />
+                  </div>
+                )
+              }
+
+              <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-foreground">
+                {title}
+              </h1>
+
+              <p class="text-xl text-text-secondary leading-relaxed">
+                {introduction}
+              </p>
+
+              <!-- Metadata Section -->
+              {
+                metadata && (
+                  <div class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-text-secondary mt-4">
+                    {metadata.client && (
+                      <span class="flex items-center gap-1.5">
+                        <Building className="w-4 h-4" /> {metadata.client}
+                      </span>
+                    )}
+                    {metadata.date && (
+                      <span class="flex items-center gap-1.5">
+                        <Calendar className="w-4 h-4" /> {metadata.date}
+                      </span>
+                    )}
+                    {metadata.website && (
+                      <a
+                        href={metadata.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex items-center gap-1.5 hover:text-primary"
+                      >
+                        <Globe className="w-4 h-4" /> {new URL(metadata.website).hostname}
+                      </a>
+                    )}
+                  </div>
+                )
+              }
+
+              <div class="flex flex-wrap gap-3 mt-4">
+                {/* Display Related Skills */}
+                {
+                  metadata?.relatedSkills &&
+                    Array.isArray(metadata.relatedSkills) &&
+                    metadata.relatedSkills.map((skill: string) => (
+                      <Badge className="bg-primary/20 text-primary">{skill}</Badge> // Removed key
+                    ))
+                }
+                {/* Display Tags */}
+                {
+                  tags &&
+                    Array.isArray(tags) &&
+                    tags.map((tag: string) => (
+                      <Badge variant="secondary">{tag}</Badge> // Removed key
+                    ))
+                }
+              </div>
+
+              <div class="flex flex-wrap gap-4 mt-8">
+                {
+                  productUrl && (
+                    <Button asChild>
+                      <a
+                        href={productUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-flex items-center gap-2"
+                      >
+                        <span>{t.buttons.visitWebsite}</span>
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    </Button>
+                  )
+                }
+
+                <Button variant="outline" asChild>
+                  <a
+                    href={`/${currentLang}/contact?product=${title}`}
+                    class="inline-flex items-center gap-2"
+                  >
+                    {t.buttons.contactUs}
+                  </a>
+                </Button>
+              </div>
+            </div>
+
+            <!-- Right column: Product image/video -->
+            <div class="rounded-lg overflow-hidden shadow-xl">
+              {
+                demoVideo ? (
+                  <VideoPlayer
+                    client:only="react"
+                    src={demoVideo}
+                    poster={coverImage || ''}
+                    title={title}
+                  />
+                ) : coverImage ? (
+                  <img src={coverImage} alt={title} class="w-full h-auto object-cover rounded-lg" />
+                ) : (
+                  <div class="bg-surface-1 w-full aspect-video flex items-center justify-center rounded-lg">
+                    <span class="text-text-secondary">Product afbeelding</span>
+                  </div>
+                )
+              }
+            </div>
+          </div>
+        </section>
+
+        {/* Problem & Solution Section Removed */}
+
+        <!-- Target Audience Section -->
+        <section class="py-16 border-b border-border">
+          <h2 class="text-2xl font-bold mb-8 text-foreground">{t.sections.audience}</h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Add check for targetAudience before mapping */}
+            {
+              targetAudience &&
+                Array.isArray(targetAudience) &&
+                targetAudience.map((audience: string) => (
+                  <div class="bg-surface-1 rounded-lg p-6 flex items-start gap-3">
+                    <div class="mt-1 text-primary">
+                      <Check className="w-5 h-5" />
+                    </div>
+                    <p>{audience}</p>
+                  </div>
+                ))
+            }
+          </div>
+        </section>
+
+        <!-- Key Features Section -->
+        {
+          keyFeatures && keyFeatures.length > 0 && (
+            <section class="py-16 border-b border-border">
+              <h2 class="text-2xl font-bold mb-8 text-foreground">{t.sections.features}</h2>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {/* Define type for feature or use any */}
+                {keyFeatures.map((feature: any) => (
+                  <Card className="hover:shadow-md transition-shadow border border-border/50">
+                    {' '}
+                    {/* Removed key prop */}
+                    <div class="p-6">
+                      <div class="mb-4 flex flex-col gap-3">
+                        <h3 class="text-xl font-semibold text-foreground">{feature.title}</h3>
+                        {/* Display icon text if available */}
+                        {feature.icon && (
+                          <span class="text-xs text-muted-foreground">Icon: {feature.icon}</span>
+                        )}
+                        <p class="text-text-secondary">{feature.description}</p>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </section>
+          )
+        }
+
+        <!-- Origin Story Section -->
+        <section class="py-16 border-b border-border">
+          <h2 class="text-2xl font-bold mb-8 text-foreground">{t.sections.origin}</h2>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div class="lg:col-span-2">
+              <p class="text-text-secondary whitespace-pre-line">{originStory}</p>
+            </div>
+
+            {
+              productOwnerQuote && (
+                <div class="lg:col-span-1">
+                  <div class="bg-surface-1 p-6 rounded-lg">
+                    <CaseQuote
+                      client:load
+                      quote={productOwnerQuote.quote}
+                      author={productOwnerQuote.author}
+                      role={productOwnerQuote.role}
+                    />
+                  </div>
+                </div>
+              )
+            }
+          </div>
+        </section>
+
+        <!-- Usage Example Section -->
+        {
+          usageExample && (
+            <section class="py-16 border-b border-border">
+              <h2 class="text-2xl font-bold mb-8 text-foreground">{t.sections.example}</h2>
+
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div>
+                  <h3 class="text-xl font-semibold mb-4">{usageExample.title}</h3>
+                  <p class="text-text-secondary mb-6">{usageExample.description}</p>
+
+                  <div class="bg-surface-1 p-4 rounded-lg">
+                    <h4 class="text-lg font-semibold mb-2">Resultaten</h4>
+                    <p class="text-text-secondary">{usageExample.results}</p>
+                  </div>
+
+                  {usageExample.userQuote && (
+                    <div class="mt-8">
+                      <CaseQuote
+                        client:load
+                        quote={usageExample.userQuote.quote}
+                        author={usageExample.userQuote.author}
+                        role={usageExample.userQuote.role}
+                      />
+                    </div>
+                  )}
+                </div>
+
+                {usageExample.image && (
+                  <div>
+                    <ImageLightbox
+                      client:load
+                      src={usageExample.image}
+                      alt={usageExample.title}
+                      title={usageExample.title}
+                      className="aspect-video w-full rounded-lg"
+                    />
+                  </div>
+                )}
+              </div>
+            </section>
+          )
+        }
+
+        <!-- Expandable Content Section -->
+        {
+          expandableContent && Array.isArray(expandableContent) && expandableContent.length > 0 && (
+            <section class="py-16 border-b border-border">
+              {expandableContent.map((contentItem: any, index: number) => (
+                <div class="mb-8 last:mb-0">
+                  {' '}
+                  {/* Removed key */}
+                  <h2 class="text-2xl font-bold mb-4 text-foreground">{contentItem.title}</h2>
+                  <p class="text-text-secondary mb-4">{contentItem.firstParagraph}</p>
+                  {contentItem.remainingText && Array.isArray(contentItem.remainingText) && (
+                    <div class="space-y-4 text-text-secondary">
+                      {contentItem.remainingText.map((text: string, textIndex: number) => (
+                        <p>{text}</p> // Removed key
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </section>
+          )
+        }
+
+        <!-- Additional Quotes Section -->
+        {
+          quotes && (quotes.first || quotes.second) && (
+            <section class="py-16 border-b border-border">
+              <h2 class="text-2xl font-bold mb-8 text-foreground">Quotes</h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {quotes.first && (
+                  <div class="bg-surface-1 p-6 rounded-lg">
+                    <CaseQuote
+                      client:load
+                      quote={quotes.first.quote}
+                      author={quotes.first.author}
+                      role={quotes.first.role}
+                    />
+                  </div>
+                )}
+                {quotes.second && (
+                  <div class="bg-surface-1 p-6 rounded-lg">
+                    <CaseQuote
+                      client:load
+                      quote={quotes.second.quote}
+                      author={quotes.second.author}
+                      role={quotes.second.role}
+                    />
+                  </div>
+                )}
+              </div>
+            </section>
+          )
+        }
+
+        <!-- Screenshots/Images -->
+        {
+          images && images.length > 0 && (
+            <section class="py-16 border-b border-border">
+              <h2 class="text-2xl font-bold mb-8 text-foreground">Screenshots</h2>
+
+              <div class="grid grid-cols-1 gap-8">
+                {/* Define type for image or use any */}
+                {images.map((image: any) => (
+                  <div class="overflow-hidden rounded-lg">
+                    {' '}
+                    {/* Removed key prop */}
+                    <ImageLightbox
+                      client:load
+                      src={image.src}
+                      alt={image.alt}
+                      title={image.alt}
+                      className={`w-full ${image.type === 'full' ? 'aspect-video' : 'aspect-square'}`}
+                    />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )
+        }
+
+        <!-- Related Products -->
+        {
+          relatedProductsData.length > 0 && (
+            <section class="py-16">
+              <h2 class="text-2xl font-bold mb-8 text-foreground">{t.sections.related}</h2>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {relatedProductsData.map((product) => (
+                  <a href={`/${currentLang}/digital-studio/${getSlug(product.id)}`} class="group">
+                    <Card className="h-full hover:shadow-md transition-all duration-300 border border-border/50">
+                      <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-3 group-hover:text-primary transition-colors">
+                          {product.data.title}
+                        </h3>
+                        <p class="text-text-secondary mb-4 line-clamp-2">
+                          {product.data.introduction}
+                        </p>
+                        <div class="flex justify-end">
+                          <ArrowRight className="w-5 h-5 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </div>
+                      </div>
+                    </Card>
+                  </a>
+                ))}
+              </div>
+            </section>
+          )
+        }
+
+        <!-- CTA Section -->
+        <section class="py-16 border-t border-border mt-12">
+          <div class="text-center max-w-3xl mx-auto">
+            <h2 class="text-3xl font-bold mb-6">Geïnteresseerd in {title}?</h2>
+            <p class="text-text-secondary mb-8">
+              Neem contact op voor meer informatie over dit product of een demo.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+              {
+                productUrl && (
+                  <Button size="lg" asChild>
+                    <a
+                      href={productUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center gap-2"
+                    >
+                      <span>{t.buttons.visitWebsite}</span>
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  </Button>
+                )
+              }
+
+              <Button variant="outline" size="lg" asChild>
+                <a
+                  href={`/${currentLang}/contact?product=${title}`}
+                  class="inline-flex items-center gap-2"
+                >
+                  {t.buttons.contactUs}
+                </a>
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        <slot />
+      </Container>
+
+      <Footer />
+    </main>
+  </body>
+</html>

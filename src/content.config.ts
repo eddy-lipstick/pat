@@ -62,6 +62,88 @@ const mediaSchema = z.object({
   type: z.enum(['full', 'grid', 'slider']),
 });
 
+// Digital studio product schema
+const digitalProductSchema = z.object({
+  // Core fields
+  title: z.string().min(1),
+  introduction: z.string(),
+  productUrl: z.string().url().optional(),
+  logoImage: z.string().optional(),
+  demoVideo: z.string().optional(),
+  coverImage: z.string().optional(),
+
+  /* Problem and solution fields removed */
+
+  // Target audience
+  targetAudience: z.array(z.string()),
+
+  // Key features
+  keyFeatures: z.array(
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      icon: z.string().optional(),
+    }),
+  ),
+
+  // Product origin story
+  originStory: z.string(),
+  productOwnerQuote: z
+    .object({
+      quote: z.string(),
+      author: z.string(),
+      role: z.string(),
+    })
+    .optional(),
+
+  // Usage example
+  usageExample: z
+    .object({
+      title: z.string(),
+      description: z.string(),
+      results: z.string(),
+      image: z.string().optional(),
+      userQuote: z
+        .object({
+          quote: z.string(),
+          author: z.string(),
+          role: z.string(),
+          company: z.string().optional(),
+        })
+        .optional(),
+    })
+    .optional(),
+
+  // Metadata
+  metadata: z.object({
+    client: z.string(),
+    date: z.string(),
+    relatedSkills: z.array(z.string()),
+    website: z.string().url().optional(),
+  }),
+
+  // Display settings
+  featured: z.boolean().default(false),
+  show_on_landing: z.boolean().default(false),
+  tags: z.array(z.string()).default([]),
+
+  // Related products
+  relatedProducts: z.array(z.string()).optional(),
+
+  // Reuse components from case studies for compatibility
+  expandableContent: z.array(expandableContentSchema).optional(),
+  quotes: z
+    .object({
+      first: quoteSchema.optional(),
+      second: quoteSchema.optional(),
+    })
+    .optional(),
+  images: z.array(mediaSchema).optional(),
+
+  // Optional translation reference
+  translationRef: z.string().optional(),
+});
+
 const beforeAfterSchema = z.object({
   beforeImage: z.string(),
   afterImage: z.string(),
@@ -314,7 +396,7 @@ export const collections = {
       pattern: '**/[^_]*.{md,mdx}', // This will match files in language subdirectories
       base: './src/content/digital-studio',
     }),
-    schema: caseStudySchema, // Using the same schema for now, will enhance later
+    schema: digitalProductSchema,
   }),
   team: defineCollection({
     loader: glob({

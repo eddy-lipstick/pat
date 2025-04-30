@@ -2,41 +2,59 @@
 // src/pages/[lang]/digital-studio/index.astro
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import Hero from '@/components/Hero.astro';
-import { languages } from '@/i18n/config';
-import { digitalSolutionsTranslations } from '@/i18n/translations/digital-studio';
-import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import Hero from '@/components/Hero.astro';
+import Breadcrumb from '@/components/Breadcrumb';
+import { ArrowRight, ExternalLink } from 'lucide-react';
+import { getLangFromUrl } from '@/i18n/utils';
+import { digitalStudioTranslations } from '@/i18n/translations/digital-studio';
 
-import { getDigitalStudioProducts, getProductLiveUrl } from '@/lib/digital-studio';
-
-// Generate pages for defined languages
+// Generate static paths for each language
 export function getStaticPaths() {
-  return Object.keys(languages).map((lang) => ({
-    params: { lang },
-  }));
+  return [{ params: { lang: 'en' } }, { params: { lang: 'nl' } }];
 }
 
+// Get current language
 const { lang } = Astro.params;
-const t = digitalSolutionsTranslations[lang];
+const currentLang = getLangFromUrl(Astro.url);
+const t = digitalStudioTranslations[currentLang];
 
-// Fetch actual digital studio products
-let digitalProducts = [];
-try {
-  const studioProducts = await getDigitalStudioProducts(lang);
-  console.log(
-    `[Digital Studio] Found ${studioProducts.length} digital studio products for language: ${lang}`
-  );
-  digitalProducts = studioProducts; // Assign fetched products directly
-} catch (error) {
-  console.error('[Digital Studio] Error fetching digital studio products:', error);
-  // digitalProducts will remain empty if fetching fails
+// Get all digital studio products for current language
+const allProducts = await getCollection('digital-studio', (entry) => 
+  entry.id.startsWith(currentLang + '/')
+);
+
+// Sort products: featured first, then by date
+const sortedProducts = allProducts.sort((a, b) => {
+  // First by featured status
+  if (a.data.featured && !b.data.featured) return -1;
+  if (!a.data.featured && b.data.featured) return 1;
+  
+  // Then by date (if available)
+  if (a.data.metadata?.date && b.data.metadata?.date) {
+    return new Date(b.data.metadata.date).getTime() - new Date(a.data.metadata.date).getTime();
+  }
+  
+  // Finally by title
+  return a.data.title.localeCompare(b.data.title);
+});
+
+// Function to extract slug
+function getSlug(path) {
+  return path.split('/')[1].replace(/\.mdx?$/, '');
 }
+
+const breadcrumbItems = [
+  { label: t.breadcrumbs.home, href: `/${currentLang}` },
+  { label: t.breadcrumbs.digitalStudio, href: `/${currentLang}/digital-studio` }
+];
 ---
 
 <BaseLayout title={t.meta.title} description={t.meta.description}>
-  {/* Hero Section */}
+  <Breadcrumb items={breadcrumbItems} client:load />
+  
   <Hero
     variant="small"
     subtitle={t.hero.subtitle}
@@ -44,161 +62,121 @@ try {
     description={t.hero.description}
   />
 
-  {/* Digital Products Grid - styled like LargeCaseStudyGrid */}
-  <div class="container mx-auto px-4 py-12">
-    <div class="space-y-16 md:space-y-32">
-      {
-        digitalProducts.map((product, index) => {
-          const { id, data, liveUrl } = product;
-          const {
-            title,
-            introduction,
-            cover_image,
-            metadata: { client, date, relatedSkills = [] },
-          } = data;
-
-          // Extract the filename without language prefix and extension
-          const baseId =
-            typeof id === 'string' && id.includes('/')
-              ? id
-                  .split('/')
-                  .pop()
-                  ?.replace(/\.[^/.]+$/, '')
-              : id;
-
-          return (
-            <div
-              class={`relative group grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center ${
-                index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''
-              }`}
-            >
-              {/* Image container */}
-              <div
-                class={`
-                relative overflow-hidden rounded-2xl
-                transition-transform duration-500 ease-out group-hover:scale-[1.02]
-                shadow-xl shadow-primary-600/10
-                aspect-[16/12] sm:aspect-[16/10] lg:aspect-[16/9]
-                ${index % 2 === 1 ? 'lg:order-2' : 'lg:order-1'}
-              `}
-              >
-                <div class="absolute inset-0 z-10" />
-                {cover_image?.src ? (
-                  <div class="absolute inset-0">
-                    <img
-                      src={cover_image.src}
-                      alt={cover_image.alt || title}
-                      class="h-full w-full object-cover object-center"
-                    />
-                  </div>
-                ) : (
-                  <div class="absolute inset-0 bg-surface-2 flex items-center justify-center">
-                    <div class="text-center p-6">
-                      <div class="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="32"
-                          height="32"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="text-primary"
-                        >
-                          <path d="M12 19l7-7 3 3-7 7-3-3z" />
-                          <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
-                          <path d="M2 2l7.586 7.586" />
-                          <circle cx="11" cy="11" r="2" />
-                        </svg>
-                      </div>
-                      <p class="text-text-tertiary">{title}</p>
-                    </div>
-                  </div>
+  <section class="py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="products-grid">
+      {sortedProducts.map((product) => {
+        // Extract product data
+        const { 
+          title, 
+          introduction, 
+          coverImage, 
+          metadata,
+          productUrl,
+          featured
+        } = product.data;
+        
+        const slug = getSlug(product.id);
+        
+        // Determine if this product is recently added (within last 30 days)
+        const isNew = metadata?.date && 
+                      (new Date().getTime() - new Date(metadata.date).getTime()) < 30 * 24 * 60 * 60 * 1000;
+        
+        return (
+          <Card className="overflow-hidden group flex flex-col h-full border border-border/30 hover:border-primary/50 hover:shadow-lg transition-all duration-300">
+            {/* Product Image */}
+            <a href={`/${currentLang}/digital-studio/${slug}`} class="block overflow-hidden">
+              {coverImage ? (
+                <div class="aspect-video overflow-hidden">
+                  <img 
+                    src={coverImage} 
+                    alt={title} 
+                    class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              ) : (
+                <div class="aspect-video bg-surface-1 flex items-center justify-center">
+                  <span class="text-text-secondary">{title}</span>
+                </div>
+              )}
+            </a>
+            
+            {/* Content */}
+            <CardHeader>
+              {/* Badges */}
+              <div class="flex gap-2 mb-2">
+                {featured && (
+                  <Badge variant="default" className="bg-primary text-primary-foreground">
+                    {t.labels.featured}
+                  </Badge>
+                )}
+                
+                {isNew && (
+                  <Badge variant="outline" className="border-accent text-accent">
+                    {t.labels.new}
+                  </Badge>
                 )}
               </div>
-
-              {/* Content container */}
-              <div
-                class={`
-                flex flex-col space-y-4 lg:space-y-6
-                transition-transform duration-500 ease-out group-hover:translate-y-[-4px]
-                ${index % 2 === 1 ? 'lg:order-1' : 'lg:order-2'}
-              `}
-              >
-                <div class="space-y-2 lg:space-y-3">
-                  <p class="text-sm text-muted-foreground">
-                    {client}
-                    {' • '}
-                    {date}
-                  </p>
-                  <h3 class="text-2xl lg:text-3xl font-bold">{title}</h3>
-                  <p class="text-base lg:text-lg text-text-secondary">{introduction}</p>
-                </div>
-
-                {relatedSkills && relatedSkills.length > 0 && (
-                  <div class="flex flex-wrap gap-2">
-                    {relatedSkills.map((skill, skillIndex) => (
-                      <Badge
-                        key={skillIndex}
-                        class="bg-primary/10 text-primary hover:bg-primary/20 border-transparent"
-                      >
-                        {skill}
-                      </Badge>
-                    ))}
-                  </div>
+              
+              <CardTitle className="text-xl mb-2">
+                <a href={`/${currentLang}/digital-studio/${slug}`} class="hover:text-primary transition-colors">
+                  {title}
+                </a>
+              </CardTitle>
+              
+              <CardDescription className="text-text-secondary line-clamp-2">
+                {introduction}
+              </CardDescription>
+            </CardHeader>
+            
+            <CardContent className="flex-grow">
+              <div class="flex flex-wrap gap-2">
+                {metadata.relatedSkills.slice(0, 3).map((skill) => (
+                  <span class="text-xs bg-surface-1 text-text-secondary px-2 py-1 rounded-full">
+                    {skill}
+                  </span>
+                ))}
+                
+                {metadata.relatedSkills.length > 3 && (
+                  <span class="text-xs bg-surface-1 text-text-secondary px-2 py-1 rounded-full">
+                    +{metadata.relatedSkills.length - 3}
+                  </span>
                 )}
-
-                <div class="pt-2 lg:pt-4 w-full flex gap-4">
-                  {/* Case Study Button */}
-                  <Button class="group relative overflow-hidden bg-feitlijn-yellow text-black hover:bg-feitlijn-yellow-400 transition-colors duration-300 w-full sm:w-auto">
-                    <a
-                      href={`/${lang}/digital-studio/${baseId}`}
-                      class="inline-flex items-center justify-center w-full"
-                    >
-                      {t.productCard.viewCaseStudy}
-                      <ArrowRight class="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    </a>
-                  </Button>
-
-                  {/* Live Demo Button - only shown if available */}
-                  {product.liveUrl || getProductLiveUrl(product) ? (
-                    <Button
-                      variant="outline"
-                      class="group relative overflow-hidden transition-colors duration-300 w-full sm:w-auto"
-                    >
-                      <a
-                        href={product.liveUrl || getProductLiveUrl(product)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="inline-flex items-center justify-center w-full"
-                      >
-                        {t.productCard.exploreLive}
-                        <ArrowRight class="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                      </a>
-                    </Button>
-                  ) : null}
-                </div>
               </div>
-            </div>
-          );
-        })
-      }
+            </CardContent>
+            
+            <CardFooter className="flex justify-between items-center pt-2 pb-4">
+              <Button variant="ghost" size="sm" asChild>
+                <a href={`/${currentLang}/digital-studio/${slug}`} class="flex items-center gap-2">
+                  <span>{t.buttons.goToProduct}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </a>
+              </Button>
+              
+              {productUrl && (
+                <Button variant="outline" size="sm" asChild>
+                  <a 
+                    href={productUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="flex items-center gap-2"
+                  >
+                    <span>{t.buttons.visitWebsite}</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </Button>
+              )}
+            </CardFooter>
+          </Card>
+        );
+      })}
     </div>
-  </div>
-
-  {/* Collaboration Section */}
-  <section class="py-12 bg-surface-1 rounded-lg my-16">
-    <div class="text-center max-w-2xl mx-auto px-4">
-      <h2 class="text-3xl font-bold mb-4">{t.collaboration.title}</h2>
-      <p class="text-text-secondary mb-8">{t.collaboration.description}</p>
-      <a
-        href={`/${lang}/contact`}
-        class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-md hover:bg-primary/90 transition-colors"
-      >
-        {t.collaboration.cta}
-      </a>
-    </div>
+    
+    {/* Empty State */}
+    {sortedProducts.length === 0 && (
+      <div class="text-center py-16 bg-surface-1 rounded-lg">
+        <h3 class="text-xl font-semibold mb-2">{t.emptyState.title}</h3>
+        <p class="text-text-secondary">{t.emptyState.description}</p>
+      </div>
+    )}
   </section>
 </BaseLayout>

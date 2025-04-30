@@ -1,60 +1,64 @@
 ---
 // src/pages/[lang]/digital-studio/[slug].astro
-// Based on src/pages/[lang]/case-studies/[id].astro
-import ModernCaseStudyLayout from '@/layouts/ModernCaseStudyLayout.astro';
-import { getCollection, render } from 'astro:content'; // Import render
+import DigitalProductLayout from '@/layouts/DigitalProductLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { getLangFromUrl } from '@/i18n/utils';
+import { languages } from '@/i18n/config'; // Import languages config
+import { digitalStudioTranslations } from '@/i18n/translations/digital-studio';
+
+// Define Language type from config keys
+type Language = keyof typeof languages;
 
 export async function getStaticPaths() {
-  const allDigitalStudioProducts = await getCollection('digital-studio');
+  // Get all digital studio products
+  const allProducts = await getCollection('digital-studio');
 
   const paths = [];
-  const languages = ['en', 'nl']; // Assuming same languages as case studies
 
-  for (const lang of languages) {
+  // Generate paths for each language and product
+  for (const lang of ['en', 'nl']) {
     // Filter products for current language
-    const languageProducts = allDigitalStudioProducts.filter((product) =>
-      product.id.startsWith(`${lang}/`)
+    const languageProducts = allProducts.filter((entry) => entry.id.startsWith(`${lang}/`));
+
+    // Log for debugging
+    console.log(`Found ${languageProducts.length} digital products for ${lang}`);
+    console.log(
+      'Product IDs:',
+      languageProducts.map((product) => product.id)
     );
 
-    // Log for debugging (optional)
-    // console.log(`Found ${languageProducts.length} digital studio products for ${lang}`);
-    // console.log('Product IDs:', languageProducts.map((p) => p.id));
+    for (const entry of languageProducts) {
+      // Get the slug without the language prefix and extension
+      const slug = entry.id.split('/')[1].replace(/\.mdx?$/, '');
 
-    for (const product of languageProducts) {
-      // Extract language and slug from the id (format: "en/product-name" or "en/category/product-name")
-      const parts = product.id.split('/');
-      const currentLang = parts[0];
-      const slug = parts
-        .slice(1)
-        .join('/')
-        .replace(/\.mdx?$/, ''); // Join remaining parts for slug
-
-      if (currentLang === lang && slug) {
-        paths.push({
-          params: { lang, slug },
-          props: { product }, // Pass the full product object
-        });
-      }
+      paths.push({
+        params: { lang, slug },
+        props: { entry },
+      });
     }
   }
 
-  // Log all generated paths for debugging (optional)
-  // console.log('Generated digital studio paths:', paths);
+  // Log all generated paths for debugging
+  console.log('Generated digital studio paths:', paths);
 
   return paths;
 }
 
-// Use 'product' consistent with the index page and previous attempts
-const { product } = Astro.props;
-const { Content } = await render(product); // Use imported render function
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+// Get current language
+const currentLang = getLangFromUrl(Astro.url);
+// Assert currentLang is a valid key for translations
+const t = digitalStudioTranslations[currentLang as Language];
+
+/* Removed console logs */
 ---
 
-{/* Use ModernCaseStudyLayout, passing 'product' as 'entry' prop */}
-<ModernCaseStudyLayout entry={product}>
-  {/* Apply similar container and prose styling as case study page */}
+<DigitalProductLayout entry={entry}>
   <div class="container mx-auto px-6 py-16">
     <div class="prose prose-lg prose-invert max-w-none">
       <Content />
     </div>
   </div>
-</ModernCaseStudyLayout>
+</DigitalProductLayout>

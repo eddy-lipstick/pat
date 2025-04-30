@@ -1,109 +1,137 @@
 ---
 title: 'Feitlijn'
-introduction: 'An AI-powered tool that analyzes contracts to identify potential risks, missing clauses, and improvement opportunities for legal professionals.'
+introduction: 'An innovative platform that makes legal decisions accessible to professionals through advanced visualization, structuring, and contextualization of case law.'
 
-# Cover image for the case study
-cover_image:
-  src: '/images/case-studies/contract-analyzer.jpg'
-  alt: 'ContractAnalyzer Pro interface showing contract analysis'
+# URL and media
+productUrl: 'https://feitlijn.nl'
+logoImage: '/images/digital-studio/feitlijn/logo.png'
+demoVideo: '/videos/feitlijn-demo.mp4'
+coverImage: '/images/case-studies/feitlijn/timeline.jpg'
 
-# Metadata
+# Problem and solution
+problem: 'Legal decisions are typically long, complex texts that are time-consuming to understand even for legal professionals. It requires experience and expertise to quickly identify relevant components and make proper connections.'
+solution: 'Feitlijn transforms these texts into structured, visual representations that make the key elements immediately clear. Through automated analysis, interactive visualizations, and contextual information, legal professionals can reach the core issues more quickly.'
+
+# Target audience
+targetAudience:
+  - 'Lawyers and legal advisors who regularly need to analyze case law'
+  - 'Judges and court staff who need an overview of previous rulings'
+  - 'Legal researchers and academics studying jurisprudence'
+  - 'Law students learning how to interpret court decisions'
+
+# Key features
+keyFeatures:
+  - title: 'Timeline Visualization'
+    description: 'A chronological overview of all relevant events in a case, with clear indication of the parties involved.'
+    icon: 'timeline'
+  - title: 'Legal Analysis'
+    description: 'Structured representation of key arguments, legal rules, and applications within a decision.'
+    icon: 'analysis'
+  - title: 'Case Routing'
+    description: 'Visual representation of the route a case has taken through different instances.'
+    icon: 'route'
+  - title: 'Collections'
+    description: 'Ability to group related decisions and share them with colleagues.'
+    icon: 'collection'
+  - title: 'Presentation Mode'
+    description: 'Professional display for use during presentations or in the courtroom.'
+    icon: 'presentation'
+
+# Origin story
+originStory: "Feitlijn originated from our years of experience with legal professionals. We observed that even experienced lawyers struggled with efficiently processing the large volume of case law. In a pilot with various law firms, we first developed a methodology to visualize decisions, which subsequently led to an automated platform.\n\nThe combination of legal expertise, modern design, and technology resulted in a tool now used daily by hundreds of professionals to save time and gain deeper insight into case law."
+
+productOwnerQuote:
+  quote: 'By visualizing and structuring case law, we make the legal system more accessible. Feitlijn demonstrates how technology can democratize legal information.'
+  author: 'Maurits Fornier'
+  role: 'Patroon'
+
+# Usage example
+usageExample:
+  title: 'Analyzing a Complex Fraud Case'
+  description: 'A major law firm in Amsterdam had to prepare a complex fraud case involving more than 20 parties and a 15-year history. Using Feitlijn, they were able to build a comprehensive timeline and argument structure within a few hours.'
+  results: 'Preparation time was reduced by 40%, and new team members could be brought up to speed quickly thanks to the clear visual structure.'
+  image: '/images/case-studies/feitlijn/timeline.jpg'
+  userQuote:
+    quote: 'Feitlijn transforms how we work with case law. Through the visual structure and contextualization, I not only see the decision but also immediately understand all relevant connections.'
+    author: 'Mr. J. van Dijk'
+    role: 'Attorney'
+    company: 'Van Doorne'
+
+# Core metadata
 metadata:
-  client: 'Legal Technology Users'
+  client: 'Legal Professionals'
   date: 'April 2024'
-  relatedSkills: ['AI', 'Contract Analysis', 'Legal Tech']
-  # The website field is used for the "Try Now" link
-  website: 'https://example.com/contract-analyzer'
+  relatedSkills: ['Legal Tech', 'UX Design', 'Data Visualization', 'Frontend Engineering']
+  website: 'https://feitlijn.nl'
 
 # Display settings
-featured: false
-show_on_landing: false
+featured: true
+show_on_landing: true
+tags: ['legal-tech', 'ai', 'analysis']
 
-# Tags for filtering/organization
-tags: ['contracts', 'ai', 'analysis']
+# Related products
+relatedProducts: ['legalsuite', 'contractanalyzer']
 
-# Team member who led this project (optional)
-teamMember: 'en/dielis-delen'
+# Translation reference
+translationRef: 'nl/feitlijn'
 
-# Below are optional components that can be added to case studies
+# Reusing case study components for compatibility
 expandableContent:
-  - title: 'How It Works'
-    firstParagraph: 'ContractAnalyzer Pro uses advanced natural language processing to scan legal documents and identify patterns, inconsistencies, and potential risks. The system has been trained on thousands of contracts across multiple jurisdictions.'
+  - title: 'From Inaccessible Text to Visual Insights'
+    firstParagraph: 'Legal decisions are typically long, complex texts that are time-consuming to understand, even for legal professionals. Feitlijn transforms these texts into structured, visual representations that make the key elements immediately clear.'
     remainingText:
-      - 'The tool highlights problematic clauses, suggests alternative wording, and identifies missing sections that are standard in similar agreements. It can process documents in multiple formats including PDF, DOCX, and plain text.'
-      - 'Legal professionals can upload documents through our secure interface, receive an analysis within minutes, and export findings in various formats for client presentations or internal use.'
-
-  - title: 'Key Features'
-    firstParagraph: 'ContractAnalyzer Pro offers a comprehensive suite of features designed specifically for legal professionals working with contracts.'
-    remainingText:
-      - 'Risk identification: The system automatically flags high-risk clauses and provisions that may lead to future disputes or liabilities.'
-      - 'Clause comparison: CompareView technology allows users to see how specific clauses compare to industry standards and best practices.'
-      - 'Missing elements detection: The tool identifies standard clauses or provisions that are missing from the document based on contract type.'
-      - 'Export and reporting: Comprehensive reports can be generated and exported in multiple formats for client presentations.'
+      - 'The application integrates different components that each highlight an aspect of the legal case: the timeline visualizes the chronology, the legal analysis structures the key arguments, and the case route shows connections with related decisions. This holistic approach ensures that users can quickly understand the essence.'
+      - 'In addition to visualization, Feitlijn also offers contextual information such as emoji summaries, collections of related decisions, and expert notes that place the decisions in a broader legal framework.'
 
 quotes:
   first:
-    quote: 'ContractAnalyzer Pro has reduced our contract review time by 40% while significantly increasing the consistency and thoroughness of our analysis.'
-    author: 'Maria Jansen'
-    role: 'Senior Legal Counsel, International Financial Group'
+    quote: 'Feitlijn transforms how we work with case law. Through the visual structure and contextualization, I not only see the decision but also immediately understand all relevant connections.'
+    author: 'Mr. J. van Dijk'
+    role: 'Attorney, Van Doorne'
+  second:
+    quote: 'By visualizing and structuring case law, we make the legal system more accessible. Feitlijn demonstrates how technology can democratize legal information.'
+    author: 'Maurits Fornier'
+    role: 'Patroon'
+
+# Images
+images:
+  - src: '/images/case-studies/feitlijn/timeline.jpg'
+    alt: 'Timeline visualization of a legal case'
+    type: 'full'
+  - src: '/images/case-studies/feitlijn/analysis.jpg'
+    alt: 'Legal analysis component'
+    type: 'full'
+  - src: '/images/case-studies/feitlijn/collections.jpg'
+    alt: 'Collections overview'
+    type: 'full'
+  - src: '/images/case-studies/feitlijn/zaakroute.jpg'
+    alt: 'Case route visualization'
+    type: 'full'
+  - src: '/images/case-studies/feitlijn/presentation.jpg'
+    alt: 'Presentation mode in action'
+    type: 'full'
 ---
 
-## Background
+# Feitlijn
 
-Contract review is one of the most time-consuming aspects of legal work, requiring meticulous attention to detail and extensive knowledge of legal precedents and industry standards. Many organizations struggle with the volume of contracts requiring review, leading to bottlenecks in business processes or increased risk exposure when reviews are rushed.
+Feitlijn is an innovative platform that transforms complex legal decisions into clear, structured visual representations. Our platform helps legal professionals save time and gain deeper insights when working with case law.
 
-## The Challenge
+## How it Works
 
-Legal professionals needed a tool that could:
+Feitlijn uses a combination of legal expertise and modern technology to automatically analyze court decisions and present them in a more accessible format:
 
-1. Reduce the time required for comprehensive contract review
-2. Ensure consistent analysis across different reviewers
-3. Identify hidden risks that might be missed in manual review
-4. Provide actionable recommendations based on industry best practices
-5. Integrate with existing document management systems
+1. **Timeline Visualization** - See the chronological sequence of events
+2. **Argument Mapping** - Understand the legal reasoning and key points
+3. **Case Connections** - Discover relationships between different cases
+4. **Expert Context** - Benefit from annotations by legal experts
 
-## Our Approach
+## Benefits for Legal Professionals
 
-We developed ContractAnalyzer Pro through a careful, iterative process:
+- **Save Time**: Reduce the time spent reading and analyzing decisions
+- **Improve Understanding**: Grasp complex legal arguments more quickly
+- **Enhance Communication**: Share insights with colleagues and clients
+- **Make Better Decisions**: Base your legal strategy on comprehensive insights
 
-1. **Research Phase**: We interviewed dozens of legal professionals to understand their contract review workflows, pain points, and requirements.
+## Integration Possibilities
 
-2. **Data Collection**: We assembled a diverse dataset of anonymized contracts spanning multiple industries and jurisdictions to train our AI models.
-
-3. **Algorithm Development**: Our team created specialized NLP models designed specifically for legal language processing, trained to recognize contract structures and potential issues.
-
-4. **Interface Design**: We designed an intuitive interface that presents complex analysis in an actionable format, allowing legal professionals to quickly identify and address issues.
-
-5. **Testing and Refinement**: The tool underwent extensive testing with legal departments and law firms, with continuous refinement based on user feedback.
-
-## The Solution
-
-ContractAnalyzer Pro offers a streamlined workflow for contract review:
-
-1. Upload documents in any standard format
-2. Receive automated analysis highlighting risks, inconsistencies, and missing elements
-3. Review AI-generated suggestions for improvements
-4. Generate comprehensive reports for clients or internal use
-5. Export findings in multiple formats
-
-The tool integrates with popular document management systems and maintains the highest standards of data security and confidentiality.
-
-## Results
-
-Legal teams using ContractAnalyzer Pro have reported:
-
-- 40-60% reduction in time spent on routine contract review
-- Increased consistency in contract analysis
-- Identification of risks that were previously overlooked
-- Higher confidence in contract completeness and compliance
-- Better allocation of legal expertise to high-value tasks
-
-## Future Development
-
-ContractAnalyzer Pro continues to evolve with planned enhancements including:
-
-- Expanded language support
-- Industry-specific modules for specialized contract types
-- Integration with negotiation tracking tools
-- Customizable risk assessment frameworks
-- Collaborative review features for legal teams
+Feitlijn can be integrated with existing legal research platforms and document management systems, creating a seamless workflow for your organization.
