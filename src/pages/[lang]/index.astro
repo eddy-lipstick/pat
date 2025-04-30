@@ -2,6 +2,7 @@
 // src/pages/[lang]/index.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getFeaturedCaseStudies } from '../../lib/case-studies';
+import { getFeaturedDigitalStudioProducts } from '../../lib/digital-studio';
 import { getLangFromUrl } from '@/i18n/utils';
 import { landingTranslations } from '@/i18n/translations/landing';
 import NameExplanationCard from '@/components/NameExplanationCard';
@@ -25,6 +26,7 @@ import { ArrowRight, MessageCircle } from 'lucide-react';
 import VideoTestimonials from '../../components/VideoTestimonials';
 import OurFormula from '../../components/OurFormula';
 import TeamSection from '../../components/TeamSection';
+import DigitalStudioGrid from '../../components/DigitalStudioGrid';
 import Hero from '@/components/Hero.astro';
 import Partners from '../../components/Partners.astro';
 import SectionHeader from '@/components/SectionHeader.astro';
@@ -59,6 +61,7 @@ const teamMembers = [
 ];
 
 const featuredCaseStudies = await getFeaturedCaseStudies();
+const featuredDigitalStudioProducts = await getFeaturedDigitalStudioProducts(currentLang);
 
 // Get all case studies for current language
 const allCaseStudies = await getCollection('case-studies', (entry) => {
@@ -104,6 +107,35 @@ const processedStudies = await Promise.all(
   <LogoGrid lang={lang} />
 
   <ServicesGrid />
+
+  {/* Digital Studio Section */}
+  {
+    featuredDigitalStudioProducts.length > 0 && (
+      <div class="container mx-auto px-4 py-12">
+        <SectionHeader
+          eyebrow={t.digitalStudio.eyebrow}
+          title={t.digitalStudio.title}
+          description={t.digitalStudio.description}
+        />
+        <div class="mt-12">
+          <DigitalStudioGrid
+            products={featuredDigitalStudioProducts}
+            client:load
+            lang={currentLang}
+          />
+        </div>
+        <div class="mt-8 text-center">
+          <a
+            href={`/${currentLang}/digital-studio`}
+            class="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
+          >
+            {t.digitalStudio.viewAll}
+            <ArrowRight class="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+    )
+  }
 
   <SectionHeader
     eyebrow={t.formula.eyebrow}

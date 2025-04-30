@@ -1,0 +1,204 @@
+---
+// src/pages/[lang]/digital-studio/index.astro
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import Hero from '@/components/Hero.astro';
+import { languages } from '@/i18n/config';
+import { digitalSolutionsTranslations } from '@/i18n/translations/digital-studio';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
+
+import { getDigitalStudioProducts, getProductLiveUrl } from '@/lib/digital-studio';
+
+// Generate pages for defined languages
+export function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({
+    params: { lang },
+  }));
+}
+
+const { lang } = Astro.params;
+const t = digitalSolutionsTranslations[lang];
+
+// Fetch actual digital studio products
+let digitalProducts = [];
+try {
+  const studioProducts = await getDigitalStudioProducts(lang);
+  console.log(
+    `[Digital Studio] Found ${studioProducts.length} digital studio products for language: ${lang}`
+  );
+  digitalProducts = studioProducts; // Assign fetched products directly
+} catch (error) {
+  console.error('[Digital Studio] Error fetching digital studio products:', error);
+  // digitalProducts will remain empty if fetching fails
+}
+---
+
+<BaseLayout title={t.meta.title} description={t.meta.description}>
+  {/* Hero Section */}
+  <Hero
+    variant="small"
+    subtitle={t.hero.subtitle}
+    title={t.hero.title}
+    description={t.hero.description}
+  />
+
+  {/* Digital Products Grid - styled like LargeCaseStudyGrid */}
+  <div class="container mx-auto px-4 py-12">
+    <div class="space-y-16 md:space-y-32">
+      {
+        digitalProducts.map((product, index) => {
+          const { id, data, liveUrl } = product;
+          const {
+            title,
+            introduction,
+            cover_image,
+            metadata: { client, date, relatedSkills = [] },
+          } = data;
+
+          // Extract the filename without language prefix and extension
+          const baseId =
+            typeof id === 'string' && id.includes('/')
+              ? id
+                  .split('/')
+                  .pop()
+                  ?.replace(/\.[^/.]+$/, '')
+              : id;
+
+          return (
+            <div
+              class={`relative group grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-center ${
+                index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''
+              }`}
+            >
+              {/* Image container */}
+              <div
+                class={`
+                relative overflow-hidden rounded-2xl
+                transition-transform duration-500 ease-out group-hover:scale-[1.02]
+                shadow-xl shadow-primary-600/10
+                aspect-[16/12] sm:aspect-[16/10] lg:aspect-[16/9]
+                ${index % 2 === 1 ? 'lg:order-2' : 'lg:order-1'}
+              `}
+              >
+                <div class="absolute inset-0 z-10" />
+                {cover_image?.src ? (
+                  <div class="absolute inset-0">
+                    <img
+                      src={cover_image.src}
+                      alt={cover_image.alt || title}
+                      class="h-full w-full object-cover object-center"
+                    />
+                  </div>
+                ) : (
+                  <div class="absolute inset-0 bg-surface-2 flex items-center justify-center">
+                    <div class="text-center p-6">
+                      <div class="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="32"
+                          height="32"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="text-primary"
+                        >
+                          <path d="M12 19l7-7 3 3-7 7-3-3z" />
+                          <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+                          <path d="M2 2l7.586 7.586" />
+                          <circle cx="11" cy="11" r="2" />
+                        </svg>
+                      </div>
+                      <p class="text-text-tertiary">{title}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Content container */}
+              <div
+                class={`
+                flex flex-col space-y-4 lg:space-y-6
+                transition-transform duration-500 ease-out group-hover:translate-y-[-4px]
+                ${index % 2 === 1 ? 'lg:order-1' : 'lg:order-2'}
+              `}
+              >
+                <div class="space-y-2 lg:space-y-3">
+                  <p class="text-sm text-muted-foreground">
+                    {client}
+                    {' • '}
+                    {date}
+                  </p>
+                  <h3 class="text-2xl lg:text-3xl font-bold">{title}</h3>
+                  <p class="text-base lg:text-lg text-text-secondary">{introduction}</p>
+                </div>
+
+                {relatedSkills && relatedSkills.length > 0 && (
+                  <div class="flex flex-wrap gap-2">
+                    {relatedSkills.map((skill, skillIndex) => (
+                      <Badge
+                        key={skillIndex}
+                        class="bg-primary/10 text-primary hover:bg-primary/20 border-transparent"
+                      >
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+
+                <div class="pt-2 lg:pt-4 w-full flex gap-4">
+                  {/* Case Study Button */}
+                  <Button class="group relative overflow-hidden bg-feitlijn-yellow text-black hover:bg-feitlijn-yellow-400 transition-colors duration-300 w-full sm:w-auto">
+                    <a
+                      href={`/${lang}/digital-studio/${baseId}`}
+                      class="inline-flex items-center justify-center w-full"
+                    >
+                      {t.productCard.viewCaseStudy}
+                      <ArrowRight class="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </a>
+                  </Button>
+
+                  {/* Live Demo Button - only shown if available */}
+                  {product.liveUrl || getProductLiveUrl(product) ? (
+                    <Button
+                      variant="outline"
+                      class="group relative overflow-hidden transition-colors duration-300 w-full sm:w-auto"
+                    >
+                      <a
+                        href={product.liveUrl || getProductLiveUrl(product)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-flex items-center justify-center w-full"
+                      >
+                        {t.productCard.exploreLive}
+                        <ArrowRight class="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      </a>
+                    </Button>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+
+  {/* Collaboration Section */}
+  <section class="py-12 bg-surface-1 rounded-lg my-16">
+    <div class="text-center max-w-2xl mx-auto px-4">
+      <h2 class="text-3xl font-bold mb-4">{t.collaboration.title}</h2>
+      <p class="text-text-secondary mb-8">{t.collaboration.description}</p>
+      <a
+        href={`/${lang}/contact`}
+        class="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-md hover:bg-primary/90 transition-colors"
+      >
+        {t.collaboration.cta}
+      </a>
+    </div>
+  </section>
+</BaseLayout>

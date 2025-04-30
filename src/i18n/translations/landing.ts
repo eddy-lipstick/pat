@@ -27,6 +27,12 @@ export const landingTranslations = {
       description:
         'We help organizations make their legal information more accessible and automate legal processes.',
     },
+    digitalStudio: {
+      eyebrow: 'Digital Studio',
+      title: 'Our Digital Products',
+      description: 'Innovative legal tech tools built from our expertise and experience.',
+      viewAll: 'View all digital products',
+    },
     formula: {
       eyebrow: 'Our formula',
       title: 'Lawyers, designers and technologists',
@@ -66,6 +72,12 @@ export const landingTranslations = {
       title: 'Wat we voor je kunnen betekenen',
       description:
         'We helpen organisaties hun juridische informatie toegankelijker te maken en juridische processen te automatiseren.',
+    },
+    digitalStudio: {
+      eyebrow: 'Digital Studio',
+      title: 'Onze Digitale Producten',
+      description: 'Innovatieve legal tech tools gebouwd vanuit onze expertise en ervaring.',
+      viewAll: 'Bekijk alle digitale producten',
     },
     formula: {
       eyebrow: 'Onze formule',

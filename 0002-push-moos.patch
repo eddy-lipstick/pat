@@ -1,0 +1,721 @@
+From 60aeed24febba3718edb96efa3cdf63097446aa7 Mon Sep 17 00:00:00 2001
+From: eddy-lipstick <maurits@patroon.nl>
+Date: Wed, 9 Apr 2025 10:02:18 +0200
+Subject: [PATCH 2/2] push moos
+
+---
+ src/components/CaseStudyCard.jsx            |  37 +--
+ src/components/ExpandableText.jsx           |  58 +++--
+ src/components/RelatedCaseStudiesSlider.jsx | 256 ++++++++++++++++++++
+ src/content.config.ts                       |   2 +-
+ src/content/case-studies/en/moos.md         |   6 +-
+ src/content/case-studies/nl/moos.md         |  12 +-
+ src/i18n/translations/case-studies.ts       |  10 +
+ src/layouts/ModernCaseStudyLayout.astro     |  27 ++-
+ src/pages/[lang]/case-studies/index.astro   |  74 +++---
+ src/styles/globals.css                      |   9 +
+ 10 files changed, 406 insertions(+), 85 deletions(-)
+ create mode 100644 src/components/RelatedCaseStudiesSlider.jsx
+
+diff --git a/src/components/CaseStudyCard.jsx b/src/components/CaseStudyCard.jsx
+index 99dfb32..5cae18f 100644
+--- a/src/components/CaseStudyCard.jsx
++++ b/src/components/CaseStudyCard.jsx
+@@ -1,8 +1,15 @@
+ import React from 'react';
+-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+-import { Badge } from "@/components/ui/badge";
++import {
++  Card,
++  CardContent,
++  CardDescription,
++  CardFooter,
++  CardHeader,
++  CardTitle,
++} from '@/components/ui/card';
++import { Badge } from '@/components/ui/badge';
+ 
+-const CaseStudyCard = ({ study }) => {
++const CaseStudyCard = ({ study, lang = 'nl' }) => {
+   const {
+     id,
+     data: {
+@@ -12,14 +19,20 @@ const CaseStudyCard = ({ study }) => {
+       metadata: {
+         client,
+         date,
+-        relatedSkills = [] // Default empty array for relatedSkills
+-      }
+-    }
++        relatedSkills = [], // Default empty array for relatedSkills
++      },
++    },
+   } = study;
+ 
++  // Extract the part of the ID after the language prefix
++  const studyId = id.includes('/') ? id.split('/')[1] : id;
++
++  // Construct the correct URL with the language prefix
++  const caseStudyUrl = `/${lang}/case-studies/${studyId}`;
++
+   return (
+     <Card className="overflow-hidden hover:shadow-lg transition-all group">
+-      <a href={`/case-studies/${id}`} className="block">
++      <a href={caseStudyUrl} className="block">
+         {cover_image?.src && (
+           <div className="aspect-video w-full overflow-hidden">
+             <img
+@@ -35,12 +48,8 @@ const CaseStudyCard = ({ study }) => {
+             <p className="text-sm text-muted-foreground">
+               {client} • {date}
+             </p>
+-            <CardTitle className="line-clamp-2">
+-              {title}
+-            </CardTitle>
+-            <CardDescription className="line-clamp-2">
+-              {introduction}
+-            </CardDescription>
++            <CardTitle className="line-clamp-2">{title}</CardTitle>
++            <CardDescription className="line-clamp-2">{introduction}</CardDescription>
+           </div>
+         </CardHeader>
+ 
+@@ -64,4 +73,4 @@ const CaseStudyCard = ({ study }) => {
+   );
+ };
+ 
+-export default CaseStudyCard;
+\ No newline at end of file
++export default CaseStudyCard;
+diff --git a/src/components/ExpandableText.jsx b/src/components/ExpandableText.jsx
+index 02017c0..44df087 100644
+--- a/src/components/ExpandableText.jsx
++++ b/src/components/ExpandableText.jsx
+@@ -6,10 +6,14 @@ const ExpandableText = ({
+     title,
+     subtitle,
+     firstParagraph,
+-    remainingText,
+-    className = ""
++    remainingText = [],  // Default to empty array
++    className = "",
++    translations = { readMore: 'Lees meer', readLess: 'Lees minder' }
+ }) => {
+     const [isExpanded, setIsExpanded] = useState(false);
++    
++    // Check if remainingText exists and has content
++    const hasRemainingText = remainingText && remainingText.length > 0 && remainingText.some(text => text.trim() !== '');
+ 
+     return (
+         <div className={`w-full md:w-3/5 space-y-8 ${className}`}>
+@@ -28,30 +32,34 @@ const ExpandableText = ({
+                 {firstParagraph}
+             </p>
+ 
+-            <div
+-                className={`transform transition-all duration-500 ease-in-out space-y-6 ${isExpanded ? 'opacity-100 max-h-[1000px]' : 'opacity-0 max-h-0 overflow-hidden'
+-                    }`}
+-            >
+-                {remainingText.map((paragraph, index) => (
+-                    <p key={index} className="text-xl text-background font-light leading-relaxed">
+-                        {paragraph}
+-                    </p>
+-                ))}
+-            </div>
++            {hasRemainingText && (
++                <>
++                    <div
++                        className={`transform transition-all duration-500 ease-in-out space-y-6 ${isExpanded ? 'opacity-100 max-h-[1000px]' : 'opacity-0 max-h-0 overflow-hidden'
++                            }`}
++                    >
++                        {remainingText.map((paragraph, index) => (
++                            <p key={index} className="text-xl text-background font-light leading-relaxed">
++                                {paragraph}
++                            </p>
++                        ))}
++                    </div>
+ 
+-            <Button
+-                variant="ghost"
+-                size="sm"
+-                onClick={() => setIsExpanded(!isExpanded)}
+-                className="transition-all duration-300 rounded-full px-3 py-1 text-sm 
+-                    bg-primary/10 text-primary hover:bg-primary/20 flex items-center"
+-            >
+-                <span className="mr-2">{isExpanded ? 'Lees minder' : 'Lees meer'}</span>
+-                <ChevronDown
+-                    className={`h-4 w-4 transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''
+-                        }`}
+-                />
+-            </Button>
++                    <Button
++                        variant="ghost"
++                        size="sm"
++                        onClick={() => setIsExpanded(!isExpanded)}
++                        className="transition-all duration-300 rounded-full px-3 py-1 text-sm 
++                            bg-primary/10 text-primary hover:bg-primary/20 flex items-center"
++                    >
++                        <span className="mr-2">{isExpanded ? translations.readLess : translations.readMore}</span>
++                        <ChevronDown
++                            className={`h-4 w-4 transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''
++                                }`}
++                        />
++                    </Button>
++                </>
++            )}
+         </div>
+     );
+ };
+diff --git a/src/components/RelatedCaseStudiesSlider.jsx b/src/components/RelatedCaseStudiesSlider.jsx
+new file mode 100644
+index 0000000..c93d2db
+--- /dev/null
++++ b/src/components/RelatedCaseStudiesSlider.jsx
+@@ -0,0 +1,256 @@
++import React, { useState, useRef, useEffect } from 'react';
++import { Button } from '@/components/ui/button';
++import { Badge } from '@/components/ui/badge';
++import { ArrowLeft, ArrowRight } from 'lucide-react';
++import { caseStudiesTranslations } from '@/i18n/translations/case-studies';
++
++const RelatedCaseStudiesSlider = ({ studies, currentStudyId, lang = 'nl' }) => {
++  const t = caseStudiesTranslations[lang];
++  const sliderRef = useRef(null);
++  const [scrollPosition, setScrollPosition] = useState(0);
++  const [canScrollLeft, setCanScrollLeft] = useState(false);
++  const [canScrollRight, setCanScrollRight] = useState(true);
++
++  // Copy the date parsing function from the case-studies/index.astro page
++  const getDateForSorting = (dateStr) => {
++    if (!dateStr) return new Date(0); // Handle missing dates
++    
++    // Maps for both English and Dutch month names
++    const monthMap = {
++      // English months
++      'january': 1, 'jan': 1,
++      'february': 2, 'feb': 2,
++      'march': 3, 'mar': 3,
++      'april': 4, 'apr': 4,
++      'may': 5,
++      'june': 6, 'jun': 6,
++      'july': 7, 'jul': 7,
++      'august': 8, 'aug': 8,
++      'september': 9, 'sep': 9, 'sept': 9,
++      'october': 10, 'oct': 10,
++      'november': 11, 'nov': 11,
++      'december': 12, 'dec': 12,
++      
++      // Dutch months
++      'januari': 1,
++      'februari': 2,
++      'maart': 3,
++      'april': 4,
++      'mei': 5,
++      'juni': 6,
++      'juli': 7,
++      'augustus': 8,
++      'september': 9,
++      'oktober': 10,
++      'november': 11,
++      'december': 12
++    };
++    
++    // Split the date into parts and standardize
++    const parts = dateStr.split(' ');
++    if (parts.length !== 2) {
++      console.warn(`Date format issue with: ${dateStr}`);
++      return new Date(0); // Return earliest possible date for invalid formats
++    }
++    
++    const monthName = parts[0].toLowerCase();
++    const year = parseInt(parts[1], 10);
++    const month = monthMap[monthName];
++    
++    if (!month || isNaN(year)) {
++      console.warn(`Invalid date: ${dateStr} (month: ${monthName}, year: ${year})`);
++      return new Date(0);
++    }
++    
++    // Create a standardized date string (YYYY-MM-01)
++    const monthStr = month.toString().padStart(2, '0');
++    return new Date(`${year}-${monthStr}-01T00:00:00Z`);
++  };
++  
++  // Filter out the current study and sort by date (newest first)
++  let filteredStudies = studies
++    .filter((study) => study.id !== currentStudyId)
++    .sort((a, b) => {
++      // Use the same date parsing logic as the main case studies page
++      const dateA = getDateForSorting(a.data.metadata?.date);
++      const dateB = getDateForSorting(b.data.metadata?.date);
++      
++      // Sort newest first
++      return dateB.getTime() - dateA.getTime();
++    });
++
++  // Early exit if no related studies
++  if (!filteredStudies.length) {
++    return null;
++  }
++
++  const handleScroll = (direction) => {
++    if (!sliderRef.current) return;
++
++    const { scrollWidth, clientWidth } = sliderRef.current;
++    const scrollAmount = clientWidth * 0.9; // Almost a full viewport
++
++    let newPosition =
++      direction === 'left'
++        ? Math.max(0, scrollPosition - scrollAmount)
++        : Math.min(scrollWidth - clientWidth, scrollPosition + scrollAmount);
++
++    sliderRef.current.scrollTo({
++      left: newPosition,
++      behavior: 'smooth',
++    });
++
++    setScrollPosition(newPosition);
++  };
++
++  // Update scroll buttons state on scroll
++  const handleScrollUpdate = () => {
++    if (!sliderRef.current) return;
++
++    const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
++    setScrollPosition(scrollLeft);
++    setCanScrollLeft(scrollLeft > 0);
++    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5); // 5px tolerance for rounding errors
++  };
++
++  // Set up scroll event listener
++  useEffect(() => {
++    const slider = sliderRef.current;
++    if (slider) {
++      slider.addEventListener('scroll', handleScrollUpdate);
++      // Initial check
++      handleScrollUpdate();
++
++      return () => {
++        slider.removeEventListener('scroll', handleScrollUpdate);
++      };
++    }
++  }, []);
++
++  return (
++    <div className="py-20 pb-28 mt-10 mb-[-128px] bg-surface-1 text-foreground">
++      <div className="container mx-auto px-6">
++        <div className="flex justify-between items-center mb-10">
++          <div className="flex gap-2">
++            <Button
++              variant="outline"
++              size="icon"
++              onClick={() => handleScroll('left')}
++              disabled={!canScrollLeft}
++              className={`bg-white border-none hover:bg-white/30 text-background h-8 w-12 ${!canScrollLeft ? 'opacity-50 cursor-not-allowed' : ''}`}
++            >
++              <ArrowLeft className="h-4 w-4" />
++            </Button>
++            <Button
++              variant="outline"
++              size="icon"
++              onClick={() => handleScroll('right')}
++              disabled={!canScrollRight}
++              className={`bg-white/20 border-none hover:bg-white/30 text-background h-8 w-12 ${!canScrollRight ? 'opacity-50 cursor-not-allowed' : ''}`}
++            >
++              <ArrowRight className="h-4 w-4" />
++            </Button>
++          </div>
++        </div>
++
++        <div
++          ref={sliderRef}
++          className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth"
++          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
++          onScroll={handleScrollUpdate}
++        >
++          {filteredStudies.map((study) => {
++            const {
++              id,
++              data: {
++                title,
++                introduction,
++                cover_image,
++                metadata: { client, date, relatedSkills = [] },
++              },
++            } = study;
++
++            // Extract the filename without language prefix and extension
++            const baseId = id
++              .split('/')
++              .pop()
++              ?.replace(/\.[^/.]+$/, '');
++
++            return (
++              <a
++                href={`/${lang}/case-studies/${baseId}`}
++                key={id}
++                className="flex-none w-[90%] lg:w-[30%] group cursor-pointer transition-all relative hover:translate-y-[-4px] duration-300"
++              >
++                <div className="relative flex flex-col transition-all duration-500 overflow-hidden">
++                  {/* Image container with hover effect */}
++                  <div className="relative aspect-[3/2] overflow-hidden mb-4 shadow-lg">
++                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10 transition-opacity duration-300 group-hover:opacity-70"></div>
++                    {cover_image?.src && (
++                      <img
++                        src={cover_image.src}
++                        alt={cover_image.alt || title}
++                        className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
++                      />
++                    )}
++                  </div>
++
++                  {/* Content */}
++                  <div className="flex flex-col h-full">
++                    <div>
++                      <div className="mb-2">
++                        <p className="text-sm">{client}</p>
++                        <h3 className="mb-10 text-xl md:text-2xl font-bold group-hover:text-primary transition-colors">
++                          {title}
++                        </h3>
++                      </div>
++
++                      {relatedSkills && relatedSkills.length > 0 && (
++                        <div className="flex flex-wrap gap-2 mb-4">
++                          {relatedSkills.slice(0, 3).map((skill, index) => (
++                            <Badge
++                              key={index}
++                              variant="outline"
++                              className="bg-primary/10 text-primary hover:bg-primary/20 border-none"
++                            >
++                              {skill}
++                            </Badge>
++                          ))}
++                          {relatedSkills.length > 3 && (
++                            <Badge
++                              variant="outline"
++                              className="bg-background/10 text-background/70 border-none"
++                            >
++                              +{relatedSkills.length - 3}
++                            </Badge>
++                          )}
++                        </div>
++                      )}
++                    </div>
++                  </div>
++                </div>
++
++                {/* Add subtle hover effect to indicate clickability */}
++              </a>
++            );
++          })}
++        </div>
++
++        <div className="mt-12 text-center">
++          <Button
++            className="bg-primary text-white hover:bg-primary-700 transition-all"
++            asChild
++            size="lg"
++          >
++            <a href={`/${lang}/case-studies`}>
++              {t.relatedCaseStudies?.viewAll || 'View all case studies'}
++              <ArrowRight className="ml-2 h-4 w-4" />
++            </a>
++          </Button>
++        </div>
++      </div>
++    </div>
++  );
++};
++
++export default RelatedCaseStudiesSlider;
+diff --git a/src/content.config.ts b/src/content.config.ts
+index ac8af9a..04f7cca 100644
+--- a/src/content.config.ts
++++ b/src/content.config.ts
+@@ -47,7 +47,7 @@ const metadataSchema = z.object({
+ const expandableContentSchema = z.object({
+   title: z.string(),
+   firstParagraph: z.string(),
+-  remainingText: z.array(z.string()),
++  remainingText: z.array(z.string()).optional().default([]),
+ });
+ 
+ const quoteSchema = z.object({
+diff --git a/src/content/case-studies/en/moos.md b/src/content/case-studies/en/moos.md
+index 363595e..eef2200 100644
+--- a/src/content/case-studies/en/moos.md
++++ b/src/content/case-studies/en/moos.md
+@@ -21,9 +21,7 @@ metadata:
+   services:
+     - 'Contract Design'
+   website: 'https://www.wijzijnmoos.nl'
+-  relatedSkills:
+-    ['Contract Design', 'Legal Content Design', 'Visual Communication', 'Stakeholder Engagement']
+-
++  relatedSkills: ['Contract Redesign', 'Legal Content Design', 'Contract UX']
+ heroVideo:
+   src: '/case-studies/moos/manifest-clip.mp4'
+   poster: '/case-studies/moos/moos-manifest.jpg'
+@@ -32,8 +30,6 @@ heroVideo:
+ expandableContent:
+   - title: "Yesterday's Contracts Have No Place in Tomorrow's Construction World"
+     firstParagraph: 'In the traditional construction world, Moos consciously chooses a different approach. With their mission to solve the housing shortage sustainably, Moos is building an ecosystem of equal partners who together create modular, circular homes. The problem? Their legal documentation did not align with this vision.'
+-    remainingText:
+-      - 'We helped Moos by transforming their partnership principles into a powerful visual manifesto and by completely redesigning their framework agreement with accessible language, smart visualizations, and a logical structure. The manifesto was proudly presented during a special partner meeting – not a standard legal document, but a clear statement that makes the rules of the game clear for everyone.'
+ 
+ images:
+   - src: '/case-studies/moos/moos-handtekeningen.jpg'
+diff --git a/src/content/case-studies/nl/moos.md b/src/content/case-studies/nl/moos.md
+index b582e0a..a7ee2a5 100644
+--- a/src/content/case-studies/nl/moos.md
++++ b/src/content/case-studies/nl/moos.md
+@@ -1,6 +1,6 @@
+ ---
+ title: 'In de bouwwereld van morgen past geen contract van gisteren'
+-introduction: 'Moos bouwt aan een duurzame toekomst met modulaire, circulaire woningen. Patroon hielp hen met het herontwerpen van het partnercontract. Het doel: minder papier, minder tekst, meer beeld.'
++introduction: 'In de traditionele bouwwereld kiest Moos bewust voor een andere aanpak. Met hun missie om het woningtekort duurzaam op te lossen, bouwt Moos aan een ecosysteem van gelijkwaardige partners die samen modulaire, circulaire woningen creëren. Het probleem? Hun juridische documentatie paste niet bij deze visie.'
+ 
+ cover_image:
+   src: '/case-studies/moos/schroef.jpg'
+@@ -21,8 +21,7 @@ metadata:
+   services:
+     - 'Contract Design'
+   website: 'https://www.wijzijnmoos.nl'
+-  relatedSkills:
+-    ['Contract Design', 'Legal Content Design', 'Visual Communication', 'Stakeholder Engagement']
++  relatedSkills: ['Contract Redesign', 'Legal Content Design', 'Contract UX']
+ 
+ heroVideo:
+   src: '/case-studies/moos/manifest-clip.mp4'
+@@ -30,10 +29,9 @@ heroVideo:
+   title: 'Het partnerschap manifest van Moos verbindt juridische afspraken aan een gezamenlijke missie.'
+ 
+ expandableContent:
+-  - title: 'In de bouwwereld van morgen past geen contract van gisteren'
+-    firstParagraph: 'In de traditionele bouwwereld kiest Moos bewust voor een andere aanpak. Met hun missie om het woningtekort duurzaam op te lossen, bouwt Moos aan een ecosysteem van gelijkwaardige partners die samen modulaire, circulaire woningen creëren. Het probleem? Hun juridische documentatie paste niet bij deze visie.'
+-    remainingText:
+-      - 'Wij hielpen Moos door hun partnerschapsprincipes om te zetten in een krachtig visueel manifest én door hun raamovereenkomst volledig te herontwerpen met toegankelijke taal, slimme visualisaties en een logische structuur. Het manifest werd met trots gepresenteerd tijdens een speciale partnerbijeenkomst – geen standaard juridisch document, maar een helder statement dat de spelregels voor iedereen duidelijk maakt.'
++  - title: 'Het doel was minder papier, minder tekst, meer beeld.'
++    firstParagraph: 'Wij hielpen Moos door hun partnerschapsprincipes om te zetten in een krachtig visueel manifest én door hun raamovereenkomst volledig te herontwerpen met toegankelijke taal, slimme visualisaties en een logische structuur. Het manifest werd met trots gepresenteerd tijdens een speciale partnerbijeenkomst – geen standaard juridisch document, maar een helder statement dat de spelregels voor iedereen duidelijk maakt.'
++    remainingText: []
+ 
+ images:
+   - src: '/case-studies/moos/moos-handtekeningen.jpg'
+diff --git a/src/i18n/translations/case-studies.ts b/src/i18n/translations/case-studies.ts
+index e0b4ca5..a72fedc 100644
+--- a/src/i18n/translations/case-studies.ts
++++ b/src/i18n/translations/case-studies.ts
+@@ -16,6 +16,11 @@ export const caseStudiesTranslations = {
+         label: 'Website',
+       },
+     },
++    relatedCaseStudies: {
++      title: 'More case studies',
++      description: 'Discover more of our work',
++      viewAll: 'View all case studies',
++    },
+ 
+     meta: {
+       title: 'Our Work | Case Studies | Patroon Legal Design',
+@@ -89,6 +94,11 @@ export const caseStudiesTranslations = {
+         label: 'Website',
+       },
+     },
++    relatedCaseStudies: {
++      title: 'Meer cases',
++      description: 'Ontdek meer van ons werk',
++      viewAll: 'Bekijk alle cases',
++    },
+     meta: {
+       title: 'Ons Werk | Cases | Patroon Legal Design',
+       description:
+diff --git a/src/layouts/ModernCaseStudyLayout.astro b/src/layouts/ModernCaseStudyLayout.astro
+index 70fc304..2945168 100644
+--- a/src/layouts/ModernCaseStudyLayout.astro
++++ b/src/layouts/ModernCaseStudyLayout.astro
+@@ -13,6 +13,7 @@ import CaseQuote from '../components/CaseQuote';
+ import BeforeAfterSlider from '../components/BeforeAfterSlider';
+ import TeamCTA from '../components/TeamCTA';
+ import CaseStudyTimeline from '../components/CaseStudyTimeline';
++import RelatedCaseStudiesSlider from '../components/RelatedCaseStudiesSlider';
+ import SEO from '@/components/SEO.astro';
+ import Container from '../components/Container.astro';
+ import SectionHeader from '@/components/SectionHeader.astro';
+@@ -20,7 +21,7 @@ import { getLangFromUrl } from '@/i18n/utils';
+ import { caseStudiesTranslations } from '@/i18n/translations/case-studies';
+ import GoogleAnalytics from '@/components/GoogleAnalytics.astro';
+ 
+-import { getEntry } from 'astro:content';
++import { getEntry, getCollection } from 'astro:content';
+ 
+ // Get current language and translations
+ const currentLang = getLangFromUrl(Astro.url);
+@@ -62,6 +63,20 @@ if (teamMember) {
+   }
+ }
+ 
++// Fetch all case studies (using same language, excluding current)
++let relatedCaseStudies = [];
++try {
++  // Get all case studies for the current language
++  const allCaseStudies = await getCollection('case-studies', (study) => {
++    return study.id.startsWith(currentLang + '/');
++  });
++  
++  // Get all studies except the current one
++  relatedCaseStudies = allCaseStudies.filter(study => study.id !== entry?.id);
++} catch (error) {
++  console.error('Error fetching case studies:', error);
++}
++
+ // Construct SEO metadata
+ const seoDescription = introduction?.slice(0, 155) + '...';
+ 
+@@ -270,6 +285,16 @@ const breadcrumbsStructuredData = {
+         </section>
+       </Container>
+ 
++      {/* Related Case Studies Slider */}
++      {relatedCaseStudies.length > 0 && (
++        <RelatedCaseStudiesSlider
++          client:load
++          studies={relatedCaseStudies}
++          currentStudyId={entry?.id}
++          lang={currentLang}
++        />
++      )}
++      
+       <Footer />
+     </main>
+   </body>
+diff --git a/src/pages/[lang]/case-studies/index.astro b/src/pages/[lang]/case-studies/index.astro
+index 0de05e4..1ef5093 100644
+--- a/src/pages/[lang]/case-studies/index.astro
++++ b/src/pages/[lang]/case-studies/index.astro
+@@ -2,8 +2,6 @@
+ // src/pages/[lang]/case-studies/index.astro
+ import BaseLayout from '@/layouts/BaseLayout.astro';
+ import { getCollection } from 'astro:content';
+-import CaseStudyCard from '@/components/CaseStudyCard';
+-import { Card } from '@/components/ui/card';
+ import LargeCaseStudyGrid from '@/components/LargeCaseStudyGrid';
+ import Hero from '@/components/Hero.astro';
+ import { caseStudiesTranslations } from '@/i18n/translations/case-studies';
+@@ -21,55 +19,67 @@ const allCaseStudies = await getCollection('case-studies', (entry) =>
+   entry.id.startsWith(lang + '/')
+ );
+ 
+-// Helper function to standardize dates for sorting  
++// Helper function to standardize dates for sorting
+ function getDateForSorting(dateStr) {
+   // Maps for both English and Dutch month names
+   const monthMap = {
+     // English months
+-    'january': 1, 'jan': 1,
+-    'february': 2, 'feb': 2,
+-    'march': 3, 'mar': 3,
+-    'april': 4, 'apr': 4,
+-    'may': 5,
+-    'june': 6, 'jun': 6,
+-    'july': 7, 'jul': 7,
+-    'august': 8, 'aug': 8,
+-    'september': 9, 'sep': 9, 'sept': 9,
+-    'october': 10, 'oct': 10,
+-    'november': 11, 'nov': 11,
+-    'december': 12, 'dec': 12,
+-    
++    january: 1,
++    jan: 1,
++    february: 2,
++    feb: 2,
++    march: 3,
++    mar: 3,
++    april: 4,
++    apr: 4,
++    may: 5,
++    june: 6,
++    jun: 6,
++    july: 7,
++    jul: 7,
++    august: 8,
++    aug: 8,
++    september: 9,
++    sep: 9,
++    sept: 9,
++    october: 10,
++    oct: 10,
++    november: 11,
++    nov: 11,
++    december: 12,
++    dec: 12,
++
+     // Dutch months
+-    'januari': 1,
+-    'februari': 2,
+-    'maart': 3,
+-    'april': 4,
+-    'mei': 5,
+-    'juni': 6,
+-    'juli': 7,
+-    'augustus': 8,
+-    'september': 9,
+-    'oktober': 10,
+-    'november': 11,
+-    'december': 12
++    januari: 1,
++    februari: 2,
++    maart: 3,
++    april: 4,
++    mei: 5,
++    juni: 6,
++    juli: 7,
++    augustus: 8,
++    september: 9,
++    oktober: 10,
++    november: 11,
++    december: 12,
+   };
+-  
++
+   // Split the date into parts and standardize
+   const parts = dateStr.split(' ');
+   if (parts.length !== 2) {
+     console.warn(`Date format issue with: ${dateStr}`);
+     return new Date(0); // Return earliest possible date for invalid formats
+   }
+-  
++
+   const monthName = parts[0].toLowerCase();
+   const year = parseInt(parts[1], 10);
+   const month = monthMap[monthName];
+-  
++
+   if (!month || isNaN(year)) {
+     console.warn(`Invalid date: ${dateStr} (month: ${monthName}, year: ${year})`);
+     return new Date(0);
+   }
+-  
++
+   // Create a standardized date string (YYYY-MM-01)
+   // Use two digits for month (padding with 0 if needed)
+   const monthStr = month.toString().padStart(2, '0');
+diff --git a/src/styles/globals.css b/src/styles/globals.css
+index 7755834..772f079 100644
+--- a/src/styles/globals.css
++++ b/src/styles/globals.css
+@@ -1,3 +1,12 @@
++/* Hide scrollbars for slider components */
++.scrollbar-hide::-webkit-scrollbar {
++  display: none;
++}
++
++.scrollbar-hide {
++  -ms-overflow-style: none;
++  scrollbar-width: none;
++}
+ @tailwind base;
+ @tailwind components;
+ @tailwind utilities;
+-- 
+2.39.3 (Apple Git-146)
+

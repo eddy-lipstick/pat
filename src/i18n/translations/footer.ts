@@ -3,7 +3,7 @@
 export const footerTranslations = {
   nl: {
     news: 'Nieuws',
-    projects: 'Projecten',
+    projects: 'Case Studies',
     blog: 'Blog',
     ourApproach: 'Onze aanpak',
     emailUs: 'Email ons',
@@ -14,7 +14,7 @@ export const footerTranslations = {
   },
   en: {
     news: 'News',
-    projects: 'Projects',
+    projects: 'Case Studies',
     blog: 'Blog',
     ourApproach: 'Our approach',
     emailUs: 'Email us',

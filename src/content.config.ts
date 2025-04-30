@@ -309,6 +309,13 @@ export const collections = {
     }),
     schema: caseStudySchema,
   }),
+  'digital-studio': defineCollection({
+    loader: glob({
+      pattern: '**/[^_]*.{md,mdx}', // This will match files in language subdirectories
+      base: './src/content/digital-studio',
+    }),
+    schema: caseStudySchema, // Using the same schema for now, will enhance later
+  }),
   team: defineCollection({
     loader: glob({
       pattern: '**/[^_]*.{md,mdx}', // This will match files in language subdirectories

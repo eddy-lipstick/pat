@@ -1,0 +1,60 @@
+---
+// src/pages/[lang]/digital-studio/[slug].astro
+// Based on src/pages/[lang]/case-studies/[id].astro
+import ModernCaseStudyLayout from '@/layouts/ModernCaseStudyLayout.astro';
+import { getCollection, render } from 'astro:content'; // Import render
+
+export async function getStaticPaths() {
+  const allDigitalStudioProducts = await getCollection('digital-studio');
+
+  const paths = [];
+  const languages = ['en', 'nl']; // Assuming same languages as case studies
+
+  for (const lang of languages) {
+    // Filter products for current language
+    const languageProducts = allDigitalStudioProducts.filter((product) =>
+      product.id.startsWith(`${lang}/`)
+    );
+
+    // Log for debugging (optional)
+    // console.log(`Found ${languageProducts.length} digital studio products for ${lang}`);
+    // console.log('Product IDs:', languageProducts.map((p) => p.id));
+
+    for (const product of languageProducts) {
+      // Extract language and slug from the id (format: "en/product-name" or "en/category/product-name")
+      const parts = product.id.split('/');
+      const currentLang = parts[0];
+      const slug = parts
+        .slice(1)
+        .join('/')
+        .replace(/\.mdx?$/, ''); // Join remaining parts for slug
+
+      if (currentLang === lang && slug) {
+        paths.push({
+          params: { lang, slug },
+          props: { product }, // Pass the full product object
+        });
+      }
+    }
+  }
+
+  // Log all generated paths for debugging (optional)
+  // console.log('Generated digital studio paths:', paths);
+
+  return paths;
+}
+
+// Use 'product' consistent with the index page and previous attempts
+const { product } = Astro.props;
+const { Content } = await render(product); // Use imported render function
+---
+
+{/* Use ModernCaseStudyLayout, passing 'product' as 'entry' prop */}
+<ModernCaseStudyLayout entry={product}>
+  {/* Apply similar container and prose styling as case study page */}
+  <div class="container mx-auto px-6 py-16">
+    <div class="prose prose-lg prose-invert max-w-none">
+      <Content />
+    </div>
+  </div>
+</ModernCaseStudyLayout>
