@@ -5,12 +5,13 @@ import { getCollection } from 'astro:content';
  */
 export async function getAllTags(lang) {
   let collections = {};
-  
+
   try {
     collections = {
       'case-studies': await getCollection('case-studies'),
       news: await getCollection('news'),
-      articles: await getCollection('articles')
+      articles: await getCollection('articles'),
+      'digital-studio': await getCollection('digital-studio'),
     };
   } catch (error) {
     console.error('Error fetching collections:', error);
@@ -21,7 +22,7 @@ export async function getAllTags(lang) {
 
   const processItems = (items) => {
     items
-      .filter(item => {
+      .filter((item) => {
         // Apply same language filtering logic
         if (item.id.startsWith(`${lang}/`)) {
           return true;
@@ -31,13 +32,13 @@ export async function getAllTags(lang) {
         }
         return false;
       })
-      .forEach(item => {
+      .forEach((item) => {
         const itemTags = item.data.tags || item.data.labels || [];
-        itemTags.forEach(tag => tags.add(tag.toLowerCase()));
+        itemTags.forEach((tag) => tags.add(tag.toLowerCase()));
       });
   };
 
-  Object.values(collections).forEach(collection => {
+  Object.values(collections).forEach((collection) => {
     if (Array.isArray(collection)) {
       processItems(collection);
     }
@@ -51,12 +52,13 @@ export async function getAllTags(lang) {
  */
 export async function getContentByTag(tag, lang) {
   let collections = {};
-  
+
   try {
     collections = {
       'case-studies': await getCollection('case-studies'),
       news: await getCollection('news'),
-      articles: await getCollection('articles')
+      articles: await getCollection('articles'),
+      'digital-studio': await getCollection('digital-studio'),
     };
   } catch (error) {
     console.error('Error fetching collections:', error);
@@ -66,7 +68,7 @@ export async function getContentByTag(tag, lang) {
   const taggedContent = [];
 
   const getUrlPath = (type) => {
-    switch(type) {
+    switch (type) {
       case 'articles':
         return 'learn/articles';
       case 'case-studies':
@@ -80,17 +82,17 @@ export async function getContentByTag(tag, lang) {
 
   const processItems = (items, collectionType) => {
     console.log(`Processing ${collectionType} collection`);
-    
+
     return items
-      .filter(item => {
+      .filter((item) => {
         // First check language using same logic as news page
-        const isCorrectLanguage = item.id.startsWith(`${lang}/`) || 
-                               (!item.id.includes('/') && item.data.language === lang);
-        
+        const isCorrectLanguage =
+          item.id.startsWith(`${lang}/`) || (!item.id.includes('/') && item.data.language === lang);
+
         // Then check tags
         const itemTags = item.data.tags || item.data.labels || [];
-        const hasTag = itemTags.some(t => t.toLowerCase() === tag.toLowerCase());
-        
+        const hasTag = itemTags.some((t) => t.toLowerCase() === tag.toLowerCase());
+
         // Debug logging for news items
         if (collectionType === 'news') {
           console.log('Processing item:', {
@@ -100,20 +102,23 @@ export async function getContentByTag(tag, lang) {
             hasLanguageField: item.data.language === lang,
             isCorrectLanguage,
             hasTag,
-            tags: itemTags
+            tags: itemTags,
           });
         }
-        
+
         return isCorrectLanguage && hasTag;
       })
-      .map(item => {
-        const id = item.id.includes('/') 
-          ? item.id.split('/').pop().replace(/\.mdx?$/, '')
+      .map((item) => {
+        const id = item.id.includes('/')
+          ? item.id
+              .split('/')
+              .pop()
+              .replace(/\.mdx?$/, '')
           : item.id.replace(/\.mdx?$/, '');
 
         const urlPath = getUrlPath(collectionType);
         const url = `/${lang}/${urlPath}/${id}`;
-        
+
         if (collectionType === 'news') {
           console.log(`Generated URL for news item: ${url}`);
         }
@@ -121,7 +126,7 @@ export async function getContentByTag(tag, lang) {
         return {
           ...item,
           collectionType,
-          url
+          url,
         };
       });
   };
@@ -130,12 +135,12 @@ export async function getContentByTag(tag, lang) {
   for (const [type, collection] of Object.entries(collections)) {
     if (Array.isArray(collection)) {
       const items = processItems(collection, type);
-      
+
       // Debug log for news items
       if (type === 'news') {
         console.log(`Found ${items.length} news items with tag "${tag}"`);
       }
-      
+
       taggedContent.push(...items);
     }
   }

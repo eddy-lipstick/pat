@@ -9,14 +9,15 @@ const CaseQuote = ({ quote, author, role }) => {
         </svg>
       </div>
 
-      <blockquote className="text-2xl font-roc-grotesk font-medium text-foreground mb-6">
-        {quote}
-      </blockquote>
+      {/* Removed text-foreground to inherit color from context */}
+      <blockquote className="text-2xl font-roc-grotesk font-medium mb-6">{quote}</blockquote>
 
       <footer className="flex items-center gap-2">
         <div>
-          <cite className="text-purple font-roc-grotesk not-italic">{author}</cite>
-          {role && <p className="text-feitlijn-purple text-sm mt-1">{role}</p>}
+          {/* Removed text-purple to inherit color from context */}
+          <cite className="font-roc-grotesk not-italic">{author}</cite>
+          {/* Removed text-feitlijn-purple to inherit color from context */}
+          {role && <p className="text-sm mt-1">{role}</p>}
         </div>
       </footer>
     </div>

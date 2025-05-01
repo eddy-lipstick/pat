@@ -5,6 +5,7 @@ export const footerTranslations = {
     news: 'Nieuws',
     projects: 'Case Studies',
     blog: 'Blog',
+    digitalStudio: 'Digital Studio', // Added key
     ourApproach: 'Onze aanpak',
     emailUs: 'Email ons',
     callUs: 'Bel ons',
@@ -16,6 +17,7 @@ export const footerTranslations = {
     news: 'News',
     projects: 'Case Studies',
     blog: 'Blog',
+    digitalStudio: 'Digital Studio', // Added key
     ourApproach: 'Our approach',
     emailUs: 'Email us',
     callUs: 'Call us',

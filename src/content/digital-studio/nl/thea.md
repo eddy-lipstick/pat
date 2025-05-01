@@ -10,9 +10,9 @@ coverImage: '/digital/thea/thea-logo.png'
 
 # Target audience
 targetAudience:
-  - 'Advocaten die complexe zaaksfeiten visueel willen presenteren voor rechters en cliënten'
+  - 'Advocaten die complexe feiten visueel in kaart willen brengen ter voorbereiding van een dossier'
   - 'M&A-specialisten die bedrijfsstructuren en aandeelhouderswijzigingen door de tijd willen volgen'
-  - 'Procesadvocaten die sterke tijdlijnen nodig hebben zonder uren handmatig werk'
+  - 'Litigation advocaten die de rechter willen meenemen in het verhaal'
 
 # Key features
 keyFeatures:

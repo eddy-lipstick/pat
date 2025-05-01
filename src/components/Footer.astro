@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { Separator } from '@/components/ui/separator';
-import { Icon } from 'astro-icon';
+// Icon import removed as it's not used
 import { languages, defaultLanguage } from '@/i18n/config';
 import { footerTranslations } from '@/i18n/translations/footer';
 
@@ -12,13 +12,15 @@ const firstSegment = pathSegments[0];
 
 // If first segment is a language code, use it; otherwise use default
 const lang = Object.keys(languages).includes(firstSegment) ? firstSegment : defaultLanguage;
-const t = footerTranslations[lang];
+// Assert lang type to satisfy TypeScript index signature requirement
+const t = footerTranslations[lang as keyof typeof footerTranslations];
 
 // Fetch data at build time and filter by language
 const allNews = await getCollection('news');
 const allCases = await getCollection('case-studies');
 const allArticles = await getCollection('articles');
 const allApproaches = await getCollection('approach');
+const allDigitalStudio = await getCollection('digital-studio'); // Fetch digital studio projects
 
 // Filter and sort items by language
 const recentNews = allNews
@@ -26,18 +28,29 @@ const recentNews = allNews
   .sort((a, b) => {
     const dateA = new Date(a.data.date);
     const dateB = new Date(b.data.date);
-    return isNaN(dateB) || isNaN(dateA) ? 0 : dateB.getTime() - dateA.getTime();
+    // Check for invalid dates using getTime()
+    return isNaN(dateB.getTime()) || isNaN(dateA.getTime()) ? 0 : dateB.getTime() - dateA.getTime();
   })
   .slice(0, 5);
 
-const recentCases = allCases.filter((item) => item.id.startsWith(`${lang}/`)).slice(0, 5);
+// Sort cases by metadata date descending
+const recentCases = allCases
+  .filter((item) => item.id.startsWith(`${lang}/`))
+  .sort((a, b) => {
+    const dateA = new Date(a.data.metadata.date);
+    const dateB = new Date(b.data.metadata.date);
+    return isNaN(dateB.getTime()) || isNaN(dateA.getTime()) ? 0 : dateB.getTime() - dateA.getTime();
+  })
+  .slice(0, 5);
 
 const recentArticles = allArticles
   .filter((item) => item.id.startsWith(`${lang}/`))
   .sort((a, b) => {
+    // Assuming publishDate is already a Date object from Zod coercion
     const dateA = a.data.publishDate;
     const dateB = b.data.publishDate;
-    return isNaN(dateB) || isNaN(dateA) ? 0 : dateB.getTime() - dateA.getTime();
+    // Check for invalid dates using getTime()
+    return isNaN(dateB.getTime()) || isNaN(dateA.getTime()) ? 0 : dateB.getTime() - dateA.getTime();
   })
   .slice(0, 5);
 
@@ -45,6 +58,16 @@ const recentApproaches = allApproaches
   .filter((item) => item.id.startsWith(`${lang}/`))
   .sort((a, b) => (b.data.order || 0) - (a.data.order || 0))
   .slice(0, 15);
+
+// Filter and sort digital studio projects by language and date
+const recentDigitalStudio = allDigitalStudio
+  .filter((item) => item.id.startsWith(`${lang}/`))
+  .sort((a, b) => {
+    const dateA = new Date(a.data.metadata.date);
+    const dateB = new Date(b.data.metadata.date);
+    return isNaN(dateB.getTime()) || isNaN(dateA.getTime()) ? 0 : dateB.getTime() - dateA.getTime();
+  })
+  .slice(0, 5); // Limit to 5 items
 
 const currentYear = new Date().getFullYear();
 
@@ -62,8 +85,9 @@ const getLocalizedUrl = (path: string) => {
 <Fragment>
   <footer class="bg-surface-1 text-text-primary w-full py-16 mt-32">
     <div class="container mx-auto">
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-        <!-- Company Info -->
+      {/* Updated grid to accommodate 5 columns on large screens */}
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-16">
+        {/* Company Info */}
         <div class="space-y-6">
           <a
             href={getLocalizedUrl('/')}
@@ -91,27 +115,6 @@ const getLocalizedUrl = (path: string) => {
           </div>
         </div>
 
-        <!-- News Column -->
-        <div class="space-y-4">
-          <div class="flex items-center gap-2 text-feitlijn-purple">
-            <h3 class="text-lg font-roc-grotesk">{t.news}</h3>
-          </div>
-          <ul class="space-y-3" role="list">
-            {
-              recentNews.map((item) => (
-                <li>
-                  <a
-                    href={getLocalizedUrl(`/news/${item.id.split('/')[1]}`)}
-                    class="text-sm text-text-secondary hover:text-feitlijn-purple transition-colors duration-200 flex items-center gap-2 group"
-                  >
-                    {item.data.title}
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-
         <!-- Cases Column -->
         <div class="space-y-4">
           <div class="flex items-center gap-2 text-feitlijn-purple">
@@ -133,6 +136,27 @@ const getLocalizedUrl = (path: string) => {
           </ul>
         </div>
 
+        {/* Digital Studio Column */}
+        <div class="space-y-4">
+          <div class="flex items-center gap-2 text-feitlijn-purple">
+            <h3 class="text-lg font-roc-grotesk">{t.digitalStudio || 'Digital Studio'}</h3>
+          </div>
+          <ul class="space-y-3" role="list">
+            {
+              recentDigitalStudio.map((item) => (
+                <li>
+                  <a
+                    href={getLocalizedUrl(`/digital-studio/${item.id.split('/')[1]}`)}
+                    class="text-sm text-text-secondary hover:text-feitlijn-purple transition-colors duration-200 flex items-center gap-2 group"
+                  >
+                    {item.data.title}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
         <!-- Articles Column -->
         <div class="space-y-4">
           <div class="flex items-center gap-2 text-feitlijn-purple">
@@ -144,6 +168,27 @@ const getLocalizedUrl = (path: string) => {
                 <li>
                   <a
                     href={getLocalizedUrl(`/learn/articles/${item.id.split('/')[1]}`)}
+                    class="text-sm text-text-secondary hover:text-feitlijn-purple transition-colors duration-200 flex items-center gap-2 group"
+                  >
+                    {item.data.title}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <!-- News Column -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-2 text-feitlijn-purple">
+            <h3 class="text-lg font-roc-grotesk">{t.news}</h3>
+          </div>
+          <ul class="space-y-3" role="list">
+            {
+              recentNews.map((item) => (
+                <li>
+                  <a
+                    href={getLocalizedUrl(`/news/${item.id.split('/')[1]}`)}
                     class="text-sm text-text-secondary hover:text-feitlijn-purple transition-colors duration-200 flex items-center gap-2 group"
                   >
                     {item.data.title}

@@ -46,7 +46,7 @@ metadata:
 # Display settings
 featured: true
 show_on_landing: true
-tags: ['legal-tech', 'ai', 'analyse']
+tags: ['legal-tech', 'ai', 'feitlijn']
 
 # Related products
 relatedProducts: ['legalsuite', 'contractanalyzer']

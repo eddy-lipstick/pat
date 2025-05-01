@@ -1,55 +1,82 @@
 ---
 // src/components/ProductCard.astro
-const { 
-  title, 
-  description, 
-  image, 
-  caseStudyUrl, 
-  liveUrl, 
-  translations 
+const {
+  title,
+  description,
+  image,
+  caseStudyUrl,
+  liveUrl,
+  translations,
+  tags, // Add tags prop
+  lang, // Add lang prop
 } = Astro.props;
 
+import TagBadge from './TagBadge.astro'; // Import TagBadge component
+
 // Limit description length and handle null/undefined
-const shortDescription = description && description.length > 120 
-  ? description.substring(0, 120) + '...' 
-  : description || '';
+const shortDescription =
+  description && description.length > 120
+    ? description.substring(0, 120) + '...'
+    : description || '';
 ---
 
-<div class="group bg-surface-1 rounded-lg overflow-hidden border border-border/50 hover:bg-surface-2 transition-colors duration-300">
+<div
+  class="group bg-surface-1 rounded-lg overflow-hidden border border-border/50 hover:bg-surface-2 transition-colors duration-300"
+>
   {/* Product Image */}
   <div class="h-[200px] overflow-hidden bg-surface-2">
-    {image ? (
-      <img 
-        src={image} 
-        alt={title} 
-        class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-      />
-    ) : (
-      <div class="w-full h-full flex items-center justify-center bg-surface-2">
-        <span class="text-text-tertiary">No image available</span>
-      </div>
-    )}
+    {
+      image ? (
+        <img
+          src={image}
+          alt={title}
+          class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+        />
+      ) : (
+        <div class="w-full h-full flex items-center justify-center bg-surface-2">
+          <span class="text-text-tertiary">No image available</span>
+        </div>
+      )
+    }
   </div>
-  
+
   {/* Product Info */}
   <div class="p-6">
     <h3 class="text-2xl font-bold mb-2">{title}</h3>
-    <p class="text-text-secondary mb-6">{shortDescription}</p>
-    
+    <p class="text-text-secondary mb-4">{shortDescription}</p>
+    {/* Adjusted margin */}
+
+    {/* Tags */}
+    {
+      tags && tags.length > 0 && (
+        <div class="flex flex-wrap gap-2 mb-6">
+          {tags.map(
+            (
+              tag: string // Add type string to tag
+            ) => (
+              <TagBadge tag={tag} lang={lang} /> // Pass lang prop
+            )
+          )}
+        </div>
+      )
+    }
+
     {/* CTA Buttons */}
     <div class="flex flex-wrap gap-3">
-      {liveUrl && (
-        <a 
-          href={liveUrl} 
-          target="_blank" 
-          rel="noopener noreferrer"
-          class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
-        >
-          {translations.exploreLive}
-        </a>
-      )}
-      <a 
-        href={caseStudyUrl} 
+      {
+        liveUrl && (
+          <a
+            href={liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
+          >
+            {translations.exploreLive}
+          </a>
+        )
+      }
+      <a
+        href={caseStudyUrl}
         class="px-4 py-2 bg-transparent border border-primary text-primary rounded-md hover:bg-primary/10 transition-colors"
       >
         {translations.viewCaseStudy}

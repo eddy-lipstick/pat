@@ -5,7 +5,7 @@ import { getCollection, render } from 'astro:content';
 import { getLangFromUrl } from '@/i18n/utils';
 import { languages } from '@/i18n/config'; // Import languages config
 import { digitalStudioTranslations } from '@/i18n/translations/digital-studio';
-import { Badge } from '@/components/ui/badge';
+import TagBadge from '@/components/TagBadge.astro'; // Import TagBadge
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowRight, ExternalLink, Check, Building, Calendar, Globe, ArrowDown, ChevronRight } from 'lucide-react';
@@ -123,8 +123,8 @@ function getSlug(path: string) {
             <div>
               {tags && tags.length > 0 && (
                 <div class="flex flex-wrap gap-2 mb-4">
-                  {tags.map((tag) => (
-                    <Badge className="bg-primary/10 text-primary border-0 font-medium">{tag}</Badge> 
+                  {tags.map((tag: string) => ( // Use TagBadge component
+                    <TagBadge tag={tag} lang={currentLang} />
                   ))}
                 </div>
               )}
