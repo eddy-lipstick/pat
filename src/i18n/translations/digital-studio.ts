@@ -12,9 +12,10 @@ export const digitalStudioTranslations = {
       digitalStudio: 'Digital Studio',
     },
     hero: {
-      title: 'Digital Studio',
-      subtitle: 'Onze technologische oplossingen',
-      description: 'Innovatieve juridisch-technologische producten ontwikkeld door Patroon.',
+      title: 'Law + Design + Tech',
+      subtitle: 'Digital Studio',
+      description:
+        'We bouwen tools voor juridische professionals die tijd besparen en resultaten opleveren. Onze digitale producten ontstaan uit praktijkproblemen: we zien waar juristen vastlopen, combineren juridische kennis met design en technologie, en bouwen tools die we zelf ook graag zouden gebruiken.',
     },
     buttons: {
       visitWebsite: 'Bezoek website',

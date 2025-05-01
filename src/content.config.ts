@@ -107,6 +107,7 @@ const digitalProductSchema = z.object({
 
   // Display settings
   tags: z.array(z.string()).default([]),
+  featured: z.boolean().default(false), // Added featured field
 
   // Related products
   relatedProducts: z.array(z.string()).optional(),

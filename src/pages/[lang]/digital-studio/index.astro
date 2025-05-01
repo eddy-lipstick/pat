@@ -2,12 +2,19 @@
 // src/pages/[lang]/digital-studio/index.astro
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+} from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Hero from '@/components/Hero.astro';
 import Breadcrumb from '@/components/Breadcrumb';
-import { ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowRight, ExternalLink, CheckCheck } from 'lucide-react';
 import { getLangFromUrl } from '@/i18n/utils';
 import { digitalStudioTranslations } from '@/i18n/translations/digital-studio';
 
@@ -18,11 +25,11 @@ export function getStaticPaths() {
 
 // Get current language
 const { lang } = Astro.params;
-const currentLang = getLangFromUrl(Astro.url);
+const currentLang = getLangFromUrl(Astro.url) as keyof typeof digitalStudioTranslations; // Assert type
 const t = digitalStudioTranslations[currentLang];
 
 // Get all digital studio products for current language
-const allProducts = await getCollection('digital-studio', (entry) => 
+const allProducts = await getCollection('digital-studio', (entry) =>
   entry.id.startsWith(currentLang + '/')
 );
 
@@ -31,30 +38,30 @@ const sortedProducts = allProducts.sort((a, b) => {
   // First by featured status
   if (a.data.featured && !b.data.featured) return -1;
   if (!a.data.featured && b.data.featured) return 1;
-  
+
   // Then by date (if available)
   if (a.data.metadata?.date && b.data.metadata?.date) {
     return new Date(b.data.metadata.date).getTime() - new Date(a.data.metadata.date).getTime();
   }
-  
+
   // Finally by title
   return a.data.title.localeCompare(b.data.title);
 });
 
 // Function to extract slug
-function getSlug(path) {
+function getSlug(path: string) {
   return path.split('/')[1].replace(/\.mdx?$/, '');
 }
 
 const breadcrumbItems = [
   { label: t.breadcrumbs.home, href: `/${currentLang}` },
-  { label: t.breadcrumbs.digitalStudio, href: `/${currentLang}/digital-studio` }
+  { label: t.breadcrumbs.digitalStudio, href: `/${currentLang}/digital-studio` },
 ];
 ---
 
 <BaseLayout title={t.meta.title} description={t.meta.description}>
   <Breadcrumb items={breadcrumbItems} client:load />
-  
+
   <Hero
     variant="small"
     subtitle={t.hero.subtitle}
@@ -63,120 +70,122 @@ const breadcrumbItems = [
   />
 
   <section class="py-12">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="products-grid">
-      {sortedProducts.map((product) => {
-        // Extract product data
-        const { 
-          title, 
-          introduction, 
-          coverImage, 
-          metadata,
-          productUrl,
-          featured
-        } = product.data;
-        
-        const slug = getSlug(product.id);
-        
-        // Determine if this product is recently added (within last 30 days)
-        const isNew = metadata?.date && 
-                      (new Date().getTime() - new Date(metadata.date).getTime()) < 30 * 24 * 60 * 60 * 1000;
-        
-        return (
-          <Card className="overflow-hidden group flex flex-col h-full border border-border/30 hover:border-primary/50 hover:shadow-lg transition-all duration-300">
-            {/* Product Image */}
-            <a href={`/${currentLang}/digital-studio/${slug}`} class="block overflow-hidden">
-              {coverImage ? (
-                <div class="aspect-video overflow-hidden">
-                  <img 
-                    src={coverImage} 
-                    alt={title} 
-                    class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
-                  />
+    <!-- Product Showcase - Each product gets a full row -->
+    <div class="space-y-16">
+      {
+        sortedProducts.map((product, index) => {
+          // Extract product data
+          const {
+            title,
+            introduction,
+            coverImage,
+            logoImage,
+            metadata,
+            // keyFeatures, // Removed as requested
+            // targetAudience, // Removed as requested
+            // productUrl, // Removed as requested
+            featured,
+          } = product.data;
+
+          const slug = getSlug(product.id);
+          const isEven = index % 2 === 0;
+
+          // Use implicit return with parentheses for the JSX block
+          return (
+            <div id={`product-${slug}`} class="group">
+              {/* Wrap the card content in a link */}
+              <a href={`/${currentLang}/digital-studio/${slug}`} class="block">
+                <div
+                  class={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 items-center bg-surface-1 p-6 lg:p-8 rounded-xl border border-border/30 group-hover:border-primary/50 group-hover:shadow-lg transition-all duration-300`}
+                >
+                  {/* Product Image/Logo Section */}
+                  <div class="w-full lg:w-2/5 overflow-hidden rounded-lg">
+                    {coverImage ? (
+                      <div class="aspect-video overflow-hidden rounded-lg bg-surface-2 flex items-center justify-center">
+                        <img
+                          src={coverImage}
+                          alt={title}
+                          class="w-full h-full object-contain transform group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
+                    ) : (
+                      <div class="aspect-video bg-surface-2 flex items-center justify-center rounded-lg">
+                        <span class="text-text-secondary">{title}</span>
+                      </div>
+                    )}
+                  </div>
+                  {/* Content Section */}
+                  <div class="w-full lg:w-3/5 flex flex-col gap-6">
+                    <div class="space-y-3">
+                      {/* Title & Badges */}
+                      <div class="flex items-center gap-3 flex-wrap">
+                        <h2 class="text-3xl font-bold">{title}</h2>
+
+                        {featured && (
+                          <Badge variant="default" className="bg-primary text-primary-foreground">
+                            {t.labels.featured}
+                          </Badge>
+                        )}
+
+                        {/* Conditionally render 'New' badge */}
+                        {product.data.metadata?.date &&
+                          new Date().getTime() - new Date(product.data.metadata.date).getTime() <
+                            30 * 24 * 60 * 60 * 1000 && (
+                            <Badge variant="outline" className="border-accent text-accent">
+                              {t.labels.new}
+                            </Badge>
+                          )}
+                      </div>
+
+                      {/* Introduction */}
+                      <p class="text-lg text-text-secondary">{introduction}</p>
+
+                      {/* Technologies/Skills */}
+                      <div class="flex flex-wrap gap-2 pt-2">
+                        {metadata.relatedSkills.map((skill) => (
+                          <span class="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    {/* Key Features and Action Buttons removed as requested */}
+                  </div>{' '}
+                  {/* Close the main content div */}
                 </div>
-              ) : (
-                <div class="aspect-video bg-surface-1 flex items-center justify-center">
-                  <span class="text-text-secondary">{title}</span>
-                </div>
-              )}
-            </a>
-            
-            {/* Content */}
-            <CardHeader>
-              {/* Badges */}
-              <div class="flex gap-2 mb-2">
-                {featured && (
-                  <Badge variant="default" className="bg-primary text-primary-foreground">
-                    {t.labels.featured}
-                  </Badge>
-                )}
-                
-                {isNew && (
-                  <Badge variant="outline" className="border-accent text-accent">
-                    {t.labels.new}
-                  </Badge>
-                )}
-              </div>
-              
-              <CardTitle className="text-xl mb-2">
-                <a href={`/${currentLang}/digital-studio/${slug}`} class="hover:text-primary transition-colors">
-                  {title}
-                </a>
-              </CardTitle>
-              
-              <CardDescription className="text-text-secondary line-clamp-2">
-                {introduction}
-              </CardDescription>
-            </CardHeader>
-            
-            <CardContent className="flex-grow">
-              <div class="flex flex-wrap gap-2">
-                {metadata.relatedSkills.slice(0, 3).map((skill) => (
-                  <span class="text-xs bg-surface-1 text-text-secondary px-2 py-1 rounded-full">
-                    {skill}
-                  </span>
-                ))}
-                
-                {metadata.relatedSkills.length > 3 && (
-                  <span class="text-xs bg-surface-1 text-text-secondary px-2 py-1 rounded-full">
-                    +{metadata.relatedSkills.length - 3}
-                  </span>
-                )}
-              </div>
-            </CardContent>
-            
-            <CardFooter className="flex justify-between items-center pt-2 pb-4">
-              <Button variant="ghost" size="sm" asChild>
-                <a href={`/${currentLang}/digital-studio/${slug}`} class="flex items-center gap-2">
-                  <span>{t.buttons.goToProduct}</span>
-                  <ArrowRight className="w-4 h-4" />
-                </a>
-              </Button>
-              
-              {productUrl && (
-                <Button variant="outline" size="sm" asChild>
-                  <a 
-                    href={productUrl} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    class="flex items-center gap-2"
-                  >
-                    <span>{t.buttons.visitWebsite}</span>
-                    <ExternalLink className="w-3 h-3" />
-                  </a>
-                </Button>
-              )}
-            </CardFooter>
-          </Card>
-        );
-      })}
+              </a>{' '}
+              {/* Close the link wrapper */}
+            </div>
+          );
+        })
+      }
     </div>
-    
+
     {/* Empty State */}
-    {sortedProducts.length === 0 && (
-      <div class="text-center py-16 bg-surface-1 rounded-lg">
-        <h3 class="text-xl font-semibold mb-2">{t.emptyState.title}</h3>
-        <p class="text-text-secondary">{t.emptyState.description}</p>
-      </div>
-    )}
+    {
+      sortedProducts.length === 0 && (
+        <div class="text-center py-16 bg-surface-1 rounded-lg">
+          <h3 class="text-xl font-semibold mb-2">{t.emptyState.title}</h3>
+          <p class="text-text-secondary">{t.emptyState.description}</p>
+        </div>
+      )
+    }
   </section>
 </BaseLayout>
+
+<style>
+  /* Add any custom styles here */
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 0.8;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  .badge-new {
+    animation: pulse 2s infinite;
+  }
+</style>

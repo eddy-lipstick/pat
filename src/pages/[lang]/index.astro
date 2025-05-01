@@ -2,7 +2,6 @@
 // src/pages/[lang]/index.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getFeaturedCaseStudies } from '../../lib/case-studies';
-import { getFeaturedDigitalStudioProducts } from '../../lib/digital-studio';
 import { getLangFromUrl } from '@/i18n/utils';
 import { landingTranslations } from '@/i18n/translations/landing';
 import NameExplanationCard from '@/components/NameExplanationCard';
@@ -20,64 +19,42 @@ import { Badge } from '@/components/ui/badge';
 import ServicesGrid from '../../components/services/ServicesGrid.astro';
 import { getCollection } from 'astro:content';
 
-import BubbleMap from '../../components/bubbles/BubbleMap';
+import BubbleMap from '../../components/bubbles/BubbleMap'; // Re-add import
 import LogoGrid from '../../components/LogoGrid.astro';
 import { ArrowRight, MessageCircle } from 'lucide-react';
 import VideoTestimonials from '../../components/VideoTestimonials';
 import OurFormula from '../../components/OurFormula';
-import TeamSection from '../../components/TeamSection';
-import DigitalStudioGrid from '../../components/DigitalStudioGrid';
+import TeamSection from '../../components/TeamSection'; // Keep TeamSection import
 import Hero from '@/components/Hero.astro';
 import Partners from '../../components/Partners.astro';
 import SectionHeader from '@/components/SectionHeader.astro';
+import DigitalStudioSection from '@/components/digital-studio/DigitalStudioSection.astro';
+
+import type { CollectionEntry } from 'astro:content';
 
 // Get current language from URL
 const currentLang = getLangFromUrl(Astro.url);
-const t = landingTranslations[currentLang];
+// Add type assertion for currentLang
+const t = landingTranslations[currentLang as 'en' | 'nl'];
 
-const { lang } = Astro.params;
+const { lang } = Astro.params as { lang: 'en' | 'nl' }; // Assert type for lang from params
 
 // Generate static paths for each language
 export function getStaticPaths() {
   return [{ params: { lang: 'en' } }, { params: { lang: 'nl' } }];
 }
 
-const teamMembers = [
-  {
-    name: 'Maurits Fornier',
-    role: t.team.roles.legalDesignLead,
-    imageUrl: '/images/team/sunmoon-stokhof.jpg',
-  },
-  {
-    name: 'Dielis Delen',
-    role: t.team.roles.softwareDeveloper,
-    imageUrl: '/images/team/dielis-delen.webp',
-  },
-  {
-    name: 'Savannah Koomen',
-    role: t.team.roles.strategyLead,
-    imageUrl: '/images/team/savannah-koomen.webp',
-  },
-];
+// teamMembers variable removed as TeamSection component doesn't accept it
 
 const featuredCaseStudies = await getFeaturedCaseStudies();
-const featuredDigitalStudioProducts = await getFeaturedDigitalStudioProducts(currentLang);
 
 // Get all case studies for current language
 const allCaseStudies = await getCollection('case-studies', (entry) => {
   return entry.id.startsWith(currentLang + '/');
 });
 
-// Filter to only get case studies that have a stakeholder assigned
-const bubbleMapCaseStudies = allCaseStudies.filter((study) => study.data.stakeholder);
-
-// Process the content for each case study
-const processedStudies = await Promise.all(
-  bubbleMapCaseStudies.map(async (study) => {
-    const { Content } = await study.render();
-    return { ...study, Content };
-  })
-);
+// Removed bubbleMapCaseStudies and processedStudies as 'stakeholder' field doesn't exist
+// and study.rendered() access was incorrect. BubbleMap component also removed below.
 ---
 
 <BaseLayout title={t.meta.title} description={t.meta.description}>
@@ -91,6 +68,7 @@ const processedStudies = await Promise.all(
     primaryButtonText={t.hero.buttons.primary}
     primaryButtonHref={`/${currentLang}/case-studies`}
   >
+    {/* Re-adding BubbleMap */}
     <div class="h-full hidden lg:block z-20 translate-x-32 translate-y-10">
       <BubbleMap client:load lang={lang} />
     </div>
@@ -104,46 +82,14 @@ const processedStudies = await Promise.all(
     )
   }
 
-  <LogoGrid lang={lang} />
+  <LogoGrid lang={currentLang} />
 
-  <ServicesGrid />
+  <ServicesGrid lang={currentLang} />
 
   {/* Digital Studio Section */}
-  {
-    featuredDigitalStudioProducts.length > 0 && (
-      <div class="container mx-auto px-4 py-12">
-        <SectionHeader
-          eyebrow={t.digitalStudio.eyebrow}
-          title={t.digitalStudio.title}
-          description={t.digitalStudio.description}
-        />
-        <div class="mt-12">
-          <DigitalStudioGrid
-            products={featuredDigitalStudioProducts}
-            client:load
-            lang={currentLang}
-          />
-        </div>
-        <div class="mt-8 text-center">
-          <a
-            href={`/${currentLang}/digital-studio`}
-            class="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
-          >
-            {t.digitalStudio.viewAll}
-            <ArrowRight class="h-4 w-4" />
-          </a>
-        </div>
-      </div>
-    )
-  }
+  <DigitalStudioSection lang={currentLang} />
 
-  <SectionHeader
-    eyebrow={t.formula.eyebrow}
-    title={t.formula.title}
-    description={t.formula.description}
-  />
-
-  <OurFormula client:load lang={lang} />
-  <Partners lang={lang} />
-  <TeamSection lang={lang} client:load teamMembers={teamMembers} />
+  <Partners lang={currentLang} />
+  {/* TeamSection called without teamMembers prop */}
+  <TeamSection lang={currentLang} client:load />
 </BaseLayout>
