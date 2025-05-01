@@ -7,30 +7,31 @@ const ImageLightbox = ({
   alt,
   title,
   className,
-  aspectRatio = '16/9', // Default aspect ratio
-  objectFit = 'cover', // Allow control of object-fit
-  objectPosition = 'center', // Allow control of object-position
+  // Removed aspectRatio prop
+  objectFit = 'contain', // Changed default to 'contain'
+  objectPosition = 'center',
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
+      {/* Removed style={{ aspectRatio }} and adjusted classes */}
       <div
         className={`relative group overflow-hidden ${className}`}
-        style={{
-          aspectRatio,
-          position: 'relative',
-        }}
+        // Removed inline style for aspectRatio
       >
+        {/* Adjusted img classes: removed absolute inset-0, added block */}
         <img
           src={src}
           alt={alt}
-          className="w-full h-full absolute inset-0"
+          className="w-full h-auto block" // Use h-auto and block display
           style={{
-            objectFit,
+            objectFit, // Keep objectFit for flexibility if needed, but default is contain
             objectPosition,
+            // Removed width/height 100% as block/h-auto handles it
           }}
         />
+        {/* Overlay for button - adjusted positioning */}
         <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300">
           <div className="p-4 flex items-center gap-4">
             <button
@@ -54,6 +55,7 @@ const ImageLightbox = ({
           >
             <X className="w-5 h-5 text-white" />
           </button>
+          {/* Ensure lightbox image also uses contain */}
           <img src={src} alt={alt} className="w-full h-full object-contain" />
         </DialogContent>
       </Dialog>

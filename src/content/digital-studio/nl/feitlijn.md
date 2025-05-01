@@ -4,56 +4,37 @@ introduction: 'Een innovatief platform dat juridische uitspraken toegankelijk ma
 
 # URL and media
 productUrl: 'https://feitlijn.nl'
-logoImage: '/images/digital-studio/feitlijn/logo.png'
-demoVideo: '/videos/feitlijn-demo.mp4'
-coverImage: '/images/case-studies/feitlijn/timeline.jpg'
+logoImage: '/digital/feitlijn/feitlijn.png'
+demoVideo: '/digital/feitlijn/tijdlijn.mp4'
+coverImage: '/digital/feitlijn/feitlijn-cover.jpg'
 
 # Problem and solution fields removed
 
 # Target audience
 targetAudience:
   - 'Advocaten en juridisch adviseurs die regelmatig jurisprudentie moeten analyseren'
-  - 'Rechters en gerechtelijke medewerkers die een overzicht nodig hebben van eerdere uitspraken'
   - 'Juridische onderzoekers en academici die jurisprudentie bestuderen'
   - 'Rechtenstudenten die leren hoe ze uitspraken moeten interpreteren'
 
 # Key features
 keyFeatures:
-  - title: 'Tijdlijn Visualisatie'
+  - title: 'Tijdlijn '
     description: 'Een chronologisch overzicht van alle relevante gebeurtenissen in een zaak, met duidelijke aanduiding van de betrokken partijen.'
     icon: 'timeline'
-  - title: 'Juridische Analyse'
+  - title: ' Analyse'
     description: 'Gestructureerde weergave van de kernargumenten, rechtsregels en toepassingen binnen een uitspraak.'
     icon: 'analysis'
   - title: 'Zaakroute'
     description: 'Visuele representatie van de route die een zaak heeft afgelegd door verschillende instanties.'
     icon: 'route'
-  - title: 'Collecties'
-    description: "Mogelijkheid om gerelateerde uitspraken te groeperen en te delen met collega's."
-    icon: 'collection'
-  - title: 'Presentatiemodus'
-    description: 'Professionele weergave voor gebruik tijdens presentaties of in de rechtszaal.'
-    icon: 'presentation'
 
 # Origin story
-originStory: "Feitlijn is ontstaan uit onze jarenlange ervaring met juridische professionals. We zagen dat zelfs ervaren juristen worstelden met het efficiënt verwerken van de grote hoeveelheid aan jurisprudentie. In een pilot met verschillende advocatenkantoren ontwikkelden we eerst een methodologie om uitspraken te visualiseren, wat vervolgens leidde tot een geautomatiseerd platform.\n\nDe combinatie van juridische expertise, modern design en technologie resulteerde in een tool die nu door honderden professionals dagelijks wordt gebruikt om tijd te besparen en diepgaander inzicht te krijgen in jurisprudentie."
+originStory: "We bouwden een tool die de enorme bron van informatie in rechterlijke uitspraken toegankelijk maakt voor iedereen in het juridische veld. En met succes: Feitlijn wordt inmiddels dagelijks gratis gebruikt door honderden juristen, advocaten en studenten die sneller en effectiever willen werken met rechtspraak.\n\nWe zetten AI-technologie in om tekstanalyse op een nieuwe manier toe te passen op rechtspraak. Het systeem analyseert automatisch de structuur, argumentatie en chronologie van uitspraken, en presenteert deze visueel. De essentie van een uitspraak wordt direct zichtbaar: een tijdlijn brengt de chronologie in kaart, de juridische analyse structureert kernargumenten, en de zaakroute toont verbanden met gerelateerde uitspraken. Hierdoor krijg je in enkele minuten inzicht waar traditioneel veel meer tijd voor nodig was.\n\nNaast technologie maakt ook de menselijke expertise Feitlijn onderscheidend. We hebben een sociale laag gecreëerd waarin vooraanstaande juristen collecties van uitspraken samenstellen en van deskundig commentaar voorzien. Deze combinatie van AI-gedreven analyse en menselijke expertise zorgt voor een dieper begrip van jurisprudentie. Dit is juridische innovatie in de praktijk: technologie die niet vervangt, maar versterkt."
 
 productOwnerQuote:
-  quote: 'Door rechtspraak te visualiseren en te structureren maken we het rechtssysteem toegankelijker. Feitlijn laat zien hoe technologie juridische informatie democratischer kan maken.'
+  quote: 'In Feitlijn komt alles samen waar Patroon voor staat: we doorbreken de muur van juridische complexiteit met goed ontwerp en slimme technologie.'
   author: 'Maurits Fornier'
   role: 'Patroon'
-
-# Usage example
-usageExample:
-  title: 'Complexe fraudezaak analyseren'
-  description: 'Een groot advocatenkantoor in Amsterdam moest een complexe fraudezaak voorbereiden met meer dan 20 betrokken partijen en een voorgeschiedenis van 15 jaar. Met behulp van Feitlijn konden ze binnen enkele uren een uitgebreide tijdlijn en argumentatiestructuur opbouwen.'
-  results: 'De voorbereidingstijd werd met 40% verminderd en nieuwe teamleden konden snel worden ingewerkt dankzij de duidelijke visuele structuur.'
-  image: '/images/case-studies/feitlijn/timeline.jpg'
-  userQuote:
-    quote: 'Feitlijn transformeert hoe we met rechtspraak werken. Door de visuele structuur en contextualisering zie ik niet alleen de uitspraak, maar ook direct alle relevante verbanden.'
-    author: 'Mr. J. van Dijk'
-    role: 'Advocaat'
-    company: 'Van Doorne'
 
 # Core metadata
 metadata:
@@ -73,39 +54,27 @@ relatedProducts: ['legalsuite', 'contractanalyzer']
 # Translation reference
 translationRef: 'en/feitlijn'
 
-# Reusing case study components for compatibility
-expandableContent:
-  - title: 'Van ontoegankelijke tekst naar visuele inzichten'
-    firstParagraph: 'Juridische uitspraken zijn doorgaans lange, complexe teksten die zelfs voor juristen tijdrovend zijn om te doorgronden. Feitlijn transformeert deze teksten naar gestructureerde, visuele representaties die de kernelementen direct inzichtelijk maken.'
-    remainingText:
-      - 'De applicatie integreert verschillende componenten die elk een aspect van de rechtszaak belichten: de tijdlijn visualiseert de chronologie, de juridische analyse structureert de kernargumenten, en de zaakroute toont verbanden met gerelateerde uitspraken. Deze holistische aanpak zorgt ervoor dat gebruikers snel de essentie kunnen begrijpen.'
-      - 'Naast de visualisatie biedt Feitlijn ook contextuele informatie zoals emoji-samenvattingen, collecties van gerelateerde uitspraken, en expertnotes die de uitspraken in een breder juridisch kader plaatsen.'
-
-quotes:
-  first:
-    quote: 'Feitlijn transformeert hoe we met rechtspraak werken. Door de visuele structuur en contextualisering zie ik niet alleen de uitspraak, maar ook direct alle relevante verbanden.'
-    author: 'Mr. J. van Dijk'
-    role: 'Advocaat, Van Doorne'
-  second:
-    quote: 'Door rechtspraak te visualiseren en te structureren maken we het rechtssysteem toegankelijker. Feitlijn laat zien hoe technologie juridische informatie democratischer kan maken.'
-    author: 'Maurits Fornier'
-    role: 'Patroon'
-
 # Images
 images:
-  - src: '/images/case-studies/feitlijn/timeline.jpg'
-    alt: 'Tijdlijn visualisatie van een rechtszaak'
+  - src: '/digital/feitlijn/micro-noot.png'
+    alt: 'Micro-noot bij een uitspraak'
     type: 'full'
-  - src: '/images/case-studies/feitlijn/analysis.jpg'
-    alt: 'Juridische analyse component'
+
+  - src: '/digital/feitlijn/samenvatting.png'
+    alt: 'Overzicht van rechtsvragen in een conclusie van de A-G'
     type: 'full'
-  - src: '/images/case-studies/feitlijn/collections.jpg'
+  - src: '/digital/feitlijn/cassatie.png'
+    alt: 'Feitlijn destilleert de cassatiemiddelen uit de tekst en zet ze in een overzicht.'
+    type: 'full'
+
+  - src: '/digital/feitlijn/collecties.png'
+    alt: 'Collecties door experts.'
+    type: 'full'
+
+  - src: '/digital/feitlijn/experts.png'
     alt: 'Collecties overzicht'
     type: 'full'
-  - src: '/images/case-studies/feitlijn/zaakroute.jpg'
+  - src: '/digital/feitlijn/zaakroute.png'
     alt: 'Zaakroute visualisatie'
-    type: 'full'
-  - src: '/images/case-studies/feitlijn/presentation.jpg'
-    alt: 'Presentatiemodus in actie'
     type: 'full'
 ---

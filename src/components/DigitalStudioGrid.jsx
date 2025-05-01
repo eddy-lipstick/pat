@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 
-import { digitalSolutionsTranslations } from '@/i18n/translations/digital-studio';
+import { digitalStudioTranslations } from '@/i18n/translations/digital-studio';
 
 /**
  * Grid component for displaying digital studio products
@@ -11,7 +11,7 @@ import { digitalSolutionsTranslations } from '@/i18n/translations/digital-studio
  */
 const DigitalStudioGrid = ({ products, lang = 'nl' }) => {
   // Get translations for the current language
-  const t = digitalSolutionsTranslations[lang] || digitalSolutionsTranslations.en;
+  const t = digitalStudioTranslations[lang] || digitalStudioTranslations.en;
   // Early return if no products
   if (!products || products.length === 0) {
     return (
@@ -107,7 +107,7 @@ const DigitalStudioGrid = ({ products, lang = 'nl' }) => {
                     href={`/${lang}/digital-studio/${baseId}`}
                     className="inline-flex items-center justify-center w-full"
                   >
-                    {t.productCard.viewCaseStudy}
+                    {t.buttons.goToProduct}
                     <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </a>
                 </Button>

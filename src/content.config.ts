@@ -60,6 +60,7 @@ const mediaSchema = z.object({
   src: z.string(),
   alt: z.string(),
   type: z.enum(['full', 'grid', 'slider']),
+  header: z.string().optional(), // Added header field
 });
 
 // Digital studio product schema
@@ -96,24 +97,6 @@ const digitalProductSchema = z.object({
     })
     .optional(),
 
-  // Usage example
-  usageExample: z
-    .object({
-      title: z.string(),
-      description: z.string(),
-      results: z.string(),
-      image: z.string().optional(),
-      userQuote: z
-        .object({
-          quote: z.string(),
-          author: z.string(),
-          role: z.string(),
-          company: z.string().optional(),
-        })
-        .optional(),
-    })
-    .optional(),
-
   // Metadata
   metadata: z.object({
     client: z.string(),
@@ -123,8 +106,6 @@ const digitalProductSchema = z.object({
   }),
 
   // Display settings
-  featured: z.boolean().default(false),
-  show_on_landing: z.boolean().default(false),
   tags: z.array(z.string()).default([]),
 
   // Related products
@@ -139,9 +120,6 @@ const digitalProductSchema = z.object({
     })
     .optional(),
   images: z.array(mediaSchema).optional(),
-
-  // Optional translation reference
-  translationRef: z.string().optional(),
 });
 
 const beforeAfterSchema = z.object({
