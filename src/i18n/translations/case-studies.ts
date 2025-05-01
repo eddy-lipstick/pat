@@ -29,7 +29,7 @@ export const caseStudiesTranslations = {
       seoTitle: 'Legal Design Case Studies',
     },
     hero: {
-      subtitle: 'Law in focus',
+      subtitle: 'Case Studies',
       title: 'Complex legal matters, clearly visualized',
     },
     viewProject: 'View this project',
@@ -106,7 +106,7 @@ export const caseStudiesTranslations = {
       seoTitle: 'Legal Design Cases',
     },
     hero: {
-      subtitle: 'Recht in beeld',
+      subtitle: 'Case Studies',
       title: 'Complexe juridische materie, helder verbeeld',
     },
     viewProject: 'Bekijk dit project',

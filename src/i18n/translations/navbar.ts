@@ -2,7 +2,8 @@
 
 export const navbarTranslations = {
   en: {
-    projects: 'Projects',
+    projects: 'Case Studies',
+    digitalProducts: 'Digital Studio',
     about: {
       title: 'About us',
       approach: 'Approach',
@@ -17,7 +18,8 @@ export const navbarTranslations = {
     contact: 'Contact',
   },
   nl: {
-    projects: 'Projecten',
+    projects: 'Case Studies',
+    digitalProducts: 'Digital Studio',
     about: {
       title: 'Over ons',
       approach: 'Aanpak',
@@ -35,9 +37,13 @@ export const navbarTranslations = {
   },
 };
 
+// Define a type for the language keys
+type LangKey = keyof typeof navbarTranslations;
+
 // Helper function to get navigation items based on language
 export const getNavItems = (currentLang: string, currentPath: string) => {
-  const t = navbarTranslations[currentLang];
+  // Assert that currentLang is a valid key
+  const t = navbarTranslations[currentLang as LangKey];
 
   const learnChildren = [
     { label: t.learn.training, href: `/${currentLang}/learn/training` },
@@ -46,8 +52,10 @@ export const getNavItems = (currentLang: string, currentPath: string) => {
 
   // Add Dutch-only items
   if (currentLang === 'nl') {
+    // Access Dutch translations directly here to satisfy TypeScript
+    const nlLearn = navbarTranslations.nl.learn;
     learnChildren.push({
-      label: t.learn.visualDissection,
+      label: nlLearn.visualDissection,
       href: `/learn/courses/visuele-snijtafel`,
     });
     learnChildren.push({
@@ -59,6 +67,10 @@ export const getNavItems = (currentLang: string, currentPath: string) => {
     {
       label: t.projects,
       href: `/${currentLang}/case-studies`,
+    },
+    {
+      label: t.digitalProducts,
+      href: `/${currentLang}/digital-studio`,
     },
     {
       label: t.about.title,

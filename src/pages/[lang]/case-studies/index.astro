@@ -14,7 +14,7 @@ export function getStaticPaths() {
 const { lang } = Astro.params;
 const t = caseStudiesTranslations[lang];
 
-// Get all case studies for current language and sort by date
+// Get all case studies for current language
 const allCaseStudies = await getCollection('case-studies', (entry) =>
   entry.id.startsWith(lang + '/')
 );

@@ -60,6 +60,67 @@ const mediaSchema = z.object({
   src: z.string(),
   alt: z.string(),
   type: z.enum(['full', 'grid', 'slider']),
+  header: z.string().optional(), // Added header field
+});
+
+// Digital studio product schema
+const digitalProductSchema = z.object({
+  // Core fields
+  title: z.string().min(1),
+  introduction: z.string(),
+  productUrl: z.string().url().optional(),
+  logoImage: z.string().optional(),
+  demoVideo: z.string().optional(),
+  coverImage: z.string().optional(),
+
+  /* Problem and solution fields removed */
+
+  // Target audience
+  targetAudience: z.array(z.string()),
+
+  // Key features
+  keyFeatures: z.array(
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      icon: z.string().optional(),
+    }),
+  ),
+
+  // Product origin story
+  originStory: z.string(),
+  productOwnerQuote: z
+    .object({
+      quote: z.string(),
+      author: z.string(),
+      role: z.string(),
+    })
+    .optional(),
+
+  // Metadata
+  metadata: z.object({
+    client: z.string(),
+    date: z.string(),
+    relatedSkills: z.array(z.string()),
+    website: z.string().url().optional(),
+  }),
+
+  // Display settings
+  tags: z.array(z.string()).default([]),
+  featured: z.boolean().default(false), // Added featured field
+
+  // Related products
+  relatedProducts: z.array(z.string()).optional(),
+
+  // Reuse components from case studies for compatibility
+  expandableContent: z.array(expandableContentSchema).optional(),
+  quotes: z
+    .object({
+      first: quoteSchema.optional(),
+      second: quoteSchema.optional(),
+    })
+    .optional(),
+  images: z.array(mediaSchema).optional(),
 });
 
 const beforeAfterSchema = z.object({
@@ -308,6 +369,13 @@ export const collections = {
       base: './src/content/case-studies',
     }),
     schema: caseStudySchema,
+  }),
+  'digital-studio': defineCollection({
+    loader: glob({
+      pattern: '**/[^_]*.{md,mdx}', // This will match files in language subdirectories
+      base: './src/content/digital-studio',
+    }),
+    schema: digitalProductSchema,
   }),
   team: defineCollection({
     loader: glob({

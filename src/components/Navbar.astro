@@ -4,7 +4,12 @@ import { Menu, X, ChevronDown, Globe } from 'lucide-react';
 import { getLangFromUrl } from '@/i18n/utils';
 import { getNavItems } from '@/i18n/translations/navbar';
 
-const { variant = 'dark' } = Astro.props;
+// Define Props interface
+interface Props {
+  variant?: 'light' | 'dark';
+}
+
+const { variant = 'dark' } = Astro.props as Props; // Use Props interface
 const currentLang = getLangFromUrl(Astro.url);
 const currentPath = Astro.url.pathname;
 
@@ -73,11 +78,13 @@ const classes = variantClasses[variant];
                     'inline-flex items-center gap-1 px-3 py-2 text-base font-medium rounded-md transition-colors font-roc-grotesk',
                     classes.text,
                     classes.hover,
-                    currentPath.startsWith(item.href) ? classes.active : '',
+                    // Check if item.href exists before calling startsWith
+                    item.href && currentPath.startsWith(item.href) ? classes.active : '',
                   ]}
                 >
                   {item.label}
-                  <ChevronDown class="h-4 w-4 transition-transform group-hover:rotate-180" />
+                  {/* Use className for React component */}
+                  <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
                 </button>
                 <div
                   class:list={[
@@ -94,7 +101,8 @@ const classes = variantClasses[variant];
                           'block px-4 py-2 text-sm transition-colors',
                           classes.text,
                           classes.dropdownHover,
-                          currentPath === child.href ? classes.active : '',
+                          // Check if child.href exists (though likely always does here)
+                          child.href && currentPath === child.href ? classes.active : '',
                         ]}
                       >
                         {child.label}
@@ -136,10 +144,12 @@ const classes = variantClasses[variant];
           aria-expanded="false"
         >
           <span class="menu-icon">
-            <Menu class="h-6 w-6" />
+            {/* Use className for React component */}
+            <Menu className="h-6 w-6" />
           </span>
           <span class="close-icon hidden">
-            <X class="h-6 w-6" />
+            {/* Use className for React component */}
+            <X className="h-6 w-6" />
           </span>
         </button>
       </div>
@@ -169,7 +179,8 @@ const classes = variantClasses[variant];
                         'block px-3 py-2 text-base font-medium rounded-md transition-colors',
                         classes.text,
                         classes.mobileMenuHover,
-                        currentPath === child.href ? classes.active : '',
+                        // Check if child.href exists
+                        child.href && currentPath === child.href ? classes.active : '',
                       ]}
                     >
                       {child.label}
