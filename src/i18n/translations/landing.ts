@@ -75,7 +75,7 @@ export const landingTranslations = {
     },
     digitalStudio: {
       eyebrow: 'Digital Studio',
-      title: 'La + Design + Tech',
+      title: 'Law + Design + Tech',
       description: 'Innovatieve legal tech tools gebouwd vanuit onze expertise en ervaring.',
       viewAll: 'Bekijk alle digitale producten',
     },
