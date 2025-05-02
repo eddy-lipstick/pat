@@ -58,117 +58,113 @@ const breadcrumbItems = [
 ---
 
 <BaseLayout title={t.meta.title} description={t.meta.description}>
-  <Breadcrumb items={breadcrumbItems} client:load />
-
   <Hero
-    variant="small"
     subtitle={t.hero.subtitle}
     title={t.hero.title}
     description={t.hero.description}
+    class="min-h-[60vh]"
   />
 
-  <section class="py-12">
-    <!-- Product Showcase - Each product gets a full row -->
-    <div class="space-y-16">
-      {
-        sortedProducts.map((product, index) => {
-          // Extract product data
-          const {
-            title,
-            introduction,
-            coverImage,
-            logoImage,
-            metadata,
-            // keyFeatures, // Removed as requested
-            // targetAudience, // Removed as requested
-            // productUrl, // Removed as requested
-            featured,
-          } = product.data;
+  <!-- Product Showcase - Each product gets a full row -->
+  <div class="space-y-16">
+    {
+      sortedProducts.map((product, index) => {
+        // Extract product data
+        const {
+          title,
+          introduction,
+          coverImage,
+          logoImage,
+          metadata,
+          // keyFeatures, // Removed as requested
+          // targetAudience, // Removed as requested
+          // productUrl, // Removed as requested
+          featured,
+        } = product.data;
 
-          const slug = getSlug(product.id);
-          const isEven = index % 2 === 0;
+        const slug = getSlug(product.id);
+        const isEven = index % 2 === 0;
 
-          // Use implicit return with parentheses for the JSX block
-          return (
-            <div id={`product-${slug}`} class="group">
-              {/* Wrap the card content in a link */}
-              <a href={`/${currentLang}/tools/${slug}`} class="block">
-                <div
-                  class={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 items-center bg-surface-1 p-6 lg:p-8 rounded-xl border border-border/30 group-hover:border-primary/50 group-hover:shadow-lg transition-all duration-300`}
-                >
-                  {/* Product Image/Logo Section */}
-                  <div class="w-full lg:w-2/5 overflow-hidden rounded-lg">
-                    {coverImage ? (
-                      <div class="aspect-video overflow-hidden rounded-lg bg-surface-2 flex items-center justify-center">
-                        <img
-                          src={coverImage}
-                          alt={title}
-                          class="w-full h-full object-contain transform group-hover:scale-105 transition-transform duration-500"
-                        />
-                      </div>
-                    ) : (
-                      <div class="aspect-video bg-surface-2 flex items-center justify-center rounded-lg">
-                        <span class="text-text-secondary">{title}</span>
-                      </div>
-                    )}
-                  </div>
-                  {/* Content Section */}
-                  <div class="w-full lg:w-3/5 flex flex-col gap-6">
-                    <div class="space-y-3">
-                      {/* Title & Badges */}
-                      <div class="flex items-center gap-3 flex-wrap">
-                        <h2 class="text-3xl font-bold">{title}</h2>
+        // Use implicit return with parentheses for the JSX block
+        return (
+          <div id={`product-${slug}`} class="group">
+            {/* Wrap the card content in a link */}
+            <a href={`/${currentLang}/tools/${slug}`} class="block">
+              <div
+                class={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 items-center bg-surface-1 p-6 lg:p-8 rounded-xl border border-border/30 group-hover:border-primary/50 group-hover:shadow-lg transition-all duration-300`}
+              >
+                {/* Product Image/Logo Section */}
+                <div class="w-full lg:w-2/5 overflow-hidden rounded-lg">
+                  {coverImage ? (
+                    <div class="aspect-video overflow-hidden rounded-lg bg-surface-2 flex items-center justify-center">
+                      <img
+                        src={coverImage}
+                        alt={title}
+                        class="w-full h-full object-contain transform group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                  ) : (
+                    <div class="aspect-video bg-surface-2 flex items-center justify-center rounded-lg">
+                      <span class="text-text-secondary">{title}</span>
+                    </div>
+                  )}
+                </div>
+                {/* Content Section */}
+                <div class="w-full lg:w-3/5 flex flex-col gap-6">
+                  <div class="space-y-3">
+                    {/* Title & Badges */}
+                    <div class="flex items-center gap-3 flex-wrap">
+                      <h2 class="text-3xl font-bold">{title}</h2>
 
-                        {featured && (
-                          <Badge variant="default" className="bg-primary text-primary-foreground">
-                            {t.labels.featured}
+                      {featured && (
+                        <Badge variant="default" className="bg-primary text-primary-foreground">
+                          {t.labels.featured}
+                        </Badge>
+                      )}
+
+                      {/* Conditionally render 'New' badge */}
+                      {product.data.metadata?.date &&
+                        new Date().getTime() - new Date(product.data.metadata.date).getTime() <
+                          30 * 24 * 60 * 60 * 1000 && (
+                          <Badge variant="outline" className="border-accent text-accent">
+                            {t.labels.new}
                           </Badge>
                         )}
-
-                        {/* Conditionally render 'New' badge */}
-                        {product.data.metadata?.date &&
-                          new Date().getTime() - new Date(product.data.metadata.date).getTime() <
-                            30 * 24 * 60 * 60 * 1000 && (
-                            <Badge variant="outline" className="border-accent text-accent">
-                              {t.labels.new}
-                            </Badge>
-                          )}
-                      </div>
-
-                      {/* Introduction */}
-                      <p class="text-lg text-text-secondary">{introduction}</p>
-
-                      {/* Technologies/Skills */}
-                      <div class="flex flex-wrap gap-2 pt-2">
-                        {metadata.relatedSkills.map((skill) => (
-                          <span class="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
                     </div>
-                    {/* Key Features and Action Buttons removed as requested */}
-                  </div>{' '}
-                  {/* Close the main content div */}
-                </div>
-              </a>{' '}
-              {/* Close the link wrapper */}
-            </div>
-          );
-        })
-      }
-    </div>
 
-    {/* Empty State */}
-    {
-      sortedProducts.length === 0 && (
-        <div class="text-center py-16 bg-surface-1 rounded-lg">
-          <h3 class="text-xl font-semibold mb-2">{t.emptyState.title}</h3>
-          <p class="text-text-secondary">{t.emptyState.description}</p>
-        </div>
-      )
+                    {/* Introduction */}
+                    <p class="text-lg text-text-secondary">{introduction}</p>
+
+                    {/* Technologies/Skills */}
+                    <div class="flex flex-wrap gap-2 pt-2">
+                      {metadata.relatedSkills.map((skill) => (
+                        <span class="text-sm bg-primary/10 text-primary px-3 py-1 rounded-full">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  {/* Key Features and Action Buttons removed as requested */}
+                </div>{' '}
+                {/* Close the main content div */}
+              </div>
+            </a>{' '}
+            {/* Close the link wrapper */}
+          </div>
+        );
+      })
     }
-  </section>
+  </div>
+
+  {/* Empty State */}
+  {
+    sortedProducts.length === 0 && (
+      <div class="text-center py-16 bg-surface-1 rounded-lg">
+        <h3 class="text-xl font-semibold mb-2">{t.emptyState.title}</h3>
+        <p class="text-text-secondary">{t.emptyState.description}</p>
+      </div>
+    )
+  }
 </BaseLayout>
 
 <style>

@@ -109,14 +109,10 @@ const allTags = [...new Set(allCaseStudies.flatMap((study) => study.data.tags ||
 ---
 
 <BaseLayout title={t.meta.title} description={t.meta.description}>
-  <div>
-    <!-- Hero Section -->
-    <Hero class="min-h-[60vh]" subtitle={t.hero.subtitle} title={t.hero.title}>
-      <div class=""></div>
-    </Hero>
+  <!-- Hero Section -->
+  <Hero class="min-h-[60vh]" subtitle={t.hero.subtitle} title={t.hero.title} />
 
-    <div class="container mx-auto px-4 py-12">
-      <LargeCaseStudyGrid studies={sortedCaseStudies} client:load lang={lang} />
-    </div>
+  <div class="container mx-auto px-4 py-12">
+    <LargeCaseStudyGrid studies={sortedCaseStudies} client:load lang={lang} />
   </div>
 </BaseLayout>
