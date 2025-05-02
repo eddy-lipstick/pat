@@ -1,10 +1,10 @@
 ---
-// src/pages/[lang]/digital-studio/[slug].astro
+// src/pages/[lang]/tools/[slug].astro
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 import { getLangFromUrl } from '@/i18n/utils';
 import { languages } from '@/i18n/config'; // Import languages config
-import { digitalStudioTranslations } from '@/i18n/translations/digital-studio';
+import { toolsTranslations } from '@/i18n/translations/tools';
 import TagBadge from '@/components/TagBadge.astro'; // Import TagBadge
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -18,8 +18,8 @@ import Container from '@/components/Container.astro';
 type Language = keyof typeof languages;
 
 export async function getStaticPaths() {
-  // Get all digital studio products
-  const allProducts = await getCollection('digital-studio');
+  // Get all tools products
+  const allProducts = await getCollection('tools');
 
   const paths = [];
 
@@ -55,7 +55,7 @@ const { Content } = await render(entry);
 // Get current language
 const currentLang = getLangFromUrl(Astro.url);
 // Assert currentLang is a valid key for translations
-const t = digitalStudioTranslations[currentLang as Language];
+const t = toolsTranslations[currentLang as Language];
 
 // Extract data from entry
 const {
@@ -79,7 +79,7 @@ const {
 let relatedProductsData = [];
 if (relatedProducts && relatedProducts.length > 0) {
   try {
-    const allProducts = await getCollection('digital-studio', (product) => {
+    const allProducts = await getCollection('tools', (product) => {
       return product.id.startsWith(currentLang + '/');
     });
 
@@ -111,7 +111,7 @@ function getSlug(path: string) {
         <div class="text-text-secondary flex items-center gap-2 text-sm mb-8">
           <a href={`/${currentLang}`} class="hover:text-primary transition-colors">{t.breadcrumbs.home}</a>
           <ChevronRight className="w-3 h-3" />
-          <a href={`/${currentLang}/digital-studio`} class="hover:text-primary transition-colors">{t.breadcrumbs.digitalStudio}</a>
+          <a href={`/${currentLang}/tools`} class="hover:text-primary transition-colors">{t.breadcrumbs.tools}</a>
           <ChevronRight className="w-3 h-3" />
           <span class="text-text-primary">{title}</span>
         </div>
@@ -250,7 +250,7 @@ function getSlug(path: string) {
           <h2 class="text-3xl font-bold mb-12 text-foreground font-roc-wide">{t.sections.audience}</h2>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {targetAudience.map((audience, index) => (
+            {targetAudience.map((audience: string, index: number) => (
               <div class="bg-gradient-to-br from-surface-1 to-surface-2 rounded-xl p-6 border border-border/20 flex items-start gap-4 hover:shadow-lg hover:border-primary/30 transition-all duration-300 group">
                 <div class="flex shrink-0 items-center justify-center w-10 h-10 rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
                   <Check className="w-5 h-5" />
@@ -268,7 +268,7 @@ function getSlug(path: string) {
       <!-- Special handling for 2 or 4 images to create a grid -->
       {images.length === 2 || images.length === 4 ? (
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {images.map((image, index) => (
+          {images.map((image: { src: string; alt: string; header?: string }, index: number) => (
             <div class="relative group">
               <!-- Decorative elements -->
               <div class="absolute -inset-0.5 bg-gradient-to-r from-primary/0 to-primary/10 rounded-xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -288,7 +288,7 @@ function getSlug(path: string) {
         </div>
       ) : (
         <div class="space-y-12">
-          {images.map((image, index) => (
+          {images.map((image: { src: string; alt: string; header?: string }, index: number) => (
             <div class="relative group">
               <!-- Decorative elements -->
               <div class="absolute -inset-0.5 bg-gradient-to-r from-primary/0 to-primary/10 rounded-xl blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -316,7 +316,7 @@ function getSlug(path: string) {
         <section class="py-16 lg:py-24 border-b border-border/20">
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-            {keyFeatures.map((feature, index) => (
+            {keyFeatures.map((feature: { title: string; description: string; icon?: string }, index: number) => (
               <div class="group">
                 <Card className="relative h-full border-border/30 bg-surface-1/80 backdrop-blur-sm hover:bg-surface-2 transition-all duration-300 overflow-hidden">
                   <div class="absolute -top-6 -right-6 w-12 h-12 bg-primary opacity-0 rounded-full blur-xl group-hover:opacity-20 transition-opacity duration-500"></div>

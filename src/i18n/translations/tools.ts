@@ -1,19 +1,19 @@
-// src/i18n/translations/digital-studio.ts
+// src/i18n/translations/tools.ts
 
-export const digitalStudioTranslations = {
+export const toolsTranslations = {
   nl: {
     meta: {
-      title: 'Digital Studio',
+      title: 'Tools',
       description: 'Innovatieve juridisch-technologische producten ontwikkeld door Patroon.',
-      seoTitle: 'Digital Studio - Juridische Tech Producten',
+      seoTitle: 'Tools - Juridische Tech Producten',
     },
     breadcrumbs: {
       home: 'Home',
-      digitalStudio: 'Digital Studio',
+      tools: 'Tools',
     },
     hero: {
       title: 'Law + Design + Tech',
-      subtitle: 'Digital Studio',
+      subtitle: 'Tools',
       description:
         'We bouwen tools voor juridische professionals die tijd besparen en resultaten opleveren. Onze digitale producten ontstaan uit praktijkproblemen: we zien waar juristen vastlopen, combineren juridische kennis met design en technologie, en bouwen tools die we zelf ook graag zouden gebruiken.',
     },
@@ -54,16 +54,16 @@ export const digitalStudioTranslations = {
   },
   en: {
     meta: {
-      title: 'Digital Studio',
+      title: 'Tools',
       description: 'Innovative legal technology products developed by Patroon.',
-      seoTitle: 'Digital Studio - Legal Tech Products',
+      seoTitle: 'Tools - Legal Tech Products',
     },
     breadcrumbs: {
       home: 'Home',
-      digitalStudio: 'Digital Studio',
+      tools: 'Tools',
     },
     hero: {
-      title: 'Digital Studio',
+      title: 'Tools',
       subtitle: 'Our technological solutions',
       description: 'Innovative legal technology products developed by Patroon.',
     },

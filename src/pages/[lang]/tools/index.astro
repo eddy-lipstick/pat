@@ -1,5 +1,5 @@
 ---
-// src/pages/[lang]/digital-studio/index.astro
+// src/pages/[lang]/tools/index.astro
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import {
@@ -16,7 +16,7 @@ import Hero from '@/components/Hero.astro';
 import Breadcrumb from '@/components/Breadcrumb';
 import { ArrowRight, ExternalLink, CheckCheck } from 'lucide-react';
 import { getLangFromUrl } from '@/i18n/utils';
-import { digitalStudioTranslations } from '@/i18n/translations/digital-studio';
+import { toolsTranslations } from '@/i18n/translations/tools';
 
 // Generate static paths for each language
 export function getStaticPaths() {
@@ -25,13 +25,11 @@ export function getStaticPaths() {
 
 // Get current language
 const { lang } = Astro.params;
-const currentLang = getLangFromUrl(Astro.url) as keyof typeof digitalStudioTranslations; // Assert type
-const t = digitalStudioTranslations[currentLang];
+const currentLang = getLangFromUrl(Astro.url) as keyof typeof toolsTranslations; // Assert type
+const t = toolsTranslations[currentLang];
 
-// Get all digital studio products for current language
-const allProducts = await getCollection('digital-studio', (entry) =>
-  entry.id.startsWith(currentLang + '/')
-);
+// Get all tools products for current language
+const allProducts = await getCollection('tools', (entry) => entry.id.startsWith(currentLang + '/'));
 
 // Sort products: featured first, then by date
 const sortedProducts = allProducts.sort((a, b) => {
@@ -55,7 +53,7 @@ function getSlug(path: string) {
 
 const breadcrumbItems = [
   { label: t.breadcrumbs.home, href: `/${currentLang}` },
-  { label: t.breadcrumbs.digitalStudio, href: `/${currentLang}/digital-studio` },
+  { label: t.breadcrumbs.tools, href: `/${currentLang}/tools` },
 ];
 ---
 
@@ -94,7 +92,7 @@ const breadcrumbItems = [
           return (
             <div id={`product-${slug}`} class="group">
               {/* Wrap the card content in a link */}
-              <a href={`/${currentLang}/digital-studio/${slug}`} class="block">
+              <a href={`/${currentLang}/tools/${slug}`} class="block">
                 <div
                   class={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-8 items-center bg-surface-1 p-6 lg:p-8 rounded-xl border border-border/30 group-hover:border-primary/50 group-hover:shadow-lg transition-all duration-300`}
                 >

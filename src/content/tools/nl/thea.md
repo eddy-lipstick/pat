@@ -4,9 +4,9 @@ introduction: 'Thea transformeert tekst in overtuigende tijdlijnen en structure 
 
 # URL and media
 productUrl: 'https://thea.legal'
-logoImage: '/digital/thea/thea-logo-wit.png'
-demoVideo: '/digital/thea/thea-tijdlijn.mp4'
-coverImage: '/digital/thea/thea-logo.png'
+logoImage: '/tools/thea/thea-logo-wit.png'
+demoVideo: '/tools/thea/thea-tijdlijn.mp4'
+coverImage: '/tools/thea/thea-logo.png'
 
 # Target audience
 targetAudience:
@@ -57,23 +57,23 @@ translationRef: 'en/thea'
 
 # Images
 images:
-  - src: '/digital/thea/categories.png'
+  - src: '/tools/thea/categories.png'
     alt: 'Thea groepeert gebeurtenissen in categorieën met kleurcodering.'
     type: 'full'
 
-  - src: '/digital/thea/key-players.png'
+  - src: '/tools/thea/key-players.png'
     alt: 'Voorbeeld van een gegenereerde tijdlijn van een complexe zaak, inclusief een opsomming van betrokken personen en partijen en hun rol.'
     type: 'full'
 
-  - src: '/digital/thea/time-machine.gif'
+  - src: '/tools/thea/time-machine.gif'
     alt: 'Structuurgrafiek die relaties tussen entiteiten visualiseert, door de tijd heen.'
     type: 'full'
 
-  - src: '/digital/thea/producties.png'
+  - src: '/tools/thea/producties.png'
     alt: 'Voeg productieverwijzingen toe.'
     type: 'full'
 
-  - src: '/digital/thea/edit-event.png'
+  - src: '/tools/thea/edit-event.png'
     alt: 'Pas eenvoudig de tijdlijn aan.'
     type: 'full'
 ---

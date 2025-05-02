@@ -4,9 +4,9 @@ introduction: 'Een innovatief platform dat juridische uitspraken toegankelijk ma
 
 # URL and media
 productUrl: 'https://feitlijn.nl'
-logoImage: '/digital/feitlijn/feitlijn.png'
-demoVideo: '/digital/feitlijn/tijdlijn.mp4'
-coverImage: '/digital/feitlijn/feitlijn-cover.jpg'
+logoImage: '/tools/feitlijn/feitlijn.png'
+demoVideo: '/tools/feitlijn/tijdlijn.mp4'
+coverImage: '/tools/feitlijn/feitlijn-cover.jpg'
 
 # Problem and solution fields removed
 
@@ -56,25 +56,25 @@ translationRef: 'en/feitlijn'
 
 # Images
 images:
-  - src: '/digital/feitlijn/micro-noot.png'
+  - src: '/tools/feitlijn/micro-noot.png'
     alt: 'Micro-noot bij een uitspraak'
     type: 'full'
 
-  - src: '/digital/feitlijn/samenvatting.png'
+  - src: '/tools/feitlijn/samenvatting.png'
     alt: 'Overzicht van rechtsvragen in een conclusie van de A-G'
     type: 'full'
-  - src: '/digital/feitlijn/cassatie.png'
+  - src: '/tools/feitlijn/cassatie.png'
     alt: 'Feitlijn destilleert de cassatiemiddelen uit de tekst en zet ze in een overzicht.'
     type: 'full'
 
-  - src: '/digital/feitlijn/collecties.png'
+  - src: '/tools/feitlijn/collecties.png'
     alt: 'Collecties door experts.'
     type: 'full'
 
-  - src: '/digital/feitlijn/experts.png'
+  - src: '/tools/feitlijn/experts.png'
     alt: 'Collecties overzicht'
     type: 'full'
-  - src: '/digital/feitlijn/zaakroute.png'
+  - src: '/tools/feitlijn/zaakroute.png'
     alt: 'Zaakroute visualisatie'
     type: 'full'
 ---

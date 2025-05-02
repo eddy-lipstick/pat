@@ -28,7 +28,7 @@ import TeamSection from '../../components/TeamSection'; // Keep TeamSection impo
 import Hero from '@/components/Hero.astro';
 import Partners from '../../components/Partners.astro';
 import SectionHeader from '@/components/SectionHeader.astro';
-import DigitalStudioSection from '@/components/digital-studio/DigitalStudioSection.astro';
+import ToolsSection from '@/components/tools/ToolsSection.astro';
 
 import type { CollectionEntry } from 'astro:content';
 
@@ -86,8 +86,8 @@ const allCaseStudies = await getCollection('case-studies', (entry) => {
 
   <ServicesGrid lang={currentLang} />
 
-  {/* Digital Studio Section */}
-  <DigitalStudioSection lang={currentLang} />
+  {/* Tools Section */}
+  <ToolsSection lang={currentLang} />
 
   <Partners lang={currentLang} />
   {/* TeamSection called without teamMembers prop */}

@@ -7,9 +7,10 @@ export const landingTranslations = {
       description:
         'We transform complex legal information into clear, user-friendly solutions. Specializing in legal design, document automation, and legal tech solutions.',
     },
-    hero: {
-      subtitle: 'Legal design & tech',
-      title: 'Creative legal minds',
+    tools: {
+      // Renamed key
+      eyebrow: 'Tools', // Updated text
+      title: 'Our Tools', // Updated text
       description:
         'We combine deep legal expertise with advanced technology and strategic design to create sophisticated solutions for complex legal challenges.',
       bulletPoints: [
@@ -21,15 +22,11 @@ export const landingTranslations = {
         primary: 'Our work',
       },
     },
-    services: {
-      eyebrow: 'Our services',
-      title: 'What we can do for you',
-      description:
-        'We help organizations make their legal information more accessible and automate legal processes.',
-    },
+    // Removed duplicate 'tools' key here
     digitalStudio: {
-      eyebrow: 'Digital Studio',
-      title: 'Our Digital Products',
+      // This should likely be removed or renamed if no longer used
+      eyebrow: 'Digital Studio', // Keeping original for now, might need removal
+      title: 'Our Digital Products', // Keeping original for now, might need removal
       description: 'Innovative legal tech tools built from our expertise and experience.',
       viewAll: 'View all digital products',
     },
@@ -73,8 +70,9 @@ export const landingTranslations = {
       description:
         'We helpen organisaties hun juridische informatie toegankelijker te maken en juridische processen te automatiseren.',
     },
-    digitalStudio: {
-      eyebrow: 'Digital Studio',
+    tools: {
+      // Renamed key
+      eyebrow: 'Tools', // Updated text
       title: 'Law + Design + Tech',
       description: 'Innovatieve legal tech tools gebouwd vanuit onze expertise en ervaring.',
       viewAll: 'Bekijk alle digitale producten',

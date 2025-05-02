@@ -370,10 +370,10 @@ export const collections = {
     }),
     schema: caseStudySchema,
   }),
-  'digital-studio': defineCollection({
+  tools: defineCollection({
     loader: glob({
       pattern: '**/[^_]*.{md,mdx}', // This will match files in language subdirectories
-      base: './src/content/digital-studio',
+      base: './src/content/tools',
     }),
     schema: digitalProductSchema,
   }),

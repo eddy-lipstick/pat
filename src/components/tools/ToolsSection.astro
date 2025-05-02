@@ -1,0 +1,31 @@
+---
+// src/components/tools/ToolsSection.astro
+import SectionHeader from '@/components/SectionHeader.astro';
+import ToolsGrid from '@/components/ToolsGrid'; // Updated import name
+import { getFeaturedToolsProducts } from '@/lib/tools'; // Updated function name
+import { landingTranslations } from '@/i18n/translations/landing';
+
+// Props expected by this component
+interface Props {
+  lang: 'en' | 'nl';
+}
+
+const { lang } = Astro.props;
+const t = landingTranslations[lang]; // Get translations based on the passed language
+
+// Fetch featured tools products for the current language
+const featuredToolsProducts = await getFeaturedToolsProducts(lang); // Updated variable and function name
+---
+
+{
+  featuredToolsProducts.length > 0 && ( // Updated variable name
+    <div class="container mx-auto px-4 py-12 mb-20">
+      <SectionHeader eyebrow={t.tools.eyebrow} title={t.tools.title} />{' '}
+      {/* Updated translation key */}
+      <div class="mt-12">
+        <ToolsGrid products={featuredToolsProducts} client:load lang={lang} />{' '}
+        {/* Updated component and variable name */}
+      </div>
+    </div>
+  )
+}

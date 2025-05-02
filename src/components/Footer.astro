@@ -20,7 +20,7 @@ const allNews = await getCollection('news');
 const allCases = await getCollection('case-studies');
 const allArticles = await getCollection('articles');
 const allApproaches = await getCollection('approach');
-const allDigitalStudio = await getCollection('digital-studio'); // Fetch digital studio projects
+const allTools = await getCollection('tools'); // Fetch tools projects
 
 // Filter and sort items by language
 const recentNews = allNews
@@ -59,8 +59,8 @@ const recentApproaches = allApproaches
   .sort((a, b) => (b.data.order || 0) - (a.data.order || 0))
   .slice(0, 15);
 
-// Filter and sort digital studio projects by language and date
-const recentDigitalStudio = allDigitalStudio
+// Filter and sort tools projects by language and date
+const recentTools = allTools
   .filter((item) => item.id.startsWith(`${lang}/`))
   .sort((a, b) => {
     const dateA = new Date(a.data.metadata.date);
@@ -136,17 +136,17 @@ const getLocalizedUrl = (path: string) => {
           </ul>
         </div>
 
-        {/* Digital Studio Column */}
+        {/* Tools Column */}
         <div class="space-y-4">
           <div class="flex items-center gap-2 text-feitlijn-purple">
-            <h3 class="text-lg font-roc-grotesk">{t.digitalStudio || 'Digital Studio'}</h3>
+            <h3 class="text-lg font-roc-grotesk">{t.tools || 'Tools'}</h3>
           </div>
           <ul class="space-y-3" role="list">
             {
-              recentDigitalStudio.map((item) => (
+              recentTools.map((item) => (
                 <li>
                   <a
-                    href={getLocalizedUrl(`/digital-studio/${item.id.split('/')[1]}`)}
+                    href={getLocalizedUrl(`/tools/${item.id.split('/')[1]}`)}
                     class="text-sm text-text-secondary hover:text-feitlijn-purple transition-colors duration-200 flex items-center gap-2 group"
                   >
                     {item.data.title}

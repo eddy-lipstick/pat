@@ -11,7 +11,7 @@ export async function getAllTags(lang) {
       'case-studies': await getCollection('case-studies'),
       news: await getCollection('news'),
       articles: await getCollection('articles'),
-      'digital-studio': await getCollection('digital-studio'),
+      tools: await getCollection('tools'),
     };
   } catch (error) {
     console.error('Error fetching collections:', error);
@@ -58,7 +58,7 @@ export async function getContentByTag(tag, lang) {
       'case-studies': await getCollection('case-studies'),
       news: await getCollection('news'),
       articles: await getCollection('articles'),
-      'digital-studio': await getCollection('digital-studio'),
+      tools: await getCollection('tools'),
     };
   } catch (error) {
     console.error('Error fetching collections:', error);
