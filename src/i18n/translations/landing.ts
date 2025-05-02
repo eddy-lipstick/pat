@@ -22,6 +22,20 @@ export const landingTranslations = {
         primary: 'Our work',
       },
     },
+    hero: {
+      // Added missing hero section for English
+      subtitle: 'Legal design & tech',
+      title: 'Creative legal minds',
+      description: 'We combine deep legal expertise with advanced technology and great design.',
+      bulletPoints: [
+        'Interactive compliance dashboards with AI analysis',
+        'Strategic visuals and videos for complex litigation',
+        'Visual B2B contracts',
+      ],
+      buttons: {
+        primary: 'View our work',
+      },
+    },
     // Removed duplicate 'tools' key here
     digitalStudio: {
       // This should likely be removed or renamed if no longer used
