@@ -5,6 +5,10 @@ import { getCollection } from 'astro:content';
 import LargeCaseStudyGrid from '@/components/LargeCaseStudyGrid';
 import Hero from '@/components/Hero.astro';
 import { caseStudiesTranslations } from '@/i18n/translations/case-studies';
+import type { ComponentProps } from 'astro/types'; // Import ComponentProps for typing
+
+// Define type for translations based on the import
+type CaseStudyTranslations = (typeof caseStudiesTranslations)['en']; // Use 'en' or 'nl' as base
 
 // Generate static paths for each language
 export function getStaticPaths() {
@@ -12,17 +16,24 @@ export function getStaticPaths() {
 }
 
 const { lang } = Astro.params;
-const t = caseStudiesTranslations[lang];
+const t = caseStudiesTranslations[
+  lang as keyof typeof caseStudiesTranslations
+] as CaseStudyTranslations; // Add type assertion
 
 // Get all case studies for current language
 const allCaseStudies = await getCollection('case-studies', (entry) =>
   entry.id.startsWith(lang + '/')
 );
 
+// Define type for monthMap keys
+type MonthMap = Record<string, number>;
+
 // Helper function to standardize dates for sorting
-function getDateForSorting(dateStr) {
+function getDateForSorting(dateStr: string): Date {
+  // Add type for dateStr and return type
   // Maps for both English and Dutch month names
-  const monthMap = {
+  const monthMap: MonthMap = {
+    // Add type for monthMap
     // English months
     january: 1,
     jan: 1,
@@ -53,37 +64,47 @@ function getDateForSorting(dateStr) {
     januari: 1,
     februari: 2,
     maart: 3,
-    april: 4,
+    // april: 4, // Duplicate removed
     mei: 5,
-    juni: 6,
+    // juni: 6, // Duplicate removed
     juli: 7,
     augustus: 8,
-    september: 9,
+    // september: 9, // Duplicate removed
     oktober: 10,
-    november: 11,
-    december: 12,
+    // november: 11, // Duplicate removed
+    // december: 12, // Duplicate removed
   };
 
-  // Split the date into parts and standardize
+  // Handle YYYY-YYYY format (use end year for sorting)
+  const rangeMatch = dateStr.match(/^(\d{4})-(\d{4})$/);
+  if (rangeMatch) {
+    const endYear = parseInt(rangeMatch[2], 10);
+    if (!isNaN(endYear)) {
+      // Use December 1st of the end year for sorting
+      return new Date(`${endYear}-12-01T00:00:00Z`);
+    } else {
+      console.warn(`Invalid year range format: ${dateStr}`);
+      return new Date(0); // Fallback for invalid range
+    }
+  }
+
+  // Handle "Month Year" format
   const parts = dateStr.split(' ');
-  if (parts.length !== 2) {
-    console.warn(`Date format issue with: ${dateStr}`);
-    return new Date(0); // Return earliest possible date for invalid formats
+  if (parts.length === 2) {
+    const monthName = parts[0].toLowerCase();
+    const year = parseInt(parts[1], 10);
+    const month = monthMap[monthName]; // Access is now typed
+
+    if (month && !isNaN(year)) {
+      // Create a standardized date string (YYYY-MM-01)
+      const monthStr = month.toString().padStart(2, '0');
+      return new Date(`${year}-${monthStr}-01T00:00:00Z`);
+    }
   }
 
-  const monthName = parts[0].toLowerCase();
-  const year = parseInt(parts[1], 10);
-  const month = monthMap[monthName];
-
-  if (!month || isNaN(year)) {
-    console.warn(`Invalid date: ${dateStr} (month: ${monthName}, year: ${year})`);
-    return new Date(0);
-  }
-
-  // Create a standardized date string (YYYY-MM-01)
-  // Use two digits for month (padding with 0 if needed)
-  const monthStr = month.toString().padStart(2, '0');
-  return new Date(`${year}-${monthStr}-01T00:00:00Z`);
+  // Fallback for any other unexpected format
+  console.warn(`Unhandled date format: ${dateStr}`);
+  return new Date(0);
 }
 
 // Sort case studies by date (newest first)
@@ -111,6 +132,7 @@ const allTags = [...new Set(allCaseStudies.flatMap((study) => study.data.tags ||
 <BaseLayout title={t.meta.title} description={t.meta.description}>
   <!-- Hero Section -->
   <Hero class="min-h-[60vh]" subtitle={t.hero.subtitle} title={t.hero.title} />
+  {/* Removed description prop as it doesn't exist on t.hero */}
 
   <div class="container mx-auto px-4 py-12">
     <LargeCaseStudyGrid studies={sortedCaseStudies} client:load lang={lang} />

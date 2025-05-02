@@ -7,7 +7,7 @@ interface Props {
   variant?: 'default' | 'small'; // Add variant prop
   subtitle: string;
   title: string;
-  description: string;
+  description?: string; // Make description optional
   bulletPoints?: string[];
   primaryButtonText?: string;
   primaryButtonHref?: string;
@@ -20,7 +20,7 @@ const {
   variant = 'default',
   subtitle,
   title,
-  description,
+  description = '', // Provide a default empty string if description is optional
   bulletPoints = [],
   primaryButtonText,
   primaryButtonHref = '#',
@@ -98,7 +98,9 @@ const {
         {
           primaryButtonText && (
             <a href={primaryButtonHref} class="w-full sm:w-auto">
-              <Button variant="default" size="lg" class="w-full">
+              <Button variant="default" size="lg" className="w-full">
+                {' '}
+                {/* Use className */}
                 {primaryButtonText}
               </Button>
             </a>
@@ -108,7 +110,9 @@ const {
         {
           secondaryButtonText && (
             <a href={secondaryButtonHref} class="w-full sm:w-auto">
-              <Button variant="outline" size="lg" class="w-full">
+              <Button variant="outline" size="lg" className="w-full">
+                {' '}
+                {/* Use className */}
                 {secondaryButtonText}
               </Button>
             </a>

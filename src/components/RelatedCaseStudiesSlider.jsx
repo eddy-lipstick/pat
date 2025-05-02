@@ -14,59 +14,71 @@ const RelatedCaseStudiesSlider = ({ studies, currentStudyId, lang = 'nl' }) => {
   // Copy the date parsing function from the case-studies/index.astro page
   const getDateForSorting = (dateStr) => {
     if (!dateStr) return new Date(0); // Handle missing dates
-    
+
     // Maps for both English and Dutch month names
     const monthMap = {
       // English months
-      'january': 1, 'jan': 1,
-      'february': 2, 'feb': 2,
-      'march': 3, 'mar': 3,
-      'april': 4, 'apr': 4,
-      'may': 5,
-      'june': 6, 'jun': 6,
-      'july': 7, 'jul': 7,
-      'august': 8, 'aug': 8,
-      'september': 9, 'sep': 9, 'sept': 9,
-      'october': 10, 'oct': 10,
-      'november': 11, 'nov': 11,
-      'december': 12, 'dec': 12,
-      
+      january: 1,
+      jan: 1,
+      february: 2,
+      feb: 2,
+      march: 3,
+      mar: 3,
+      april: 4,
+      apr: 4,
+      may: 5,
+      june: 6,
+      jun: 6,
+      july: 7,
+      jul: 7,
+      august: 8,
+      aug: 8,
+      september: 9,
+      sep: 9,
+      sept: 9,
+      october: 10,
+      oct: 10,
+      november: 11,
+      nov: 11,
+      december: 12,
+      dec: 12,
+
       // Dutch months
-      'januari': 1,
-      'februari': 2,
-      'maart': 3,
-      'april': 4,
-      'mei': 5,
-      'juni': 6,
-      'juli': 7,
-      'augustus': 8,
-      'september': 9,
-      'oktober': 10,
-      'november': 11,
-      'december': 12
+      januari: 1,
+      februari: 2,
+      maart: 3,
+      // 'april': 4, // Duplicate removed
+      mei: 5,
+      // 'juni': 6, // Duplicate removed
+      juli: 7,
+      augustus: 8,
+      // 'september': 9, // Duplicate removed
+      oktober: 10,
+      // 'november': 11, // Duplicate removed
+      // 'december': 12 // Duplicate removed
     };
-    
+
     // Split the date into parts and standardize
     const parts = dateStr.split(' ');
     if (parts.length !== 2) {
       console.warn(`Date format issue with: ${dateStr}`);
       return new Date(0); // Return earliest possible date for invalid formats
     }
-    
+
     const monthName = parts[0].toLowerCase();
     const year = parseInt(parts[1], 10);
     const month = monthMap[monthName];
-    
+
     if (!month || isNaN(year)) {
       console.warn(`Invalid date: ${dateStr} (month: ${monthName}, year: ${year})`);
       return new Date(0);
     }
-    
+
     // Create a standardized date string (YYYY-MM-01)
     const monthStr = month.toString().padStart(2, '0');
     return new Date(`${year}-${monthStr}-01T00:00:00Z`);
   };
-  
+
   // Filter out the current study and sort by date (newest first)
   let filteredStudies = studies
     .filter((study) => study.id !== currentStudyId)
@@ -74,7 +86,7 @@ const RelatedCaseStudiesSlider = ({ studies, currentStudyId, lang = 'nl' }) => {
       // Use the same date parsing logic as the main case studies page
       const dateA = getDateForSorting(a.data.metadata?.date);
       const dateB = getDateForSorting(b.data.metadata?.date);
-      
+
       // Sort newest first
       return dateB.getTime() - dateA.getTime();
     });
