@@ -1,0 +1,20 @@
+---
+// src/pages/gsap-test.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+// Import the animated logo component once created
+import AnimatedLogo from '../components/AnimatedLogo.jsx';
+---
+
+<BaseLayout title="GSAP Logo Test" description="Testing GSAP SVG animation">
+  <div class="container mx-auto py-12">
+    <h1 class="text-3xl font-bold mb-6">GSAP Logo Animation Test</h1>
+    <p class="mb-4">This page demonstrates the Patroon logo animated with GSAP's DrawSVGPlugin.</p>
+    <div
+      class="border p-4 rounded-lg bg-gray-100 dark:bg-gray-800 flex justify-center items-center min-h-[100px]"
+    >
+      {/* Placeholder for the animated logo */}
+      {/* <p>Animated logo will appear here.</p> */}
+      <AnimatedLogo client:load />
+    </div>
+  </div>
+</BaseLayout>
