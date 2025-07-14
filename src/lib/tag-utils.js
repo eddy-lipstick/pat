@@ -81,8 +81,6 @@ export async function getContentByTag(tag, lang) {
   };
 
   const processItems = (items, collectionType) => {
-    console.log(`Processing ${collectionType} collection`);
-
     return items
       .filter((item) => {
         // First check language using same logic as news page
@@ -92,19 +90,6 @@ export async function getContentByTag(tag, lang) {
         // Then check tags
         const itemTags = item.data.tags || item.data.labels || [];
         const hasTag = itemTags.some((t) => t.toLowerCase() === tag.toLowerCase());
-
-        // Debug logging for news items
-        if (collectionType === 'news') {
-          console.log('Processing item:', {
-            id: item.id,
-            language: item.data.language,
-            inFolder: item.id.startsWith(`${lang}/`),
-            hasLanguageField: item.data.language === lang,
-            isCorrectLanguage,
-            hasTag,
-            tags: itemTags,
-          });
-        }
 
         return isCorrectLanguage && hasTag;
       })
@@ -119,10 +104,6 @@ export async function getContentByTag(tag, lang) {
         const urlPath = getUrlPath(collectionType);
         const url = `/${lang}/${urlPath}/${id}`;
 
-        if (collectionType === 'news') {
-          console.log(`Generated URL for news item: ${url}`);
-        }
-
         return {
           ...item,
           collectionType,
@@ -135,12 +116,6 @@ export async function getContentByTag(tag, lang) {
   for (const [type, collection] of Object.entries(collections)) {
     if (Array.isArray(collection)) {
       const items = processItems(collection, type);
-
-      // Debug log for news items
-      if (type === 'news') {
-        console.log(`Found ${items.length} news items with tag "${tag}"`);
-      }
-
       taggedContent.push(...items);
     }
   }

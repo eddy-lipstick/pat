@@ -17,7 +17,6 @@ const VideoPlayer = ({ src, poster, title, autoPlay = true, className = '' }) =>
                 playPromise.catch(() => {
                     videoRef.current.muted = true;
                     videoRef.current.play().catch(error => {
-                        console.log('Autoplay failed:', error);
                         setIsPlaying(false);
                     });
                 });
@@ -31,7 +30,6 @@ const VideoPlayer = ({ src, poster, title, autoPlay = true, className = '' }) =>
             const playPromise = videoRef.current.play();
             if (playPromise !== undefined) {
                 playPromise.catch(error => {
-                    console.log('Play failed:', error);
                     setIsPlaying(false);
                 });
             }
@@ -53,9 +51,11 @@ const VideoPlayer = ({ src, poster, title, autoPlay = true, className = '' }) =>
 
     if (!isClient) {
         return (
-            <div className="relative w-full aspect-video">
-                <div className="absolute inset-0 flex items-center justify-center text-text-secondary">
-                    Loading...
+            <div className="relative w-full aspect-video bg-muted animate-pulse rounded-lg">
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-full bg-muted-foreground/20 flex items-center justify-center">
+                        <Play className="w-8 h-8 text-muted-foreground/40" />
+                    </div>
                 </div>
             </div>
         );

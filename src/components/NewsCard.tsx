@@ -1,7 +1,18 @@
 import React from 'react';
 import { Card } from '@/components/ui/card';
+import OptimizedImage from './OptimizedImage';
 
-const NewsCard = ({ title, date, summary, imageSrc, imageAlt, href, lang }) => {
+interface NewsCardProps {
+  title: string;
+  date: string | Date;
+  summary: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  href: string;
+  lang: 'nl' | 'en';
+}
+
+const NewsCard: React.FC<NewsCardProps> = ({ title, date, summary, imageSrc, imageAlt, href, lang }) => {
   const formattedDate = new Date(date).toLocaleDateString(lang === 'nl' ? 'nl-NL' : 'en-US', {
     year: 'numeric',
     month: 'long',
@@ -29,7 +40,7 @@ const NewsCard = ({ title, date, summary, imageSrc, imageAlt, href, lang }) => {
           </div>
           {imageSrc && (
             <div className="relative h-full min-h-[200px]">
-              <img
+              <OptimizedImage
                 src={imageSrc}
                 alt={imageAlt || ''}
                 className="absolute inset-0 w-full h-full object-cover"

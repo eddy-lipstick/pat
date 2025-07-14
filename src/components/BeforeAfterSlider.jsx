@@ -116,9 +116,13 @@ const BeforeAfterSlider = ({ beforeImage, afterImage, alt }) => {
 
     if (!isClient) {
         return (
-            <Card className="relative w-full overflow-hidden select-none bg-surface-1">
-                <div className="absolute inset-0 flex items-center justify-center text-text-secondary">
-                    Loading...
+            <Card className="relative w-full aspect-video overflow-hidden select-none bg-muted animate-pulse">
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="flex gap-2">
+                        <div className="w-2 h-2 bg-muted-foreground/40 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                        <div className="w-2 h-2 bg-muted-foreground/40 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                        <div className="w-2 h-2 bg-muted-foreground/40 rounded-full animate-bounce"></div>
+                    </div>
                 </div>
             </Card>
         );

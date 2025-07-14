@@ -1,9 +1,26 @@
-// src/components/NewsList.jsx
+// src/components/NewsList.tsx
 import React from 'react';
 import NewsCard from './NewsCard';
 
-const NewsList = ({ newsItems, lang }) => {
-  console.log('NewsItems received:', newsItems);
+interface NewsItem {
+  id: string;
+  data: {
+    title: string;
+    date: string | Date;
+    summary: string;
+    image?: {
+      src: string;
+      alt: string;
+    };
+  };
+}
+
+interface NewsListProps {
+  newsItems?: NewsItem[];
+  lang: 'nl' | 'en';
+}
+
+const NewsList: React.FC<NewsListProps> = ({ newsItems, lang }) => {
   return (
     <div className="grid gap-6">
       {newsItems?.map((item) => (

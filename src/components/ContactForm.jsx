@@ -6,7 +6,6 @@ import { languages, defaultLanguage } from '@/i18n/config';
 const ContactForm = ({ lang = 'nl' }) => {
   const t = heroContactTranslations?.[lang] || heroContactTranslations?.['nl'];
   if (!t) {
-    console.error('Translations not found for language:', lang);
     return null; // Or some fallback UI
   }
   const [isSubmitting, setIsSubmitting] = useState(false);
