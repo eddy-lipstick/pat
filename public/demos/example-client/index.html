@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demo - Patroon Legal Design</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --background: hsl(243, 100%, 11%);
+        --foreground: hsl(0, 0%, 100%);
+        --feitlijn-purple: hsl(234, 89%, 74%);
+        --feitlijn-yellow: hsl(65, 100%, 60%);
+        --surface-1: hsl(245, 70%, 20%);
+        --surface-2: hsl(245, 65%, 24%);
+        --text-2: hsl(240, 10%, 90%);
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue',
+          Arial, sans-serif;
+        background: var(--background);
+        color: var(--foreground);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 400px;
+      }
+
+      .logo {
+        text-align: center;
+        margin-bottom: 48px;
+      }
+
+      .logo img {
+        width: 160px;
+        height: auto;
+        opacity: 0.9;
+      }
+
+      .card {
+        background: var(--surface-1);
+        border-radius: 12px;
+        padding: 32px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      h1 {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: var(--foreground);
+      }
+
+      .subtitle {
+        color: var(--text-2);
+        margin-bottom: 36px;
+        font-size: 15px;
+        line-height: 1.5;
+      }
+
+      .form-group {
+        margin-bottom: 24px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px 16px;
+        background: var(--surface-2);
+        border: 1px solid transparent;
+        border-radius: 8px;
+        color: var(--foreground);
+        font-size: 16px;
+        transition: all 0.2s;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: var(--feitlijn-purple);
+        box-shadow: 0 0 0 3px rgba(139, 134, 255, 0.1);
+      }
+
+      button {
+        width: 100%;
+        padding: 12px 24px;
+        background: var(--feitlijn-purple);
+        color: var(--background);
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      button:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      .error {
+        color: #ff6b6b;
+        font-size: 14px;
+        margin-top: 8px;
+        display: none;
+      }
+
+      .error.show {
+        display: block;
+      }
+
+      .info {
+        background: var(--surface-2);
+        border-radius: 8px;
+        padding: 20px;
+        margin-top: 28px;
+        font-size: 14px;
+        color: var(--text-2);
+        line-height: 1.5;
+        border-left: 3px solid var(--feitlijn-purple);
+      }
+
+      .demo-frame {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        border: none;
+        display: none;
+      }
+
+      .demo-frame.show {
+        display: block;
+      }
+
+      .login-container {
+        transition: opacity 0.3s;
+      }
+
+      .login-container.hide {
+        opacity: 0;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container" id="loginContainer">
+      <div class="container">
+        <div class="logo">
+          <img src="/logo.svg" alt="Patroon Legal Design" />
+        </div>
+
+        <div class="card">
+          <h1>Demo toegang</h1>
+          <p class="subtitle">Voer het wachtwoord in om de demo te bekijken.</p>
+
+          <form id="passwordForm">
+            <div class="form-group">
+              <label for="password">Wachtwoord</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Voer wachtwoord in"
+                autocomplete="off"
+              />
+              <div class="error" id="error">Onjuist wachtwoord. Probeer opnieuw.</div>
+            </div>
+
+            <button type="submit">Bekijk demo</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <iframe id="demoFrame" class="demo-frame" src=""></iframe>
+
+    <script>
+      // Configuration - Replace these values for each client
+      const CONFIG = {
+        password: 'example123', // Password for example-client
+        demoFile: 'demo.html', // The actual demo file
+        clientId: 'example-client', // Client identifier for localStorage
+      };
+
+      // Check if already authenticated
+      const storageKey = `patroon_demo_${CONFIG.clientId}`;
+      const savedAuth = localStorage.getItem(storageKey);
+
+      if (savedAuth === CONFIG.password) {
+        showDemo();
+      }
+
+      // Handle form submission
+      document.getElementById('passwordForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const passwordInput = document.getElementById('password');
+        const errorElement = document.getElementById('error');
+
+        if (passwordInput.value === CONFIG.password) {
+          // Save authentication
+          localStorage.setItem(storageKey, CONFIG.password);
+          errorElement.classList.remove('show');
+          showDemo();
+        } else {
+          errorElement.classList.add('show');
+          passwordInput.value = '';
+          passwordInput.focus();
+        }
+      });
+
+      function showDemo() {
+        const loginContainer = document.getElementById('loginContainer');
+        const demoFrame = document.getElementById('demoFrame');
+
+        // Set the demo source
+        demoFrame.src = CONFIG.demoFile;
+
+        // Animate transition
+        loginContainer.classList.add('hide');
+
+        setTimeout(() => {
+          loginContainer.style.display = 'none';
+          demoFrame.classList.add('show');
+        }, 300);
+      }
+
+      // Auto-focus password field
+      window.addEventListener('load', () => {
+        if (!savedAuth) {
+          document.getElementById('password').focus();
+        }
+      });
+    </script>
+  </body>
+</html>
