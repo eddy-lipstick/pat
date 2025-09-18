@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+Disallow: /demos/
 Sitemap: https://www.patroon.nl/sitemap-index.xml
